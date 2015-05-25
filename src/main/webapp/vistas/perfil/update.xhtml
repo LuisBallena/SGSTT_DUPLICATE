@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="./../home.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                >
+
+    <ui:define name="content">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header">Administrar Perfiles</h3>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 opcion-listado" >
+                    <h:link style="font-size: 16px;font-weight: bold;" value="Regresar al Listado" outcome="list.xhtml"></h:link>
+                </div>
+                <div class="col-lg-12">
+                    <div class="panel panel-success">
+                        <div class="panel-heading"  >Actualizar Perfil</div>
+                        <div class="panel-body">
+                            <div class="row" id="modificarComercio">
+                                <div class="col-lg-12">
+                                    <h:form id="frmRegistrarOperador" styleClass="form-horizontal" >
+                                        <f:event type="preRenderView" listener="#{perfilControlador.initUpdate}" />
+                                        <h:messages id="msg" globalOnly="true" styleClass="list-group" infoClass="list-group-item list-group-item-success"
+                                                    errorClass="list-group-item list-group-item-danger" />
+                                        <div class="form-group has-feedback">
+                                            <label for="nombre" class="col-sm-3 control-label" >Nombre :</label>
+                                            <div class="col-sm-5">
+                                                <p:inputText styleClass="form-control" id="nombre" value="#{perfilControlador.perfil.nombre}"  >
+                                                </p:inputText>
+                                            </div>	
+                                        </div>
+                                        <div class="form-group has-feedback">
+
+                                            <p:dataTable value="#{perfilControlador.permisos}" var="list" style="text-align: center;" >  
+                                                <p:column headerText="Modulo"  >
+                                                    <h:outputLabel value ="#{list.modulo.nombre}" />
+                                                    
+                                                </p:column>
+                                                <p:column headerText="Listar"  >
+                                                    <h:panelGroup rendered="#{list.modulo.listar}" >
+                                                     <p:selectBooleanCheckbox value ="#{list.listar}" />
+                                                    </h:panelGroup>
+                                                    
+                                                </p:column>
+                                                <p:column headerText="Crear"  >
+                                                    <h:panelGroup rendered="#{list.modulo.crear}" >
+                                                    <p:selectBooleanCheckbox value ="#{list.crear}" />
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column headerText="Actualizar"  >
+                                                    <h:panelGroup rendered="#{list.modulo.actualizar}" >
+                                                    <p:selectBooleanCheckbox value ="#{list.actualizar}" />
+                                                    </h:panelGroup>
+                                                </p:column>
+                                                <p:column headerText="Eliminar"  >
+                                                    <h:panelGroup rendered="#{list.modulo.eliminar}" >
+                                                    <p:selectBooleanCheckbox value ="#{list.eliminar}" />
+                                                    </h:panelGroup>
+                                                </p:column>
+                                            </p:dataTable>
+                                        </div>
+
+                                        <br/>
+                                        <p:commandButton value="Actualizar" actionListener="#{perfilControlador.actualizarPerfil}" update="@form" styleClass="btn btn-primary"/>
+                                    </h:form>  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+    </ui:define>
+
+</ui:composition>

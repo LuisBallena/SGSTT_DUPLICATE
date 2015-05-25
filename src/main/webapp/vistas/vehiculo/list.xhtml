@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="./../home.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                >
+
+    <ui:define name="content">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header">Administrar Vehiculo</h3>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <h:panelGroup rendered="#{sesionControlador.permisoModulo.crear eq true}">
+                                        <h:button value="Nueva Vehiculo" styleClass="btn btn-success" outcome="create.xhtml" />
+                                    </h:panelGroup>
+                                </div>
+                            </div>
+                            <br/>
+                            <h:form id="frmTarifa">
+                                <f:event type="preRenderView" listener="#{vehiculoControlador.initLista}" />
+                                <p:dataTable  value="#{vehiculoControlador.vehiculoPaginador}"    var="list" emptyMessage="No existen registros de vehiculos" 
+                                              paginator="true" rows="10" lazy="true" rowIndexVar="rowIndex"
+                                              paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
+
+                                    <p:column  style="text-align: center;width: 8%;">
+                                        <f:facet name="header">
+                                            #
+                                        </f:facet>
+                                        <h:outputText value="#{rowIndex+1}" />
+                                    </p:column>
+                                    <p:column  headerText="Descripción" style="text-align: center;">
+                                        <h:outputText value="#{list.descripcion}" />
+                                    </p:column>
+                                    <p:column  headerText="Placa" style="text-align: center;">
+                                        <h:outputText value="#{list.placa}" />
+                                    </p:column>
+                                    <p:column  headerText="Tipo Vehiculo" style="text-align: center;">
+                                        <h:outputText value="#{list.tipoVehiculo.nombre}" />
+                                    </p:column>
+                                    <p:column  headerText="Marca" style="text-align: center;">
+                                        <h:outputText value="#{list.marca.nombreMarca}" />
+                                    </p:column>
+                                </p:dataTable> 
+                            </h:form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+    </ui:define>
+
+</ui:composition>

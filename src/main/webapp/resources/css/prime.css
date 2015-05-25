@@ -1,0 +1,36 @@
+/* 
+    Created on : 11/02/2015, 11:38:41 AM
+    Author     : Luis Alonso Ballena Garcia
+*/
+
+.ui-state-default .icon-choice{
+    background-image: url("#{resource['images/accept.png']}");
+}
+
+.ui-state-default .icon-add{
+    background-image: url("#{resource['images/add.png']}");
+}
+
+.ui-state-default .icon-update{
+    background-image: url("#{resource['images/pencil.png']}");
+}
+
+.ui-state-default .icon-delete{
+    background-image: url("#{resource['images/button_cancel.gif']}");
+}
+
+.input-disable{
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 4px;  
+    height: 34px;
+    padding-top: 5px;
+}
+
+.bootstrap-calendar .ui-inputfield{
+    width: 83%;
+}
+
+.ui-datepicker{
+    font-size: 12px;
+}

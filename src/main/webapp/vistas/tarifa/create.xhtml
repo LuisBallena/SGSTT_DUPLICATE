@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="./../home.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                >
+
+    <ui:define name="content">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header">Administrar Tarifario</h3>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 opcion-listado" >
+                    <h:link style="font-size: 16px;font-weight: bold;" value="Regresar al Listado" outcome="list.xhtml"></h:link>
+                </div>
+                <div class="col-lg-12">
+                    <div class="panel panel-success">
+                        <div class="panel-heading"  >Registrar Tarifa</div>
+                        <div class="panel-body">
+                            <div class="row" id="modificarComercio">
+                                <div class="col-lg-12">
+                                    <h:form id="frmRegistrarCliente" styleClass="form-horizontal" >
+                                        <f:event type="preRenderView" listener="#{tarifaControlador.initCreate}" />
+                                        <h:messages id="msg" globalOnly="true" styleClass="list-group" infoClass="list-group-item list-group-item-success"
+                                                    errorClass="list-group-item list-group-item-danger" />
+                                        <div class="form-group has-feedback">
+                                            <label for="operador" class="col-sm-3 control-label" >Horas :</label>
+                                            <div class="col-sm-5" >
+                                                <p:inputText styleClass="form-control" id="horas" value="#{tarifaControlador.tarifa.horas}">
+                                                </p:inputText>
+                                            </div>	
+                                        </div>
+                                        <div class="form-group has-feedback">
+                                            <label for="operador" class="col-sm-3 control-label" >Descripción :</label>
+                                            <div class="col-sm-5" >
+                                                <p:inputText styleClass="form-control" id="descripcion" value="#{tarifaControlador.tarifa.descripcion}">
+                                                </p:inputText>
+                                            </div>	
+                                        </div>
+                                        <div class="form-group has-feedback">
+                                            <label for="operador" class="col-sm-3 control-label" >Tipo Servicio :</label>
+                                            <div class="col-sm-5" >
+                                                <h:selectOneMenu styleClass="form-control" value="#{tarifaControlador.tarifa.servicio.id}">
+                                                    <f:selectItem itemLabel="Seleccionar" itemValue="0" />
+                                                    <f:selectItems value="#{tarifaControlador.servicios}" var="servicios" itemLabel="#{servicios.descripcion}" itemValue="#{servicios.id}" />
+                                                </h:selectOneMenu>
+                                            </div>	
+                                        </div>
+                                        <div class="form-group has-feedback">
+                                            <label for="operador" class="col-sm-3 control-label" >Tipo Vehiculo :</label>
+                                            <div class="col-sm-5" >
+                                                <h:selectOneMenu styleClass="form-control" value="#{tarifaControlador.tarifa.tipoVehiculo.id}">
+                                                    <f:selectItem itemLabel="Seleccionar" itemValue="0" />
+                                                    <f:selectItems value="#{tarifaControlador.tipoVehiculos}" var="vehiculos" itemLabel="#{vehiculos.nombre}" itemValue="#{vehiculos.id}" />
+                                                </h:selectOneMenu>
+                                            </div>	
+                                        </div>
+                                        <div class="form-group has-feedback">
+                                            <label for="operador" class="col-sm-3 control-label" >Precio :</label>
+                                            <div class="col-sm-5" >
+                                                <pe:inputNumber maxValue="500" value="#{tarifaControlador.tarifa.precio}"  />
+                                            </div>	
+                                        </div>
+                                        <div class="col-sm-3 control-label">
+                                            <p:commandButton value="Guardar" actionListener="#{tarifaControlador.registrarTarifa}" update="@form" styleClass="btn btn-primary"/>
+                                        </div>
+                                    </h:form>  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+    </ui:define>
+
+</ui:composition>
