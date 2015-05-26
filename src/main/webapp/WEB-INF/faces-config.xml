@@ -30,6 +30,11 @@
             <redirect />
         </navigation-case>
         <navigation-case>
+            <from-outcome>incidencia</from-outcome>
+            <to-view-id>/vistas/incidencia/list.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
             <from-outcome>servicio</from-outcome>
             <to-view-id>/vistas/servicio/list.xhtml</to-view-id>
             <redirect />

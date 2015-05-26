@@ -17,6 +17,9 @@
     <mapping class="com.sgstt.entidad.Permiso" />
     <mapping class="com.sgstt.entidad.Modulo" />
     <mapping class="com.sgstt.entidad.Usuario" />
+    <mapping class="com.sgstt.entidad.Incidencia" />
+    <mapping class="com.sgstt.entidad.EstadoIncidencia" />
+    <mapping class="com.sgstt.entidad.TipoIncidencia" />
     <mapping class="com.sgstt.entidad.Empleado" />
     <mapping class="com.sgstt.entidad.EstadoServicio" />
     <mapping class="com.sgstt.entidad.Servicio" />
