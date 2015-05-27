@@ -75,6 +75,12 @@
                                         </f:facet>
                                         <h:outputText value="#{list.vehiculo}" />
                                     </p:column>
+                                    <p:column    style="text-align: center;font-size: 15px;">
+                                        <f:facet name="header">
+                                            Chofer
+                                        </f:facet>
+                                        <h:outputText value="#{list.chofer}" />
+                                    </p:column>
                                     <p:column  style="text-align: center;width: 8%;">
                                         <p:commandButton style="font-size: 12px;" icon="icon-update" action="#{servicioControlador.irActualizar(list.id,list.idTipo)}"    >
                                         </p:commandButton>

@@ -21,6 +21,8 @@ public class ServicioDetalleDto implements Serializable{
     
     String vehiculo;
     
+    String chofer;
+    
     String tipoServicio;
     
     Integer id;
@@ -102,5 +104,14 @@ public class ServicioDetalleDto implements Serializable{
     public void setIdTipo(Integer idTipo) {
         this.idTipo = idTipo;
     }
+
+	public String getChofer() {
+		return chofer;
+	}
+
+	public void setChofer(String chofer) {
+		this.chofer = chofer;
+	}
+    
     
 }
