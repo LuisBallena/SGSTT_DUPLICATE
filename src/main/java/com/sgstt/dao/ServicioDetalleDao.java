@@ -1,6 +1,7 @@
 package com.sgstt.dao;
 
 import com.sgstt.entidad.ServicioDetalle;
+import java.util.Date;
 
 /**
  *
@@ -9,5 +10,9 @@ import com.sgstt.entidad.ServicioDetalle;
 public interface ServicioDetalleDao extends GenericDao<ServicioDetalle,Integer>{
     
     public ServicioDetalle obtenerServicioDetallesConVehiculoChofer(Integer id);
+    
+    public boolean esVehiculoLibre(Integer idVehiculo, int cantidadHoraPlazo, Date fecha);
+    
+    public boolean esChoferLibre(Integer idChofer, int cantidadHoraPlazo, Date fecha);
 
 }

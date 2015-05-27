@@ -3,6 +3,7 @@ package com.sgstt.servicios;
 import com.sgstt.dao.*;
 import com.sgstt.dao.impl.*;
 import com.sgstt.entidad.*;
+import com.sgstt.excepciones.TransporteException;
 import com.sgstt.hibernate.HibernateConexion;
 import com.sgstt.util.Utilitario;
 import java.io.Serializable;
@@ -12,7 +13,8 @@ import java.util.List;
  *
  * @author Luis Alonso Ballena Garcia
  */
-public class TransporteServicio implements Serializable{
+public class TransporteServicio implements Serializable {
+
     private static final long serialVersionUID = -480596500113721392L;
 
     private final HibernateConexion conexion;
@@ -63,48 +65,48 @@ public class TransporteServicio implements Serializable{
         conexion.closeConexion();
         return aux;
     }
-    
-    public List<Cliente> obtenerClientes(){
+
+    public List<Cliente> obtenerClientes() {
         List<Cliente> aux = null;
         conexion.beginConexion();
         aux = clienteDao.obtenerTodos();
         conexion.closeConexion();
         return aux;
     }
-    
-    public List<Vuelo> obtenerVuelos(){
+
+    public List<Vuelo> obtenerVuelos() {
         List<Vuelo> aux = null;
         conexion.beginConexion();
         aux = vueloDao.obtenerTodos();
         conexion.closeConexion();
         return aux;
     }
-    
-    public List<Trasladista> obtenerGuias(){
+
+    public List<Trasladista> obtenerGuias() {
         List<Trasladista> aux = null;
         conexion.beginConexion();
         aux = trasladistaDao.obtenerTodos();
         conexion.closeConexion();
         return aux;
     }
-    
-    public List<File> obtenerFilesActivos(){
+
+    public List<File> obtenerFilesActivos() {
         List<File> aux = null;
         conexion.beginConexion();
         aux = fileDao.obtenerTodosActivos();
         conexion.closeConexion();
         return aux;
     }
-    
-    public ServicioDetalle obtenerServicioDetalleConVehiculosChofer(Integer id){
+
+    public ServicioDetalle obtenerServicioDetalleConVehiculosChofer(Integer id) {
         ServicioDetalle aux = null;
         conexion.beginConexion();
         aux = servicioDetalleDao.obtenerServicioDetallesConVehiculoChofer(id);
         conexion.closeConexion();
         return aux;
     }
-    
-    public ServicioDetalle obtenerServicioDetalle(Integer id){
+
+    public ServicioDetalle obtenerServicioDetalle(Integer id) {
         ServicioDetalle aux = null;
         conexion.beginConexion();
         aux = servicioDetalleDao.obtenerEntidad(id);
@@ -112,12 +114,25 @@ public class TransporteServicio implements Serializable{
         return aux;
     }
     
-    public void registrarServicio(ServicioDetalle servicioDetalle , Vehiculo vehiculo , Chofer chofer){
+    public void registrarServicioTercializado(ServicioDetalle servicioDetalle){
         conexion.beginConexion();
+        servicioDetalle.setExternalizado("SI");
+        servicioDetalleDao.agregar(servicioDetalle);
+        Utilitario.enviarMensajeGlobalValido("Se ha registrado correctamente");
+        conexion.closeConexion();
+    }
+
+    public void registrarServicio(ServicioDetalle servicioDetalle, Vehiculo vehiculo, Chofer chofer) throws TransporteException {
+        conexion.beginConexion();
+        if (!servicioDetalleDao.esVehiculoLibre(vehiculo.getId(), ServicioDetalle.TIEMPO_ESPERA, servicioDetalle.getFecha())) {
+            throw new TransporteException("El vehiculo esta ocupado");
+        } else if (servicioDetalleDao.esChoferLibre(chofer.getId(), ServicioDetalle.TIEMPO_ESPERA, servicioDetalle.getFecha())) {
+            throw new TransporteException("El Chofer esta ocupado");
+        }
         VehiculoChofer vehiculoChofer = new VehiculoChofer();
         vehiculoChofer.setChofer(chofer);
         vehiculoChofer.setVehiculo(vehiculo);
-        vehiculoChoferDao.agregar(vehiculoChofer);
+        vehiculoChoferDao.agregarOActualizar(vehiculoChofer);
         vehiculoChoferDao.recargarEntidad(vehiculoChofer);
         vehiculoChofer.getDetalles().add(servicioDetalle);
         servicioDetalle.getVehiculosChoferes().add(vehiculoChofer);
@@ -125,8 +140,8 @@ public class TransporteServicio implements Serializable{
         Utilitario.enviarMensajeGlobalValido("Se ha registrado correctamente");
         conexion.closeConexion();
     }
-    
-    public void actualizarServicio(ServicioDetalle servicioDetalle , Vehiculo vehiculo , Chofer chofer){
+
+    public void actualizarServicio(ServicioDetalle servicioDetalle, Vehiculo vehiculo, Chofer chofer) {
         conexion.beginConexion();
         VehiculoChofer[] array = servicioDetalle.getVehiculosChoferes().toArray(new VehiculoChofer[0]);
         VehiculoChofer vehiculoChofer = array[0];
@@ -137,8 +152,8 @@ public class TransporteServicio implements Serializable{
         Utilitario.enviarMensajeGlobalValido("Se ha actualizado correctamente");
         conexion.closeConexion();
     }
-    
-    public void eliminarServicioDetalle(ServicioDetalle servicioDetalle){
+
+    public void eliminarServicioDetalle(ServicioDetalle servicioDetalle) {
         conexion.beginConexion();
         servicioDetalle.setEstado(Estado.ELIMINADO);
         servicioDetalleDao.actualizar(servicioDetalle);

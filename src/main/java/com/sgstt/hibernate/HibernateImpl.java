@@ -108,6 +108,19 @@ public class HibernateImpl<T, ID extends Serializable> implements GenericDao<T, 
         }
         return lista;
     }
+    
+     @Override
+    public void agregarOActualizar(T t) {
+        Session session = null;
+        try {
+            session = conexion.getSession();
+            session.saveOrUpdate(t);
+        } catch (HibernateException e) {
+            log.error(String.format("[HibernateImpl/eliminar] %s", e.getMessage()), e);
+        } catch (Exception e) {
+            log.error(String.format("[HibernateImpl/eliminar] %s", e.getMessage()), e);
+        }
+    }
 
     @Override
     public void recargarEntidad(T t) {
@@ -119,5 +132,7 @@ public class HibernateImpl<T, ID extends Serializable> implements GenericDao<T, 
     private Class<T> getEntityClass() {
         return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
+
+   
 
 }

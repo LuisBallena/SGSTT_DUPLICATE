@@ -14,6 +14,8 @@ public interface GenericDao<T, ID extends Serializable> {
     public void actualizar(T t);
 
     public void eliminar(T t);
+    
+    public void agregarOActualizar(T t);
 
     public T obtenerEntidad(ID id);
 

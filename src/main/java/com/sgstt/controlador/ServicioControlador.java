@@ -11,6 +11,7 @@ import com.sgstt.entidad.Trasladista;
 import com.sgstt.entidad.Vehiculo;
 import com.sgstt.entidad.VehiculoChofer;
 import com.sgstt.entidad.Vuelo;
+import com.sgstt.excepciones.TransporteException;
 import com.sgstt.hibernate.HibernatePaginador;
 import com.sgstt.paginacion.ServicioDetallePaginador;
 import com.sgstt.servicios.TransporteServicio;
@@ -18,10 +19,12 @@ import com.sgstt.util.Utilitario;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -48,6 +51,9 @@ public class ServicioControlador implements Serializable {
     private Vuelo vueloSeleccionado;
     private Date fechaActual;
     private HibernatePaginador<ServicioDetalleDto> servicioDetallePaginador;
+    private Date fechaAuxiliar;
+    /*Esta variable es para capturar el mensaje de la excepción, mejorenlo*/
+    private String messageException;
 
     public ServicioControlador() {
     }
@@ -67,7 +73,8 @@ public class ServicioControlador implements Serializable {
             servicios = transporteServicio.obtenerServiciosPorTipoServicio(TipoServicio.TRASLADO);
             initCollections();
             servicioDetalle = new ServicioDetalle();
-            servicioDetalle.setFecha(new Date());
+            fechaAuxiliar = new Date();
+            servicioDetalle.setFecha(fechaAuxiliar);
             servicioDetalle.setFile(new File());
             initTraslado();
         }
@@ -119,6 +126,7 @@ public class ServicioControlador implements Serializable {
         if (!esVistaValida()) {
             return;
         }
+        servicioDetalle.setFecha(servicioDetalle.getFecha() == null ? fechaAuxiliar :servicioDetalle.getFecha());
         servicioDetalle.setFechaRegistro(new Date());
         servicioDetalle.setFechaModificacion(new Date());
         servicioDetalle.setServicio(servicioSeleccionado);
@@ -127,7 +135,18 @@ public class ServicioControlador implements Serializable {
         servicio.setId(1);
         servicioDetalle.setEstadoServicio(servicio);
         servicioDetalle.setVuelo(vueloSeleccionado);
-        transporteServicio.registrarServicio(servicioDetalle, vehiculoSeleccionado, choferSeleccionado);
+        try {
+            transporteServicio.registrarServicio(servicioDetalle, vehiculoSeleccionado, choferSeleccionado);
+             limpiarTraslado();
+        } catch (TransporteException ex) {
+            setMessageException(ex.getMessage());
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.addCallbackParam("exception",true);
+        }
+    }
+    
+    public void registrarServicioTercializado(){
+        transporteServicio.registrarServicioTercializado(servicioDetalle);
         limpiarTraslado();
     }
     
@@ -338,4 +357,12 @@ public class ServicioControlador implements Serializable {
         this.servicioDetallePaginador = servicioDetallePaginador;
     }
 
+    public String getMessageException() {
+        return messageException;
+    }
+
+    public void setMessageException(String messageException) {
+        this.messageException = messageException;
+    }
+    
 }

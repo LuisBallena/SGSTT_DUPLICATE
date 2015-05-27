@@ -31,6 +31,8 @@ import org.hibernate.annotations.FetchMode;
 public class ServicioDetalle implements Serializable {
 
     private static final long serialVersionUID = 165099556331434992L;
+    
+    public static final int TIEMPO_ESPERA = 4;
 
     @Id
     @GeneratedValue
@@ -88,6 +90,9 @@ public class ServicioDetalle implements Serializable {
             inverseJoinColumns = {
                 @JoinColumn(name = "id_vehiculo_has_chofer")})
     private Set<VehiculoChofer> vehiculosChoferes = new HashSet<>(0);
+    
+    @Column
+    private String externalizado;
 
     public ServicioDetalle() {
     }
@@ -198,6 +203,14 @@ public class ServicioDetalle implements Serializable {
      */
     public void setFechaModificacion(Date fechaModificacion) {
         this.fechaModificacion = fechaModificacion;
+    }
+
+    public String getExternalizado() {
+        return externalizado;
+    }
+
+    public void setExternalizado(String externalizado) {
+        this.externalizado = externalizado;
     }
 
 }
