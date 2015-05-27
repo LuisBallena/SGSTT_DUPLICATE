@@ -25,7 +25,6 @@ public class TransporteServicio implements Serializable {
     private final VueloDao vueloDao;
     private final TrasladistaDao trasladistaDao;
     private final FileDao fileDao;
-    private final VehiculoChoferDao vehiculoChoferDao;
     private final ServicioDetalleDao servicioDetalleDao;
 
     public TransporteServicio() {
@@ -37,7 +36,6 @@ public class TransporteServicio implements Serializable {
         vueloDao = new VueloImpl(conexion);
         trasladistaDao = new TrasladistaImpl(conexion);
         fileDao = new FileImpl(conexion);
-        vehiculoChoferDao = new VehiculoChoferImpl(conexion);
         servicioDetalleDao = new ServicioDetalleImpl(conexion);
     }
 
@@ -98,14 +96,6 @@ public class TransporteServicio implements Serializable {
         return aux;
     }
 
-    public ServicioDetalle obtenerServicioDetalleConVehiculosChofer(Integer id) {
-        ServicioDetalle aux = null;
-        conexion.beginConexion();
-        aux = servicioDetalleDao.obtenerServicioDetallesConVehiculoChofer(id);
-        conexion.closeConexion();
-        return aux;
-    }
-
     public ServicioDetalle obtenerServicioDetalle(Integer id) {
         ServicioDetalle aux = null;
         conexion.beginConexion();
@@ -122,32 +112,20 @@ public class TransporteServicio implements Serializable {
         conexion.closeConexion();
     }
 
-    public void registrarServicio(ServicioDetalle servicioDetalle, Vehiculo vehiculo, Chofer chofer) throws TransporteException {
+    public void registrarServicio(ServicioDetalle servicioDetalle) throws TransporteException {
         conexion.beginConexion();
-        if (!servicioDetalleDao.esVehiculoLibre(vehiculo.getId(), ServicioDetalle.TIEMPO_ESPERA, servicioDetalle.getFecha())) {
-            throw new TransporteException("El vehiculo esta ocupado");
-        } else if (servicioDetalleDao.esChoferLibre(chofer.getId(), ServicioDetalle.TIEMPO_ESPERA, servicioDetalle.getFecha())) {
-            throw new TransporteException("El Chofer esta ocupado");
-        }
-        VehiculoChofer vehiculoChofer = new VehiculoChofer();
-        vehiculoChofer.setChofer(chofer);
-        vehiculoChofer.setVehiculo(vehiculo);
-        vehiculoChoferDao.agregarOActualizar(vehiculoChofer);
-        vehiculoChoferDao.recargarEntidad(vehiculoChofer);
-        vehiculoChofer.getDetalles().add(servicioDetalle);
-        servicioDetalle.getVehiculosChoferes().add(vehiculoChofer);
+//        if (!servicioDetalleDao.esVehiculoLibre(vehiculo.getId(), ServicioDetalle.TIEMPO_ESPERA, servicioDetalle.getFecha())) {
+//            throw new TransporteException("El vehiculo esta ocupado");
+//        } else if (servicioDetalleDao.esChoferLibre(chofer.getId(), ServicioDetalle.TIEMPO_ESPERA, servicioDetalle.getFecha())) {
+//            throw new TransporteException("El Chofer esta ocupado");
+//        }
         servicioDetalleDao.agregar(servicioDetalle);
         Utilitario.enviarMensajeGlobalValido("Se ha registrado correctamente");
         conexion.closeConexion();
     }
 
-    public void actualizarServicio(ServicioDetalle servicioDetalle, Vehiculo vehiculo, Chofer chofer) {
+    public void actualizarServicio(ServicioDetalle servicioDetalle) {
         conexion.beginConexion();
-        VehiculoChofer[] array = servicioDetalle.getVehiculosChoferes().toArray(new VehiculoChofer[0]);
-        VehiculoChofer vehiculoChofer = array[0];
-        vehiculoChofer.setChofer(chofer);
-        vehiculoChofer.setVehiculo(vehiculo);
-        vehiculoChoferDao.actualizar(vehiculoChofer);
         servicioDetalleDao.actualizar(servicioDetalle);
         Utilitario.enviarMensajeGlobalValido("Se ha actualizado correctamente");
         conexion.closeConexion();

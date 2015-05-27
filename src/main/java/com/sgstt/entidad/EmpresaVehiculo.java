@@ -9,8 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 /**
  *
@@ -19,14 +17,12 @@ import org.hibernate.annotations.FetchMode;
 @Entity
 @Table(name = "EMPRESA_VEHICULO")
 public class EmpresaVehiculo implements Serializable{
+    private static final long serialVersionUID = 488952243757020619L;
 
     @Id
     @GeneratedValue
-    @Column
+    @Column(name = "idempresa_vehiculo")
     private Integer id;
-    
-    @Column
-    private String descripcion;
     
     @Column
     private String placa;
@@ -34,14 +30,7 @@ public class EmpresaVehiculo implements Serializable{
     @Column
     private String marca;
     
-    @Column
-    private String modelo;
-    
-    @Column
-    private String color;
-    
     @ManyToOne(fetch = FetchType.LAZY)
-    @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "empresa_idempresa", nullable = false)
     private Empresa empresa;
 
@@ -54,14 +43,6 @@ public class EmpresaVehiculo implements Serializable{
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
     }
 
     public String getPlaca() {
@@ -78,22 +59,6 @@ public class EmpresaVehiculo implements Serializable{
 
     public void setMarca(String marca) {
         this.marca = marca;
-    }
-
-    public String getModelo() {
-        return modelo;
-    }
-
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
     }
 
     public Empresa getEmpresa() {

@@ -26,20 +26,6 @@ public class ServicioDetalleImpl extends HibernateImpl<ServicioDetalle, Integer>
     }
 
     @Override
-    public ServicioDetalle obtenerServicioDetallesConVehiculoChofer(Integer id) {
-        ServicioDetalle servicioDetalle = null;
-        try {
-            Session session = conexion.getSession();
-            Query query = session.createQuery("from ServicioDetalle as service join fetch service.vehiculosChoferes where service.id = :dato");
-            query.setInteger("dato", id);
-            servicioDetalle = (ServicioDetalle) query.uniqueResult();
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        }
-        return servicioDetalle;
-    }
-
-    @Override
     public boolean esVehiculoLibre(Integer idVehiculo, int cantidadHoraPlazo,Date fecha) {
         boolean resultado = true;
         try {

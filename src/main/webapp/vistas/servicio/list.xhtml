@@ -33,56 +33,62 @@
                                                 paginator="true" rows="10" lazy="true" rowIndexVar="rowIndex"
                                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
 
-                                    <p:column  style="text-align: center;width: 6%;font-size: 15px;">
+                                    <p:column  style="text-align: center;width: 6%;font-size: 13px;">
                                         <f:facet name="header">
                                             #
                                         </f:facet>
                                         <h:outputText value="#{rowIndex+1}" />
                                     </p:column>
-                                    <p:column    style="text-align: center;font-size: 15px;">
+                                    <p:column    style="text-align: center;font-size: 13px;">
                                         <f:facet name="header">
                                             Servicio
                                         </f:facet>
-                                        <h:outputText value="#{list.servicio}" />
+                                        <h:outputText value="#{list.servicio.descripcion}" />
                                     </p:column>
-                                    <p:column    style="text-align: center;font-size: 15px;">
+                                    <p:column    style="text-align: center;font-size: 13px;">
                                         <f:facet name="header">
                                             Tipo Servicio
                                         </f:facet>
-                                        <h:outputText value="#{list.tipoServicio}" />
+                                        <h:outputText value="#{list.servicio.tipoServicio.descripcion}" />
                                     </p:column>
-                                    <p:column    style="text-align: center;font-size: 15px;">
+                                    <p:column    style="text-align: center;font-size: 13px;">
                                         <f:facet name="header">
                                             File
                                         </f:facet>
-                                        <h:outputText value="#{list.file}" />
+                                        <h:outputText value="#{list.file.idFile}" />
                                     </p:column>
-                                    <p:column    style="text-align: center;font-size: 15px;">
+                                    <p:column    style="text-align: center;font-size: 13px;">
                                         <f:facet name="header">
                                             PAX
                                         </f:facet>
-                                        <h:outputText value="#{list.pax}" />
+                                        <h:outputText value="#{list.file.pax}" />
                                     </p:column>
-                                    <p:column    style="text-align: center;font-size: 15px;">
+                                    <p:column    style="text-align: center;font-size: 13px;">
                                         <f:facet name="header">
                                             Estado
                                         </f:facet>
                                         <h:outputText value="#{list.estado}" />
                                     </p:column>
-                                    <p:column    style="text-align: center;font-size: 15px;">
+                                    <p:column    style="text-align: center;font-size: 13px;">
+                                        <f:facet name="header">
+                                            Serv. Externo
+                                        </f:facet>
+                                        <h:outputText value="#{list.externalizado}" />
+                                    </p:column>
+                                    <p:column    style="text-align: center;font-size: 13px;">
                                         <f:facet name="header">
                                             Vehiculo
                                         </f:facet>
-                                        <h:outputText value="#{list.vehiculo}" />
+                                        <h:outputText value="#{list.vehiculo.descripcion}" />
                                     </p:column>
-                                    <p:column    style="text-align: center;font-size: 15px;">
+                                    <p:column    style="text-align: center;font-size: 13px;">
                                         <f:facet name="header">
                                             Chofer
                                         </f:facet>
-                                        <h:outputText value="#{list.chofer}" />
+                                        <h:outputText value="#{list.chofer.nombre} #{list.chofer.apellido}" />
                                     </p:column>
                                     <p:column  style="text-align: center;width: 8%;">
-                                        <p:commandButton style="font-size: 12px;" icon="icon-update" action="#{servicioControlador.irActualizar(list.id,list.idTipo)}"    >
+                                        <p:commandButton style="font-size: 12px;" icon="icon-update" action="#{servicioControlador.irActualizar(list.id,list.servicio.tipoServicio.id)}"    >
                                         </p:commandButton>
                                         <p:commandButton style="font-size: 12px;" icon="icon-delete" actionListener="#{servicioControlador.capturarServicioDetalle(list.id)}" oncomplete="PF('deleteperfil').show();"   >
                                             </p:commandButton>

@@ -22,6 +22,7 @@ public class ServicioDetalleTest {
         ServicioDetalleDao servicioDetalleDao = new ServicioDetalleImpl(conexion);
         conexion.beginConexion();
         boolean resultado = servicioDetalleDao.esVehiculoLibre(2,4, Utilitario.parseDate("2015-05-26 18:30","yyyy-MM-dd hh:mm"));
+        conexion.closeConexion();
         Assert.assertEquals(false, resultado);
     }
     
@@ -31,6 +32,7 @@ public class ServicioDetalleTest {
         ServicioDetalleDao servicioDetalleDao = new ServicioDetalleImpl(conexion);
         conexion.beginConexion();
         boolean resultado = servicioDetalleDao.esChoferLibre(1,4, Utilitario.parseDate("2015-05-26 19:30","yyyy-MM-dd hh:mm"));
+        conexion.closeConexion();
         Assert.assertEquals(false, resultado);
     }
 

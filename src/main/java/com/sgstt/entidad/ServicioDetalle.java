@@ -2,9 +2,6 @@ package com.sgstt.entidad;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,8 +10,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -63,6 +58,26 @@ public class ServicioDetalle implements Serializable {
     @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "IDESTADO_SERVICIO", nullable = false)
     private EstadoServicio estadoServicio;
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.JOIN)
+    @JoinColumn(name = "IDVEHICULO", nullable = true)
+    private Vehiculo vehiculo;
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.JOIN)
+    @JoinColumn(name = "IDCHOFER", nullable = true)
+    private Chofer chofer;
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.JOIN)
+    @JoinColumn(name = "IDEMPRESA_CHOFER", nullable = true)
+    private EmpresaChofer empresaChofer;
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.JOIN)
+    @JoinColumn(name = "IDEMPRESA_VEHICULO", nullable = true)
+    private EmpresaVehiculo empresaVehiculo;
 
     @Column(name = "NUM_PERSONAS")
     private Integer nroPersonas;
@@ -83,18 +98,13 @@ public class ServicioDetalle implements Serializable {
     @Column(nullable = false, insertable = false)
     private Estado estado;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "servicio_detalle_has_vehiculo_has_chofer",
-            joinColumns = {
-                @JoinColumn(name = "idservicio_detalle")},
-            inverseJoinColumns = {
-                @JoinColumn(name = "id_vehiculo_has_chofer")})
-    private Set<VehiculoChofer> vehiculosChoferes = new HashSet<>(0);
     
-    @Column
+    @Column(insertable = false)
     private String externalizado;
 
     public ServicioDetalle() {
+        vehiculo = new Vehiculo();
+        chofer = new Chofer();
     }
 
     public Integer getId() {
@@ -169,14 +179,6 @@ public class ServicioDetalle implements Serializable {
         this.estado = estado;
     }
 
-    public Set<VehiculoChofer> getVehiculosChoferes() {
-        return vehiculosChoferes;
-    }
-
-    public void setVehiculosChoferes(Set<VehiculoChofer> vehiculosChoferes) {
-        this.vehiculosChoferes = vehiculosChoferes;
-    }
-
     /**
      * @return the fechaRegistro
      */
@@ -213,4 +215,36 @@ public class ServicioDetalle implements Serializable {
         this.externalizado = externalizado;
     }
 
+    public Vehiculo getVehiculo() {
+        return vehiculo;
+    }
+
+    public void setVehiculo(Vehiculo vehiculo) {
+        this.vehiculo = vehiculo;
+    }
+
+    public Chofer getChofer() {
+        return chofer;
+    }
+
+    public void setChofer(Chofer chofer) {
+        this.chofer = chofer;
+    }
+
+    public EmpresaChofer getEmpresaChofer() {
+        return empresaChofer;
+    }
+
+    public void setEmpresaChofer(EmpresaChofer empresaChofer) {
+        this.empresaChofer = empresaChofer;
+    }
+
+    public EmpresaVehiculo getEmpresaVehiculo() {
+        return empresaVehiculo;
+    }
+
+    public void setEmpresaVehiculo(EmpresaVehiculo empresaVehiculo) {
+        this.empresaVehiculo = empresaVehiculo;
+    }
+    
 }

@@ -9,8 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 /**
  *
@@ -35,14 +33,7 @@ public class EmpresaChofer implements Serializable{
     @Column(name = "DNI")
     private String dni;
     
-    @Column(name = "CELULAR")
-    private String celular;
-    
-    @Column(name = "CORREO")
-    private String correo;
-    
     @ManyToOne(fetch = FetchType.LAZY)
-    @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "empresa_idempresa", nullable = false)
     private Empresa empresa;
 
@@ -79,22 +70,6 @@ public class EmpresaChofer implements Serializable{
 
     public void setDni(String dni) {
         this.dni = dni;
-    }
-
-    public String getCelular() {
-        return celular;
-    }
-
-    public void setCelular(String celular) {
-        this.celular = celular;
-    }
-
-    public String getCorreo() {
-        return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
     }
 
     public Empresa getEmpresa() {

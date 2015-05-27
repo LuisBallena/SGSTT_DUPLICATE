@@ -5,11 +5,9 @@ import com.sgstt.entidad.EstadoServicio;
 import com.sgstt.entidad.File;
 import com.sgstt.entidad.Servicio;
 import com.sgstt.entidad.ServicioDetalle;
-import com.sgstt.entidad.ServicioDetalleDto;
 import com.sgstt.entidad.TipoServicio;
 import com.sgstt.entidad.Trasladista;
 import com.sgstt.entidad.Vehiculo;
-import com.sgstt.entidad.VehiculoChofer;
 import com.sgstt.entidad.Vuelo;
 import com.sgstt.excepciones.TransporteException;
 import com.sgstt.hibernate.HibernatePaginador;
@@ -19,7 +17,6 @@ import com.sgstt.util.Utilitario;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -43,14 +40,12 @@ public class ServicioControlador implements Serializable {
     private List<Trasladista> guias;
     private List<Vuelo> vuelos;
     private List<File> files;
-    private Chofer choferSeleccionado;
-    private Vehiculo vehiculoSeleccionado;
     private Servicio servicioSeleccionado;
     private ServicioDetalle servicioDetalle;
     private Trasladista trasladistaSeleccionado;
     private Vuelo vueloSeleccionado;
     private Date fechaActual;
-    private HibernatePaginador<ServicioDetalleDto> servicioDetallePaginador;
+    private HibernatePaginador<ServicioDetalle> servicioDetallePaginador;
     private Date fechaAuxiliar;
     /*Esta variable es para capturar el mensaje de la excepción, mejorenlo*/
     private String messageException;
@@ -88,14 +83,12 @@ public class ServicioControlador implements Serializable {
                 return;
             }
             Integer id = Integer.valueOf(value.toString());
+            log.info(" el id obtenido es "+id);
             fechaActual = new Date();
             transporteServicio = new TransporteServicio();
             servicios = transporteServicio.obtenerServiciosPorTipoServicio(TipoServicio.TRASLADO);
-            servicioDetalle = transporteServicio.obtenerServicioDetalleConVehiculosChofer(id);
-            VehiculoChofer[] vehiculoChofer = servicioDetalle.getVehiculosChoferes().toArray(new VehiculoChofer[servicioDetalle.getVehiculosChoferes().size()]);
+            servicioDetalle = transporteServicio.obtenerServicioDetalle(id);
             servicioSeleccionado = servicioDetalle.getServicio();
-            choferSeleccionado = vehiculoChofer[0].getChofer();
-            vehiculoSeleccionado = vehiculoChofer[0].getVehiculo();
             trasladistaSeleccionado = (servicioDetalle.getTrasladista() == null ? new Trasladista() : servicioDetalle.getTrasladista());
             vueloSeleccionado = servicioDetalle.getVuelo();
             initCollections();
@@ -112,8 +105,6 @@ public class ServicioControlador implements Serializable {
 
     private void initTraslado() {
         servicioSeleccionado = new Servicio();
-        choferSeleccionado = new Chofer();
-        vehiculoSeleccionado = new Vehiculo();
         trasladistaSeleccionado = new Trasladista();
         vueloSeleccionado = new Vuelo();
     }
@@ -136,7 +127,7 @@ public class ServicioControlador implements Serializable {
         servicioDetalle.setEstadoServicio(servicio);
         servicioDetalle.setVuelo(vueloSeleccionado);
         try {
-            transporteServicio.registrarServicio(servicioDetalle, vehiculoSeleccionado, choferSeleccionado);
+            transporteServicio.registrarServicio(servicioDetalle);
              limpiarTraslado();
         } catch (TransporteException ex) {
             setMessageException(ex.getMessage());
@@ -158,7 +149,7 @@ public class ServicioControlador implements Serializable {
         servicioDetalle.setServicio(servicioSeleccionado);
         servicioDetalle.setTrasladista(trasladistaSeleccionado.getId().intValue() == 0 ? null : trasladistaSeleccionado);
         servicioDetalle.setVuelo(vueloSeleccionado);
-        transporteServicio.actualizarServicio(servicioDetalle, vehiculoSeleccionado, choferSeleccionado);
+        transporteServicio.actualizarServicio(servicioDetalle);
     }
     
     public void eliminarDetalle(){
@@ -196,10 +187,10 @@ public class ServicioControlador implements Serializable {
         } else if (!esNroPersonasValida(servicioDetalle)) {
             Utilitario.enviarMensajeGlobalError("Debe ingresar la cantidad de Personas");
             resultado = false;
-        } else if (!esChoferValido(choferSeleccionado)) {
+        } else if (!esChoferValido(servicioDetalle.getChofer())) {
             Utilitario.enviarMensajeGlobalError("Debe seleccionar un chofer");
             resultado = false;
-        } else if (!esVehiculoValido(vehiculoSeleccionado)) {
+        } else if (!esVehiculoValido(servicioDetalle.getVehiculo())) {
             Utilitario.enviarMensajeGlobalError("Debe seleccionar un vehiculo");
             resultado = false;
         } else if (!esLineaValida(vueloSeleccionado)) {
@@ -269,22 +260,6 @@ public class ServicioControlador implements Serializable {
         this.servicios = servicios;
     }
 
-    public Chofer getChoferSeleccionado() {
-        return choferSeleccionado;
-    }
-
-    public void setChoferSeleccionado(Chofer choferSeleccionado) {
-        this.choferSeleccionado = choferSeleccionado;
-    }
-
-    public Vehiculo getVehiculoSeleccionado() {
-        return vehiculoSeleccionado;
-    }
-
-    public void setVehiculoSeleccionado(Vehiculo vehiculoSeleccionado) {
-        this.vehiculoSeleccionado = vehiculoSeleccionado;
-    }
-
     public Servicio getServicioSeleccionado() {
         return servicioSeleccionado;
     }
@@ -349,14 +324,14 @@ public class ServicioControlador implements Serializable {
         this.fechaActual = fechaActual;
     }
 
-    public HibernatePaginador<ServicioDetalleDto> getServicioDetallePaginador() {
+    public HibernatePaginador<ServicioDetalle> getServicioDetallePaginador() {
         return servicioDetallePaginador;
     }
 
-    public void setServicioDetallePaginador(HibernatePaginador<ServicioDetalleDto> servicioDetallePaginador) {
+    public void setServicioDetallePaginador(HibernatePaginador<ServicioDetalle> servicioDetallePaginador) {
         this.servicioDetallePaginador = servicioDetallePaginador;
     }
-
+    
     public String getMessageException() {
         return messageException;
     }

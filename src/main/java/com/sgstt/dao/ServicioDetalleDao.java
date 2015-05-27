@@ -9,8 +9,6 @@ import java.util.Date;
  */
 public interface ServicioDetalleDao extends GenericDao<ServicioDetalle,Integer>{
     
-    public ServicioDetalle obtenerServicioDetallesConVehiculoChofer(Integer id);
-    
     public boolean esVehiculoLibre(Integer idVehiculo, int cantidadHoraPlazo, Date fecha);
     
     public boolean esChoferLibre(Integer idChofer, int cantidadHoraPlazo, Date fecha);

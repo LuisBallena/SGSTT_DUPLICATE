@@ -57,14 +57,14 @@
                                         <div class="form-group has-feedback">
                                             <label class="col-md-2 control-label" >Chofer :</label>
                                             <div class="col-md-3">
-                                                <h:selectOneMenu styleClass="form-control" value="#{servicioControlador.choferSeleccionado.id}">
+                                                <h:selectOneMenu styleClass="form-control" value="#{servicioControlador.servicioDetalle.chofer.id}">
                                                     <f:selectItem itemLabel="Seleccionar" itemValue="0" />
                                                     <f:selectItems value="#{servicioControlador.choferes}" var="choferes" itemLabel="#{choferes.nombre} #{choferes.apellido}" itemValue="#{choferes.id}" />
                                                 </h:selectOneMenu>
                                             </div>
                                             <label  class="col-md-2 control-label" >Vehiculo :</label>
                                             <div class="col-md-3">
-                                                <h:selectOneMenu styleClass="form-control" value="#{servicioControlador.vehiculoSeleccionado.id}">
+                                                <h:selectOneMenu styleClass="form-control" value="#{servicioControlador.servicioDetalle.vehiculo.id}">
                                                     <f:selectItem itemLabel="Seleccionar" itemValue="0" />
                                                     <f:selectItems value="#{servicioControlador.vehiculos}" var="vehiculos" itemLabel="#{vehiculos.descripcion}" itemValue="#{vehiculos.id}" />
                                                 </h:selectOneMenu>
