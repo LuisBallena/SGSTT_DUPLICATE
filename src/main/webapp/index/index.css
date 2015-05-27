@@ -1,0 +1,38 @@
+/* ::::: http://translivik.com/public/librerias/lib_jAlert/jquery.alerts.css ::::: */
+
+/* ::::: http://translivik.com/public/librerias/fotos_album/nivo-slider/themes/default/default.css ::::: */
+
+/* ::::: http://translivik.com/public/librerias/fotos_album/nivo-slider/nivo-slider.css ::::: */
+
+/* ::::: http://translivik.com/public/librerias/fotos_album/nivo-slider/demo/style.css ::::: */
+
+blockquote::before, blockquote::after, q::before, q::after { content: ""; }
+a, a:visited { color: blue; text-decoration: none; }
+a:hover, a:active { color: rgb(0, 0, 0); text-decoration: none; }
+/* ::::: http://translivik.com/public/css/pagina.css ::::: */
+
+html, body, h4, h3, h2, h1 { height: 95%; width: 100%; font-family: Arial; margin: 0px; padding: 0px; font-size: 13px; background-color: rgb(0, 0, 0); }
+a { text-decoration: none; }
+#general { width: 100%; height: 100%; overflow: hidden; background-color: rgb(243, 243, 243); }
+#arriba { height: 2%; background-color: rgb(0, 0, 0); }
+#menus_header { overflow: hidden; width: 100%; background-color: rgb(243, 243, 243); margin-bottom: 20px; }
+#c_m_h { margin-left: 120px; margin-right: 0px; overflow: hidden; border-bottom: 2px solid rgb(102, 102, 102); }
+#logo { float: left; width: 300px; height: 90px; padding-top: 30px; border: 0px solid green; }
+#menus { float: right; height: 100px; width: 580px; padding-top: 20px; padding-left: 10px; padding-right: 130px; background-color: rgb(243, 243, 243); border: 0px solid green; }
+.submenus { text-decoration: none; }
+img { border-width: 0px; }
+#cuerpo { background-color: rgb(243, 243, 243); text-align: center; padding-top: 0px; padding-bottom: 0px; overflow: hidden; margin: 0px auto; width: 1150px; border: 0px solid red; }
+#footer { margin-top: auto; background-color: rgb(0, 0, 0); height: 10%; color: rgb(255, 255, 255); text-align: center; padding-top: 0px; border: 0px solid red; }
+.btnEnviar, a {  }
+#scrollbar1 { width: 98%; }
+#scrollbar1 .viewport { overflow: hidden; width: 1150px; height: 480px; position: relative; padding-left: 0px; margin-right: 0px; }
+#scrollbar1 .overview { list-style: outside none none; position: absolute; left: 0px; top: 0px; padding: 0px; margin: 0px; }
+#scrollbar1 .scrollbar { background: transparent url('bg-scrollbar-track-yg.png') no-repeat scroll 0px 0px; position: relative; float: right; width: 15px; }
+#scrollbar1 .track { background: transparent url('bg-scrollbar-trackend-y.png') no-repeat scroll 0px 100%; height: 100%; width: 10px; position: relative; padding: 0px 1px; }
+#scrollbar1 .thumb { background: transparent url('bg-scrollbar-thumb-y.png') no-repeat scroll 50% 100%; height: 20px; width: 18px; cursor: pointer; overflow: hidden; position: absolute; top: 0px; left: -5px; }
+#scrollbar1 .thumb .end { background: transparent url('bg-scrollbar-thumb-y.png') no-repeat scroll 50% 0px; overflow: hidden; height: 5px; width: 18px; }
+#scrollbar1 .disable { display: none; }
+/* ::::: http://translivik.com/public/css/tooltip_mz.css ::::: */
+
+.tt-wrapper th a span::before, .tt-wrapper th a span::after { content: ""; position: absolute; bottom: -15px; left: 50%; margin-left: -9px; width: 0px; height: 0px; border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 10px solid rgba(0, 0, 0, 0.1); }
+.tt-wrapper a span::after { bottom: -14px; margin-left: -10px; border-top: 10px solid rgb(255, 255, 255); }
