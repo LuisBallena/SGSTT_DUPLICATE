@@ -19,6 +19,14 @@
     background-image: url("#{resource['images/button_cancel.gif']}");
 }
 
+.ui-state-default .icon-money{
+    background-image: url("#{resource['images/money.gif']}");
+}
+
+.ui-state-default .icon-file{
+    background-image: url("#{resource['images/file.gif']}");
+}
+
 .input-disable{
     background-color: #f5f5f5;
     border: 1px solid #ccc;

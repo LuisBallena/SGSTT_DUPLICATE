@@ -87,11 +87,15 @@
                                         </f:facet>
                                         <h:outputText value="#{list.chofer.nombre} #{list.chofer.apellido}" />
                                     </p:column>
-                                    <p:column  style="text-align: center;width: 8%;">
+                                    <p:column  style="text-align: center;width: 8%;">                                      
+                                        <p:commandButton style="font-size: 12px;" icon="icon-file" actionListener="#{servicioControlador.capturarServicioDetalle(list.id)}" action="#{servicioControlador.irDetalles(list.id,list.servicio.tipoServicio.id)}"    >
+                                        </p:commandButton>
                                         <p:commandButton style="font-size: 12px;" icon="icon-update" action="#{servicioControlador.irActualizar(list.id,list.servicio.tipoServicio.id)}"    >
                                         </p:commandButton>
+                                        <p:commandButton style="font-size: 12px;" icon="icon-money" action="#{servicioControlador.irActualizar(list.id,list.servicio.tipoServicio.id)}"    >
+                                        </p:commandButton>
                                         <p:commandButton style="font-size: 12px;" icon="icon-delete" actionListener="#{servicioControlador.capturarServicioDetalle(list.id)}" oncomplete="PF('deleteperfil').show();"   >
-                                            </p:commandButton>
+                                        </p:commandButton>
                                     </p:column>
                                 </p:dataTable> 
                             </h:form>    

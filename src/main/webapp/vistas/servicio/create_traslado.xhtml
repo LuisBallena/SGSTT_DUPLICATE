@@ -72,20 +72,6 @@
                                             </div>
                                         </div>
                                         <div class="form-group has-feedback">
-                                            <label class="col-md-2 control-label" >Linea :</label>
-                                            <div class="col-md-3">
-                                                <h:selectOneMenu styleClass="form-control" value="#{servicioControlador.vueloSeleccionado.id}">
-                                                    <f:selectItem itemLabel="Seleccionar" itemValue="0" />
-                                                    <f:selectItems value="#{servicioControlador.vuelos}" var="vuelos" itemLabel="#{vuelos.descripcion}" itemValue="#{vuelos.id}" />
-                                                </h:selectOneMenu>
-                                            </div>
-                                            <label  class="col-md-2 control-label" >Destino :</label>
-                                            <div class="col-md-3">
-                                                <p:inputText styleClass="form-control"   >
-                                                </p:inputText>
-                                            </div>
-                                        </div>
-                                        <div class="form-group has-feedback">
                                             <h:panelGroup id="cliente">
                                                 <label class="col-md-2 control-label" >File :</label>
                                                 <div  style="padding-right: 0px;"  class="col-xs-11 col-md-2" >
@@ -106,6 +92,15 @@
                                                     </p>
                                                 </div>
                                             </h:panelGroup>
+                                        </div>
+                                         <div class="form-group has-feedback">
+                                            <label class="col-md-2 control-label" >Vuelo :</label>
+                                            <div class="col-md-3">
+                                                <h:selectOneMenu styleClass="form-control" value="#{servicioControlador.vueloSeleccionado.id}">
+                                                    <f:selectItem itemLabel="Seleccionar" itemValue="0" />
+                                                    <f:selectItems value="#{servicioControlador.vuelos}" var="vuelos" itemLabel="#{vuelos.descripcion}" itemValue="#{vuelos.id}" />
+                                                </h:selectOneMenu>
+                                            </div> 
                                         </div>
                                         <div class="col-sm-3 control-label">
                                             <p:commandButton value="Guardar" actionListener="#{servicioControlador.registrarDetalle}"  styleClass="btn btn-primary" update="@form :DialogMessage" oncomplete="handleLoginRequest(xhr, status, args)" >

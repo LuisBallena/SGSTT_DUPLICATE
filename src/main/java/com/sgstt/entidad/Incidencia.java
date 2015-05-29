@@ -26,6 +26,8 @@ import org.hibernate.annotations.FetchMode;
 @Entity
 @Table
 public class Incidencia implements Serializable{
+	
+	 private static final long serialVersionUID = 165099556331434992L;
     
     @Id
     @GeneratedValue
