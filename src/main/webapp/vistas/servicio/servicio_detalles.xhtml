@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="./../home.xhtml">
+
+    <ui:define name="content">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header">Servicio Detallado</h3>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <h4 style="color: #2980b9;">Información General</h4>
+                            <div class="form-horizontal" >
+                                <div class="form-group" style="margin-bottom: 0px;" >
+                                    <label class="control-label col-xs-12 col-md- col-sm-2" style="text-align: left;">Correlativo File :</label>
+                                    <p class="form-control-static col-xs-12 col-sm-10" >#{servicioControlador.servicioDetalle.empleado.nombre}</p>
+                                </div>
+                                <div class="form-group" style="margin-bottom: 0px;">
+                                    <label class="control-label col-xs-12 col-sm-2" style="text-align: left;" >Tipo Servicio :</label>
+                                    <p class="form-control-static col-xs-12 col-sm-10"  >#{servicioControlador.servicioDetalle.tipoServicio.descripcion}</p>
+                                </div>
+                                <div class="form-group" style="margin-bottom: 0px;">
+                                    <label class="control-label col-xs-12 col-sm-2" style="text-align: left;" >Servicio :</label>
+                                    <p class="form-control-static col-xs-12 col-sm-10"  >#{servicioControlador.servicioDetallePaginador.servicio.descripcion}</p>
+                                </div>
+<!--                                 <div class="form-group" style="margin-bottom: 0px;"> -->
+<!--                                     <label class="control-label col-xs-12 col-sm-2" style="text-align: left;" >Numero Personas :</label> -->
+<!--                                     <p class="form-control-static col-xs-12 col-sm-10">#{servicioControlador.servicioDetallePaginador.servicio.descripcion}</p> -->
+<!--                                 </div> -->
+<!--                                 <div class="form-group" style="margin-bottom: 0px;"> -->
+<!--                                     <label class="control-label col-xs-12 col-sm-2" style="text-align: left;" >Fecha Servicio :</label> -->
+<!--                                     <p class="form-control-static col-xs-12 col-sm-10"  >#{servicioControlador.servicioDetallePaginador.servicio.descripcion}</p> -->
+<!--                                 </div> -->
+<!--                                 <div class="form-group" style="margin-bottom: 0px;"> -->
+<!--                                     <label class="control-label col-xs-12 col-sm-2" style="text-align: left;" >Estado :</label> -->
+<!--                                     <p class="form-control-static col-xs-12 col-sm-10"  >#{servicioControlador.servicioDetallePaginador.servicio.descripcion}</p> -->
+<!--                                 </div> -->
+<!--                                 <div class="form-group" style="margin-bottom: 0px;"> -->
+<!--                                     <label class="control-label col-xs-12 col-sm-2" style="text-align: left;" >Vuelo :</label> -->
+<!--                                     <p class="form-control-static col-xs-12 col-sm-10"  >#{servicioControlador.servicioDetallePaginador.servicio.descripcion}</p> -->
+<!--                                 </div> -->
+<!--                                 <div class="form-group" style="margin-bottom: 0px;"> -->
+<!--                                     <label class="control-label col-xs-12 col-sm-2" style="text-align: left;" >Horario de Vuelo :</label> -->
+<!--                                     <p class="form-control-static col-xs-12 col-sm-10"  >#{servicioControlador.servicioDetallePaginador.servicio.descripcion}</p> -->
+<!--                                 </div> -->
+<!--                                 <div class="form-group" style="margin-bottom: 0px;"> -->
+<!--                                     <label class="control-label col-xs-12 col-sm-2" style="text-align: left;" >Chofer :</label> -->
+<!--                                     <p class="form-control-static col-xs-12 col-sm-10"  >#{servicioControlador.servicioDetallePaginador.servicio.descripcion}</p> -->
+<!--                                 </div> -->
+<!--                                 <div class="form-group" style="margin-bottom: 0px;"> -->
+<!--                                     <label class="control-label col-xs-12 col-sm-2" style="text-align: left;" >Vehiculo :</label> -->
+<!--                                     <p class="form-control-static col-xs-12 col-sm-10"  >#{servicioControlador.servicioDetallePaginador.servicio.descripcion}</p> -->
+<!--                                 </div> -->
+<!--                                 <div class="form-group" style="margin-bottom: 0px;"> -->
+<!--                                     <label class="control-label col-xs-12 col-sm-2" style="text-align: left;" >Trasladista :</label> -->
+<!--                                     <p class="form-control-static col-xs-12 col-sm-10"  >#{servicioControlador.servicioDetallePaginador.servicio.descripcion}</p> -->
+<!--                                 </div> -->
+<!--                             </div> -->                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       </div>
+    </ui:define>
+
+</ui:composition>
