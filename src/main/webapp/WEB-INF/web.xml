@@ -36,7 +36,7 @@
         <filter-class>com.sgstt.seguridad.SesionFilter</filter-class>
         <init-param>
             <param-name>urlLoginSGSTT</param-name>
-            <param-value>index.xhtml</param-value>
+            <param-value>index/index.xhtml</param-value>
         </init-param>
     </filter>
     <filter-mapping>
@@ -51,7 +51,7 @@
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
-    <!-- FIN DE FILTRO SESION -->
+    <!-- FIN DE FILTRO SESION -->x
     <welcome-file-list>
         <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>
