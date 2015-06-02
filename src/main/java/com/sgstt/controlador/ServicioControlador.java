@@ -47,7 +47,7 @@ public class ServicioControlador implements Serializable {
     private Date fechaActual;
     private HibernatePaginador<ServicioDetalle> servicioDetallePaginador;
     private Date fechaAuxiliar;
-    /*Esta variable es para capturar el mensaje de la excepción, mejorenlo*/
+    /*Esta variable es para capturar el mensaje de la excepciÃ³n, mejorenlo*/
     private String messageException;
 
     public ServicioControlador() {
@@ -94,27 +94,7 @@ public class ServicioControlador implements Serializable {
             initCollections();
         }
     }
-    
-    public void initUpdateDetalle() {
-        if (!FacesContext.getCurrentInstance().isPostback()) {
-            Object value = Utilitario.getFlash("idServicioDetalle");
-            if (value == null) {
-                Utilitario.redireccionarJSF(FacesContext.getCurrentInstance(), "/vistas/servicio/list.xhtml");
-                return;
-            }
-            Integer id = Integer.valueOf(value.toString());
-            log.info(" el id obtenido es "+id);
-            fechaActual = new Date();
-            transporteServicio = new TransporteServicio();
-            servicios = transporteServicio.obtenerServiciosPorTipoServicio(TipoServicio.TRASLADO);
-            servicioDetalle = transporteServicio.obtenerServicioDetalle(id);
-            servicioSeleccionado = servicioDetalle.getServicio();
-            trasladistaSeleccionado = (servicioDetalle.getTrasladista() == null ? new Trasladista() : servicioDetalle.getTrasladista());
-            vueloSeleccionado = servicioDetalle.getVuelo();
-            initCollections();
-        }
-    }
-    
+
     private void initCollections() {
         choferes = transporteServicio.obtenerChoferes();
         vehiculos = transporteServicio.obtenerVehiculos();
@@ -131,10 +111,6 @@ public class ServicioControlador implements Serializable {
 
     public void capturarFile(File file) {
         servicioDetalle.setFile(file);
-    }
-    
-    public void capturarVuelo(Vuelo vuelo) {
-        servicioDetalle.setVuelo(vuelo);
     }
 
     public void registrarDetalle() {
@@ -185,28 +161,6 @@ public class ServicioControlador implements Serializable {
         switch (idTipoServicio) {
             case TipoServicio.TRASLADO:
                 pagina = "update_traslado.xhtml?faces-redirect=true;";
-                break;
-        }
-        Utilitario.putFlash("idServicioDetalle", id);
-        return pagina;
-    }
-    
-    public String irFacturar(Integer id, Integer idTipoServicio) {
-        String pagina = "";
-        switch (idTipoServicio) {
-            case TipoServicio.TRASLADO:
-                pagina = "servicio_facturar.xhtml?faces-redirect=true;";
-                break;
-        }
-        Utilitario.putFlash("idServicioDetalle", id);
-        return pagina;
-    }
-    
-    public String irDetalles(Integer id, Integer idTipoServicio) {
-        String pagina = "";
-        switch (idTipoServicio) {
-            case TipoServicio.TRASLADO:
-                pagina = "servicio_detalles.xhtml?faces-redirect=true;";
                 break;
         }
         Utilitario.putFlash("idServicioDetalle", id);

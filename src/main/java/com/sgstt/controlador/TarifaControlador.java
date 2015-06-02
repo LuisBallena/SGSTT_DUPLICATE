@@ -116,19 +116,16 @@ public class TarifaControlador implements Serializable {
          if (Utilitario.esNulo(tarifa.getHoras())) {
             Utilitario.enviarMensajeGlobalError("Debe ingresar las horas");
             resultado = false; }
-        
-         else if (Utilitario.esNulo(tarifa.getDescripcion())) {
-            Utilitario.enviarMensajeGlobalError("Debe ingresar descripción");
-            resultado = false;
-        }
-          else if (!Utilitario.esRangoValido(tarifa.getDescripcion(), 10)) {
+         
+         else if (!Utilitario.esSoloNumero(tarifa.getHoras())) {
+             Utilitario.enviarMensajeGlobalError("Horas solo pueden ser numeros");
+             resultado = false;
+         }
+         if (!Utilitario.esNulo(tarifa.getDescripcion()) && !Utilitario.esRangoValido(tarifa.getDescripcion(), 15)) {
             Utilitario.enviarMensajeGlobalError("El rango maximo de la descripcion es de 10 caracteres");
             resultado = false;
         }
-        else if (!Utilitario.esSoloNumero(tarifa.getHoras())) {
-            Utilitario.enviarMensajeGlobalError("Horas solo pueden ser numeros");
-            resultado = false;
-        }
+        
         return resultado;
     }
 

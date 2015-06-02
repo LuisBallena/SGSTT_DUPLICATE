@@ -74,6 +74,7 @@ public class CotizacionServicio {
         conexion.beginConexion();
         tarifa.setFechaRegistro(new Date());
         tarifa.setFechaModificacion(new Date());
+        tarifa.setDescripcion("Sin Descripción");
         tarifaDao.agregar(tarifa);
         Utilitario.enviarMensajeGlobalValido("Se ha registrado correctamente");
         conexion.closeConexion();
