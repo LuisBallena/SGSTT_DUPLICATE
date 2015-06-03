@@ -2409,8 +2409,8 @@ textarea.input-group-sm>.form-control,textarea.input-group-sm>.input-group-addon
         margin-left: 0}
 }
 .navbar-static-top {
-    background-color: #0d594a;
-    background: url("#{resource['images/header-profile-new.png']}") repeat}
+    background-color: #000;    
+}
 @media (min-width: 768px) {
     .navbar-static-top {
         border-radius: 0}
@@ -2601,8 +2601,7 @@ textarea.input-group-sm>.form-control,textarea.input-group-sm>.input-group-addon
         margin-right: 0}
 }
 .navbar-default {
-      background-color: #222;
-    
+      background-color: #F3F3F3;    
 }
 .navbar-default .navbar-brand {
     color: #777}
