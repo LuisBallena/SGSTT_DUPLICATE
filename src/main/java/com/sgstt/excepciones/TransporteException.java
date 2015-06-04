@@ -1,9 +1,5 @@
 package com.sgstt.excepciones;
 
-/**
- *
- * @author Luis Alonso Ballena Garcia
- */
 public class TransporteException extends Exception{
     private static final long serialVersionUID = 1814329686846784976L;
     

@@ -1,0 +1,29 @@
+#tabla table .ui-state-default{
+    background-image: none;
+    background-color:  #30A88F;
+    border-radius: 0px;
+    text-shadow: none;
+    color: #FFF;
+}
+#tabla table .ui-chkbox-box, #tabla table .ui-button{
+    background-color:  #CFC9C9;
+}
+.ui-datatable{
+    font-family: inherit;
+    font-size: 18px;    
+}
+.ui-datatable thead th{
+    overflow: visible;
+}
+
+/* esto no es primefaces*/
+.active, #side-menu a:hover{
+    font-weight: bold;
+}
+
+#side-menu a:hover, a{
+    color: #30A88F;
+}
+i {
+    color: #127d67;
+}
