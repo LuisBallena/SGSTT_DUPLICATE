@@ -3,18 +3,32 @@ package com.sgstt.controlador;
 
 import com.sgstt.entidad.Cliente;
 import com.sgstt.entidad.File;
+import com.sgstt.hibernate.HibernateConexion;
 import com.sgstt.hibernate.HibernatePaginador;
 import com.sgstt.paginacion.FilePaginador;
 import com.sgstt.servicios.FileServicio;
 import com.sgstt.util.Utilitario;
+import java.io.OutputStream;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.util.JRLoader;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.log4j.Logger;
+import org.hibernate.internal.SessionImpl;
 
 /**
  *
@@ -79,9 +93,46 @@ public class FileControlador implements Serializable{
         limpiar();
     }
     
+    public void exportarFactura(Integer id){
+        /* tu lo modificias como quieras para que sea un codigo mas limpio :D */
+        String realPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
+        String rutaJasper = String.format("%sresources\\reports\\factura.jasper",realPath);
+        log.info("La ruta final es : "+rutaJasper);
+        Map map = new HashMap();
+        map.put("IDFILE",id);
+        JasperReport reporte;
+        try {
+            reporte = (JasperReport) JRLoader.loadObjectFromFile(rutaJasper);
+            HibernateConexion conexion = new HibernateConexion();
+            conexion.beginConexion();
+            JasperPrint jprint = JasperFillManager.fillReport(reporte, map, ((SessionImpl)(conexion.getSession())).connection());
+            conexion.closeConexion();
+            FacesContext context = FacesContext.getCurrentInstance();
+            ExternalContext externalContext = context.getExternalContext();
+            externalContext = getResponseContentPdf(externalContext, "factura");
+            OutputStream outputStream = externalContext.getResponseOutputStream();
+            JasperExportManager.exportReportToPdfStream(jprint, outputStream);
+            externalContext.setResponseStatus(200);
+            externalContext.responseFlushBuffer();
+            context.responseComplete();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+    }
+    
     private void limpiar(){
         file = new File();
         clienteSeleccionado = new Cliente();
+    }
+    
+    private ExternalContext getResponseContentPdf(ExternalContext externalContext, String nombreArchivo){
+        externalContext.setResponseContentType("application/pdf");
+        externalContext.setResponseHeader("Expires", "0");
+        externalContext.setResponseHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+        externalContext.setResponseHeader("Pragma", "public");
+        externalContext.setResponseHeader("Content-Disposition", "attachment; filename=" + nombreArchivo + ".pdf");
+        return externalContext;
     }
     
     public void actualizarFile(){
