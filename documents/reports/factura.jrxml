@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="factura" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="61ec99cb-d6c8-4700-a209-1e1918af79fc">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="IDFILE" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT FILE.NRO_CORRELATIVO,SERVICE.DESCRIPCION,TAR.PRECIO FROM FILE AS FILE
+INNER JOIN SERVICIO_DETALLE AS DETALLE ON FILE.IDFILE = DETALLE.IDFILE
+INNER JOIN SERVICIO AS SERVICE ON DETALLE.IDSERVICIO = SERVICE.IDSERVICIO
+INNER JOIN TARIFA AS TAR ON TAR.IDSERVICIO = SERVICE.IDSERVICIO
+WHERE FILE.IDFILE = $P{IDFILE}
+ORDER BY FILE.NRO_CORRELATIVO]]>
+	</queryString>
+	<field name="NRO_CORRELATIVO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DESCRIPCION" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PRECIO" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="costo_total_sin_igv" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{PRECIO}]]></variableExpression>
+	</variable>
+	<variable name="total_igv" class="java.lang.Double">
+		<variableExpression><![CDATA[$V{costo_total_sin_igv} + ($V{costo_total_sin_igv}*0.2)]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="33" splitType="Stretch">
+			<staticText>
+				<reportElement x="153" y="9" width="132" height="20" uuid="34c5e434-4367-4858-9344-542fdf854840"/>
+				<textElement>
+					<font fontName="Arial" size="16" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[FACTURA - FILE]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="285" y="9" width="100" height="20" uuid="659f2153-73be-498f-9978-ecc4b30411eb"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NRO_CORRELATIVO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="153" height="20" uuid="8dfb2a59-f621-41af-8565-e9b91c5d976f"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Servicio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="153" y="0" width="100" height="20" uuid="abc357cb-e973-4f9c-bb6c-d3f48ae6ac7f"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Costo (Sin IGV)]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="153" height="20" uuid="c2439646-6878-47aa-b970-84967e5b3647"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{DESCRIPCION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="153" y="0" width="100" height="20" uuid="8c4f76d8-6cc4-4919-ac87-2769dda04e35"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{PRECIO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="48" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="47" splitType="Stretch">
+			<staticText>
+				<reportElement x="53" y="7" width="100" height="20" uuid="8fe5a6e9-dd82-4396-8194-092da0992bf4"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total (Sin IGV)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="53" y="27" width="100" height="20" uuid="89b0f669-9cb7-4857-a4c3-8debd6d95f82"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total (Con IGV)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="153" y="7" width="100" height="20" uuid="7df92faa-3035-415e-be1c-dc4611eedc1e"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{costo_total_sin_igv}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="153" y="27" width="100" height="20" uuid="30dfc1a9-70f6-4047-92b8-01ba257c5a74"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total_igv}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="0" width="253" height="1" uuid="3a3eb961-82af-42ac-87ce-45b5ef788422"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>
