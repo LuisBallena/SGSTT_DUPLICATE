@@ -97,7 +97,7 @@
                                         <f:facet name="header">
                                             Trasladista
                                         </f:facet>
-                                        <h:outputText value="#{list.chofer.nombre} #{list.trasladista.apellido}" />
+                                        <h:outputText value="#{list.trasladista.nombre} #{list.trasladista.apellido}" />
                                     </p:column>
                                     <p:column  style="text-align: center;width: 8%;">                                      
                                         <p:commandButton style="font-size: 12px;" icon="icon-file" actionListener="#{servicioControlador.capturarServicioDetalle(list.id)}" action="#{servicioControlador.irDetalles(list.id,list.servicio.tipoServicio.id)}"    >
