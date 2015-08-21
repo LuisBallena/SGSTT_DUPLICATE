@@ -48,6 +48,7 @@ CREATE  TABLE IF NOT EXISTS `SGSTT`.`chofer` (
   `apellido` VARCHAR(45) NULL ,
   `dni` VARCHAR(45) NULL ,
   `categoria` VARCHAR(45) NULL ,
+  `ESTADO` TINYINT(1) NOT NULL DEFAULT 1 ,
   PRIMARY KEY (`idchofer`) )
 ENGINE = InnoDB;
 
@@ -176,8 +177,9 @@ DROP TABLE IF EXISTS `SGSTT`.`servicio` ;
 
 CREATE  TABLE IF NOT EXISTS `SGSTT`.`servicio` (
   `idservicio` INT NOT NULL AUTO_INCREMENT ,
-  `origen` VARCHAR(45) NULL ,
-  `destino` VARCHAR(45) NULL ,
+  `origen` VARCHAR(100) NULL ,
+  `destino` VARCHAR(100) NULL ,
+  `zona` VARCHAR(45) NULL ,
   `descripcion` VARCHAR(45) NULL ,
   `idtipo_servicio` INT NOT NULL ,
   PRIMARY KEY (`idservicio`) ,
@@ -458,10 +460,10 @@ CREATE  TABLE IF NOT EXISTS `SGSTT`.`servicio_detalle` (
   INDEX `fk_servicio_detalle_vuelo1_idx` (`idvuelo` ASC) ,
   INDEX `fk_servicio_detalle_File1_idx` (`idFile` ASC) ,
   INDEX `fk_servicio_detalle_estado_servicio1_idx` (`idestado_servicio` ASC) ,
-  INDEX `fk_servicio_detalle_chofer1` (`idchofer` ASC) ,
-  INDEX `fk_servicio_detalle_vehiculo1` (`idvehiculo` ASC) ,
-  INDEX `fk_servicio_detalle_empresa_chofer1` (`idempresa_chofer` ASC) ,
-  INDEX `fk_servicio_detalle_empresa_vehiculo1` (`idempresa_vehiculo` ASC) ,
+  INDEX `fk_servicio_detalle_chofer1_idx` (`idchofer` ASC) ,
+  INDEX `fk_servicio_detalle_vehiculo1_idx` (`idvehiculo` ASC) ,
+  INDEX `fk_servicio_detalle_empresa_chofer1_idx` (`idempresa_chofer` ASC) ,
+  INDEX `fk_servicio_detalle_empresa_vehiculo1_idx` (`idempresa_vehiculo` ASC) ,
   CONSTRAINT `fk_servicio_detalle_trasladista1`
     FOREIGN KEY (`idtrasladista` )
     REFERENCES `SGSTT`.`trasladista` (`idtrasladista` )
@@ -523,22 +525,23 @@ DROP TABLE IF EXISTS `SGSTT`.`incidencia` ;
 CREATE  TABLE IF NOT EXISTS `SGSTT`.`incidencia` (
   `idincidencia` INT NOT NULL ,
   `descripcion` VARCHAR(45) NULL ,
-  `estado_incidencia_idestado_incidencia` INT NOT NULL ,
-  `tipo_incidencia_idtipo_incidencia` INT NOT NULL ,
+  `idestado_incidencia` INT NOT NULL ,
+  `idtipo_incidencia` INT NOT NULL ,
   `idservicio_detalle` INT NOT NULL ,
   `FECHA_REGISTRO` DATETIME NOT NULL ,
   `FECHA_MODIFICACION` DATETIME NOT NULL ,
+  `ESTADO` TINYINT(2) NULL DEFAULT '1' ,
   PRIMARY KEY (`idincidencia`, `idservicio_detalle`) ,
-  INDEX `fk_incidencia_tipo_incidencia1_idx` (`tipo_incidencia_idtipo_incidencia` ASC) ,
-  INDEX `fk_incidencia_estado_incidencia1_idx` (`estado_incidencia_idestado_incidencia` ASC) ,
+  INDEX `fk_incidencia_tipo_incidencia1_idx` (`idtipo_incidencia` ASC) ,
+  INDEX `fk_incidencia_estado_incidencia1_idx` (`idestado_incidencia` ASC) ,
   INDEX `fk_incidencia_servicio_detalle1_idx` (`idservicio_detalle` ASC) ,
   CONSTRAINT `fk_incidencia_tipo_incidencia1`
-    FOREIGN KEY (`tipo_incidencia_idtipo_incidencia` )
+    FOREIGN KEY (`idtipo_incidencia` )
     REFERENCES `SGSTT`.`tipo_incidencia` (`idtipo_incidencia` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_incidencia_estado_incidencia1`
-    FOREIGN KEY (`estado_incidencia_idestado_incidencia` )
+    FOREIGN KEY (`idestado_incidencia` )
     REFERENCES `SGSTT`.`estado_incidencia` (`idestado_incidencia` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
@@ -660,6 +663,18 @@ COMMIT;
 START TRANSACTION;
 USE `SGSTT`;
 INSERT INTO `SGSTT`.`trasladista` (`idtrasladista`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (0001, 'Juan', 'Sotelo', '44598764', 'J r Laroc', 'cjjccckl', '7437434', '987654345', 1);
+INSERT INTO `SGSTT`.`trasladista` (`idtrasladista`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (0002, 'Manuel', 'Saravia', '12547698', 'Arequipa 45', 'cfdfdsf', '5457854', '965874123', 1);
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `SGSTT`.`chofer`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `SGSTT`;
+INSERT INTO `SGSTT`.`chofer` (`idchofer`, `nombre`, `apellido`, `dni`, `categoria`, `ESTADO`) VALUES (1, 'Ruben', 'Ramirezz', '72502828', 'A1', 1);
+INSERT INTO `SGSTT`.`chofer` (`idchofer`, `nombre`, `apellido`, `dni`, `categoria`, `ESTADO`) VALUES (2, 'Oscar', 'Mendivil', '09876543', 'A2', 1);
+INSERT INTO `SGSTT`.`chofer` (`idchofer`, `nombre`, `apellido`, `dni`, `categoria`, `ESTADO`) VALUES (3, 'Robert', 'Manrique', '12457896', 'A3', 1);
 
 COMMIT;
 
@@ -680,6 +695,17 @@ START TRANSACTION;
 USE `SGSTT`;
 INSERT INTO `SGSTT`.`tipo_vehiculo` (`idtipo_vehiculo`, `nombre`, `capacidad`) VALUES (1, 'SPRINTER L.', 20);
 INSERT INTO `SGSTT`.`tipo_vehiculo` (`idtipo_vehiculo`, `nombre`, `capacidad`) VALUES (2, 'MINI-BUS', 10);
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `SGSTT`.`vehiculo`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `SGSTT`;
+INSERT INTO `SGSTT`.`vehiculo` (`idvehiculo`, `descripcion`, `placa`, `ESTADO`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (1, 'VAN-H1', '123-agb', 1, '2010', '12', '10', 'negro', 1, 1, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `SGSTT`.`vehiculo` (`idvehiculo`, `descripcion`, `placa`, `ESTADO`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (2, 'Sprinter-2', 'abc-789', 1, '2012', '40', '36', 'plata', 1, 1, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `SGSTT`.`vehiculo` (`idvehiculo`, `descripcion`, `placa`, `ESTADO`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (3, 'Bus-3', '345-ret', 1, '2009', '50', '45', NULL, 1, 1, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
 
 COMMIT;
 
@@ -709,9 +735,29 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `SGSTT`;
-INSERT INTO `SGSTT`.`servicio` (`idservicio`, `origen`, `destino`, `descripcion`, `idtipo_servicio`) VALUES (1, 'Aeropuerto', 'Lima', 'APTO - LIMA', 1);
-INSERT INTO `SGSTT`.`servicio` (`idservicio`, `origen`, `destino`, `descripcion`, `idtipo_servicio`) VALUES (2, 'Aeropuerto', 'Miraflores', 'APTO - MIRAFLORES', 1);
-INSERT INTO `SGSTT`.`servicio` (`idservicio`, `origen`, `destino`, `descripcion`, `idtipo_servicio`) VALUES (3, 'Aeropuerto', 'San Isidro', 'APTO - SAN ISIDRO', 2);
+INSERT INTO `SGSTT`.`servicio` (`idservicio`, `origen`, `destino`, `zona`, `descripcion`, `idtipo_servicio`) VALUES (1, 'Aeropuerto Internacional Jorge Chávez, s/n Av Elmer Faucett, Callao', 'Hotel Sheraton, Av Paseo de la República 170, Lima Lima 1', 'LIMA', 'APTO - LIMA - SHERATON', 1);
+INSERT INTO `SGSTT`.`servicio` (`idservicio`, `origen`, `destino`, `zona`, `descripcion`, `idtipo_servicio`) VALUES (2, 'Aeropuerto Internacional Jorge Chávez, s/n Av Elmer Faucett, Callao', 'JW Marriott Hotel Lima, Malecón de la Reserva 615, Lima', 'MIRAFLORES', 'APTO - MIRAFLORES - MARRIOT', 1);
+INSERT INTO `SGSTT`.`servicio` (`idservicio`, `origen`, `destino`, `zona`, `descripcion`, `idtipo_servicio`) VALUES (3, 'Aeropuerto Internacional Jorge Chávez, s/n Av Elmer Faucett, Callao', 'Hotel Conquistadores, Lizardo Alzamora Este 260, San Isidro 15073, Perú', 'SAN ISIDRO', 'APTO - SAN ISIDRO - CONQUISTADORES', 1);
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `SGSTT`.`tipo_incidencia`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `SGSTT`;
+INSERT INTO `SGSTT`.`tipo_incidencia` (`idtipo_incidencia`, `descripcion`) VALUES (1, 'Demora Pasajeros');
+INSERT INTO `SGSTT`.`tipo_incidencia` (`idtipo_incidencia`, `descripcion`) VALUES (2, 'Horas adicionales');
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `SGSTT`.`estado_incidencia`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `SGSTT`;
+INSERT INTO `SGSTT`.`estado_incidencia` (`idestado_incidencia`, `descripcion`) VALUES (1, 'pendiente');
+INSERT INTO `SGSTT`.`estado_incidencia` (`idestado_incidencia`, `descripcion`) VALUES (2, 'atendida');
 
 COMMIT;
 
@@ -732,6 +778,7 @@ START TRANSACTION;
 USE `SGSTT`;
 INSERT INTO `SGSTT`.`Cliente` (`idCliente`, `Nombre`, `NumeroDocumento`, `Direccion`, `idEstado`, `Razon Social`, `Correo`, `id_TipoCliente`) VALUES (1, 'GEBECO', NULL, NULL, NULL, NULL, NULL, 2);
 INSERT INTO `SGSTT`.`Cliente` (`idCliente`, `Nombre`, `NumeroDocumento`, `Direccion`, `idEstado`, `Razon Social`, `Correo`, `id_TipoCliente`) VALUES (2, 'AVS', NULL, NULL, NULL, NULL, NULL, 2);
+INSERT INTO `SGSTT`.`Cliente` (`idCliente`, `Nombre`, `NumeroDocumento`, `Direccion`, `idEstado`, `Razon Social`, `Correo`, `id_TipoCliente`) VALUES (3, 'Setours', NULL, NULL, NULL, NULL, NULL, 2);
 
 COMMIT;
 
@@ -750,6 +797,34 @@ COMMIT;
 START TRANSACTION;
 USE `SGSTT`;
 INSERT INTO `SGSTT`.`estado_servicio` (`idestado_servicio`, `descripcion`) VALUES (1, 'PENDIENTE');
+INSERT INTO `SGSTT`.`estado_servicio` (`idestado_servicio`, `descripcion`) VALUES (2, 'REALIZADO');
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `SGSTT`.`empresa`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `SGSTT`;
+INSERT INTO `SGSTT`.`empresa` (`idempresa`, `razon_social`, `ruc`, `telefono`, `celular`, `correo`) VALUES (1, 'TARAKATOURS', NULL, NULL, NULL, NULL);
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `SGSTT`.`empresa_chofer`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `SGSTT`;
+INSERT INTO `SGSTT`.`empresa_chofer` (`idempresa_chofer`, `nombre`, `apellido`, `dni`, `empresa_idempresa`) VALUES (1, 'Rodrigo', 'Rosas', '12345678', 1);
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `SGSTT`.`empresa_vehiculo`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `SGSTT`;
+INSERT INTO `SGSTT`.`empresa_vehiculo` (`idempresa_vehiculo`, `marca`, `placa`, `empresa_idempresa`) VALUES (1, 'hyundai', '124-afg', 1);
 
 COMMIT;
 
@@ -759,6 +834,7 @@ COMMIT;
 START TRANSACTION;
 USE `SGSTT`;
 INSERT INTO `SGSTT`.`PERFIL` (`idPERFIL`, `NOMBRE`, `ESTADO`) VALUES (1, 'Administrador del Sistema', 1);
+INSERT INTO `SGSTT`.`PERFIL` (`idPERFIL`, `NOMBRE`, `ESTADO`) VALUES (2, 'Encargador de Servicios', 1);
 
 COMMIT;
 
@@ -783,6 +859,8 @@ INSERT INTO `SGSTT`.`MODULO` (`idMODULO`, `NOMBRE`, `URL`, `LISTAR`, `CREAR`, `A
 INSERT INTO `SGSTT`.`MODULO` (`idMODULO`, `NOMBRE`, `URL`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`, `ESTADO`) VALUES (5, 'Administrar Servicios', 'servicio', 1, 1, 1, 1, 1);
 INSERT INTO `SGSTT`.`MODULO` (`idMODULO`, `NOMBRE`, `URL`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`, `ESTADO`) VALUES (6, 'Administrar Tarifario', 'tarifa', 1, 1, 1, 1, 1);
 INSERT INTO `SGSTT`.`MODULO` (`idMODULO`, `NOMBRE`, `URL`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`, `ESTADO`) VALUES (7, 'Administrar Vehiculo', 'vehiculo', 1, 1, 1, 1, 1);
+INSERT INTO `SGSTT`.`MODULO` (`idMODULO`, `NOMBRE`, `URL`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`, `ESTADO`) VALUES (8, 'Administrar Incidencia', 'incidencia', 1, 1, 1, 1, 1);
+INSERT INTO `SGSTT`.`MODULO` (`idMODULO`, `NOMBRE`, `URL`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`, `ESTADO`) VALUES (9, 'Administrar Choferes', 'chofer', 1, 1, 1, 1, 1);
 
 COMMIT;
 
@@ -798,5 +876,7 @@ INSERT INTO `SGSTT`.`PERMISO` (`idPERMISO`, `idPERFIL`, `idMODULO`, `LISTAR`, `C
 INSERT INTO `SGSTT`.`PERMISO` (`idPERMISO`, `idPERFIL`, `idMODULO`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`) VALUES (5, 1, 5, 1, 1, 1, 1);
 INSERT INTO `SGSTT`.`PERMISO` (`idPERMISO`, `idPERFIL`, `idMODULO`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`) VALUES (6, 1, 6, 1, 1, 1, 1);
 INSERT INTO `SGSTT`.`PERMISO` (`idPERMISO`, `idPERFIL`, `idMODULO`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`) VALUES (7, 1, 7, 1, 1, 1, 1);
+INSERT INTO `SGSTT`.`PERMISO` (`idPERMISO`, `idPERFIL`, `idMODULO`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`) VALUES (8, 1, 8, 1, 1, 1, 1);
+INSERT INTO `SGSTT`.`PERMISO` (`idPERMISO`, `idPERFIL`, `idMODULO`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`) VALUES (9, 1, 9, 1, 1, 1, 1);
 
 COMMIT;

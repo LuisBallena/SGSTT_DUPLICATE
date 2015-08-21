@@ -3,6 +3,8 @@ package com.sgstt.entidad;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -31,6 +33,10 @@ public class Chofer implements Serializable{
     
     @Column
     private String categoria;
+    
+    @Enumerated(EnumType.ORDINAL)
+    @Column(nullable = false,insertable = false)
+    Estado estado;
 
     public Chofer() {
     }
@@ -73,6 +79,14 @@ public class Chofer implements Serializable{
 
     public void setCategoria(String categoria) {
         this.categoria = categoria;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
     
 }

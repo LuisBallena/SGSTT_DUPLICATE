@@ -49,5 +49,10 @@
             <to-view-id>/vistas/vehiculo/list.xhtml</to-view-id>
             <redirect />
         </navigation-case>
+        <navigation-case>
+            <from-outcome>chofer</from-outcome>
+            <to-view-id>/vistas/chofer/list.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
     </navigation-rule>
 </faces-config>

@@ -1,5 +1,7 @@
 package com.sgstt.controlador;
 
+import com.clyme.dao.IMotor;
+import com.clyme.impl.MotorElectrico;
 import com.sgstt.entidad.Usuario;
 import com.sgstt.servicios.EmpleadoServicio;
 import com.sgstt.util.Utilitario;
@@ -31,6 +33,8 @@ public class LoginControlador implements Serializable {
     }
 
     public String login() {
+        IMotor iMotor = new MotorElectrico();
+        iMotor.versionMotor();
         if (!esVistaValida()) {
             return "";
         }
