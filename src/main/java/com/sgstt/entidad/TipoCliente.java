@@ -13,7 +13,9 @@ import javax.persistence.Table;
 @Table(name = "tipo_cliente", catalog = "sgstt")
 public class TipoCliente implements java.io.Serializable {
     private static final long serialVersionUID = 5132060655054553164L;
-
+    public static final int NATURAL = 1;
+    public static final int JURIDICO = 2;
+    
     @Id
     @GeneratedValue
     @Column(name = "id_TipoCliente")

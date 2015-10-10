@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.sgstt.controlador;
 
 import com.sgstt.entidad.Modulo;
@@ -68,8 +63,8 @@ public class SesionControlador implements Serializable {
                 Permiso permisoPrevio = SerializationUtils.clone(permisoModulo);
                 log.info("[SesionControlador/validarModuloPostBack] Modulo previamente seleccionado : " + permisoModulo.getModulo().getNombre());
                 contextPath = contextPath.replaceAll("/SGSTT", "");
-                String viewId = navegadorControlador.obtenerViewId(contextPath);
-                if (!viewId.isEmpty()) {
+                String viewId = navegadorControlador.obtenerFrontOutCome(contextPath);
+                if (viewId != null && !viewId.isEmpty()) {
                     permisoModulo = obtenerModuloSesion(viewId);
                 }
                 if (permisoModulo == null) {

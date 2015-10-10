@@ -61,8 +61,8 @@ public class NavegadorControlador implements Serializable{
         for (String llave : llaves) {
             String[] valores = generarValores(llave);
             for (int i = 0; i < valores.length; i++) {
-                String key = valores[i].replaceAll("fromOutcome=", "").replaceAll("'", "");
-                String value = valores[(i + 1)].replaceAll("toViewId=", "").replaceAll("'", "");
+                String value = valores[i].replaceAll("fromOutcome=", "").replaceAll("'", "");
+                String key = valores[(i + 1)].replaceAll("toViewId=", "").replaceAll("'", "");
                 navegacion.put(key, value);
                 log.debug(String.format("[NavegadorControlador/agregarNavegacion] caso de navegacion (%s,%s)", key, value));
                 i = i + 1;
@@ -70,15 +70,8 @@ public class NavegadorControlador implements Serializable{
         }
     }
 
-    public String obtenerViewId(String url) {
-        String viewId = "";
-        for (Map.Entry<String, String> entry : navegacion.entrySet()) {
-            if (entry.getValue().equalsIgnoreCase(url)) {
-                viewId = entry.getKey();
-                return viewId;
-            }
-        }
-        return viewId;
+    public String obtenerFrontOutCome(String viewId) {
+        return navegacion.get(viewId);
     }
 
     /**

@@ -6,76 +6,68 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
                 >
 
     <ui:define name="content">
         <div class="row">
             <div class="col-lg-12">
-                <h3 class="page-header">Administrar Servicios</h3>
+                <h3 class="page-header">Administrar Orden de Servicios</h3>
             </div>
             <div class="row">
                 <div class="col-lg-12 opcion-listado" >
-                    <h:link style="font-size: 16px;font-weight: bold;" value="Lista de Servicios" outcome="list.xhtml"></h:link>
+                    <h:link style="font-size: 16px;font-weight: bold;" value="Lista de Orden de Servicios" outcome="list.xhtml"></h:link>
                 </div>
                 <div class="col-lg-12">
                     <div class="panel panel-success">
-                        <div class="panel-heading"  >Actualizar Traslado</div>
+                        <div class="panel-heading"  >Registrar Traslado</div>
                         <div class="panel-body">
                             <div class="row" id="modificarComercio">
                                 <div class="col-lg-12">
                                     <h:form id="frmRegistrarOTraslado" styleClass="form-horizontal" >
-                                        <f:event type="preRenderView" listener="#{servicioControlador.initUpdateTraslado}" />
+                                        <f:event type="preRenderView" listener="#{ordenServicioControlador.initCreateTraslado}" />
                                         <h:messages id="msg" globalOnly="true" styleClass="list-group" infoClass="list-group-item list-group-item-success"
                                                     errorClass="list-group-item list-group-item-danger" />
 
                                         <div class="form-group has-feedback">
                                             <label  class="col-md-2 control-label" >Servicio :</label>
                                             <div class="col-md-3">
-                                                <h:selectOneMenu styleClass="form-control" value="#{servicioControlador.servicioSeleccionado.id}">
+                                                <h:selectOneMenu styleClass="form-control" value="#{ordenServicioControlador.servicioSeleccionado.id}">
                                                     <f:selectItem itemLabel="Seleccionar" itemValue="0" />
-                                                    <f:selectItems value="#{servicioControlador.servicios}" var="servicios" itemLabel="#{servicios.descripcion}" itemValue="#{servicios.id}" />
+                                                    <f:selectItems value="#{ordenServicioControlador.servicios}" var="servicios" itemLabel="#{servicios.descripcion}" itemValue="#{servicios.id}" />
                                                 </h:selectOneMenu>
                                             </div>
                                             <label  class="col-md-2 control-label" >Fecha :</label>
                                             <div class="col-md-3">
-                                                <p:calendar styleClass="bootstrap-calendar" readonlyInput="true" locale="es" pattern="dd/MM/yyyy HH:mm"  value="#{servicioControlador.servicioDetalle.fecha}"  mode="popup" showOn="button" />
+                                                <p:calendar styleClass="bootstrap-calendar" readonlyInput="true"  locale="es" pattern="dd/MM/yyyy HH:mm"  value="#{ordenServicioControlador.servicioDetalle.fecha}" mode="popup" showOn="button" />
                                             </div>
                                         </div>
                                         <div class="form-group has-feedback">
                                             <label class="col-md-2 control-label" >Guia :</label>
                                             <div class="col-md-3">
-                                                <h:selectOneMenu styleClass="form-control" value="#{servicioControlador.trasladistaSeleccionado.id}">
+                                                <h:selectOneMenu styleClass="form-control" value="#{ordenServicioControlador.trasladistaSeleccionado.id}">
                                                     <f:selectItem itemLabel="Seleccionar" itemValue="0" />
-                                                    <f:selectItems value="#{servicioControlador.guias}" var="guias" itemLabel="#{guias.nombre} #{guias.apellido}" itemValue="#{guias.id}" />
+                                                    <f:selectItems value="#{ordenServicioControlador.guias}" var="guias" itemLabel="#{guias.nombre} #{guias.apellido}" itemValue="#{guias.id}" />
                                                 </h:selectOneMenu>
                                             </div>
                                             <label  class="col-md-2 control-label" >Nro Pasajeros :</label>
                                             <div class="col-md-3">
-                                                <p:inputMask mask="9?9" slotChar="" styleClass="form-control"  value="#{servicioControlador.servicioDetalle.nroPersonas}" />
+                                                <p:inputMask mask="9?9" slotChar="" styleClass="form-control"  value="#{ordenServicioControlador.servicioDetalle.nroPersonas}" />
                                             </div>
                                         </div>
                                         <div class="form-group has-feedback">
                                             <label class="col-md-2 control-label" >Chofer :</label>
                                             <div class="col-md-3">
-                                                <h:selectOneMenu styleClass="form-control" value="#{servicioControlador.servicioDetalle.chofer.id}">
+                                                <h:selectOneMenu styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.chofer.id}">
                                                     <f:selectItem itemLabel="Seleccionar" itemValue="0" />
-                                                    <f:selectItems value="#{servicioControlador.choferes}" var="choferes" itemLabel="#{choferes.nombre} #{choferes.apellido}" itemValue="#{choferes.id}" />
+                                                    <f:selectItems value="#{ordenServicioControlador.choferes}" var="choferes" itemLabel="#{choferes.nombre} #{choferes.apellido}" itemValue="#{choferes.id}" />
                                                 </h:selectOneMenu>
                                             </div>
                                             <label  class="col-md-2 control-label" >Vehiculo :</label>
                                             <div class="col-md-3">
-                                                <h:selectOneMenu styleClass="form-control" value="#{servicioControlador.servicioDetalle.vehiculo.id}">
+                                                <h:selectOneMenu styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.vehiculo.id}">
                                                     <f:selectItem itemLabel="Seleccionar" itemValue="0" />
-                                                    <f:selectItems value="#{servicioControlador.vehiculos}" var="vehiculos" itemLabel="#{vehiculos.descripcion}" itemValue="#{vehiculos.id}" />
-                                                </h:selectOneMenu>
-                                            </div>
-                                        </div>
-                                        <div class="form-group has-feedback">
-                                            <label class="col-md-2 control-label" >Linea :</label>
-                                            <div class="col-md-3">
-                                                <h:selectOneMenu styleClass="form-control" value="#{servicioControlador.vueloSeleccionado.id}">
-                                                    <f:selectItem itemLabel="Seleccionar" itemValue="0" />
-                                                    <f:selectItems value="#{servicioControlador.vuelos}" var="vuelos" itemLabel="#{vuelos.descripcion}" itemValue="#{vuelos.id}" />
+                                                    <f:selectItems value="#{ordenServicioControlador.vehiculos}" var="vehiculos" itemLabel="#{vehiculos.descripcion}" itemValue="#{vehiculos.id}" />
                                                 </h:selectOneMenu>
                                             </div>
                                         </div>
@@ -84,7 +76,7 @@
                                                 <label class="col-md-2 control-label" >File :</label>
                                                 <div  style="padding-right: 0px;"  class="col-xs-11 col-md-2" >
 
-                                                    <p:inputText  style="width: 100%;background-color: #f5f5f5;border: 1px solid #ccc;border-radius: 4px;  height: 34px;padding-top: 5px;" value="#{servicioControlador.servicioDetalle.file.idFile}"      >
+                                                    <p:inputText  style="width: 100%;background-color: #f5f5f5;border: 1px solid #ccc;border-radius: 4px;  height: 34px;padding-top: 5px;" value="#{ordenServicioControlador.servicioDetalle.file.idFile}"      >
                                                     </p:inputText>
 
                                                 </div>
@@ -96,15 +88,24 @@
                                                 <label  class="col-md-2 control-label" >PAX :</label>
                                                 <div class="col-md-3">
                                                     <p class="form-control" style="background-color: #f5f5f5;border: 1px solid #ccc;">
-                                                        #{servicioControlador.servicioDetalle.file.pax}
+                                                        #{ordenServicioControlador.servicioDetalle.file.pax}
                                                     </p>
                                                 </div>
                                             </h:panelGroup>
                                         </div>
+                                         <div class="form-group has-feedback">
+                                            <label class="col-md-2 control-label" >Vuelo :</label>
+                                            <div class="col-md-3">
+                                                <h:selectOneMenu styleClass="form-control" value="#{ordenServicioControlador.vueloSeleccionado.id}">
+                                                    <f:selectItem itemLabel="Seleccionar" itemValue="0" />
+                                                    <f:selectItems value="#{ordenServicioControlador.vuelos}" var="vuelos" itemLabel="#{vuelos.descripcion}" itemValue="#{vuelos.id}" />
+                                                </h:selectOneMenu>
+                                            </div> 
+                                        </div>
                                         <div class="col-sm-3 control-label">
-                                            <h:commandButton value="Actualizar" actionListener="#{servicioControlador.actualizarDetalle}"  styleClass="btn btn-primary" >
-                                                <f:ajax render="@form" execute="@form" />
-                                            </h:commandButton>
+                                            <p:commandButton value="Guardar" actionListener="#{ordenServicioControlador.registrarDetalle}"  styleClass="btn btn-primary" update="@form :DialogMessage" oncomplete="handleLoginRequest(xhr, status, args)" >
+
+                                            </p:commandButton>
                                         </div>
                                     </h:form>  
                                 </div>
@@ -117,7 +118,7 @@
         </div>
         <p:dialog modal="true" width="500"  height="300" header="Lista de Files" position="center top" id="DialogSelectable" widgetVar="dialogSelectable">
             <h:form id="frmDialogSelectable">
-                <p:dataTable  value="#{servicioControlador.files}" var="list" 
+                <p:dataTable  value="#{ordenServicioControlador.files}" var="list" 
                               paginator="true" rows="10"  rowIndexVar="rowIndex"
                               paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
 
@@ -149,13 +150,43 @@
                         </h:outputText>
                     </p:column>
                     <p:column style="text-align: center;width: 12%;">
-                        <p:commandButton icon="icon-choice" update=":frmRegistrarOTraslado:cliente" actionListener="#{servicioControlador.capturarFile(list)}"  oncomplete="PF('dialogSelectable').hide();" >
+                        <p:commandButton icon="icon-choice" update=":frmRegistrarOTraslado:cliente" actionListener="#{ordenServicioControlador.capturarFile(list)}"  oncomplete="PF('dialogSelectable').hide();" >
                         </p:commandButton>
                     </p:column>
                 </p:dataTable>
             </h:form>
         </p:dialog>
-        <h:outputScript name="js/calendar.js" />
-    </ui:define>
+        <p:dialog modal="true" width="250"   header="Mensaje" position="center top" id="DialogMessage" widgetVar="dialogMessage">
+            <div class="row">
+                <div class="col-lg-12">
+                    #{ordenServicioControlador.messageException}
+                </div>
+                <div class="col-lg-12">
+                    <p>
+                        ¿Desea tercializar el servicio?
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <p:commandButton    value="Si" actionListener="#{ordenServicioControlador.registrarServicioTercializado}" update=":frmRegistrarOTraslado:msg" oncomplete="PF('dialogMessage').hide();"   >
 
+                    </p:commandButton>
+                </div>
+                <div class="col-lg-6">
+                    <p:commandButton    value="No" onclick="PF('dialogMessage').hide();"   >
+
+                    </p:commandButton>
+                </div>
+            </div>
+        </p:dialog>
+        <h:outputScript name="js/calendar.js" />
+        <script type="text/javascript">
+            function handleLoginRequest(xhr, status, args) {
+                if (args.exception) {
+                    PF('dialogMessage').show();
+                }
+            }
+        </script>
+    </ui:define>
 </ui:composition>

@@ -14,6 +14,7 @@ DROP TABLE IF EXISTS `SGSTT`.`tipo_servicio` ;
 CREATE  TABLE IF NOT EXISTS `SGSTT`.`tipo_servicio` (
   `idtipo_servicio` INT NOT NULL AUTO_INCREMENT ,
   `descripcion` VARCHAR(45) NULL ,
+  `ESTADO` TINYINT(1) NOT NULL DEFAULT 1 ,
   PRIMARY KEY (`idtipo_servicio`) )
 ENGINE = InnoDB;
 
@@ -177,10 +178,8 @@ DROP TABLE IF EXISTS `SGSTT`.`servicio` ;
 
 CREATE  TABLE IF NOT EXISTS `SGSTT`.`servicio` (
   `idservicio` INT NOT NULL AUTO_INCREMENT ,
-  `origen` VARCHAR(100) NULL ,
-  `destino` VARCHAR(100) NULL ,
-  `zona` VARCHAR(45) NULL ,
-  `descripcion` VARCHAR(45) NULL ,
+  `descripcion` VARCHAR(300) NOT NULL ,
+  `ESTADO` TINYINT(1) NOT NULL DEFAULT 1 ,
   `idtipo_servicio` INT NOT NULL ,
   PRIMARY KEY (`idservicio`) ,
   INDEX `fk_servicio_tipo_servicio1_idx` (`idtipo_servicio` ASC) ,
@@ -301,10 +300,11 @@ DROP TABLE IF EXISTS `SGSTT`.`Cliente` ;
 CREATE  TABLE IF NOT EXISTS `SGSTT`.`Cliente` (
   `idCliente` INT NOT NULL AUTO_INCREMENT ,
   `Nombre` VARCHAR(45) NULL ,
-  `NumeroDocumento` INT NULL ,
+  `NumeroDocumento` VARCHAR(12) NULL ,
+  `RazonSocial` VARCHAR(45) NULL ,
   `Direccion` VARCHAR(45) NULL ,
-  `idEstado` INT NULL ,
-  `Razon Social` VARCHAR(45) NULL ,
+  `ESTADO` TINYINT(1) NOT NULL DEFAULT 1 ,
+  `TIPO_DOCUMENTO` VARCHAR(50) NULL ,
   `Correo` VARCHAR(45) NULL ,
   `id_TipoCliente` INT NOT NULL ,
   PRIMARY KEY (`idCliente`) ,
@@ -641,6 +641,45 @@ CREATE  TABLE IF NOT EXISTS `SGSTT`.`PERMISO` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `SGSTT`.`Destinos`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `SGSTT`.`Destinos` ;
+
+CREATE  TABLE IF NOT EXISTS `SGSTT`.`Destinos` (
+  `idDestinos` INT NOT NULL AUTO_INCREMENT ,
+  `NOMBRE` VARCHAR(300) NOT NULL ,
+  `LATITUD` VARCHAR(50) NULL ,
+  `LONGITUD` VARCHAR(50) NULL ,
+  `ESTADO` TINYINT(1) NOT NULL DEFAULT 1 ,
+  PRIMARY KEY (`idDestinos`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `SGSTT`.`servicio_destinos`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `SGSTT`.`servicio_destinos` ;
+
+CREATE  TABLE IF NOT EXISTS `SGSTT`.`servicio_destinos` (
+  `servicio_idservicio` INT NOT NULL ,
+  `Destinos_idDestinos` INT NOT NULL ,
+  PRIMARY KEY (`servicio_idservicio`, `Destinos_idDestinos`) ,
+  INDEX `fk_servicio_has_Destinos_Destinos1` (`Destinos_idDestinos` ASC) ,
+  INDEX `fk_servicio_has_Destinos_servicio1` (`servicio_idservicio` ASC) ,
+  CONSTRAINT `fk_servicio_has_Destinos_servicio1`
+    FOREIGN KEY (`servicio_idservicio` )
+    REFERENCES `SGSTT`.`servicio` (`idservicio` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_servicio_has_Destinos_Destinos1`
+    FOREIGN KEY (`Destinos_idDestinos` )
+    REFERENCES `SGSTT`.`Destinos` (`idDestinos` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
@@ -651,9 +690,9 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `SGSTT`;
-INSERT INTO `SGSTT`.`tipo_servicio` (`idtipo_servicio`, `descripcion`) VALUES (1, 'TRASLADO');
-INSERT INTO `SGSTT`.`tipo_servicio` (`idtipo_servicio`, `descripcion`) VALUES (2, 'EXCURSION');
-INSERT INTO `SGSTT`.`tipo_servicio` (`idtipo_servicio`, `descripcion`) VALUES (3, 'VIAJE');
+INSERT INTO `SGSTT`.`tipo_servicio` (`idtipo_servicio`, `descripcion`, `ESTADO`) VALUES (1, 'TRASLADO', 1);
+INSERT INTO `SGSTT`.`tipo_servicio` (`idtipo_servicio`, `descripcion`, `ESTADO`) VALUES (2, 'EXCURSION', 1);
+INSERT INTO `SGSTT`.`tipo_servicio` (`idtipo_servicio`, `descripcion`, `ESTADO`) VALUES (3, 'VIAJE', 1);
 
 COMMIT;
 
@@ -735,9 +774,9 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `SGSTT`;
-INSERT INTO `SGSTT`.`servicio` (`idservicio`, `origen`, `destino`, `zona`, `descripcion`, `idtipo_servicio`) VALUES (1, 'Aeropuerto Internacional Jorge Chávez, s/n Av Elmer Faucett, Callao', 'Hotel Sheraton, Av Paseo de la República 170, Lima Lima 1', 'LIMA', 'APTO - LIMA - SHERATON', 1);
-INSERT INTO `SGSTT`.`servicio` (`idservicio`, `origen`, `destino`, `zona`, `descripcion`, `idtipo_servicio`) VALUES (2, 'Aeropuerto Internacional Jorge Chávez, s/n Av Elmer Faucett, Callao', 'JW Marriott Hotel Lima, Malecón de la Reserva 615, Lima', 'MIRAFLORES', 'APTO - MIRAFLORES - MARRIOT', 1);
-INSERT INTO `SGSTT`.`servicio` (`idservicio`, `origen`, `destino`, `zona`, `descripcion`, `idtipo_servicio`) VALUES (3, 'Aeropuerto Internacional Jorge Chávez, s/n Av Elmer Faucett, Callao', 'Hotel Conquistadores, Lizardo Alzamora Este 260, San Isidro 15073, Perú', 'SAN ISIDRO', 'APTO - SAN ISIDRO - CONQUISTADORES', 1);
+INSERT INTO `SGSTT`.`servicio` (`idservicio`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (1, 'APTO - LIMA - SHERATON', 1, 1);
+INSERT INTO `SGSTT`.`servicio` (`idservicio`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (2, 'APTO - MIRAFLORES - MARRIOT', 1, 1);
+INSERT INTO `SGSTT`.`servicio` (`idservicio`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (3, 'APTO - SAN ISIDRO - CONQUISTADORES', 1, 1);
 
 COMMIT;
 
@@ -776,9 +815,9 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `SGSTT`;
-INSERT INTO `SGSTT`.`Cliente` (`idCliente`, `Nombre`, `NumeroDocumento`, `Direccion`, `idEstado`, `Razon Social`, `Correo`, `id_TipoCliente`) VALUES (1, 'GEBECO', NULL, NULL, NULL, NULL, NULL, 2);
-INSERT INTO `SGSTT`.`Cliente` (`idCliente`, `Nombre`, `NumeroDocumento`, `Direccion`, `idEstado`, `Razon Social`, `Correo`, `id_TipoCliente`) VALUES (2, 'AVS', NULL, NULL, NULL, NULL, NULL, 2);
-INSERT INTO `SGSTT`.`Cliente` (`idCliente`, `Nombre`, `NumeroDocumento`, `Direccion`, `idEstado`, `Razon Social`, `Correo`, `id_TipoCliente`) VALUES (3, 'Setours', NULL, NULL, NULL, NULL, NULL, 2);
+INSERT INTO `SGSTT`.`Cliente` (`idCliente`, `Nombre`, `NumeroDocumento`, `RazonSocial`, `Direccion`, `ESTADO`, `TIPO_DOCUMENTO`, `Correo`, `id_TipoCliente`) VALUES (1, '', NULL, 'GEBECO', NULL, 1, 'RUC', NULL, 2);
+INSERT INTO `SGSTT`.`Cliente` (`idCliente`, `Nombre`, `NumeroDocumento`, `RazonSocial`, `Direccion`, `ESTADO`, `TIPO_DOCUMENTO`, `Correo`, `id_TipoCliente`) VALUES (2, '', NULL, 'AVS', NULL, 1, 'RUC', NULL, 2);
+INSERT INTO `SGSTT`.`Cliente` (`idCliente`, `Nombre`, `NumeroDocumento`, `RazonSocial`, `Direccion`, `ESTADO`, `TIPO_DOCUMENTO`, `Correo`, `id_TipoCliente`) VALUES (3, '', NULL, 'SETOURS', NULL, 1, 'RUC', NULL, 2);
 
 COMMIT;
 
@@ -856,11 +895,15 @@ INSERT INTO `SGSTT`.`MODULO` (`idMODULO`, `NOMBRE`, `URL`, `LISTAR`, `CREAR`, `A
 INSERT INTO `SGSTT`.`MODULO` (`idMODULO`, `NOMBRE`, `URL`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`, `ESTADO`) VALUES (2, 'Administrar Modulos', 'modulo', 1, 0, 1, 0, 1);
 INSERT INTO `SGSTT`.`MODULO` (`idMODULO`, `NOMBRE`, `URL`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`, `ESTADO`) VALUES (3, 'Administrar Cuenta', 'cuenta', 1, 1, 1, 1, 1);
 INSERT INTO `SGSTT`.`MODULO` (`idMODULO`, `NOMBRE`, `URL`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`, `ESTADO`) VALUES (4, 'Administrar File', 'file', 1, 1, 1, 1, 1);
-INSERT INTO `SGSTT`.`MODULO` (`idMODULO`, `NOMBRE`, `URL`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`, `ESTADO`) VALUES (5, 'Administrar Servicios', 'servicio', 1, 1, 1, 1, 1);
+INSERT INTO `SGSTT`.`MODULO` (`idMODULO`, `NOMBRE`, `URL`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`, `ESTADO`) VALUES (5, 'Administrar Orden Servicios', 'ordenServicio', 1, 1, 1, 1, 1);
 INSERT INTO `SGSTT`.`MODULO` (`idMODULO`, `NOMBRE`, `URL`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`, `ESTADO`) VALUES (6, 'Administrar Tarifario', 'tarifa', 1, 1, 1, 1, 1);
 INSERT INTO `SGSTT`.`MODULO` (`idMODULO`, `NOMBRE`, `URL`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`, `ESTADO`) VALUES (7, 'Administrar Vehiculo', 'vehiculo', 1, 1, 1, 1, 1);
 INSERT INTO `SGSTT`.`MODULO` (`idMODULO`, `NOMBRE`, `URL`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`, `ESTADO`) VALUES (8, 'Administrar Incidencia', 'incidencia', 1, 1, 1, 1, 1);
 INSERT INTO `SGSTT`.`MODULO` (`idMODULO`, `NOMBRE`, `URL`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`, `ESTADO`) VALUES (9, 'Administrar Choferes', 'chofer', 1, 1, 1, 1, 1);
+INSERT INTO `SGSTT`.`MODULO` (`idMODULO`, `NOMBRE`, `URL`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`, `ESTADO`) VALUES (10, 'Administrar Cliente', 'cliente', 1, 1, 1, 1, 1);
+INSERT INTO `SGSTT`.`MODULO` (`idMODULO`, `NOMBRE`, `URL`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`, `ESTADO`) VALUES (11, 'Administrar Destino', 'destino', 1, 1, 1, 1, 1);
+INSERT INTO `SGSTT`.`MODULO` (`idMODULO`, `NOMBRE`, `URL`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`, `ESTADO`) VALUES (12, 'Administrar Tipo Servicio', 'tipoServicio', 1, 1, 1, 1, 1);
+INSERT INTO `SGSTT`.`MODULO` (`idMODULO`, `NOMBRE`, `URL`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`, `ESTADO`) VALUES (13, 'Administrar Servicios', 'servicio', 1, 1, 1, 1, 1);
 
 COMMIT;
 
@@ -878,5 +921,9 @@ INSERT INTO `SGSTT`.`PERMISO` (`idPERMISO`, `idPERFIL`, `idMODULO`, `LISTAR`, `C
 INSERT INTO `SGSTT`.`PERMISO` (`idPERMISO`, `idPERFIL`, `idMODULO`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`) VALUES (7, 1, 7, 1, 1, 1, 1);
 INSERT INTO `SGSTT`.`PERMISO` (`idPERMISO`, `idPERFIL`, `idMODULO`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`) VALUES (8, 1, 8, 1, 1, 1, 1);
 INSERT INTO `SGSTT`.`PERMISO` (`idPERMISO`, `idPERFIL`, `idMODULO`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`) VALUES (9, 1, 9, 1, 1, 1, 1);
+INSERT INTO `SGSTT`.`PERMISO` (`idPERMISO`, `idPERFIL`, `idMODULO`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`) VALUES (10, 1, 10, 1, 1, 1, 1);
+INSERT INTO `SGSTT`.`PERMISO` (`idPERMISO`, `idPERFIL`, `idMODULO`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`) VALUES (11, 1, 11, 1, 1, 1, 1);
+INSERT INTO `SGSTT`.`PERMISO` (`idPERMISO`, `idPERFIL`, `idMODULO`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`) VALUES (12, 1, 12, 1, 1, 1, 1);
+INSERT INTO `SGSTT`.`PERMISO` (`idPERMISO`, `idPERFIL`, `idMODULO`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`) VALUES (13, 1, 13, 1, 1, 1, 1);
 
 COMMIT;

@@ -120,13 +120,6 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.31</version>
         </dependency>
-        <!-- de Prueba -->
-        <dependency>
-            <groupId>com.clyme</groupId>
-            <artifactId>Motor</artifactId>
-            <version>1.0</version>
-            <type>jar</type>
-        </dependency>
         <!-- JUnit/ para realizar test Unitarios -->
         <dependency>
             <groupId>junit</groupId>

@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="./../home.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                >
+
+    <ui:define name="content">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header">Administrar Cliente</h3>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 opcion-listado" >
+                    <h:link style="font-size: 16px;font-weight: bold;" value="Lista de Cliente" outcome="list.xhtml"></h:link>
+                </div>
+                <div class="col-lg-12">
+                    <div class="panel panel-success">
+                        <div class="panel-heading"  >Actualizar Cliente</div>
+                        <div class="panel-body">
+                            <div class="row" id="modificarComercio">
+                                <div class="col-lg-12">
+                                    <h:form id="frmRegistrarCliente" styleClass="form-horizontal" >
+                                        <f:event type="preRenderView" listener="#{clienteControlador.initUpdate}" />
+                                        <h:messages id="msg" globalOnly="true" styleClass="list-group" infoClass="list-group-item list-group-item-success"
+                                                    errorClass="list-group-item list-group-item-danger" />
+                                        <div class="form-group has-feedback">
+                                            <label for="nombre" class="col-sm-3 control-label" >Tipo Cliente :</label>
+                                            <div    class="col-sm-6" >
+                                                <h:selectOneMenu value="#{clienteControlador.cliente.tipoCliente.idTipoCliente}" styleClass="form-control"  >
+                                                    <f:ajax event="change" render="contenedorPadre tipoDocumento" listener="#{clienteControlador.onChangeTipoCliente}" />
+                                                    <f:selectItems value="#{clienteControlador.tiposClientes}" var="tipos" itemLabel="#{tipos.tipoCliente}" itemValue="#{tipos.idTipoCliente}" />
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </div>
+                                        <h:panelGroup id="contenedorPadre">
+                                            <h:panelGroup id="contenedorNombreNatural" rendered="#{clienteControlador.cliente.tipoCliente.idTipoCliente eq 1}">
+                                                <div class="form-group has-feedback">
+                                                    <label for="nombre" class="col-sm-3 control-label" >Cliente :</label>
+                                                    <div    class="col-sm-6" >
+                                                        <p:inputText styleClass="form-control"  value="#{clienteControlador.cliente.nombre}"     >
+                                                        </p:inputText>
+                                                    </div>
+                                                </div>
+                                            </h:panelGroup>
+                                            <h:panelGroup id="contenedorNombreJuridico" rendered="#{clienteControlador.cliente.tipoCliente.idTipoCliente eq 2}" >
+                                                <div class="form-group has-feedback">
+                                                    <label for="nombre" class="col-sm-3 control-label" >Razón Social :</label>
+                                                    <div    class="col-sm-6" >
+                                                        <p:inputText styleClass="form-control"  value="#{clienteControlador.cliente.razonSocial}"     >
+                                                        </p:inputText>
+                                                    </div>
+                                                </div>    
+                                            </h:panelGroup>
+                                        </h:panelGroup>
+                                        <div class="form-group has-feedback">
+                                            <label for="nombre" class="col-sm-3 control-label" >Tipo Documento :</label>
+                                            <div    class="col-sm-6" >
+                                                <h:selectOneMenu id="tipoDocumento" value="#{clienteControlador.auxTipoDocumento}" styleClass="form-control"  >
+                                                    <f:selectItem itemValue="0" itemLabel="DNI" />
+                                                    <f:selectItem itemValue="1" itemLabel="RUC" />
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </div>
+                                        <div class="form-group has-feedback">
+                                            <label for="nombre" class="col-sm-3 control-label" >Nro Doc. :</label>
+                                            <div    class="col-sm-6" >
+                                                <p:inputMask styleClass="form-control" mask="9?9999999999" placeHolder=""  value="#{clienteControlador.cliente.numeroDocumento}"     >
+                                                </p:inputMask>
+                                            </div>
+                                        </div>
+                                        <div class="form-group has-feedback">
+                                            <label for="nombre" class="col-sm-3 control-label" >Dirección :</label>
+                                            <div    class="col-sm-6" >
+                                                <p:inputText styleClass="form-control"  value="#{clienteControlador.cliente.direccion}"     >
+                                                </p:inputText>
+                                            </div>
+                                        </div>
+                                        <div class="form-group has-feedback">
+                                            <label for="nombre" class="col-sm-3 control-label" >Correo :</label>
+                                            <div    class="col-sm-6" >
+                                                <p:inputText styleClass="form-control"  value="#{clienteControlador.cliente.correo}"     >
+                                                </p:inputText>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3 control-label">
+                                            <p:commandButton value="Actualizar" actionListener="#{clienteControlador.actualizarCliente}" update="@form" styleClass="btn btn-primary"/>
+                                        </div>
+                                    </h:form>  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+    </ui:define>
+
+</ui:composition>

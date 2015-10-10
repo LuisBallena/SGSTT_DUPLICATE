@@ -45,8 +45,9 @@ public class UsuarioImpl extends HibernateImpl<Usuario,Integer> implements Usuar
         try {
             query = conexion.getSession()
                     .createQuery("select distinct user from Usuario as user "
-                            + "join fetch user.empleado as emp join fetch user.perfil as p join fetch p.permisos "
-                            + "where user.nick = :parameter and user.estado = 1");
+                            + "join fetch user.empleado as emp join fetch user.perfil as p join fetch p.permisos as permi "
+                            + "where user.nick = :parameter and user.estado = 1"
+                            + "and permi.listar = 1");
             query.setString("parameter", nick);
             lista = query.list();
             if (lista.size() > 1) {

@@ -51,7 +51,7 @@
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
-    <!-- FIN DE FILTRO SESION -->x
+    <!-- FIN DE FILTRO SESION -->
     <welcome-file-list>
         <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>

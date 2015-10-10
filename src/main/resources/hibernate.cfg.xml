@@ -9,7 +9,6 @@
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">123</property>
     <property name="hibernate.current_session_context_class">thread</property>
-    <property name="hibernate.show_sql">true</property>
     <mapping class="com.sgstt.entidad.TipoCliente" />
     <mapping class="com.sgstt.entidad.Cliente" />
     <mapping class="com.sgstt.entidad.File" />
@@ -35,5 +34,6 @@
     <mapping class="com.sgstt.entidad.Empresa" />
     <mapping class="com.sgstt.entidad.EmpresaChofer" />
     <mapping class="com.sgstt.entidad.EmpresaVehiculo" />
+    <mapping class="com.sgstt.entidad.Destino" />
   </session-factory>
 </hibernate-configuration>

@@ -40,6 +40,11 @@
             <redirect />
         </navigation-case>
         <navigation-case>
+            <from-outcome>ordenServicio</from-outcome>
+            <to-view-id>/vistas/ordenServicio/list.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
             <from-outcome>tarifa</from-outcome>
             <to-view-id>/vistas/tarifa/list.xhtml</to-view-id>
             <redirect />
@@ -52,6 +57,21 @@
         <navigation-case>
             <from-outcome>chofer</from-outcome>
             <to-view-id>/vistas/chofer/list.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>cliente</from-outcome>
+            <to-view-id>/vistas/cliente/list.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>destino</from-outcome>
+            <to-view-id>/vistas/destino/list.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>tipoServicio</from-outcome>
+            <to-view-id>/vistas/tipoServicio/list.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>

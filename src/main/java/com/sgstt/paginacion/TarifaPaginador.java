@@ -11,6 +11,7 @@ import java.io.Serializable;
  */
 @Paginator(value = Tarifa.class)
 public class TarifaPaginador extends HibernateStringPaginador implements Serializable{
+    private static final long serialVersionUID = 3940490095617616126L;
     
     @Override
     protected String createFilter() {

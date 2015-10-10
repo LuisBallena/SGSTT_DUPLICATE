@@ -47,11 +47,11 @@
 
                                     <p:column  style="text-align: center;width: 8%;">
                                         <h:panelGroup rendered="#{list.id > 1}">
-                                            <p:commandButton style="font-size: 12px;" icon="icon-update" action="#{perfilControlador.irtActualizar(list.id)}"    >
+                                            <p:commandButton style="font-size: 12px;" icon="icon-update" action="#{perfilControlador.irtActualizar(list.id)}" rendered="#{sesionControlador.permisoModulo.actualizar eq true}"  >
                                             </p:commandButton>
                                         </h:panelGroup>
                                         <h:panelGroup rendered="#{list.id > 1}">
-                                            <p:commandButton style="font-size: 12px;" icon="icon-delete" actionListener="#{perfilControlador.capturarPerfil(list.id)}" oncomplete="PF('deleteperfil').show();"   >
+                                            <p:commandButton style="font-size: 12px;" icon="icon-delete" actionListener="#{perfilControlador.capturarPerfil(list.id)}" rendered="#{sesionControlador.permisoModulo.eliminar eq true}" oncomplete="PF('deleteperfil').show();"   >
                                             </p:commandButton>
                                         </h:panelGroup>
                                     </p:column>

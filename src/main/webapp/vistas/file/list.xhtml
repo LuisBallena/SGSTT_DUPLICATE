@@ -66,9 +66,9 @@
                                         </h:outputText>
                                     </p:column>
                                     <p:column  style="text-align: center;width: 12%;">
-                                        <p:commandButton rendered="#{sesionControlador.permisoModulo.actualizar}" style="font-size: 12px;" icon="icon-update" action="#{fileControlador.irActualizar(list.idFile)}"    >
+                                        <p:commandButton rendered="#{sesionControlador.permisoModulo.actualizar eq true}" style="font-size: 12px;" icon="icon-update" action="#{fileControlador.irActualizar(list.idFile)}"    >
                                         </p:commandButton>
-                                        <p:commandButton rendered="#{sesionControlador.permisoModulo.eliminar}" style="font-size: 12px;" icon="icon-delete" action="#{fileControlador.capturarFile(list)}" oncomplete="PF('deletefile').show();"   >
+                                        <p:commandButton rendered="#{sesionControlador.permisoModulo.eliminar eq true}" style="font-size: 12px;" icon="icon-delete" action="#{fileControlador.capturarFile(list)}" oncomplete="PF('deletefile').show();"   >
                                         </p:commandButton>
                                         <p:commandButton  style="font-size: 12px;" icon="icon-money" ajax="false" action="#{fileControlador.exportarFactura(list.idFile)}"   >
                                         </p:commandButton>

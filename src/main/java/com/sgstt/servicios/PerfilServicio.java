@@ -12,6 +12,7 @@ import com.sgstt.entidad.Perfil;
 import com.sgstt.entidad.Permiso;
 import com.sgstt.hibernate.HibernateConexion;
 import com.sgstt.util.Utilitario;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 
@@ -19,7 +20,8 @@ import java.util.List;
  *
  * @author Luis Alonso Ballena Garcia
  */
-public class PerfilServicio {
+public class PerfilServicio implements Serializable{
+    private static final long serialVersionUID = -1385547639855308924L;
 
     private final HibernateConexion conexion;
     private final ModuloDao moduloDao;

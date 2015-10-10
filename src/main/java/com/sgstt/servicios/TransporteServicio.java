@@ -26,6 +26,8 @@ public class TransporteServicio implements Serializable {
     private final TrasladistaDao trasladistaDao;
     private final FileDao fileDao;
     private final ServicioDetalleDao servicioDetalleDao;
+    private final DestinoDao destinoDao;
+    private final TipoServicioDao tipoServicioDao;
 
     public TransporteServicio() {
         conexion = new HibernateConexion();
@@ -37,6 +39,8 @@ public class TransporteServicio implements Serializable {
         trasladistaDao = new TrasladistaImpl(conexion);
         fileDao = new FileImpl(conexion);
         servicioDetalleDao = new ServicioDetalleImpl(conexion);
+        destinoDao = new DestinoImpl(conexion);
+        tipoServicioDao = new TipoServicioImpl(conexion);
     }
 
     public List<Chofer> obtenerChoferes() {
@@ -103,8 +107,8 @@ public class TransporteServicio implements Serializable {
         conexion.closeConexion();
         return aux;
     }
-    
-    public void registrarServicioTercializado(ServicioDetalle servicioDetalle){
+
+    public void registrarServicioTercializado(ServicioDetalle servicioDetalle) {
         conexion.beginConexion();
         servicioDetalle.setExternalizado("SI");
         servicioDetalleDao.agregar(servicioDetalle);
@@ -137,6 +141,66 @@ public class TransporteServicio implements Serializable {
         servicioDetalleDao.actualizar(servicioDetalle);
         conexion.closeConexion();
         Utilitario.enviarMensajeGlobalValido("Se ha eliminado correctamente");
+    }
+
+    public void guardarDestino(Destino destino) {
+        conexion.beginConexion();
+        destinoDao.agregar(destino);
+        conexion.closeConexion();
+        Utilitario.enviarMensajeGlobalValido("Se ha registrado correctamente");
+    }
+
+    public void actualizarDestino(Destino destino) {
+        conexion.beginConexion();
+        destinoDao.actualizar(destino);
+        conexion.closeConexion();
+        Utilitario.enviarMensajeGlobalValido("Se ha actualizado correctamente");
+    }
+    
+    public void guardarTipoServicio(TipoServicio tipoServicio){
+        conexion.beginConexion();
+        tipoServicioDao.agregar(tipoServicio);
+        conexion.closeConexion();
+        Utilitario.enviarMensajeGlobalValido("Se ha registrado correctamente");
+    }
+    
+    public void actualizarTipoServicio(TipoServicio tipoServicio){
+        conexion.beginConexion();
+        tipoServicioDao.actualizar(tipoServicio);
+        conexion.closeConexion();
+        Utilitario.enviarMensajeGlobalValido("Se ha actualizado correctamente");
+    }
+    
+    public void eliminarDestino(Destino destino){
+        conexion.beginConexion();
+        destino.setEstado(Estado.ELIMINADO);
+        destinoDao.actualizar(destino);
+        conexion.closeConexion();
+        Utilitario.enviarMensajeGlobalValido("Se ha eliminado correctamente");
+    }
+    
+    public void eliminarTipoServicio(TipoServicio tipoServicio){
+        conexion.beginConexion();
+        tipoServicio.setEstado(Estado.ELIMINADO);
+        tipoServicioDao.actualizar(tipoServicio);
+        conexion.closeConexion();
+        Utilitario.enviarMensajeGlobalValido("Se ha eliminado correctamente");
+    }
+    
+    public TipoServicio obtenerTipoServicio(Integer id){
+        TipoServicio tipoServicio = null;
+        conexion.beginConexion();
+        tipoServicio = tipoServicioDao.obtenerEntidad(id);
+        conexion.closeConexion();
+        return tipoServicio;
+    }
+    
+    public Destino obtenerDestino(Integer id){
+        Destino auxDestino = null;
+        conexion.beginConexion();
+        auxDestino = destinoDao.obtenerEntidad(id);
+        conexion.closeConexion();
+        return auxDestino;
     }
 
 }

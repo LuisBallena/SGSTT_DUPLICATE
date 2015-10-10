@@ -3,6 +3,8 @@ package com.sgstt.entidad;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -25,6 +27,10 @@ public class TipoServicio implements Serializable{
     
     @Column
     String descripcion;
+    
+    @Enumerated(EnumType.ORDINAL)
+    @Column(nullable = false,insertable = false)
+    private Estado estado;
 
     public TipoServicio() {
     }
@@ -44,7 +50,13 @@ public class TipoServicio implements Serializable{
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    
-    
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
 
 }
