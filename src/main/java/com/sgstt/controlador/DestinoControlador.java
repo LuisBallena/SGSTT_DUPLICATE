@@ -76,6 +76,21 @@ public class DestinoControlador implements Serializable{
     
     private boolean esVistaValida(){
         boolean resultado = true;
+        if(!esNombreValido()){
+            resultado = false;
+        }
+        return resultado;
+    }
+    
+    private boolean esNombreValido(){
+        boolean resultado = true;
+        if(Utilitario.esNulo(destino.getNombre())){
+            Utilitario.enviarMensajeGlobalError("Se debe ingresar el nombre del Destino");
+            resultado = false;
+        }else if(!Utilitario.esRangoValido(destino.getNombre(), 300)){
+            Utilitario.enviarMensajeGlobalError("El rango máximo del nombre es de 300 caracteres");
+            resultado = false;
+        }
         return resultado;
     }
     

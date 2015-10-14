@@ -44,6 +44,13 @@
                                         </f:facet>
                                         <h:outputText value="#{list.descripcion}" />
                                     </p:column>
+                                    <p:column  style="text-align: center;width: 12%;">
+                                        <p:commandButton rendered="#{sesionControlador.permisoModulo.actualizar eq true}" style="font-size: 12px;"  icon="icon-update" action="#{servicioControlador.irActualizar(list.id)}"    >
+                                        </p:commandButton>
+                                        <p:commandButton rendered="#{sesionControlador.permisoModulo.eliminar eq true}" style="font-size: 12px;"  icon="icon-delete" oncomplete="PF('deleteservicio').show();"    >
+                                            <f:setPropertyActionListener value="#{list}" target="#{servicioControlador.servicio}" />
+                                        </p:commandButton>
+                                    </p:column>
                                 </p:dataTable> 
                             </h:form>
                         </div>
@@ -51,15 +58,15 @@
                 </div>
             </div>
             <!-- /.col-lg-12 -->
-        </div>    
-        <p:dialog modal="true" position="center top"  widgetVar="deletedestino" resizable="false" showEffect="fade" >
+        </div>
+        <p:dialog modal="true" position="center top"  widgetVar="deleteservicio" resizable="false" showEffect="fade" >
             <h:form >
                 <div   id="row" style="font-weight: bold;font-size: 14px;">
-                    ¿Desea Eliminar el Destino ?
+                    ¿Desea Eliminar el Servicio ?
                 </div>
                 <div   id="row">
                     <div class="col-lg-6">
-                        <p:commandButton  actionListener="#{destinoControlador.eliminarDestino}" update=":formperfil" value="Si" oncomplete="PF('deletedestino').hide();"   >
+                        <p:commandButton  actionListener="#{servicioControlador.eliminarServicio}" update=":formperfil" value="Si" oncomplete="PF('deleteservicio').hide();"   >
 
                         </p:commandButton>
                     </div>

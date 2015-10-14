@@ -76,6 +76,13 @@ public class TipoServicioControlador implements Serializable {
 
     private boolean esVistaValida() {
         boolean resultado = true;
+        if(Utilitario.esNulo(tipoServicio.getDescripcion())){
+            Utilitario.enviarMensajeGlobalError("Debe ingresar la descripción");
+            resultado = false;
+        }else if(!Utilitario.esRangoValido(tipoServicio.getDescripcion(), 45)){
+            Utilitario.enviarMensajeGlobalError("El rango máximo de la descripción es de 45 caracteres");
+            resultado = false;
+        }
         return resultado;
     }
 

@@ -10,5 +10,7 @@ import java.util.List;
 public interface ServicioDao extends GenericDao<Servicio,Integer>{
     
     public List<Servicio> obtenerServiciosPorTipoServicioId(Integer id);
+    
+    public Servicio obtenerServicioConDestinos(Integer id);
 
 }

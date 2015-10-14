@@ -115,26 +115,21 @@ public class TransporteServicio implements Serializable {
         Utilitario.enviarMensajeGlobalValido("Se ha registrado correctamente");
         conexion.closeConexion();
     }
-
+    /*Se debe refactorizar debido a que no hace relacion a su funcion*/
     public void registrarServicio(ServicioDetalle servicioDetalle) throws TransporteException {
         conexion.beginConexion();
-//        if (!servicioDetalleDao.esVehiculoLibre(vehiculo.getId(), ServicioDetalle.TIEMPO_ESPERA, servicioDetalle.getFecha())) {
-//            throw new TransporteException("El vehiculo esta ocupado");
-//        } else if (servicioDetalleDao.esChoferLibre(chofer.getId(), ServicioDetalle.TIEMPO_ESPERA, servicioDetalle.getFecha())) {
-//            throw new TransporteException("El Chofer esta ocupado");
-//        }
         servicioDetalleDao.agregar(servicioDetalle);
         Utilitario.enviarMensajeGlobalValido("Se ha registrado correctamente");
         conexion.closeConexion();
     }
-
+    /*Se debe refactorizar debido a que no hace relacion a su funcion*/
     public void actualizarServicio(ServicioDetalle servicioDetalle) {
         conexion.beginConexion();
         servicioDetalleDao.actualizar(servicioDetalle);
         Utilitario.enviarMensajeGlobalValido("Se ha actualizado correctamente");
         conexion.closeConexion();
     }
-
+    
     public void eliminarServicioDetalle(ServicioDetalle servicioDetalle) {
         conexion.beginConexion();
         servicioDetalle.setEstado(Estado.ELIMINADO);
@@ -195,12 +190,58 @@ public class TransporteServicio implements Serializable {
         return tipoServicio;
     }
     
+    public List<TipoServicio> obtenerTiposServicios(){
+        List<TipoServicio> auxiliar = null;
+        conexion.beginConexion();
+        auxiliar = tipoServicioDao.obtenerTodosActivos();
+        conexion.closeConexion();
+        return auxiliar;
+    }
+    
+    public List<Destino> obtenerDestinos(){
+        List<Destino> auxiliar = null;
+        conexion.beginConexion();
+        auxiliar = destinoDao.obtenerTodosActivos();
+        conexion.closeConexion();
+        return auxiliar;
+    }
+    
     public Destino obtenerDestino(Integer id){
         Destino auxDestino = null;
         conexion.beginConexion();
         auxDestino = destinoDao.obtenerEntidad(id);
         conexion.closeConexion();
         return auxDestino;
+    }
+    
+    public void guardarServicio(Servicio servicio){
+        conexion.beginConexion();
+        servicioDao.agregar(servicio);
+        conexion.closeConexion();
+        Utilitario.enviarMensajeGlobalValido("Se ha registrado correctamente");
+    }
+    
+    public void actualizarServicio(Servicio servicio){
+        conexion.beginConexion();
+        servicioDao.actualizar(servicio);
+        conexion.closeConexion();
+        Utilitario.enviarMensajeGlobalValido("Se ha actualizado correctamente");
+    }
+    
+    public Servicio obtenerServicio(Integer id){
+        Servicio auxServicio = null;
+        conexion.beginConexion();
+        auxServicio = servicioDao.obtenerServicioConDestinos(id);
+        conexion.closeConexion();
+        return auxServicio;
+    }
+    
+    public void eliminarServicio(Servicio servicio){
+        conexion.beginConexion();
+        servicio.setEstado(Estado.ELIMINADO);
+        servicioDao.actualizar(servicio);
+        conexion.closeConexion();
+        Utilitario.enviarMensajeGlobalValido("Se ha eliminado correctamente");
     }
 
 }

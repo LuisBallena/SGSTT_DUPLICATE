@@ -1,6 +1,5 @@
 package com.sgstt.entidad;
 
-import com.sgstt.util.Utilitario;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -137,10 +136,13 @@ public class Cliente implements java.io.Serializable {
     }
 
     public String getNombreAuxiliar() {
-        if(Utilitario.esNulo(nombre)){
-            nombreAuxiliar = getRazonSocial();
-        }else{
-            nombreAuxiliar = getNombre();
+        switch(getTipoCliente().getIdTipoCliente()){
+            case TipoCliente.JURIDICO:
+                nombreAuxiliar = getRazonSocial();
+                break;
+            case TipoCliente.NATURAL:
+                nombreAuxiliar = getNombre();
+                break;
         }
         return nombreAuxiliar;
     }

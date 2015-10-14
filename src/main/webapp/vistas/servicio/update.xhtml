@@ -19,12 +19,12 @@
                 </div>
                 <div class="col-lg-12">
                     <div class="panel panel-success">
-                        <div class="panel-heading"  >Registrar Servicio</div>
+                        <div class="panel-heading"  >Actualizar Servicio</div>
                         <div class="panel-body">
                             <div class="row" id="modificarComercio">
                                 <div class="col-lg-12">
                                     <h:form id="frmRegistrarServicio" styleClass="form-horizontal" >
-                                        <f:event type="preRenderView" listener="#{servicioControlador.initCreate}" />
+                                        <f:event type="preRenderView" listener="#{servicioControlador.initUpdate}" />
                                         <h:messages id="msg" globalOnly="true" styleClass="list-group" infoClass="list-group-item list-group-item-success"
                                                     errorClass="list-group-item list-group-item-danger" />
                                         <div class="form-group has-feedback">
@@ -56,7 +56,7 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-3 control-label">
-                                            <p:commandButton value="Guardar" actionListener="#{servicioControlador.guardarServicio}" update="@form" styleClass="btn btn-primary"/>
+                                            <p:commandButton value="Actualizar" actionListener="#{servicioControlador.actualizarServicio}" update="@form" styleClass="btn btn-primary"/>
                                         </div>
                                     </h:form>  
                                 </div>

@@ -2,6 +2,7 @@
 package com.sgstt.entidad;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -81,5 +82,47 @@ public class Destino implements Serializable{
     public void setEstado(Estado estado) {
         this.estado = estado;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 53 * hash + Objects.hashCode(this.id);
+        hash = 53 * hash + Objects.hashCode(this.nombre);
+        hash = 53 * hash + Objects.hashCode(this.longitud);
+        hash = 53 * hash + Objects.hashCode(this.latitud);
+        hash = 53 * hash + Objects.hashCode(this.estado);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Destino other = (Destino) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.nombre, other.nombre)) {
+            return false;
+        }
+        if (!Objects.equals(this.longitud, other.longitud)) {
+            return false;
+        }
+        if (!Objects.equals(this.latitud, other.latitud)) {
+            return false;
+        }
+        if (this.estado != other.estado) {
+            return false;
+        }
+        return true;
+    }
+
+    
+
+    
     
 }

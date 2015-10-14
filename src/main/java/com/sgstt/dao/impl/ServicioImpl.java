@@ -8,8 +8,10 @@ import java.io.Serializable;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 
 /**
  *
@@ -34,6 +36,20 @@ public class ServicioImpl extends HibernateImpl<Servicio,Integer> implements Ser
             e.printStackTrace();
         }
         return lista;
+    }
+
+    @Override
+    public Servicio obtenerServicioConDestinos(Integer id) {
+        Servicio auxServicio = null;
+        try{
+            Session session = conexion.getSession();
+            Query query = session.createQuery("from Servicio as servicio join fetch servicio.destinos as destinos where servicio.id = :dato");
+            query.setInteger("dato", id);
+            auxServicio = (Servicio) query.uniqueResult();
+        }catch(HibernateException e){
+            e.printStackTrace();
+        }
+        return auxServicio;
     }
 
 }

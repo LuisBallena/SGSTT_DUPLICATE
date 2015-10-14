@@ -927,3 +927,29 @@ INSERT INTO `SGSTT`.`PERMISO` (`idPERMISO`, `idPERFIL`, `idMODULO`, `LISTAR`, `C
 INSERT INTO `SGSTT`.`PERMISO` (`idPERMISO`, `idPERFIL`, `idMODULO`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`) VALUES (13, 1, 13, 1, 1, 1, 1);
 
 COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `SGSTT`.`Destinos`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `SGSTT`;
+INSERT INTO `SGSTT`.`Destinos` (`idDestinos`, `NOMBRE`, `LATITUD`, `LONGITUD`, `ESTADO`) VALUES (1, 'AEROPUERTO LAN', '1', '1', 1);
+INSERT INTO `SGSTT`.`Destinos` (`idDestinos`, `NOMBRE`, `LATITUD`, `LONGITUD`, `ESTADO`) VALUES (2, 'HOTEL SHERATON', '2', '2', 1);
+INSERT INTO `SGSTT`.`Destinos` (`idDestinos`, `NOMBRE`, `LATITUD`, `LONGITUD`, `ESTADO`) VALUES (3, 'HOTEL MARRIOT', '1', '2', 1);
+INSERT INTO `SGSTT`.`Destinos` (`idDestinos`, `NOMBRE`, `LATITUD`, `LONGITUD`, `ESTADO`) VALUES (4, 'HOTEL CONQUISTADORES', '1', '2', 1);
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `SGSTT`.`servicio_destinos`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `SGSTT`;
+INSERT INTO `SGSTT`.`servicio_destinos` (`servicio_idservicio`, `Destinos_idDestinos`) VALUES (1, 1);
+INSERT INTO `SGSTT`.`servicio_destinos` (`servicio_idservicio`, `Destinos_idDestinos`) VALUES (1, 2);
+INSERT INTO `SGSTT`.`servicio_destinos` (`servicio_idservicio`, `Destinos_idDestinos`) VALUES (2, 1);
+INSERT INTO `SGSTT`.`servicio_destinos` (`servicio_idservicio`, `Destinos_idDestinos`) VALUES (2, 3);
+INSERT INTO `SGSTT`.`servicio_destinos` (`servicio_idservicio`, `Destinos_idDestinos`) VALUES (3, 1);
+INSERT INTO `SGSTT`.`servicio_destinos` (`servicio_idservicio`, `Destinos_idDestinos`) VALUES (3, 4);
+
+COMMIT;

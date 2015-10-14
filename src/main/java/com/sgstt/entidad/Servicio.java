@@ -52,6 +52,7 @@ public class Servicio implements Serializable {
     private Set<Destino> destinos = new HashSet<Destino>(0);
 
     public Servicio() {
+        tipoServicio = new TipoServicio();
     }
 
     public Integer getId() {
