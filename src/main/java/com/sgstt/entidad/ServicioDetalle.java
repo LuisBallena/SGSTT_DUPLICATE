@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -46,18 +47,13 @@ public class ServicioDetalle implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @Fetch(FetchMode.JOIN)
-    @JoinColumn(name = "IDFILE", nullable = false)
+    @JoinColumn(name = "IDFILE", nullable = true)
     private File file;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "IDTRASLADISTA")
     private Trasladista trasladista;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @Fetch(FetchMode.JOIN)
-    @JoinColumn(name = "IDESTADO_SERVICIO", nullable = false)
-    private EstadoServicio estadoServicio;
     
     @ManyToOne(fetch = FetchType.EAGER)
     @Fetch(FetchMode.JOIN)
@@ -97,14 +93,23 @@ public class ServicioDetalle implements Serializable {
     @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false, insertable = false)
     private Estado estado;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ESTADO_SERVICIO")
+    private EstadoServicio estadoServicio;
 
     
     @Column(insertable = false)
     private String externalizado;
+    
+    @Column(name = "VENTA_DIRECTA")
+    private boolean ventaDirecta;
+    
+    @Transient
+    private String fileAuxiliar;
 
     public ServicioDetalle() {
-        vehiculo = new Vehiculo();
-        chofer = new Chofer();
+        ventaDirecta = false;
     }
 
     public Integer getId() {
@@ -137,14 +142,6 @@ public class ServicioDetalle implements Serializable {
 
     public void setTrasladista(Trasladista trasladista) {
         this.trasladista = trasladista;
-    }
-
-    public EstadoServicio getEstadoServicio() {
-        return estadoServicio;
-    }
-
-    public void setEstadoServicio(EstadoServicio estadoServicio) {
-        this.estadoServicio = estadoServicio;
     }
 
     public Integer getNroPersonas() {
@@ -246,5 +243,31 @@ public class ServicioDetalle implements Serializable {
     public void setEmpresaVehiculo(EmpresaVehiculo empresaVehiculo) {
         this.empresaVehiculo = empresaVehiculo;
     }
+
+    public EstadoServicio getEstadoServicio() {
+        return estadoServicio;
+    }
+
+    public void setEstadoServicio(EstadoServicio estadoServicio) {
+        this.estadoServicio = estadoServicio;
+    }
+
+    public boolean isVentaDirecta() {
+        return ventaDirecta;
+    }
+
+    public void setVentaDirecta(boolean ventaDirecta) {
+        this.ventaDirecta = ventaDirecta;
+    }
+
+    public String getFileAuxiliar() {
+        if(isVentaDirecta()){
+            fileAuxiliar = "VENTA DIRECTA";
+        }else{
+            fileAuxiliar = ""+getFile().getIdFile();
+        }
+        return fileAuxiliar;
+    }
+
     
 }

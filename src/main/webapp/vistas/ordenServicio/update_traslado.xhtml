@@ -55,31 +55,6 @@
                                             </div>
                                         </div>
                                         <div class="form-group has-feedback">
-                                            <label class="col-md-2 control-label" >Chofer :</label>
-                                            <div class="col-md-3">
-                                                <h:selectOneMenu styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.chofer.id}">
-                                                    <f:selectItem itemLabel="Seleccionar" itemValue="0" />
-                                                    <f:selectItems value="#{ordenServicioControlador.choferes}" var="choferes" itemLabel="#{choferes.nombre} #{choferes.apellido}" itemValue="#{choferes.id}" />
-                                                </h:selectOneMenu>
-                                            </div>
-                                            <label  class="col-md-2 control-label" >Vehiculo :</label>
-                                            <div class="col-md-3">
-                                                <h:selectOneMenu styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.vehiculo.id}">
-                                                    <f:selectItem itemLabel="Seleccionar" itemValue="0" />
-                                                    <f:selectItems value="#{ordenServicioControlador.vehiculos}" var="vehiculos" itemLabel="#{vehiculos.descripcion}" itemValue="#{vehiculos.id}" />
-                                                </h:selectOneMenu>
-                                            </div>
-                                        </div>
-                                        <div class="form-group has-feedback">
-                                            <label class="col-md-2 control-label" >Linea :</label>
-                                            <div class="col-md-3">
-                                                <h:selectOneMenu styleClass="form-control" value="#{ordenServicioControlador.vueloSeleccionado.id}">
-                                                    <f:selectItem itemLabel="Seleccionar" itemValue="0" />
-                                                    <f:selectItems value="#{ordenServicioControlador.vuelos}" var="vuelos" itemLabel="#{vuelos.descripcion}" itemValue="#{vuelos.id}" />
-                                                </h:selectOneMenu>
-                                            </div>
-                                        </div>
-                                        <div class="form-group has-feedback">
                                             <h:panelGroup id="cliente">
                                                 <label class="col-md-2 control-label" >File :</label>
                                                 <div  style="padding-right: 0px;"  class="col-xs-11 col-md-2" >
@@ -100,6 +75,23 @@
                                                     </p>
                                                 </div>
                                             </h:panelGroup>
+                                        </div>
+                                        <div class="form-group has-feedback">
+                                            <label class="col-md-2 control-label" >Vuelo :</label>
+                                            <div class="col-md-3">
+                                                <h:selectOneMenu styleClass="form-control" value="#{ordenServicioControlador.vueloSeleccionado.id}">
+                                                    <f:selectItem itemLabel="Seleccionar" itemValue="0" />
+                                                    <f:selectItems value="#{ordenServicioControlador.vuelos}" var="vuelos" itemLabel="#{vuelos.descripcion}" itemValue="#{vuelos.id}" />
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </div>
+                                        <div class="form-group has-feedback">
+                                            <label class="col-md-2 control-label" >Venta Directa :</label>
+                                            <div class="col-md-3">
+                                                <label class="control-label">
+                                                     <h:selectBooleanCheckbox  value="#{ordenServicioControlador.servicioDetalle.ventaDirecta}" />
+                                                </label>
+                                            </div>
                                         </div>
                                         <div class="col-sm-3 control-label">
                                             <h:commandButton value="Actualizar" actionListener="#{ordenServicioControlador.actualizarDetalle}"  styleClass="btn btn-primary" >
@@ -138,7 +130,7 @@
                         <f:facet name="header">
                             Cliente
                         </f:facet>
-                        <h:outputText value="#{list.cliente.nombre}" >
+                        <h:outputText value="#{list.cliente.nombreAuxiliar}" >
                         </h:outputText>
                     </p:column>
                     <p:column style="text-align: center;">

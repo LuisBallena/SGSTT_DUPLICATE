@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 package com.sgstt.servicios;
 
@@ -13,7 +9,6 @@ import com.sgstt.dao.impl.MarcaImpl;
 import com.sgstt.dao.impl.TipoVehiculoImpl;
 import com.sgstt.dao.impl.VehiculoImpl;
 import com.sgstt.entidad.Estado;
-import com.sgstt.entidad.File;
 import com.sgstt.entidad.Marca;
 import com.sgstt.entidad.TipoVehiculo;
 import com.sgstt.entidad.Vehiculo;

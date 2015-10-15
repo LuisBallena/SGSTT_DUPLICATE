@@ -281,6 +281,63 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `SGSTT`.`empresa`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `SGSTT`.`empresa` ;
+
+CREATE  TABLE IF NOT EXISTS `SGSTT`.`empresa` (
+  `idempresa` INT NOT NULL AUTO_INCREMENT ,
+  `razon_social` VARCHAR(45) NULL ,
+  `ruc` VARCHAR(45) NULL ,
+  `telefono` VARCHAR(45) NULL ,
+  `celular` VARCHAR(45) NULL ,
+  `correo` VARCHAR(45) NULL ,
+  PRIMARY KEY (`idempresa`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `SGSTT`.`empresa_chofer`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `SGSTT`.`empresa_chofer` ;
+
+CREATE  TABLE IF NOT EXISTS `SGSTT`.`empresa_chofer` (
+  `idempresa_chofer` INT NOT NULL AUTO_INCREMENT ,
+  `nombre` VARCHAR(60) NULL ,
+  `apellido` VARCHAR(60) NULL ,
+  `dni` VARCHAR(8) NULL ,
+  `empresa_idempresa` INT NOT NULL ,
+  PRIMARY KEY (`idempresa_chofer`) ,
+  INDEX `fk_empresa_chofer_empresa1_idx` (`empresa_idempresa` ASC) ,
+  CONSTRAINT `fk_empresa_chofer_empresa1`
+    FOREIGN KEY (`empresa_idempresa` )
+    REFERENCES `SGSTT`.`empresa` (`idempresa` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `SGSTT`.`empresa_vehiculo`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `SGSTT`.`empresa_vehiculo` ;
+
+CREATE  TABLE IF NOT EXISTS `SGSTT`.`empresa_vehiculo` (
+  `idempresa_vehiculo` INT NOT NULL AUTO_INCREMENT ,
+  `marca` VARCHAR(25) NULL ,
+  `placa` VARCHAR(16) NULL ,
+  `empresa_idempresa` INT NOT NULL ,
+  PRIMARY KEY (`idempresa_vehiculo`) ,
+  INDEX `fk_empresa_vehiculo_empresa1_idx` (`empresa_idempresa` ASC) ,
+  CONSTRAINT `fk_empresa_vehiculo_empresa1`
+    FOREIGN KEY (`empresa_idempresa` )
+    REFERENCES `SGSTT`.`empresa` (`idempresa` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `SGSTT`.`Tipo_Cliente`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `SGSTT`.`Tipo_Cliente` ;
@@ -362,108 +419,39 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `SGSTT`.`estado_servicio`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `SGSTT`.`estado_servicio` ;
-
-CREATE  TABLE IF NOT EXISTS `SGSTT`.`estado_servicio` (
-  `idestado_servicio` INT NOT NULL ,
-  `descripcion` VARCHAR(20) NULL ,
-  PRIMARY KEY (`idestado_servicio`) )
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `SGSTT`.`empresa`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `SGSTT`.`empresa` ;
-
-CREATE  TABLE IF NOT EXISTS `SGSTT`.`empresa` (
-  `idempresa` INT NOT NULL AUTO_INCREMENT ,
-  `razon_social` VARCHAR(45) NULL ,
-  `ruc` VARCHAR(45) NULL ,
-  `telefono` VARCHAR(45) NULL ,
-  `celular` VARCHAR(45) NULL ,
-  `correo` VARCHAR(45) NULL ,
-  PRIMARY KEY (`idempresa`) )
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `SGSTT`.`empresa_chofer`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `SGSTT`.`empresa_chofer` ;
-
-CREATE  TABLE IF NOT EXISTS `SGSTT`.`empresa_chofer` (
-  `idempresa_chofer` INT NOT NULL AUTO_INCREMENT ,
-  `nombre` VARCHAR(60) NULL ,
-  `apellido` VARCHAR(60) NULL ,
-  `dni` VARCHAR(8) NULL ,
-  `empresa_idempresa` INT NOT NULL ,
-  PRIMARY KEY (`idempresa_chofer`) ,
-  INDEX `fk_empresa_chofer_empresa1_idx` (`empresa_idempresa` ASC) ,
-  CONSTRAINT `fk_empresa_chofer_empresa1`
-    FOREIGN KEY (`empresa_idempresa` )
-    REFERENCES `SGSTT`.`empresa` (`idempresa` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `SGSTT`.`empresa_vehiculo`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `SGSTT`.`empresa_vehiculo` ;
-
-CREATE  TABLE IF NOT EXISTS `SGSTT`.`empresa_vehiculo` (
-  `idempresa_vehiculo` INT NOT NULL AUTO_INCREMENT ,
-  `marca` VARCHAR(25) NULL ,
-  `placa` VARCHAR(16) NULL ,
-  `empresa_idempresa` INT NOT NULL ,
-  PRIMARY KEY (`idempresa_vehiculo`) ,
-  INDEX `fk_empresa_vehiculo_empresa1_idx` (`empresa_idempresa` ASC) ,
-  CONSTRAINT `fk_empresa_vehiculo_empresa1`
-    FOREIGN KEY (`empresa_idempresa` )
-    REFERENCES `SGSTT`.`empresa` (`idempresa` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `SGSTT`.`servicio_detalle`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `SGSTT`.`servicio_detalle` ;
 
 CREATE  TABLE IF NOT EXISTS `SGSTT`.`servicio_detalle` (
   `idservicio_detalle` INT NOT NULL AUTO_INCREMENT ,
-  `idFile` INT NOT NULL ,
   `idservicio` INT NOT NULL ,
   `num_personas` INT NOT NULL ,
   `FECHA` DATETIME NOT NULL ,
+  `VENTA_DIRECTA` TINYINT(1) NOT NULL DEFAULT 0 ,
+  `externalizado` VARCHAR(2) NOT NULL DEFAULT 'NO' ,
   `ESTADO` TINYINT(1) NOT NULL DEFAULT 1 ,
+  `ESTADO_SERVICIO` VARCHAR(60) NULL ,
   `FECHA_REGISTRO` DATETIME NOT NULL ,
   `FECHA_MODIFICACION` DATETIME NOT NULL ,
-  `externalizado` VARCHAR(2) NOT NULL DEFAULT 'NO' ,
   `idvuelo` INT NOT NULL ,
-  `idestado_servicio` INT NOT NULL ,
   `idchofer` INT NULL ,
   `idtrasladista` INT NULL ,
   `idcobro` INT NULL ,
   `idvehiculo` INT NULL ,
   `idempresa_chofer` INT NULL ,
   `idempresa_vehiculo` INT NULL ,
-  PRIMARY KEY (`idservicio_detalle`, `idFile`, `idservicio`) ,
+  `idFile` INT NULL ,
+  PRIMARY KEY (`idservicio_detalle`, `idservicio`) ,
   INDEX `fk_servicio_detalle_trasladista1_idx` (`idtrasladista` ASC) ,
   INDEX `fk_servicio_detalle_cobro1_idx` (`idcobro` ASC) ,
   INDEX `fk_servicio_detalle_servicio1_idx` (`idservicio` ASC) ,
   INDEX `fk_servicio_detalle_vuelo1_idx` (`idvuelo` ASC) ,
-  INDEX `fk_servicio_detalle_File1_idx` (`idFile` ASC) ,
-  INDEX `fk_servicio_detalle_estado_servicio1_idx` (`idestado_servicio` ASC) ,
   INDEX `fk_servicio_detalle_chofer1_idx` (`idchofer` ASC) ,
   INDEX `fk_servicio_detalle_vehiculo1_idx` (`idvehiculo` ASC) ,
   INDEX `fk_servicio_detalle_empresa_chofer1_idx` (`idempresa_chofer` ASC) ,
   INDEX `fk_servicio_detalle_empresa_vehiculo1_idx` (`idempresa_vehiculo` ASC) ,
+  INDEX `fk_servicio_detalle_File1` (`idFile` ASC) ,
   CONSTRAINT `fk_servicio_detalle_trasladista1`
     FOREIGN KEY (`idtrasladista` )
     REFERENCES `SGSTT`.`trasladista` (`idtrasladista` )
@@ -484,16 +472,6 @@ CREATE  TABLE IF NOT EXISTS `SGSTT`.`servicio_detalle` (
     REFERENCES `SGSTT`.`vuelo` (`idvuelo` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_servicio_detalle_File1`
-    FOREIGN KEY (`idFile` )
-    REFERENCES `SGSTT`.`File` (`idFile` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_servicio_detalle_estado_servicio1`
-    FOREIGN KEY (`idestado_servicio` )
-    REFERENCES `SGSTT`.`estado_servicio` (`idestado_servicio` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_servicio_detalle_chofer1`
     FOREIGN KEY (`idchofer` )
     REFERENCES `SGSTT`.`chofer` (`idchofer` )
@@ -512,6 +490,11 @@ CREATE  TABLE IF NOT EXISTS `SGSTT`.`servicio_detalle` (
   CONSTRAINT `fk_servicio_detalle_empresa_vehiculo1`
     FOREIGN KEY (`idempresa_vehiculo` )
     REFERENCES `SGSTT`.`empresa_vehiculo` (`idempresa_vehiculo` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_servicio_detalle_File1`
+    FOREIGN KEY (`idFile` )
+    REFERENCES `SGSTT`.`File` (`idFile` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -801,6 +784,33 @@ INSERT INTO `SGSTT`.`estado_incidencia` (`idestado_incidencia`, `descripcion`) V
 COMMIT;
 
 -- -----------------------------------------------------
+-- Data for table `SGSTT`.`empresa`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `SGSTT`;
+INSERT INTO `SGSTT`.`empresa` (`idempresa`, `razon_social`, `ruc`, `telefono`, `celular`, `correo`) VALUES (1, 'TARAKATOURS', NULL, NULL, NULL, NULL);
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `SGSTT`.`empresa_chofer`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `SGSTT`;
+INSERT INTO `SGSTT`.`empresa_chofer` (`idempresa_chofer`, `nombre`, `apellido`, `dni`, `empresa_idempresa`) VALUES (1, 'Rodrigo', 'Rosas', '12345678', 1);
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `SGSTT`.`empresa_vehiculo`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `SGSTT`;
+INSERT INTO `SGSTT`.`empresa_vehiculo` (`idempresa_vehiculo`, `marca`, `placa`, `empresa_idempresa`) VALUES (1, 'hyundai', '124-afg', 1);
+
+COMMIT;
+
+-- -----------------------------------------------------
 -- Data for table `SGSTT`.`Tipo_Cliente`
 -- -----------------------------------------------------
 START TRANSACTION;
@@ -827,43 +837,6 @@ COMMIT;
 START TRANSACTION;
 USE `SGSTT`;
 INSERT INTO `SGSTT`.`EMPLEADO` (`idEMPLEADO`, `NOMBRE`, `APELLIDOS`, `DNI`) VALUES (1, 'Sistema', 'Administrador', 'admin');
-
-COMMIT;
-
--- -----------------------------------------------------
--- Data for table `SGSTT`.`estado_servicio`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `SGSTT`;
-INSERT INTO `SGSTT`.`estado_servicio` (`idestado_servicio`, `descripcion`) VALUES (1, 'PENDIENTE');
-INSERT INTO `SGSTT`.`estado_servicio` (`idestado_servicio`, `descripcion`) VALUES (2, 'REALIZADO');
-
-COMMIT;
-
--- -----------------------------------------------------
--- Data for table `SGSTT`.`empresa`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `SGSTT`;
-INSERT INTO `SGSTT`.`empresa` (`idempresa`, `razon_social`, `ruc`, `telefono`, `celular`, `correo`) VALUES (1, 'TARAKATOURS', NULL, NULL, NULL, NULL);
-
-COMMIT;
-
--- -----------------------------------------------------
--- Data for table `SGSTT`.`empresa_chofer`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `SGSTT`;
-INSERT INTO `SGSTT`.`empresa_chofer` (`idempresa_chofer`, `nombre`, `apellido`, `dni`, `empresa_idempresa`) VALUES (1, 'Rodrigo', 'Rosas', '12345678', 1);
-
-COMMIT;
-
--- -----------------------------------------------------
--- Data for table `SGSTT`.`empresa_vehiculo`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `SGSTT`;
-INSERT INTO `SGSTT`.`empresa_vehiculo` (`idempresa_vehiculo`, `marca`, `placa`, `empresa_idempresa`) VALUES (1, 'hyundai', '124-afg', 1);
 
 COMMIT;
 

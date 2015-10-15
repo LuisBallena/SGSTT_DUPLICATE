@@ -117,13 +117,20 @@ public class TransporteServicio implements Serializable {
     }
     /*Se debe refactorizar debido a que no hace relacion a su funcion*/
     public void registrarServicio(ServicioDetalle servicioDetalle) throws TransporteException {
+        if(servicioDetalle.isVentaDirecta()){
+            servicioDetalle.setFile(null);
+        }
         conexion.beginConexion();
+        servicioDetalle.setEstadoServicio(EstadoServicio.SIN_ASIGNAR);
         servicioDetalleDao.agregar(servicioDetalle);
         Utilitario.enviarMensajeGlobalValido("Se ha registrado correctamente");
         conexion.closeConexion();
     }
     /*Se debe refactorizar debido a que no hace relacion a su funcion*/
     public void actualizarServicio(ServicioDetalle servicioDetalle) {
+        if(servicioDetalle.isVentaDirecta()){
+            servicioDetalle.setFile(null);
+        }
         conexion.beginConexion();
         servicioDetalleDao.actualizar(servicioDetalle);
         Utilitario.enviarMensajeGlobalValido("Se ha actualizado correctamente");

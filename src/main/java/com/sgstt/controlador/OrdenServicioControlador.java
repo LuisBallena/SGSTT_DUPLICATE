@@ -1,13 +1,10 @@
 package com.sgstt.controlador;
 
-import com.sgstt.entidad.Chofer;
-import com.sgstt.entidad.EstadoServicio;
 import com.sgstt.entidad.File;
 import com.sgstt.entidad.Servicio;
 import com.sgstt.entidad.ServicioDetalle;
 import com.sgstt.entidad.TipoServicio;
 import com.sgstt.entidad.Trasladista;
-import com.sgstt.entidad.Vehiculo;
 import com.sgstt.entidad.Vuelo;
 import com.sgstt.excepciones.TransporteException;
 import com.sgstt.hibernate.HibernatePaginador;
@@ -34,8 +31,6 @@ public class OrdenServicioControlador implements Serializable {
     private static final long serialVersionUID = -8924952626882918455L;
     private static final Logger log = Logger.getLogger(OrdenServicioControlador.class.getPackage().getName());
     private TransporteServicio transporteServicio;
-    private List<Chofer> choferes;
-    private List<Vehiculo> vehiculos;
     private List<Servicio> servicios;
     private List<Trasladista> guias;
     private List<Vuelo> vuelos;
@@ -88,6 +83,7 @@ public class OrdenServicioControlador implements Serializable {
             transporteServicio = new TransporteServicio();
             servicios = transporteServicio.obtenerServiciosPorTipoServicio(TipoServicio.TRASLADO);
             servicioDetalle = transporteServicio.obtenerServicioDetalle(id);
+            servicioDetalle.setFile(servicioDetalle.isVentaDirecta() ? new File() : servicioDetalle.getFile());
             servicioSeleccionado = servicioDetalle.getServicio();
             trasladistaSeleccionado = (servicioDetalle.getTrasladista() == null ? new Trasladista() : servicioDetalle.getTrasladista());
             vueloSeleccionado = servicioDetalle.getVuelo();
@@ -96,8 +92,6 @@ public class OrdenServicioControlador implements Serializable {
     }
 
     private void initCollections() {
-        choferes = transporteServicio.obtenerChoferes();
-        vehiculos = transporteServicio.obtenerVehiculos();
         vuelos = transporteServicio.obtenerVuelos();
         guias = transporteServicio.obtenerGuias();
         files = transporteServicio.obtenerFilesActivos();
@@ -122,9 +116,6 @@ public class OrdenServicioControlador implements Serializable {
         servicioDetalle.setFechaModificacion(new Date());
         servicioDetalle.setServicio(servicioSeleccionado);
         servicioDetalle.setTrasladista(trasladistaSeleccionado.getId().intValue() == 0 ? null : trasladistaSeleccionado);
-        EstadoServicio servicio = new EstadoServicio();
-        servicio.setId(1);
-        servicioDetalle.setEstadoServicio(servicio);
         servicioDetalle.setVuelo(vueloSeleccionado);
         try {
             transporteServicio.registrarServicio(servicioDetalle);
@@ -187,12 +178,6 @@ public class OrdenServicioControlador implements Serializable {
         } else if (!esNroPersonasValida(servicioDetalle)) {
             Utilitario.enviarMensajeGlobalError("Debe ingresar la cantidad de Personas");
             resultado = false;
-        } else if (!esChoferValido(servicioDetalle.getChofer())) {
-            Utilitario.enviarMensajeGlobalError("Debe seleccionar un chofer");
-            resultado = false;
-        } else if (!esVehiculoValido(servicioDetalle.getVehiculo())) {
-            Utilitario.enviarMensajeGlobalError("Debe seleccionar un vehiculo");
-            resultado = false;
         } else if (!esLineaValida(vueloSeleccionado)) {
             Utilitario.enviarMensajeGlobalError("Debe seleccionar una linea");
             resultado = false;
@@ -211,20 +196,16 @@ public class OrdenServicioControlador implements Serializable {
         return servicioDetalle.getNroPersonas() != null && servicioDetalle.getNroPersonas().intValue() != 0;
     }
 
-    public boolean esChoferValido(Chofer chofer) {
-        return chofer.getId().intValue() != 0;
-    }
-
-    public boolean esVehiculoValido(Vehiculo vehiculo) {
-        return vehiculo.getId().intValue() != 0;
-    }
-
     public boolean esLineaValida(Vuelo vuelo) {
         return vuelo.getId().intValue() != 0;
     }
 
     public boolean esFileValido(File file) {
-        return file.getIdFile() != 0;
+        boolean resultado = true;
+        if(!servicioDetalle.isVentaDirecta() && file.getIdFile() == 0){
+            resultado = false;
+        }
+        return resultado;
     }
 
     /* GETTERS AND SETTERS */
@@ -234,22 +215,6 @@ public class OrdenServicioControlador implements Serializable {
 
     public void setTransporteServicio(TransporteServicio transporteServicio) {
         this.transporteServicio = transporteServicio;
-    }
-
-    public List<Chofer> getChoferes() {
-        return choferes;
-    }
-
-    public void setChoferes(List<Chofer> choferes) {
-        this.choferes = choferes;
-    }
-
-    public List<Vehiculo> getVehiculos() {
-        return vehiculos;
-    }
-
-    public void setVehiculos(List<Vehiculo> vehiculos) {
-        this.vehiculos = vehiculos;
     }
 
     public List<Servicio> getServicios() {
