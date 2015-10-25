@@ -264,7 +264,7 @@ public class ServicioDetalle implements Serializable {
         if(isVentaDirecta()){
             fileAuxiliar = "VENTA DIRECTA";
         }else{
-            fileAuxiliar = ""+getFile().getIdFile();
+            fileAuxiliar = ""+getFile().getNroCorrelativo();
         }
         return fileAuxiliar;
     }

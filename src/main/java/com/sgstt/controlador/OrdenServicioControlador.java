@@ -1,10 +1,12 @@
 package com.sgstt.controlador;
 
+import com.sgstt.entidad.Chofer;
 import com.sgstt.entidad.File;
 import com.sgstt.entidad.Servicio;
 import com.sgstt.entidad.ServicioDetalle;
 import com.sgstt.entidad.TipoServicio;
 import com.sgstt.entidad.Trasladista;
+import com.sgstt.entidad.Vehiculo;
 import com.sgstt.entidad.Vuelo;
 import com.sgstt.excepciones.TransporteException;
 import com.sgstt.hibernate.HibernatePaginador;
@@ -35,6 +37,8 @@ public class OrdenServicioControlador implements Serializable {
     private List<Trasladista> guias;
     private List<Vuelo> vuelos;
     private List<File> files;
+    private List<Chofer> choferes;
+    private List<Vehiculo> vehiculos;
     private Servicio servicioSeleccionado;
     private ServicioDetalle servicioDetalle;
     private Trasladista trasladistaSeleccionado;
@@ -78,16 +82,17 @@ public class OrdenServicioControlador implements Serializable {
                 return;
             }
             Integer id = Integer.valueOf(value.toString());
-            log.info(" el id obtenido es "+id);
             fechaActual = new Date();
             transporteServicio = new TransporteServicio();
             servicios = transporteServicio.obtenerServiciosPorTipoServicio(TipoServicio.TRASLADO);
             servicioDetalle = transporteServicio.obtenerServicioDetalle(id);
+            servicioDetalle.setChofer(new Chofer());
+            servicioDetalle.setVehiculo(new Vehiculo());
             servicioDetalle.setFile(servicioDetalle.isVentaDirecta() ? new File() : servicioDetalle.getFile());
             servicioSeleccionado = servicioDetalle.getServicio();
             trasladistaSeleccionado = (servicioDetalle.getTrasladista() == null ? new Trasladista() : servicioDetalle.getTrasladista());
             vueloSeleccionado = servicioDetalle.getVuelo();
-            initCollections();
+            initCollectionsUpdate();
         }
     }
 
@@ -95,6 +100,13 @@ public class OrdenServicioControlador implements Serializable {
         vuelos = transporteServicio.obtenerVuelos();
         guias = transporteServicio.obtenerGuias();
         files = transporteServicio.obtenerFilesActivos();
+        
+    }
+    
+    private void initCollectionsUpdate(){
+        initCollections();
+        vehiculos = transporteServicio.obtenerVehiculosConTipoVehiculos();
+        choferes = transporteServicio.obtenerChoferes();
     }
 
     private void initTraslado() {
@@ -133,7 +145,7 @@ public class OrdenServicioControlador implements Serializable {
     }
     
     public void actualizarDetalle(){
-        if (!esVistaValida()) {
+        if (!esVistaUpdateValida()) {
             return;
         }
         servicioDetalle.setFechaModificacion(new Date());
@@ -171,6 +183,24 @@ public class OrdenServicioControlador implements Serializable {
     }
 
     private boolean esVistaValida() {
+        boolean resultado = true;
+        if (!esServicioValido(servicioSeleccionado)) {
+            Utilitario.enviarMensajeGlobalError("Debe seleccionar un Servicio");
+            resultado = false;
+        } else if (!esNroPersonasValida(servicioDetalle)) {
+            Utilitario.enviarMensajeGlobalError("Debe ingresar la cantidad de Personas");
+            resultado = false;
+        } else if (!esLineaValida(vueloSeleccionado)) {
+            Utilitario.enviarMensajeGlobalError("Debe seleccionar una linea");
+            resultado = false;
+        } else if (!esFileValido(servicioDetalle.getFile())) {
+            Utilitario.enviarMensajeGlobalError("Debe seleccionar un file");
+            resultado = false;
+        }
+        return resultado;
+    }
+    
+    public boolean esVistaUpdateValida(){
         boolean resultado = true;
         if (!esServicioValido(servicioSeleccionado)) {
             Utilitario.enviarMensajeGlobalError("Debe seleccionar un Servicio");
@@ -303,6 +333,22 @@ public class OrdenServicioControlador implements Serializable {
 
     public void setMessageException(String messageException) {
         this.messageException = messageException;
+    }
+
+    public List<Chofer> getChoferes() {
+        return choferes;
+    }
+
+    public void setChoferes(List<Chofer> choferes) {
+        this.choferes = choferes;
+    }
+
+    public List<Vehiculo> getVehiculos() {
+        return vehiculos;
+    }
+
+    public void setVehiculos(List<Vehiculo> vehiculos) {
+        this.vehiculos = vehiculos;
     }
     
 }

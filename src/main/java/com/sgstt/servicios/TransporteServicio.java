@@ -59,6 +59,14 @@ public class TransporteServicio implements Serializable {
         conexion.closeConexion();
         return aux;
     }
+    
+    public List<Vehiculo> obtenerVehiculosConTipoVehiculos(){
+        List<Vehiculo> aux = null;
+        conexion.beginConexion();
+        aux = vehiculoDao.getVehiculosWithTipoVehiculos();
+        conexion.closeConexion();
+        return aux;
+    }
 
     public List<Servicio> obtenerServiciosPorTipoServicio(Integer id) {
         List<Servicio> aux = null;

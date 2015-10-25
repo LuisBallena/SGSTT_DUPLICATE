@@ -32,18 +32,13 @@
                                 <p:dataTable    value="#{ordenServicioControlador.servicioDetallePaginador}"    var="list" emptyMessage="No existen registros de servicios" 
                                                 paginator="true" rows="10" lazy="true" rowIndexVar="rowIndex"
                                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
-
-                                    <p:column  style="text-align: center;width: 6%;font-size: 13px;">
-                                        <f:facet name="header">
-                                            #
-                                        </f:facet>
-                                        <h:outputText value="#{rowIndex+1}" />
-                                    </p:column>
                                     <p:column    style="text-align: center;font-size: 13px;">
                                         <f:facet name="header">
                                             Fecha
                                         </f:facet>
-                                        <h:outputText value="#{list.fecha}" />
+                                        <h:outputText value="#{list.fecha}" >
+                                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="GMT-5" />
+                                        </h:outputText>
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 13px;">
                                         <f:facet name="header">
@@ -85,19 +80,19 @@
                                         <f:facet name="header">
                                             Vehiculo
                                         </f:facet>
-                                        <h:outputText value="#{list.vehiculo.descripcion}" />
+                                        <h:outputText value="#{list.vehiculo eq null ? 'NO ASIGNADO' : list.vehiculo.descripcion}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 13px;">
                                         <f:facet name="header">
                                             Chofer
                                         </f:facet>
-                                        <h:outputText value="#{list.chofer.nombre} #{list.chofer.apellido}" />
+                                        <h:outputText value="#{list.chofer eq null ? 'NO ASIGNADO' : list.chofer.datosCompletos}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 13px;">
                                         <f:facet name="header">
                                             Trasladista
                                         </f:facet>
-                                        <h:outputText value="#{list.trasladista.nombre} #{list.trasladista.apellido}" />
+                                        <h:outputText value="#{list.trasladista eq null ? 'NO ASIGNADO' :  list.trasladista.datosCompletos}" />
                                     </p:column>
                                     <p:column  style="text-align: center;width: 8%;">                                      
                                         <p:commandButton style="font-size: 12px;" icon="icon-file" actionListener="#{ordenServicioControlador.capturarServicioDetalle(list.id)}" action="#{ordenServicioControlador.irDetalles(list.id,list.servicio.tipoServicio.id)}"    >

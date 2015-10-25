@@ -35,6 +35,9 @@
     padding-top: 5px;
 }
 
+.bootstrap-calendar{
+    font-size: 15px;
+}
 .bootstrap-calendar .ui-inputfield{
     width: 80%;
 }
@@ -49,4 +52,14 @@
 
 .DataList_SGSTT.ui-datalist .ui-datalist-item{
     margin-bottom: 2px;
+}
+
+#image_overlay{
+    background-image: url("../images/cargar.gif");
+    border: 0px;
+    z-index: 9999;
+    width: 31px;
+    height: 31px;
+    float: left;
+    margin-right: 5px;
 }

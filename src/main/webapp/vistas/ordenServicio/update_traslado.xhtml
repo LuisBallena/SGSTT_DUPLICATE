@@ -86,10 +86,52 @@
                                             </div>
                                         </div>
                                         <div class="form-group has-feedback">
+                                            <h:panelGroup id="panelChofer">
+                                                <label class="col-md-2 control-label" >Chofer :</label>
+                                                <div  style="padding-right: 0px;"  class="col-xs-11 col-md-2" >
+                                                    <p class="form-control" style="background-color: #f5f5f5;border: 1px solid #ccc;">
+                                                        #{ordenServicioControlador.servicioDetalle.chofer.datosCompletos}
+                                                    </p>
+                                                </div>
+                                                <div class="col-xs-1 col-md-1" style="padding-left: 0px;" >
+                                                    <div onclick="PF('dialogChoferes').show();" class="btn btn-primary clickable" style="width: 43px;height: 32.8px;" >
+                                                        <img src="#{request.contextPath}/resources/images/add.png" />
+                                                    </div>
+                                                </div>
+                                                <label  class="col-md-2 control-label" >Categoria :</label>
+                                                <div class="col-md-3">
+                                                    <p class="form-control" style="background-color: #f5f5f5;border: 1px solid #ccc;">
+                                                        #{ordenServicioControlador.servicioDetalle.chofer.categoria}
+                                                    </p>
+                                                </div>
+                                            </h:panelGroup>
+                                        </div>
+                                        <div class="form-group has-feedback">
+                                            <h:panelGroup id="panelVehiculo">
+                                                <label  class="col-md-2 control-label" >Vehiculo Placa :</label>
+                                                <div  style="padding-right: 0px;"  class="col-xs-11 col-md-2" >
+                                                   <p class="form-control" style="background-color: #f5f5f5;border: 1px solid #ccc;">
+                                                    #{ordenServicioControlador.servicioDetalle.vehiculo.placa}
+                                                    </p>
+                                                </div>
+                                                <div class="col-xs-1 col-md-1" style="padding-left: 0px;" >
+                                                    <div onclick="PF('dialogVehiculos').show();" class="btn btn-primary clickable" style="width: 43px;height: 32.8px;" >
+                                                        <img src="#{request.contextPath}/resources/images/add.png" />
+                                                    </div>
+                                                </div>
+                                                <label  class="col-md-2 control-label" >Tipo Vehiculo :</label>
+                                                <div class="col-md-3">
+                                                    <p class="form-control" style="background-color: #f5f5f5;border: 1px solid #ccc;">
+                                                        #{ordenServicioControlador.servicioDetalle.vehiculo.tipoVehiculo.nombre}
+                                                    </p>
+                                                </div>
+                                            </h:panelGroup>
+                                        </div>
+                                        <div class="form-group has-feedback">
                                             <label class="col-md-2 control-label" >Venta Directa :</label>
                                             <div class="col-md-3">
                                                 <label class="control-label">
-                                                     <h:selectBooleanCheckbox  value="#{ordenServicioControlador.servicioDetalle.ventaDirecta}" />
+                                                    <h:selectBooleanCheckbox  value="#{ordenServicioControlador.servicioDetalle.ventaDirecta}" />
                                                 </label>
                                             </div>
                                         </div>
@@ -109,7 +151,7 @@
         </div>
         <p:dialog modal="true" width="500"  height="300" header="Lista de Files" position="center top" id="DialogSelectable" widgetVar="dialogSelectable">
             <h:form id="frmDialogSelectable">
-                <p:dataTable  value="#{ordenServicioControlador.files}" var="list" 
+                <p:dataTable  value="#{ordenServicioControlador.files}" var="listFile" 
                               paginator="true" rows="10"  rowIndexVar="rowIndex"
                               paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
 
@@ -123,25 +165,93 @@
                         <f:facet name="header">
                             Nro Correlativo
                         </f:facet>
-                        <h:outputText value="#{list.nroCorrelativo}" >
+                        <h:outputText value="#{listFile.nroCorrelativo}" >
                         </h:outputText>
                     </p:column>
                     <p:column style="text-align: center;">
                         <f:facet name="header">
                             Cliente
                         </f:facet>
-                        <h:outputText value="#{list.cliente.nombreAuxiliar}" >
+                        <h:outputText value="#{listFile.cliente.nombreAuxiliar}" >
                         </h:outputText>
                     </p:column>
                     <p:column style="text-align: center;">
                         <f:facet name="header">
                             PAX
                         </f:facet>
-                        <h:outputText value="#{list.pax}" >
+                        <h:outputText value="#{listFile.pax}" >
                         </h:outputText>
                     </p:column>
                     <p:column style="text-align: center;width: 12%;">
                         <p:commandButton icon="icon-choice" update=":frmRegistrarOTraslado:cliente" actionListener="#{ordenServicioControlador.capturarFile(list)}"  oncomplete="PF('dialogSelectable').hide();" >
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:dialog>
+        <p:dialog modal="true" width="500"  height="300" header="Lista de Choferes" position="center top" id="dialogChoferes" widgetVar="dialogChoferes">
+            <h:form id="frmDialogChoferes">
+                <p:dataTable  value="#{ordenServicioControlador.choferes}" var="listChofer" 
+                              paginator="true" rows="10"  rowIndexVar="rowIndex"
+                              paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
+
+                    <p:column style="text-align: center;width: 10%;">
+                        <f:facet name="header">
+                            #
+                        </f:facet>
+                        <h:outputText value="#{rowIndex+1}" />
+                    </p:column>
+                    <p:column style="text-align: center;">
+                        <f:facet name="header">
+                            Chofer
+                        </f:facet>
+                        <h:outputText value="#{listChofer.datosCompletos}" >
+                        </h:outputText>
+                    </p:column>
+                    <p:column style="text-align: center;">
+                        <f:facet name="header">
+                            DNI
+                        </f:facet>
+                        <h:outputText value="#{listChofer.dni}" >
+                        </h:outputText>
+                    </p:column>
+                    <p:column style="text-align: center;width: 12%;">
+                        <p:commandButton icon="icon-choice" update=":frmRegistrarOTraslado:panelChofer"   oncomplete="PF('dialogChoferes').hide();" >
+                            <f:setPropertyActionListener value="#{listChofer}" target="#{ordenServicioControlador.servicioDetalle.chofer}"  />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:dialog>
+        <p:dialog modal="true" width="500"  height="300" header="Lista de Vehiculos" position="center top" id="dialogVehiculos" widgetVar="dialogVehiculos">
+            <h:form id="frmDialogVehiculos">
+                <p:dataTable  value="#{ordenServicioControlador.vehiculos}" var="listVehiculo" 
+                              paginator="true" rows="10"  rowIndexVar="rowIndex"
+                              paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
+
+                    <p:column style="text-align: center;width: 10%;">
+                        <f:facet name="header">
+                            #
+                        </f:facet>
+                        <h:outputText value="#{rowIndex+1}" />
+                    </p:column>
+                    <p:column style="text-align: center;">
+                        <f:facet name="header">
+                            Vehiculo
+                        </f:facet>
+                        <h:outputText value="#{listVehiculo.tipoVehiculo.nombre}" >
+                        </h:outputText>
+                    </p:column>
+                    <p:column style="text-align: center;">
+                        <f:facet name="header">
+                            Placa
+                        </f:facet>
+                        <h:outputText value="#{listVehiculo.placa}" >
+                        </h:outputText>
+                    </p:column>
+                    <p:column style="text-align: center;width: 12%;">
+                        <p:commandButton icon="icon-choice" update=":frmRegistrarOTraslado:panelVehiculo"   oncomplete="PF('dialogVehiculos').hide();" >
+                            <f:setPropertyActionListener value="#{listVehiculo}" target="#{ordenServicioControlador.servicioDetalle.vehiculo}"  />
                         </p:commandButton>
                     </p:column>
                 </p:dataTable>

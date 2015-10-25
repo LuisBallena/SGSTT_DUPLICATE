@@ -8,6 +8,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
@@ -47,6 +48,9 @@ public class Trasladista implements Serializable{
     @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false,insertable = false)
     Estado estado;
+    
+    @Transient
+    private String datosCompletos;
 
     public Trasladista() {
     }
@@ -123,4 +127,10 @@ public class Trasladista implements Serializable{
         this.estado = estado;
     }
 
+    public String getDatosCompletos() {
+        return String.format("%s %s",getNombre(),getApellido());
+    }
+
+    
+    
 }

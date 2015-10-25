@@ -1,5 +1,6 @@
 package com.sgstt.entidad;
 
+import com.sgstt.util.Utilitario;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
@@ -36,7 +38,10 @@ public class Chofer implements Serializable{
     
     @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false,insertable = false)
-    Estado estado;
+    private Estado estado;
+   
+    @Transient
+    private String datosCompletos;
 
     public Chofer() {
     }
@@ -88,5 +93,11 @@ public class Chofer implements Serializable{
     public void setEstado(Estado estado) {
         this.estado = estado;
     }
+
+    public String getDatosCompletos() {
+        return String.format("%s %s",Utilitario.esNulo(getNombre()) ? "" : getNombre(),Utilitario.esNulo(getApellido()) ? "" : getApellido());
+    }
+    
+    
     
 }
