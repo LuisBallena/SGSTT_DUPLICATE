@@ -28,6 +28,7 @@ public class TransporteServicio implements Serializable {
     private final ServicioDetalleDao servicioDetalleDao;
     private final DestinoDao destinoDao;
     private final TipoServicioDao tipoServicioDao;
+    private final TarifaDao tarifaDao;
 
     public TransporteServicio() {
         conexion = new HibernateConexion();
@@ -41,6 +42,7 @@ public class TransporteServicio implements Serializable {
         servicioDetalleDao = new ServicioDetalleImpl(conexion);
         destinoDao = new DestinoImpl(conexion);
         tipoServicioDao = new TipoServicioImpl(conexion);
+        tarifaDao = new TarifaImpl(conexion);
     }
 
     public List<Chofer> obtenerChoferes() {
@@ -59,8 +61,8 @@ public class TransporteServicio implements Serializable {
         conexion.closeConexion();
         return aux;
     }
-    
-    public List<Vehiculo> obtenerVehiculosConTipoVehiculos(){
+
+    public List<Vehiculo> obtenerVehiculosConTipoVehiculos() {
         List<Vehiculo> aux = null;
         conexion.beginConexion();
         aux = vehiculoDao.getVehiculosWithTipoVehiculos();
@@ -115,6 +117,14 @@ public class TransporteServicio implements Serializable {
         conexion.closeConexion();
         return aux;
     }
+    
+    public ServicioDetalle obtenerServicioDetalleConTipoVehiculo(Integer id){
+        ServicioDetalle aux = null;
+        conexion.beginConexion();
+        aux = servicioDetalleDao.getServicioDetalleWithTipoVehiculo(id);
+        conexion.closeConexion();
+        return aux;
+    }
 
     public void registrarServicioTercializado(ServicioDetalle servicioDetalle) {
         conexion.beginConexion();
@@ -124,8 +134,9 @@ public class TransporteServicio implements Serializable {
         conexion.closeConexion();
     }
     /*Se debe refactorizar debido a que no hace relacion a su funcion*/
+
     public void registrarServicio(ServicioDetalle servicioDetalle) throws TransporteException {
-        if(servicioDetalle.isVentaDirecta()){
+        if (servicioDetalle.isVentaDirecta()) {
             servicioDetalle.setFile(null);
         }
         conexion.beginConexion();
@@ -134,17 +145,31 @@ public class TransporteServicio implements Serializable {
         Utilitario.enviarMensajeGlobalValido("Se ha registrado correctamente");
         conexion.closeConexion();
     }
-    /*Se debe refactorizar debido a que no hace relacion a su funcion*/
-    public void actualizarServicio(ServicioDetalle servicioDetalle) {
-        if(servicioDetalle.isVentaDirecta()){
+
+    public void actualizarServicioDetalle(ServicioDetalle servicioDetalle) {
+        if (servicioDetalle.isVentaDirecta()) {
             servicioDetalle.setFile(null);
         }
         conexion.beginConexion();
+        if (estaAsignadoChoferVehiculo(servicioDetalle)) {
+            servicioDetalle.setEstadoServicio(EstadoServicio.PENDIENTE);
+            Tarifa tarifa = tarifaDao.getTarifaFilterByTipoVehiculoAndServicio(servicioDetalle.getVehiculo().getTipoVehiculo().getId(), servicioDetalle.getServicio().getId());
+            if(tarifa != null){
+                servicioDetalle.setPrecioServicio(tarifa.getPrecio());
+            }
+        }
         servicioDetalleDao.actualizar(servicioDetalle);
         Utilitario.enviarMensajeGlobalValido("Se ha actualizado correctamente");
         conexion.closeConexion();
     }
     
+    public void actualizarCotizacion(ServicioDetalle servicioDetalle){
+        conexion.beginConexion();
+        servicioDetalleDao.actualizar(servicioDetalle);
+        Utilitario.enviarMensajeGlobalValido("Se ha actualizado correctamente");
+        conexion.closeConexion();
+    }
+
     public void eliminarServicioDetalle(ServicioDetalle servicioDetalle) {
         conexion.beginConexion();
         servicioDetalle.setEstado(Estado.ELIMINADO);
@@ -166,97 +191,102 @@ public class TransporteServicio implements Serializable {
         conexion.closeConexion();
         Utilitario.enviarMensajeGlobalValido("Se ha actualizado correctamente");
     }
-    
-    public void guardarTipoServicio(TipoServicio tipoServicio){
+
+    public void guardarTipoServicio(TipoServicio tipoServicio) {
         conexion.beginConexion();
         tipoServicioDao.agregar(tipoServicio);
         conexion.closeConexion();
         Utilitario.enviarMensajeGlobalValido("Se ha registrado correctamente");
     }
-    
-    public void actualizarTipoServicio(TipoServicio tipoServicio){
+
+    public void actualizarTipoServicio(TipoServicio tipoServicio) {
         conexion.beginConexion();
         tipoServicioDao.actualizar(tipoServicio);
         conexion.closeConexion();
         Utilitario.enviarMensajeGlobalValido("Se ha actualizado correctamente");
     }
-    
-    public void eliminarDestino(Destino destino){
+
+    public void eliminarDestino(Destino destino) {
         conexion.beginConexion();
         destino.setEstado(Estado.ELIMINADO);
         destinoDao.actualizar(destino);
         conexion.closeConexion();
         Utilitario.enviarMensajeGlobalValido("Se ha eliminado correctamente");
     }
-    
-    public void eliminarTipoServicio(TipoServicio tipoServicio){
+
+    public void eliminarTipoServicio(TipoServicio tipoServicio) {
         conexion.beginConexion();
         tipoServicio.setEstado(Estado.ELIMINADO);
         tipoServicioDao.actualizar(tipoServicio);
         conexion.closeConexion();
         Utilitario.enviarMensajeGlobalValido("Se ha eliminado correctamente");
     }
-    
-    public TipoServicio obtenerTipoServicio(Integer id){
+
+    public TipoServicio obtenerTipoServicio(Integer id) {
         TipoServicio tipoServicio = null;
         conexion.beginConexion();
         tipoServicio = tipoServicioDao.obtenerEntidad(id);
         conexion.closeConexion();
         return tipoServicio;
     }
-    
-    public List<TipoServicio> obtenerTiposServicios(){
+
+    public List<TipoServicio> obtenerTiposServicios() {
         List<TipoServicio> auxiliar = null;
         conexion.beginConexion();
         auxiliar = tipoServicioDao.obtenerTodosActivos();
         conexion.closeConexion();
         return auxiliar;
     }
-    
-    public List<Destino> obtenerDestinos(){
+
+    public List<Destino> obtenerDestinos() {
         List<Destino> auxiliar = null;
         conexion.beginConexion();
         auxiliar = destinoDao.obtenerTodosActivos();
         conexion.closeConexion();
         return auxiliar;
     }
-    
-    public Destino obtenerDestino(Integer id){
+
+    public Destino obtenerDestino(Integer id) {
         Destino auxDestino = null;
         conexion.beginConexion();
         auxDestino = destinoDao.obtenerEntidad(id);
         conexion.closeConexion();
         return auxDestino;
     }
-    
-    public void guardarServicio(Servicio servicio){
+
+    public void guardarServicio(Servicio servicio) {
         conexion.beginConexion();
         servicioDao.agregar(servicio);
         conexion.closeConexion();
         Utilitario.enviarMensajeGlobalValido("Se ha registrado correctamente");
     }
-    
-    public void actualizarServicio(Servicio servicio){
+
+    public void actualizarServicio(Servicio servicio) {
         conexion.beginConexion();
         servicioDao.actualizar(servicio);
         conexion.closeConexion();
         Utilitario.enviarMensajeGlobalValido("Se ha actualizado correctamente");
     }
-    
-    public Servicio obtenerServicio(Integer id){
+
+    public Servicio obtenerServicio(Integer id) {
         Servicio auxServicio = null;
         conexion.beginConexion();
         auxServicio = servicioDao.obtenerServicioConDestinos(id);
         conexion.closeConexion();
         return auxServicio;
     }
-    
-    public void eliminarServicio(Servicio servicio){
+
+    public void eliminarServicio(Servicio servicio) {
         conexion.beginConexion();
         servicio.setEstado(Estado.ELIMINADO);
         servicioDao.actualizar(servicio);
         conexion.closeConexion();
         Utilitario.enviarMensajeGlobalValido("Se ha eliminado correctamente");
+    }
+
+    private boolean estaAsignadoChoferVehiculo(ServicioDetalle servicioDetalle) {
+        return (servicioDetalle.getChofer() != null ) 
+                &&(servicioDetalle.getVehiculo() != null );
     }
 
 }

@@ -10,4 +10,6 @@ import com.sgstt.entidad.Tarifa;
  */
 public interface TarifaDao extends GenericDao<Tarifa,Integer>{
     
+    public Tarifa getTarifaFilterByTipoVehiculoAndServicio(Integer idTipoVehiculo,Integer idServicio);
+    
 }

@@ -102,11 +102,17 @@ public class ServicioDetalle implements Serializable {
     @Column(insertable = false)
     private String externalizado;
     
+    @Column(name = "PRECIO_SERVICIO")
+    private Double precioServicio;
+    
     @Column(name = "VENTA_DIRECTA")
     private boolean ventaDirecta;
     
     @Transient
     private String fileAuxiliar;
+    
+    @Column(insertable = false)
+    private boolean gravada;
 
     public ServicioDetalle() {
         ventaDirecta = false;
@@ -260,6 +266,22 @@ public class ServicioDetalle implements Serializable {
         this.ventaDirecta = ventaDirecta;
     }
 
+    public Double getPrecioServicio() {
+        return precioServicio;
+    }
+
+    public void setPrecioServicio(Double precioServicio) {
+        this.precioServicio = precioServicio;
+    }
+
+    public boolean isGravada() {
+        return gravada;
+    }
+
+    public void setGravada(boolean gravada) {
+        this.gravada = gravada;
+    }
+    
     public String getFileAuxiliar() {
         if(isVentaDirecta()){
             fileAuxiliar = "VENTA DIRECTA";
@@ -268,6 +290,5 @@ public class ServicioDetalle implements Serializable {
         }
         return fileAuxiliar;
     }
-
     
 }

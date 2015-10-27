@@ -74,10 +74,9 @@ public class CotizacionServicio {
         conexion.beginConexion();
         tarifa.setFechaRegistro(new Date());
         tarifa.setFechaModificacion(new Date());
-        tarifa.setDescripcion("Sin Descripción");
         tarifaDao.agregar(tarifa);
-        Utilitario.enviarMensajeGlobalValido("Se ha registrado correctamente");
         conexion.closeConexion();
+        Utilitario.enviarMensajeGlobalValido("Se ha registrado correctamente");
     }
     
     public void actualizarTarifa(Tarifa tarifa){
@@ -86,6 +85,14 @@ public class CotizacionServicio {
         tarifaDao.actualizar(tarifa);
         Utilitario.enviarMensajeGlobalValido("Se ha actualizado correctamente");
         conexion.closeConexion();
+    }
+    
+    public Tarifa obtenerTarifa(Integer idTipoVehiculo, Integer idServicio){
+        Tarifa auxTarifa = null;
+        conexion.beginConexion();
+        auxTarifa = tarifaDao.getTarifaFilterByTipoVehiculoAndServicio(idTipoVehiculo, idServicio);
+        conexion.closeConexion();
+        return auxTarifa;
     }
     
     public void eliminarTarifa(Tarifa tarifa){

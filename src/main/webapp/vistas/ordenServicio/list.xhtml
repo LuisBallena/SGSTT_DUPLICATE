@@ -95,11 +95,10 @@
                                         <h:outputText value="#{list.trasladista eq null ? 'NO ASIGNADO' :  list.trasladista.datosCompletos}" />
                                     </p:column>
                                     <p:column  style="text-align: center;width: 8%;">                                      
-                                        <p:commandButton style="font-size: 12px;" icon="icon-file" actionListener="#{ordenServicioControlador.capturarServicioDetalle(list.id)}" action="#{ordenServicioControlador.irDetalles(list.id,list.servicio.tipoServicio.id)}"    >
+                                        <p:commandButton style="font-size: 12px;" icon="icon-update" action="#{ordenServicioControlador.irActualizar(list.id)}"    >
                                         </p:commandButton>
-                                        <p:commandButton style="font-size: 12px;" icon="icon-update" action="#{ordenServicioControlador.irActualizar(list.id,list.servicio.tipoServicio.id)}"    >
-                                        </p:commandButton>
-                                        <p:commandButton style="font-size: 12px;" icon="icon-money" action="#{ordenServicioControlador.irActualizar(list.id,list.servicio.tipoServicio.id)}"    >
+                                        <p:commandButton style="font-size: 12px;" rendered="#{list.estadoServicio == 'PENDIENTE'}" icon="icon-money" action="#{ordenServicioControlador.irCotizar}" update="@form" >
+                                            <f:setPropertyActionListener value="#{list}" target="#{ordenServicioControlador.servicioDetalle}" />
                                         </p:commandButton>
                                         <p:commandButton style="font-size: 12px;" icon="icon-delete" actionListener="#{ordenServicioControlador.capturarServicioDetalle(list.id)}" oncomplete="PF('deleteperfil').show();"   >
                                         </p:commandButton>

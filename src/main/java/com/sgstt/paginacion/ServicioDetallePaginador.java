@@ -17,7 +17,7 @@ public class ServicioDetallePaginador extends HibernateStringPaginador implement
     
     @Override
     protected String createFilter() {
-        return String.format("%s where serviciodetalle.estado = 1",super.createFilter());
+        return String.format("%s left join fetch serviciodetalle.vehiculo.tipoVehiculo where serviciodetalle.estado = 1",super.createFilter());
     }
 
 }

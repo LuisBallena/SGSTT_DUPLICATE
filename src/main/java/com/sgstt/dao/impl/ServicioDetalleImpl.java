@@ -8,10 +8,13 @@ import com.sgstt.util.Utilitario;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 
 /**
  *
@@ -65,6 +68,20 @@ public class ServicioDetalleImpl extends HibernateImpl<ServicioDetalle, Integer>
             e.printStackTrace();
         }
         return resultado;
+    }
+
+    @Override
+    public ServicioDetalle getServicioDetalleWithTipoVehiculo(Integer id) {
+        ServicioDetalle servicioDetalle = null;
+        try{
+            Criteria criteria = conexion.getSession().createCriteria(ServicioDetalle.class,"service");
+            criteria.createCriteria("service.vehiculo.tipoVehiculo",JoinType.INNER_JOIN);
+            criteria.add(Restrictions.eq("service.id", id));
+            servicioDetalle = (ServicioDetalle) criteria.uniqueResult();
+        }catch(HibernateException e){
+            e.printStackTrace();
+        }
+        return servicioDetalle;
     }
 
 }
