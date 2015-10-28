@@ -112,6 +112,7 @@ public class OrdenServicioControlador implements Serializable {
             servicioDetalle = transporteServicio.obtenerServicioDetalleConTipoVehiculo(id);
         }
     }
+    
 
     private void initCollections() {
         vuelos = transporteServicio.obtenerVuelos();

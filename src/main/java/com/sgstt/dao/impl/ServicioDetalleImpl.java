@@ -75,7 +75,7 @@ public class ServicioDetalleImpl extends HibernateImpl<ServicioDetalle, Integer>
         ServicioDetalle servicioDetalle = null;
         try{
             Criteria criteria = conexion.getSession().createCriteria(ServicioDetalle.class,"service");
-            criteria.createCriteria("service.vehiculo.tipoVehiculo",JoinType.INNER_JOIN);
+            criteria.createCriteria("service.vehiculo.tipoVehiculo",JoinType.LEFT_OUTER_JOIN);
             criteria.add(Restrictions.eq("service.id", id));
             servicioDetalle = (ServicioDetalle) criteria.uniqueResult();
         }catch(HibernateException e){
