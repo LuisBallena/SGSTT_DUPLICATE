@@ -5,6 +5,10 @@ import com.sgstt.entidad.Vuelo;
 import com.sgstt.hibernate.HibernateConexion;
 import com.sgstt.hibernate.HibernateImpl;
 import java.io.Serializable;
+import java.util.List;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
 
 /**
  *
@@ -15,6 +19,19 @@ public class VueloImpl extends HibernateImpl<Vuelo,Integer> implements VueloDao,
 
     public VueloImpl(HibernateConexion conexion) {
         super(conexion);
+    }
+
+    @Override
+    public List<Vuelo> getVuelosWithStateActiveWithAerolinea() {
+        List<Vuelo> vuelos = null;
+        try{
+            Session session = conexion.getSession();
+            Query query = session.createQuery("from Vuelo as vuelo join fetch vuelo.aerolinea");
+            vuelos = query.list();
+        }catch(HibernateException e){
+            e.printStackTrace();
+        }
+        return vuelos;
     }
 
 }

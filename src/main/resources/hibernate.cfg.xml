@@ -35,5 +35,6 @@
     <mapping class="com.sgstt.entidad.EmpresaChofer" />
     <mapping class="com.sgstt.entidad.EmpresaVehiculo" />
     <mapping class="com.sgstt.entidad.Destino" />
+    <mapping class="com.sgstt.entidad.Aerolinea" />
   </session-factory>
 </hibernate-configuration>

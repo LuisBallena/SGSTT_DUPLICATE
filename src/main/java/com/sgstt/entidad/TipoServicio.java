@@ -20,6 +20,8 @@ public class TipoServicio implements Serializable{
     
     public static final int TRASLADO = 1;
     
+    public static final int VIAJE = 3;
+    
     @Id
     @GeneratedValue
     @Column(name = "IDTIPO_SERVICIO")        

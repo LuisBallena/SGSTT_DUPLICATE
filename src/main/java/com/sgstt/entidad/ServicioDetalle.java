@@ -105,6 +105,15 @@ public class ServicioDetalle implements Serializable {
     @Column(name = "PRECIO_SERVICIO")
     private Double precioServicio;
     
+    @Column
+    private Double descuento;
+    
+    @Column
+    private Double adicional;
+    
+    @Column(name = "DIAS_VIAJE")
+    private Integer diasViaje;
+    
     @Column(name = "VENTA_DIRECTA")
     private boolean ventaDirecta;
     
@@ -116,6 +125,7 @@ public class ServicioDetalle implements Serializable {
 
     public ServicioDetalle() {
         ventaDirecta = false;
+        vuelo = new Vuelo();
     }
 
     public Integer getId() {
@@ -274,12 +284,36 @@ public class ServicioDetalle implements Serializable {
         this.precioServicio = precioServicio;
     }
 
+    public Double getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(Double descuento) {
+        this.descuento = descuento;
+    }
+
+    public Double getAdicional() {
+        return adicional;
+    }
+
+    public void setAdicional(Double adicional) {
+        this.adicional = adicional;
+    }
+
     public boolean isGravada() {
         return gravada;
     }
 
     public void setGravada(boolean gravada) {
         this.gravada = gravada;
+    }
+
+    public Integer getDiasViaje() {
+        return diasViaje;
+    }
+
+    public void setDiasViaje(Integer diasViaje) {
+        this.diasViaje = diasViaje;
     }
     
     public String getFileAuxiliar() {

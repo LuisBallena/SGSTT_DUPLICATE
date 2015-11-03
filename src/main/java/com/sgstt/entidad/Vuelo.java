@@ -3,9 +3,14 @@ package com.sgstt.entidad;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 /**
  *
@@ -34,8 +39,10 @@ public class Vuelo implements Serializable{
     private String horario;
     
     /* No mapeado como clase*/
-    @Column
-    private Integer idaerolinea;
+    @ManyToOne(fetch = FetchType.LAZY)
+     @Fetch(FetchMode.JOIN)
+    @JoinColumn(name = "idaerolinea", nullable = false)
+    private Aerolinea aerolinea;
 
     public Vuelo() {
     }
@@ -72,12 +79,12 @@ public class Vuelo implements Serializable{
         this.horario = horario;
     }
 
-    public Integer getIdaerolinea() {
-        return idaerolinea;
+    public Aerolinea getAerolinea() {
+        return aerolinea;
     }
 
-    public void setIdaerolinea(Integer idaerolinea) {
-        this.idaerolinea = idaerolinea;
+    public void setAerolinea(Aerolinea aerolinea) {
+        this.aerolinea = aerolinea;
     }
 
     public String getDescripcion() {

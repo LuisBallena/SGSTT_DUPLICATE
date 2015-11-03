@@ -20,7 +20,7 @@
                             <div class="row">
                                 <div class="col-sm-2">
                                     <h:panelGroup rendered="#{sesionControlador.permisoModulo.crear eq true}">
-                                        <h:button value="Nuevo Traslado" styleClass="btn btn-primary" outcome="create_traslado.xhtml" />
+                                        <h:button value="Nueva Orden" styleClass="btn btn-primary" outcome="create_traslado.xhtml" />
                                     </h:panelGroup>
                                 </div>
                             </div>
@@ -29,7 +29,7 @@
                                 <f:event type="preRenderView" listener="#{ordenServicioControlador.initLista}" />
                                 <h:messages id="msg" globalOnly="true" styleClass="list-group" infoClass="list-group-item list-group-item-success"
                                                     errorClass="list-group-item list-group-item-danger" />
-                                <p:dataTable    value="#{ordenServicioControlador.servicioDetallePaginador}"    var="list" emptyMessage="No existen registros de servicios" 
+                                <p:dataTable    value="#{ordenServicioControlador.servicioDetallePaginador}"  var="list" emptyMessage="No existen registros de servicios" 
                                                 paginator="true" rows="10" lazy="true" rowIndexVar="rowIndex"
                                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
                                     <p:column    style="text-align: center;font-size: 13px;">
@@ -37,7 +37,7 @@
                                             Fecha
                                         </f:facet>
                                         <h:outputText value="#{list.fecha}" >
-                                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="GMT-5" />
+                                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-5" />
                                         </h:outputText>
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 13px;">
@@ -66,6 +66,24 @@
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 13px;">
                                         <f:facet name="header">
+                                            Nro Pasajeros
+                                        </f:facet>
+                                        <h:outputText value="#{list.nroPersonas}" />
+                                    </p:column>
+                                    <p:column    style="text-align: center;font-size: 13px;">
+                                        <f:facet name="header">
+                                            Trasladista
+                                        </f:facet>
+                                        <h:outputText value="#{list.trasladista eq null ? 'NO ASIGNADO' :  list.trasladista.datosCompletos}" />
+                                    </p:column>
+                                    <p:column    style="text-align: center;font-size: 13px;">
+                                        <f:facet name="header">
+                                            Vuelo
+                                        </f:facet>
+                                        <h:outputText value="#{list.vuelo.descripcion}" />
+                                    </p:column>
+                                    <p:column    style="text-align: center;font-size: 13px;">
+                                        <f:facet name="header">
                                             Estado
                                         </f:facet>
                                         <h:outputText value="#{list.estadoServicio}" />
@@ -88,16 +106,11 @@
                                         </f:facet>
                                         <h:outputText value="#{list.chofer eq null ? 'NO ASIGNADO' : list.chofer.datosCompletos}" />
                                     </p:column>
-                                    <p:column    style="text-align: center;font-size: 13px;">
-                                        <f:facet name="header">
-                                            Trasladista
-                                        </f:facet>
-                                        <h:outputText value="#{list.trasladista eq null ? 'NO ASIGNADO' :  list.trasladista.datosCompletos}" />
-                                    </p:column>
+                                    
                                     <p:column  style="text-align: center;width: 8%;">                                      
                                         <p:commandButton style="font-size: 12px;" icon="icon-update" action="#{ordenServicioControlador.irActualizar(list.id)}"    >
                                         </p:commandButton>
-                                        <p:commandButton style="font-size: 12px;" rendered="#{list.estadoServicio == 'PENDIENTE'}" icon="icon-money" action="#{ordenServicioControlador.irCotizar}" update="@form" >
+                                        <p:commandButton title="Cotizacion por Item" style="font-size: 12px;" rendered="#{list.estadoServicio == 'PENDIENTE'}" icon="icon-money" action="#{ordenServicioControlador.irCotizar}" update="@form" >
                                             <f:setPropertyActionListener value="#{list}" target="#{ordenServicioControlador.servicioDetalle}" />
                                         </p:commandButton>
                                         <p:commandButton style="font-size: 12px;" icon="icon-delete" actionListener="#{ordenServicioControlador.capturarServicioDetalle(list.id)}" oncomplete="PF('deleteperfil').show();"   >

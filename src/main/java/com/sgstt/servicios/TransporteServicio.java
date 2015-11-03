@@ -77,6 +77,14 @@ public class TransporteServicio implements Serializable {
         conexion.closeConexion();
         return aux;
     }
+    
+    public List<Servicio> obtenerServicios(){
+        List<Servicio> aux = null;
+        conexion.beginConexion();
+        aux = servicioDao.obtenerTodosActivos();
+        conexion.closeConexion();
+        return aux;
+    }
 
     public List<Cliente> obtenerClientes() {
         List<Cliente> aux = null;
@@ -89,7 +97,7 @@ public class TransporteServicio implements Serializable {
     public List<Vuelo> obtenerVuelos() {
         List<Vuelo> aux = null;
         conexion.beginConexion();
-        aux = vueloDao.obtenerTodos();
+        aux = vueloDao.getVuelosWithStateActiveWithAerolinea();
         conexion.closeConexion();
         return aux;
     }
