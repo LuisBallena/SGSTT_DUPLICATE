@@ -419,6 +419,18 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `SGSTT`.`venta_directa`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `SGSTT`.`venta_directa` ;
+
+CREATE  TABLE IF NOT EXISTS `SGSTT`.`venta_directa` (
+  `idventa` INT NOT NULL AUTO_INCREMENT ,
+  `serie` VARCHAR(10) NOT NULL DEFAULT 'VTA' ,
+  PRIMARY KEY (`idventa`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `SGSTT`.`servicio_detalle`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `SGSTT`.`servicio_detalle` ;
@@ -428,7 +440,6 @@ CREATE  TABLE IF NOT EXISTS `SGSTT`.`servicio_detalle` (
   `idservicio` INT NOT NULL ,
   `num_personas` INT NOT NULL ,
   `FECHA` DATETIME NOT NULL ,
-  `VENTA_DIRECTA` TINYINT(1) NOT NULL DEFAULT 0 ,
   `externalizado` VARCHAR(2) NOT NULL DEFAULT 'NO' ,
   `PRECIO_SERVICIO` DECIMAL(12,2) NULL ,
   `DESCUENTO` DECIMAL(12,2) NULL ,
@@ -447,6 +458,7 @@ CREATE  TABLE IF NOT EXISTS `SGSTT`.`servicio_detalle` (
   `idempresa_chofer` INT NULL ,
   `idempresa_vehiculo` INT NULL ,
   `idFile` INT NULL ,
+  `idventa` INT NULL ,
   PRIMARY KEY (`idservicio_detalle`, `idservicio`) ,
   INDEX `fk_servicio_detalle_trasladista1_idx` (`idtrasladista` ASC) ,
   INDEX `fk_servicio_detalle_cobro1_idx` (`idcobro` ASC) ,
@@ -457,6 +469,7 @@ CREATE  TABLE IF NOT EXISTS `SGSTT`.`servicio_detalle` (
   INDEX `fk_servicio_detalle_empresa_chofer1_idx` (`idempresa_chofer` ASC) ,
   INDEX `fk_servicio_detalle_empresa_vehiculo1_idx` (`idempresa_vehiculo` ASC) ,
   INDEX `fk_servicio_detalle_File1` (`idFile` ASC) ,
+  INDEX `fk_servicio_detalle_venta_directa1` (`idventa` ASC) ,
   CONSTRAINT `fk_servicio_detalle_trasladista1`
     FOREIGN KEY (`idtrasladista` )
     REFERENCES `SGSTT`.`trasladista` (`idtrasladista` )
@@ -500,6 +513,11 @@ CREATE  TABLE IF NOT EXISTS `SGSTT`.`servicio_detalle` (
   CONSTRAINT `fk_servicio_detalle_File1`
     FOREIGN KEY (`idFile` )
     REFERENCES `SGSTT`.`File` (`idFile` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_servicio_detalle_venta_directa1`
+    FOREIGN KEY (`idventa` )
+    REFERENCES `SGSTT`.`venta_directa` (`idventa` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

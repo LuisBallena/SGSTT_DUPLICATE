@@ -2,13 +2,10 @@ package com.sgstt.controlador;
 
 import com.sgstt.entidad.Aerolinea;
 import com.sgstt.entidad.Chofer;
-import com.sgstt.entidad.EstadoServicio;
 import com.sgstt.entidad.File;
 import com.sgstt.entidad.Servicio;
 import com.sgstt.entidad.ServicioDetalle;
 import com.sgstt.entidad.Tarifa;
-import com.sgstt.entidad.TipoServicio;
-import com.sgstt.entidad.TipoVehiculo;
 import com.sgstt.entidad.Trasladista;
 import com.sgstt.entidad.Vehiculo;
 import com.sgstt.entidad.Vuelo;
@@ -19,6 +16,7 @@ import com.sgstt.servicios.CotizacionServicio;
 import com.sgstt.servicios.TransporteServicio;
 import com.sgstt.util.Utilitario;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +25,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
-import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -52,7 +49,8 @@ public class OrdenServicioControlador implements Serializable {
     private Date fechaActual;
     private HibernatePaginador<ServicioDetalle> servicioDetallePaginador;
     private Date fechaAuxiliar;
-    private Map<Integer,Vuelo> mapaSelectOneVuelo;
+    private List<ServicioDetalle> ordenesServicios;
+    private Map<Integer,Vuelo> mapaVuelos;
 
     public OrdenServicioControlador() {
     }
@@ -65,8 +63,9 @@ public class OrdenServicioControlador implements Serializable {
         }
     }
 
-    public void initCreateTraslado() {
+    public void initCreateOrdenFile() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
+            ordenesServicios = new ArrayList<>();
             fechaActual = new Date();
             transporteServicio = new TransporteServicio();
             servicios = transporteServicio.obtenerServicios();
@@ -75,6 +74,18 @@ public class OrdenServicioControlador implements Serializable {
             fechaAuxiliar = new Date();
             servicioDetalle.setFecha(fechaAuxiliar);
             servicioDetalle.setFile(new File());
+            initTraslado();
+        }
+    }
+
+    public void initCreateOrdenVTA() {
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+            fechaActual = new Date();
+            transporteServicio = new TransporteServicio();
+            initCollectionsVTA();
+            servicioDetalle = new ServicioDetalle();
+            fechaAuxiliar = new Date();
+            servicioDetalle.setFecha(fechaAuxiliar);
             initTraslado();
         }
     }
@@ -93,7 +104,6 @@ public class OrdenServicioControlador implements Serializable {
             servicioDetalle = transporteServicio.obtenerServicioDetalleConTipoVehiculo(id);
             servicioDetalle.setChofer(servicioDetalle.getChofer() != null ? servicioDetalle.getChofer() : null);
             servicioDetalle.setVehiculo(servicioDetalle.getVehiculo() != null ? servicioDetalle.getVehiculo() : null);
-            servicioDetalle.setFile(servicioDetalle.isVentaDirecta() ? new File() : servicioDetalle.getFile());
             servicioSeleccionado = servicioDetalle.getServicio();
             trasladistaSeleccionado = (servicioDetalle.getTrasladista() == null ? new Trasladista() : servicioDetalle.getTrasladista());
             initCollectionsUpdate();
@@ -112,16 +122,26 @@ public class OrdenServicioControlador implements Serializable {
             servicioDetalle = transporteServicio.obtenerServicioDetalleConTipoVehiculo(id);
         }
     }
-    
 
     private void initCollections() {
-        mapaSelectOneVuelo = new HashMap<>();
+        mapaVuelos = new HashMap<>();
         vuelos = transporteServicio.obtenerVuelos();
-        for(Vuelo auxVuelo: vuelos){
-            mapaSelectOneVuelo.put(auxVuelo.getId(), auxVuelo);
+        for(Vuelo vuelo : vuelos){
+            mapaVuelos.put(vuelo.getId(), vuelo);
         }
         guias = transporteServicio.obtenerGuias();
         files = transporteServicio.obtenerFilesActivos();
+    }
+    
+    private void initCollectionsVTA(){
+        mapaVuelos = new HashMap<>();
+        ordenesServicios = new ArrayList<>();
+        servicios = transporteServicio.obtenerServicios();
+        vuelos = transporteServicio.obtenerVuelos();
+        for(Vuelo vuelo : vuelos){
+            mapaVuelos.put(vuelo.getId(), vuelo);
+        }
+        guias = transporteServicio.obtenerGuias();
     }
 
     private void initCollectionsUpdate() {
@@ -135,21 +155,34 @@ public class OrdenServicioControlador implements Serializable {
         trasladistaSeleccionado = new Trasladista();
     }
 
-    public void registrarDetalle() {
-        if (!esVistaValida()) {
-            return;
-        }
-        servicioDetalle.setFecha(servicioDetalle.getFecha() == null ? fechaAuxiliar : servicioDetalle.getFecha());
-        servicioDetalle.setFechaRegistro(new Date());
-        servicioDetalle.setFechaModificacion(new Date());
-        servicioDetalle.setServicio(servicioSeleccionado);
-        servicioDetalle.setTrasladista(trasladistaSeleccionado.getId().intValue() == 0 ? null : trasladistaSeleccionado);
-        try {
-            transporteServicio.registrarServicio(servicioDetalle);
+    public void agregarOrdenServicio() {
+        if (esVistaValida()) {
+            servicioDetalle.setServicio((Servicio) Utilitario.obtenerElemento(servicios, servicioSeleccionado));
+            servicioDetalle.setTrasladista((Trasladista) Utilitario.obtenerElemento(guias, trasladistaSeleccionado));
+            servicioDetalle.setFecha(servicioDetalle.getFecha() == null ? fechaAuxiliar : servicioDetalle.getFecha());
+            servicioDetalle.setFechaRegistro(new Date());
+            servicioDetalle.setFechaModificacion(new Date());
+            ordenesServicios.add(servicioDetalle);
+            servicioDetalle.setVuelo(mapaVuelos.get(servicioDetalle.getVuelo().getId()));
             limpiarTraslado();
+        }
+    }
+
+    public void registrarDetalle() {
+        try {
+            transporteServicio.registrarServicios(ordenesServicios);
+            ordenesServicios.clear();
         } catch (TransporteException ex) {
-            RequestContext context = RequestContext.getCurrentInstance();
-            context.addCallbackParam("exception", true);
+            Utilitario.enviarMensajeGlobalError(ex.getMessage());
+        }
+    }
+    
+    public void registrarDetalleVTA(){
+         try {
+            transporteServicio.registrarServiciosVTA(ordenesServicios);
+            ordenesServicios.clear();
+        } catch (TransporteException ex) {
+            Utilitario.enviarMensajeGlobalError(ex.getMessage());
         }
     }
 
@@ -207,10 +240,10 @@ public class OrdenServicioControlador implements Serializable {
         servicioDetalle.setFecha(new Date());
         servicioDetalle.setFile(new File());
     }
-    
-    public void onChangeVuelo(){
-        Aerolinea auxAerolinea = mapaSelectOneVuelo.get(servicioDetalle.getVuelo().getId()).getAerolinea();
-        servicioDetalle.getVuelo().setAerolinea(auxAerolinea);
+
+    public void onChangeVuelo() {
+        Aerolinea auAerolinea = mapaVuelos.get(servicioDetalle.getVuelo().getId()).getAerolinea();
+        servicioDetalle.getVuelo().setAerolinea(auAerolinea);
     }
 
     private boolean esVistaValida() {
@@ -224,7 +257,7 @@ public class OrdenServicioControlador implements Serializable {
         } else if (!esLineaValida(servicioDetalle.getVuelo())) {
             Utilitario.enviarMensajeGlobalError("Debe seleccionar una linea");
             resultado = false;
-        } else if (!esFileValido(servicioDetalle.getFile())) {
+        } else if (files !=null && !esFileValido(servicioDetalle.getFile())) {
             Utilitario.enviarMensajeGlobalError("Debe seleccionar un file");
             resultado = false;
         }
@@ -242,7 +275,7 @@ public class OrdenServicioControlador implements Serializable {
         } else if (!esLineaValida(servicioDetalle.getVuelo())) {
             Utilitario.enviarMensajeGlobalError("Debe seleccionar una linea");
             resultado = false;
-        } else if (!esFileValido(servicioDetalle.getFile())) {
+        } else if (servicioDetalle.getVenta() == null && !esFileValido(servicioDetalle.getFile())) {
             Utilitario.enviarMensajeGlobalError("Debe seleccionar un file");
             resultado = false;
         }
@@ -263,7 +296,7 @@ public class OrdenServicioControlador implements Serializable {
 
     public boolean esFileValido(File file) {
         boolean resultado = true;
-        if (!servicioDetalle.isVentaDirecta() && file.getIdFile() == 0) {
+        if (file.getIdFile() == 0) {
             resultado = false;
         }
         return resultado;
@@ -364,6 +397,14 @@ public class OrdenServicioControlador implements Serializable {
 
     public void setVehiculos(List<Vehiculo> vehiculos) {
         this.vehiculos = vehiculos;
+    }
+
+    public List<ServicioDetalle> getOrdenesServicios() {
+        return ordenesServicios;
+    }
+
+    public void setOrdenesServicios(List<ServicioDetalle> ordenesServicios) {
+        this.ordenesServicios = ordenesServicios;
     }
 
 }

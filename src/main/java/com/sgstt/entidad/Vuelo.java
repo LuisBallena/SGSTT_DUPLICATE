@@ -1,6 +1,7 @@
 package com.sgstt.entidad;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -38,7 +39,6 @@ public class Vuelo implements Serializable{
     @Column
     private String horario;
     
-    /* No mapeado como clase*/
     @ManyToOne(fetch = FetchType.LAZY)
      @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "idaerolinea", nullable = false)

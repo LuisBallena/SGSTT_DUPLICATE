@@ -27,7 +27,7 @@ import org.hibernate.annotations.FetchMode;
 public class ServicioDetalle implements Serializable {
 
     private static final long serialVersionUID = 165099556331434992L;
-    
+
     public static final int TIEMPO_ESPERA = 4;
 
     @Id
@@ -54,26 +54,31 @@ public class ServicioDetalle implements Serializable {
     @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "IDTRASLADISTA")
     private Trasladista trasladista;
-    
+
     @ManyToOne(fetch = FetchType.EAGER)
     @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "IDVEHICULO", nullable = true)
     private Vehiculo vehiculo;
-    
+
     @ManyToOne(fetch = FetchType.EAGER)
     @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "IDCHOFER", nullable = true)
     private Chofer chofer;
-    
+
     @ManyToOne(fetch = FetchType.EAGER)
     @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "IDEMPRESA_CHOFER", nullable = true)
     private EmpresaChofer empresaChofer;
-    
+
     @ManyToOne(fetch = FetchType.EAGER)
     @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "IDEMPRESA_VEHICULO", nullable = true)
     private EmpresaVehiculo empresaVehiculo;
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.JOIN)
+    @JoinColumn(name = "IDVENTA")
+    private Venta venta;
 
     @Column(name = "NUM_PERSONAS")
     private Integer nroPersonas;
@@ -93,38 +98,33 @@ public class ServicioDetalle implements Serializable {
     @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false, insertable = false)
     private Estado estado;
-    
+
     @Enumerated(EnumType.STRING)
     @Column(name = "ESTADO_SERVICIO")
     private EstadoServicio estadoServicio;
 
-    
     @Column(insertable = false)
     private String externalizado;
-    
+
     @Column(name = "PRECIO_SERVICIO")
     private Double precioServicio;
-    
+
     @Column
     private Double descuento;
-    
+
     @Column
     private Double adicional;
-    
+
     @Column(name = "DIAS_VIAJE")
     private Integer diasViaje;
-    
-    @Column(name = "VENTA_DIRECTA")
-    private boolean ventaDirecta;
-    
+
     @Transient
     private String fileAuxiliar;
-    
+
     @Column(insertable = false)
     private boolean gravada;
 
     public ServicioDetalle() {
-        ventaDirecta = false;
         vuelo = new Vuelo();
     }
 
@@ -268,14 +268,6 @@ public class ServicioDetalle implements Serializable {
         this.estadoServicio = estadoServicio;
     }
 
-    public boolean isVentaDirecta() {
-        return ventaDirecta;
-    }
-
-    public void setVentaDirecta(boolean ventaDirecta) {
-        this.ventaDirecta = ventaDirecta;
-    }
-
     public Double getPrecioServicio() {
         return precioServicio;
     }
@@ -315,14 +307,22 @@ public class ServicioDetalle implements Serializable {
     public void setDiasViaje(Integer diasViaje) {
         this.diasViaje = diasViaje;
     }
-    
+
     public String getFileAuxiliar() {
-        if(isVentaDirecta()){
-            fileAuxiliar = "VENTA DIRECTA";
-        }else{
-            fileAuxiliar = ""+getFile().getNroCorrelativo();
+        if(getFile() != null){
+             fileAuxiliar = "" + getFile().getNroCorrelativo();
+        }else if(getVenta() != null){
+            fileAuxiliar = String.format("%s-%d",getVenta().getSerie(),getVenta().getId());
         }
         return fileAuxiliar;
+    }
+
+    public Venta getVenta() {
+        return venta;
+    }
+
+    public void setVenta(Venta venta) {
+        this.venta = venta;
     }
     
 }

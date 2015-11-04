@@ -2,6 +2,7 @@ package com.sgstt.entidad;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -55,6 +56,32 @@ public class Servicio implements Serializable {
         tipoServicio = new TipoServicio();
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 79 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Servicio other = (Servicio) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
+
+    
+    
+    /*GETTERS AND SETTERS */
+
     public Integer getId() {
         return id;
     }
@@ -94,5 +121,6 @@ public class Servicio implements Serializable {
     public void setEstado(Estado estado) {
         this.estado = estado;
     }
+    
     
 }

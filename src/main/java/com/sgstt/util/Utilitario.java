@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -345,5 +346,16 @@ public class Utilitario {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    public static Object obtenerElemento(List lista , Object clase){
+        Object valor = null;
+        if(!lista.isEmpty()){
+            int indice = lista.indexOf(clase);
+            if(indice != -1){
+                valor = lista.get(indice);
+            }
+        }
+        return valor;
     }
 }

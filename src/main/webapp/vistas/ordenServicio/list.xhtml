@@ -20,15 +20,22 @@
                             <div class="row">
                                 <div class="col-sm-2">
                                     <h:panelGroup rendered="#{sesionControlador.permisoModulo.crear eq true}">
-                                        <h:button value="Nueva Orden" styleClass="btn btn-primary" outcome="create_traslado.xhtml" />
+                                        <h:button value="Nueva Orden File" styleClass="btn btn-primary" outcome="create_orden_file.xhtml" />
                                     </h:panelGroup>
+
+                                </div>
+                                <div class="col-sm-2">
+                                    <h:panelGroup rendered="#{sesionControlador.permisoModulo.crear eq true}">
+                                        <h:button value="Nueva Orden VTA" styleClass="btn btn-primary" outcome="create_orden_vta.xhtml" />
+                                    </h:panelGroup>
+
                                 </div>
                             </div>
                             <br/>
                             <h:form id="formperfil">
                                 <f:event type="preRenderView" listener="#{ordenServicioControlador.initLista}" />
                                 <h:messages id="msg" globalOnly="true" styleClass="list-group" infoClass="list-group-item list-group-item-success"
-                                                    errorClass="list-group-item list-group-item-danger" />
+                                            errorClass="list-group-item list-group-item-danger" />
                                 <p:dataTable    value="#{ordenServicioControlador.servicioDetallePaginador}"  var="list" emptyMessage="No existen registros de servicios" 
                                                 paginator="true" rows="10" lazy="true" rowIndexVar="rowIndex"
                                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
@@ -106,7 +113,7 @@
                                         </f:facet>
                                         <h:outputText value="#{list.chofer eq null ? 'NO ASIGNADO' : list.chofer.datosCompletos}" />
                                     </p:column>
-                                    
+
                                     <p:column  style="text-align: center;width: 8%;">                                      
                                         <p:commandButton style="font-size: 12px;" icon="icon-update" action="#{ordenServicioControlador.irActualizar(list.id)}"    >
                                         </p:commandButton>
