@@ -67,6 +67,10 @@ public class Vehiculo implements Serializable {
     @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false, insertable = false)
     Estado estado;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idSede")
+    Sede sede;
 
     public Vehiculo() {
         tipoVehiculo = new TipoVehiculo();
@@ -167,6 +171,14 @@ public class Vehiculo implements Serializable {
 
     public void setFechaRegistro(Date fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
+    }
+
+    public Sede getSede() {
+        return sede;
+    }
+
+    public void setSede(Sede sede) {
+        this.sede = sede;
     }
 
 }

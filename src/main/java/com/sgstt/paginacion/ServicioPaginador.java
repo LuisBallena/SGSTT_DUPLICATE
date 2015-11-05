@@ -17,5 +17,12 @@ public class ServicioPaginador extends HibernateStringPaginador implements Seria
     protected String createFilter() {
         return String.format("%s where servicio.estado = 1",super.createFilter());
     }
+
+    @Override
+    protected String createFilter(Object... values) {
+        return String.format("%s where servicio.sede.id = %d and servicio.estado = 1",super.createFilter(),(Integer)values[0]);
+    }
+    
+    
     
 }

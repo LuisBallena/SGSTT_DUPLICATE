@@ -29,7 +29,8 @@ public class UsuarioImpl extends HibernateImpl<Usuario,Integer> implements Usuar
         Session session = conexion.getSession();
         Criteria criteria = session.createCriteria(Usuario.class, "user")
                 .add(Restrictions.eq("user.nick", usuario.getNick()))
-                .add(Restrictions.eq("user.clave", usuario.getClave()));
+                .add(Restrictions.eq("user.clave", usuario.getClave()))
+                .add(Restrictions.eq("user.sede.id",usuario.getSede().getId()));
         Usuario user = (Usuario) criteria.uniqueResult();
         if (user != null && user.getClave().equals(usuario.getClave())) {
             resultado = true;
@@ -44,7 +45,7 @@ public class UsuarioImpl extends HibernateImpl<Usuario,Integer> implements Usuar
         List<Usuario> lista;
         try {
             query = conexion.getSession()
-                    .createQuery("select distinct user from Usuario as user "
+                    .createQuery("select distinct user from Usuario as user join fetch user.sede as sede "
                             + "join fetch user.empleado as emp join fetch user.perfil as p join fetch p.permisos as permi "
                             + "where user.nick = :parameter and user.estado = 1"
                             + "and permi.listar = 1");

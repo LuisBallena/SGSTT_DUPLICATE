@@ -19,5 +19,10 @@ public class UsuarioPaginador extends HibernateStringPaginador implements Serial
     }
     
     
+    @Override
+    protected String createFilter(Object...values) {
+        return  String.format("from Usuario as usuario join fetch usuario.empleado as operador join fetch usuario.perfil as perfil where usuario.id != 1 and usuario.sede.id = %d", (Integer)values[0]);
+    }
+    
     
 }

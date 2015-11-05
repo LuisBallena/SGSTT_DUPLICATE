@@ -1,10 +1,12 @@
 package com.sgstt.controlador;
 
 
+import com.sgstt.entidad.Sede;
 import com.sgstt.entidad.Usuario;
 import com.sgstt.servicios.EmpleadoServicio;
 import com.sgstt.util.Utilitario;
 import java.io.Serializable;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
@@ -23,12 +25,15 @@ public class LoginControlador implements Serializable {
     private static final Logger log = Logger.getLogger(LoginControlador.class.getPackage().getName());
 
     private Usuario usuario;
+    private List<Sede> sedes;
     private SesionControlador sesion;
     private EmpleadoServicio empleadoServicio;
 
     public LoginControlador() {
         usuario = new Usuario();
+        usuario.setSede(new Sede());
         empleadoServicio = new EmpleadoServicio();
+        sedes = empleadoServicio.obtenerSedes();
     }
 
     public String login() {
@@ -93,6 +98,14 @@ public class LoginControlador implements Serializable {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public List<Sede> getSedes() {
+        return sedes;
+    }
+
+    public void setSedes(List<Sede> sedes) {
+        this.sedes = sedes;
     }
 
 }

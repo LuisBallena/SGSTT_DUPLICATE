@@ -2,12 +2,15 @@ package com.sgstt.servicios;
 
 import com.sgstt.dao.EmpleadoDao;
 import com.sgstt.dao.PerfilDao;
+import com.sgstt.dao.SedeDao;
 import com.sgstt.dao.UsuarioDao;
 import com.sgstt.dao.impl.EmpleadoImpl;
 import com.sgstt.dao.impl.PerfilImpl;
+import com.sgstt.dao.impl.SedeImpl;
 import com.sgstt.dao.impl.UsuarioImpl;
 import com.sgstt.entidad.Empleado;
 import com.sgstt.entidad.Perfil;
+import com.sgstt.entidad.Sede;
 import com.sgstt.entidad.Usuario;
 import com.sgstt.hibernate.HibernateConexion;
 import com.sgstt.util.Utilitario;
@@ -25,12 +28,14 @@ public class EmpleadoServicio implements Serializable{
     private final UsuarioDao usuarioDao;
     private final EmpleadoDao empleadoDao;
     private final PerfilDao perfilDao;
+    private final SedeDao sedeDao;
 
     public EmpleadoServicio() {
         conexion = new HibernateConexion();
         usuarioDao = new UsuarioImpl(conexion);
         empleadoDao = new EmpleadoImpl(conexion);
         perfilDao = new PerfilImpl(conexion);
+        sedeDao = new SedeImpl(conexion);
     }
     
     public List<Empleado> obtenerEmpleadosSinCuenta(){
@@ -76,6 +81,14 @@ public class EmpleadoServicio implements Serializable{
         usuarioDao.agregar(usuario);
         Utilitario.enviarMensajeGlobalValido("Se ha ingresado correctamente");
         conexion.closeConexion();
+    }
+    
+    public List<Sede> obtenerSedes(){
+        List<Sede> sedes = null;
+        conexion.beginConexion();
+        sedes = sedeDao.obtenerTodos();
+        conexion.closeConexion();
+        return sedes;
     }
     
     private boolean existeNick(String nick) {

@@ -10,6 +10,7 @@ import com.sgstt.util.Utilitario;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -26,6 +27,8 @@ public class UsuarioControlador implements Serializable {
     private List<Perfil> perfiles;
     private List<Empleado> empleados;
     private Usuario usuario;
+    @ManagedProperty(value = "#{sesionControlador}")
+    private SesionControlador sesionControlador;
 
     public UsuarioControlador() {
     }
@@ -33,7 +36,7 @@ public class UsuarioControlador implements Serializable {
     public void initLista() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
             usuarioPaginador = new UsuarioPaginador();
-            usuarioPaginador.initPaginador();
+            usuarioPaginador.initPaginador(sesionControlador.getUsuarioSesion().getSede().getId());
         }
     }
 
@@ -50,6 +53,7 @@ public class UsuarioControlador implements Serializable {
         if(!esVistaValida()){
             return;
         }
+        usuario.setSede(sesionControlador.getUsuarioSesion().getSede());
         empleadoServicio.agregarUsuario(usuario);
     }
 
@@ -134,4 +138,7 @@ public class UsuarioControlador implements Serializable {
         this.usuario = usuario;
     }
 
+    public void setSesionControlador(SesionControlador sesionControlador) {
+        this.sesionControlador = sesionControlador;
+    }
 }

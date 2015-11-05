@@ -47,10 +47,10 @@ public class TransporteServicio implements Serializable {
         ventaDao = new VentaImpl(conexion);
     }
 
-    public List<Chofer> obtenerChoferes() {
+    public List<Chofer> obtenerChoferesPorSede(Integer idSede) {
         List<Chofer> aux = null;
         conexion.beginConexion();
-        aux = choferDao.obtenerTodos();
+        aux = choferDao.getVehiculosFilterbySede(idSede);
         conexion.closeConexion();
         return aux;
 
@@ -64,7 +64,7 @@ public class TransporteServicio implements Serializable {
         return aux;
     }
 
-    public List<Vehiculo> obtenerVehiculosConTipoVehiculos() {
+    public List<Vehiculo> obtenerVehiculosConTipoVehiculosPorEstado(Integer idSede) {
         List<Vehiculo> aux = null;
         conexion.beginConexion();
         aux = vehiculoDao.getVehiculosWithTipoVehiculos();
@@ -84,6 +84,14 @@ public class TransporteServicio implements Serializable {
         List<Servicio> aux = null;
         conexion.beginConexion();
         aux = servicioDao.obtenerTodosActivos();
+        conexion.closeConexion();
+        return aux;
+    }
+    
+    public List<Servicio> obtenerServiciosPorSede(Integer idSede) {
+        List<Servicio> aux = null;
+        conexion.beginConexion();
+        aux = servicioDao.getServiciosWithSede(idSede);
         conexion.closeConexion();
         return aux;
     }

@@ -31,7 +31,7 @@
                                             <label for="operador" class="col-sm-3 control-label" >Empleado :</label>
                                             <div class="col-sm-5" >
                                                 <h:selectOneMenu styleClass="form-control" id="operador" value="#{usuarioControlador.usuario.empleado.id}" >
-                                                    <f:selectItem itemLabel="Seleccione un perfil" itemValue="0"/>
+                                                    <f:selectItem itemLabel="Seleccione un empleado" itemValue="0"/>
                                                     <f:selectItems value="#{usuarioControlador.empleados}" var="empleados" itemValue="#{empleados.id}" itemLabel="#{empleados.nombre} #{empleados.apellidos}"/>
                                                 </h:selectOneMenu>
                                             </div>	

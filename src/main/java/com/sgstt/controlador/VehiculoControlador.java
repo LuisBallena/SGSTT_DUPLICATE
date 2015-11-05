@@ -9,6 +9,7 @@ import com.sgstt.servicios.VehiculoServicio;
 import com.sgstt.util.Utilitario;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -21,6 +22,8 @@ public class VehiculoControlador {
     private List<TipoVehiculo> tipos;
     private List<Marca> marcas;
     private Vehiculo vehiculo;
+    @ManagedProperty(value = "#{sesionControlador}")
+    private SesionControlador sesionControlador;
 
     public VehiculoControlador() {
     }
@@ -28,7 +31,7 @@ public class VehiculoControlador {
     public void initLista() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
             vehiculoPaginador = new VehiculoPaginador();
-            vehiculoPaginador.initPaginador();
+            vehiculoPaginador.initPaginador(sesionControlador.getUsuarioSesion().getSede().getId());
         }
     }
 
@@ -45,6 +48,7 @@ public class VehiculoControlador {
         if(!esVistaValida()){
             return;
         }
+        vehiculo.setSede(sesionControlador.getUsuarioSesion().getSede());
         vehiculoServicio.registrarVehiculo(vehiculo);
         limpiar();
     }
@@ -150,7 +154,9 @@ public class VehiculoControlador {
     public void setVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
     }
-    
-    
+
+    public void setSesionControlador(SesionControlador sesionControlador) {
+        this.sesionControlador = sesionControlador;
+    }
     
 }

@@ -54,10 +54,10 @@ public class CotizacionServicio {
         conexion.closeConexion();
         return aux;
     }
-    public List<Servicio> obtenerServicios(){
+    public List<Servicio> obtenerServiciosPorSede(Integer idSede){
         List<Servicio> aux = null;
         conexion.beginConexion();
-        aux = ServicioDao.obtenerTodos();
+        aux = ServicioDao.getServiciosWithSede(idSede);
         conexion.closeConexion();
         return aux;
     }

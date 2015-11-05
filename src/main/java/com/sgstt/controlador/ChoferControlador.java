@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.sgstt.controlador;
 
 import com.sgstt.entidad.Chofer;
@@ -12,6 +8,7 @@ import com.sgstt.servicios.ChoferServicio;
 import com.sgstt.util.Utilitario;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -26,6 +23,8 @@ public class ChoferControlador implements Serializable{
     private HibernatePaginador<Chofer> choferPaginador;
     private ChoferServicio choferServicio;
     private Chofer chofer;
+    @ManagedProperty(value = "#{sesionControlador}")
+    private SesionControlador sesionControlador;
     
     
     /**
@@ -37,7 +36,7 @@ public class ChoferControlador implements Serializable{
     public void initLista(){
         if (!FacesContext.getCurrentInstance().isPostback()) {
             choferPaginador = new ChoferPaginador();
-            choferPaginador.initPaginador();
+            choferPaginador.initPaginador(sesionControlador.getUsuarioSesion().getSede().getId());
         }
     }
     
@@ -62,6 +61,7 @@ public class ChoferControlador implements Serializable{
     
     public void guardarChofer(){
         /*validaciones*/
+        chofer.setSede(sesionControlador.getUsuarioSesion().getSede());
         choferServicio.guardarChofer(chofer);
         
         chofer = new Chofer();
@@ -100,4 +100,8 @@ public class ChoferControlador implements Serializable{
         this.chofer = chofer;
     }
 
+    public void setSesionControlador(SesionControlador sesionControlador) {
+        this.sesionControlador = sesionControlador;
+    }
+    
 }

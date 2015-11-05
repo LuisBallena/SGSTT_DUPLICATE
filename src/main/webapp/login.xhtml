@@ -33,6 +33,24 @@
                                         <h:inputSecret id="clave" styleClass="form-control" pt:placeholder="Clave" value="#{loginControlador.usuario.clave}"   >
                                         </h:inputSecret>
                                     </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-xs-2 col-sm-3" style="padding-right: 0px;padding-top: 4px;">
+                                                <label class="control-label">
+                                            Sede :
+                                        </label>
+                                            </div>
+                                            <div class="col-xs-10 col-sm-9" style="padding-left: 0px;margin-left: -10px;padding-right: 5px;">
+                                                <h:selectOneMenu styleClass="form-control" value="#{loginControlador.usuario.sede.id}">
+                                            <f:selectItems value="#{loginControlador.sedes}" var="listSede" itemValue="#{listSede.id}" itemLabel="#{listSede.descripcion}" />
+                                        </h:selectOneMenu>
+                                            </div>
+                                            
+                                        
+                                        </div>
+                                        
+
+                                    </div>
                                     <h:commandButton action="#{loginControlador.login}"   styleClass="btn btn-lg btn-primary btn-block"  value="Acceder">
                                         <f:ajax execute="@form" render="@form"  />
                                     </h:commandButton> 

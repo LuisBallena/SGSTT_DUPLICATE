@@ -39,18 +39,37 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `SGSTT`.`Sede`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `SGSTT`.`Sede` ;
+
+CREATE  TABLE IF NOT EXISTS `SGSTT`.`Sede` (
+  `idSede` INT NOT NULL AUTO_INCREMENT ,
+  `descripcion` VARCHAR(200) NOT NULL ,
+  PRIMARY KEY (`idSede`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `SGSTT`.`chofer`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `SGSTT`.`chofer` ;
 
 CREATE  TABLE IF NOT EXISTS `SGSTT`.`chofer` (
   `idchofer` INT NOT NULL AUTO_INCREMENT ,
+  `idSede` INT NOT NULL ,
   `nombre` VARCHAR(45) NULL ,
   `apellido` VARCHAR(45) NULL ,
   `dni` VARCHAR(45) NULL ,
   `categoria` VARCHAR(45) NULL ,
   `ESTADO` TINYINT(1) NOT NULL DEFAULT 1 ,
-  PRIMARY KEY (`idchofer`) )
+  PRIMARY KEY (`idchofer`, `idSede`) ,
+  INDEX `fk_chofer_Sede1` (`idSede` ASC) ,
+  CONSTRAINT `fk_chofer_Sede1`
+    FOREIGN KEY (`idSede` )
+    REFERENCES `SGSTT`.`Sede` (`idSede` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -86,6 +105,7 @@ DROP TABLE IF EXISTS `SGSTT`.`vehiculo` ;
 
 CREATE  TABLE IF NOT EXISTS `SGSTT`.`vehiculo` (
   `idvehiculo` INT NOT NULL AUTO_INCREMENT ,
+  `idSede` INT NOT NULL ,
   `descripcion` VARCHAR(45) NULL ,
   `placa` VARCHAR(7) NULL ,
   `ESTADO` TINYINT(1) NOT NULL DEFAULT 1 ,
@@ -97,9 +117,10 @@ CREATE  TABLE IF NOT EXISTS `SGSTT`.`vehiculo` (
   `marca_idmarca` INT NOT NULL ,
   `fecha_registro` DATETIME NULL ,
   `fecha_modificacion` DATETIME NULL ,
-  PRIMARY KEY (`idvehiculo`) ,
+  PRIMARY KEY (`idvehiculo`, `idSede`) ,
   INDEX `fk_vehículo_marca1_idx` (`marca_idmarca` ASC) ,
   INDEX `fk_vehículo_tipo vehiculo1_idx` (`idtipo_vehiculo` ASC) ,
+  INDEX `fk_vehiculo_Sede1` (`idSede` ASC) ,
   CONSTRAINT `fk_vehículo_marca1`
     FOREIGN KEY (`marca_idmarca` )
     REFERENCES `SGSTT`.`marca` (`idmarca` )
@@ -108,6 +129,11 @@ CREATE  TABLE IF NOT EXISTS `SGSTT`.`vehiculo` (
   CONSTRAINT `fk_vehículo_tipo vehiculo1`
     FOREIGN KEY (`idtipo_vehiculo` )
     REFERENCES `SGSTT`.`tipo_vehiculo` (`idtipo_vehiculo` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_vehiculo_Sede1`
+    FOREIGN KEY (`idSede` )
+    REFERENCES `SGSTT`.`Sede` (`idSede` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -178,14 +204,21 @@ DROP TABLE IF EXISTS `SGSTT`.`servicio` ;
 
 CREATE  TABLE IF NOT EXISTS `SGSTT`.`servicio` (
   `idservicio` INT NOT NULL AUTO_INCREMENT ,
+  `idSede` INT NOT NULL ,
   `descripcion` VARCHAR(300) NOT NULL ,
   `ESTADO` TINYINT(1) NOT NULL DEFAULT 1 ,
   `idtipo_servicio` INT NOT NULL ,
-  PRIMARY KEY (`idservicio`) ,
+  PRIMARY KEY (`idservicio`, `idSede`) ,
   INDEX `fk_servicio_tipo_servicio1_idx` (`idtipo_servicio` ASC) ,
+  INDEX `fk_servicio_Sede1` (`idSede` ASC) ,
   CONSTRAINT `fk_servicio_tipo_servicio1`
     FOREIGN KEY (`idtipo_servicio` )
     REFERENCES `SGSTT`.`tipo_servicio` (`idtipo_servicio` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_servicio_Sede1`
+    FOREIGN KEY (`idSede` )
+    REFERENCES `SGSTT`.`Sede` (`idSede` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -380,7 +413,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `SGSTT`.`EMPLEADO` ;
 
 CREATE  TABLE IF NOT EXISTS `SGSTT`.`EMPLEADO` (
-  `idEMPLEADO` INT NOT NULL ,
+  `idEMPLEADO` INT NOT NULL AUTO_INCREMENT ,
   `NOMBRE` VARCHAR(45) NOT NULL ,
   `APELLIDOS` VARCHAR(45) NOT NULL ,
   `DNI` VARCHAR(8) NOT NULL ,
@@ -450,7 +483,7 @@ CREATE  TABLE IF NOT EXISTS `SGSTT`.`servicio_detalle` (
   `ESTADO_SERVICIO` VARCHAR(60) NULL ,
   `FECHA_REGISTRO` DATETIME NOT NULL ,
   `FECHA_MODIFICACION` DATETIME NOT NULL ,
-  `idvuelo` INT NOT NULL ,
+  `idvuelo` INT NULL ,
   `idchofer` INT NULL ,
   `idtrasladista` INT NULL ,
   `idcobro` INT NULL ,
@@ -581,12 +614,14 @@ CREATE  TABLE IF NOT EXISTS `SGSTT`.`USUARIO` (
   `idUSUARIO` INT NOT NULL AUTO_INCREMENT ,
   `idPERFIL` INT NOT NULL ,
   `idEMPLEADO` INT NOT NULL ,
+  `idSede` INT NOT NULL ,
   `NICK` VARCHAR(20) NOT NULL ,
   `CLAVE` VARCHAR(20) NOT NULL ,
   `ESTADO` TINYINT(1) NOT NULL DEFAULT 1 ,
-  PRIMARY KEY (`idUSUARIO`, `idPERFIL`, `idEMPLEADO`) ,
+  PRIMARY KEY (`idUSUARIO`, `idPERFIL`, `idEMPLEADO`, `idSede`) ,
   INDEX `fk_USUARIO_PERFIL1_idx` (`idPERFIL` ASC) ,
   INDEX `fk_USUARIO_EMPLEADO1_idx` (`idEMPLEADO` ASC) ,
+  INDEX `fk_USUARIO_Sede1` (`idSede` ASC) ,
   CONSTRAINT `fk_USUARIO_PERFIL1`
     FOREIGN KEY (`idPERFIL` )
     REFERENCES `SGSTT`.`PERFIL` (`idPERFIL` )
@@ -595,6 +630,11 @@ CREATE  TABLE IF NOT EXISTS `SGSTT`.`USUARIO` (
   CONSTRAINT `fk_USUARIO_EMPLEADO1`
     FOREIGN KEY (`idEMPLEADO` )
     REFERENCES `SGSTT`.`EMPLEADO` (`idEMPLEADO` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_USUARIO_Sede1`
+    FOREIGN KEY (`idSede` )
+    REFERENCES `SGSTT`.`Sede` (`idSede` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -713,13 +753,23 @@ INSERT INTO `SGSTT`.`trasladista` (`idtrasladista`, `nombre`, `apellido`, `dni`,
 COMMIT;
 
 -- -----------------------------------------------------
+-- Data for table `SGSTT`.`Sede`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `SGSTT`;
+INSERT INTO `SGSTT`.`Sede` (`idSede`, `descripcion`) VALUES (1, 'LIMA');
+INSERT INTO `SGSTT`.`Sede` (`idSede`, `descripcion`) VALUES (2, 'CUSCO');
+
+COMMIT;
+
+-- -----------------------------------------------------
 -- Data for table `SGSTT`.`chofer`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `SGSTT`;
-INSERT INTO `SGSTT`.`chofer` (`idchofer`, `nombre`, `apellido`, `dni`, `categoria`, `ESTADO`) VALUES (1, 'Ruben', 'Ramirezz', '72502828', 'A1', 1);
-INSERT INTO `SGSTT`.`chofer` (`idchofer`, `nombre`, `apellido`, `dni`, `categoria`, `ESTADO`) VALUES (2, 'Oscar', 'Mendivil', '09876543', 'A2', 1);
-INSERT INTO `SGSTT`.`chofer` (`idchofer`, `nombre`, `apellido`, `dni`, `categoria`, `ESTADO`) VALUES (3, 'Robert', 'Manrique', '12457896', 'A3', 1);
+INSERT INTO `SGSTT`.`chofer` (`idchofer`, `idSede`, `nombre`, `apellido`, `dni`, `categoria`, `ESTADO`) VALUES (1, 1, 'Ruben', 'Ramirezz', '72502828', 'A1', 1);
+INSERT INTO `SGSTT`.`chofer` (`idchofer`, `idSede`, `nombre`, `apellido`, `dni`, `categoria`, `ESTADO`) VALUES (2, 1, 'Oscar', 'Mendivil', '09876543', 'A2', 1);
+INSERT INTO `SGSTT`.`chofer` (`idchofer`, `idSede`, `nombre`, `apellido`, `dni`, `categoria`, `ESTADO`) VALUES (3, 1, 'Robert', 'Manrique', '12457896', 'A3', 1);
 
 COMMIT;
 
@@ -748,9 +798,9 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `SGSTT`;
-INSERT INTO `SGSTT`.`vehiculo` (`idvehiculo`, `descripcion`, `placa`, `ESTADO`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (1, 'VAN-H1', '123-agb', 1, '2010', '12', '10', 'negro', 1, 1, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `SGSTT`.`vehiculo` (`idvehiculo`, `descripcion`, `placa`, `ESTADO`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (2, 'Sprinter-2', 'abc-789', 1, '2012', '40', '36', 'plata', 1, 1, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `SGSTT`.`vehiculo` (`idvehiculo`, `descripcion`, `placa`, `ESTADO`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (3, 'Bus-3', '345-ret', 1, '2009', '50', '45', NULL, 1, 1, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `SGSTT`.`vehiculo` (`idvehiculo`, `idSede`, `descripcion`, `placa`, `ESTADO`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (1, 1, 'VAN-H1', '123-agb', 1, '2010', '12', '10', 'negro', 1, 1, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `SGSTT`.`vehiculo` (`idvehiculo`, `idSede`, `descripcion`, `placa`, `ESTADO`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (2, 1, 'Sprinter-2', 'abc-789', 1, '2012', '40', '36', 'plata', 1, 1, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `SGSTT`.`vehiculo` (`idvehiculo`, `idSede`, `descripcion`, `placa`, `ESTADO`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (3, 1, 'Bus-3', '345-ret', 1, '2009', '50', '45', NULL, 1, 1, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
 
 COMMIT;
 
@@ -780,9 +830,9 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `SGSTT`;
-INSERT INTO `SGSTT`.`servicio` (`idservicio`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (1, 'APTO - LIMA - SHERATON', 1, 1);
-INSERT INTO `SGSTT`.`servicio` (`idservicio`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (2, 'APTO - MIRAFLORES - MARRIOT', 1, 1);
-INSERT INTO `SGSTT`.`servicio` (`idservicio`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (3, 'APTO - SAN ISIDRO - CONQUISTADORES', 1, 1);
+INSERT INTO `SGSTT`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (1, 1, 'APTO - LIMA - SHERATON', 1, 1);
+INSERT INTO `SGSTT`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (2, 1, 'APTO - MIRAFLORES - MARRIOT', 1, 1);
+INSERT INTO `SGSTT`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (3, 1, 'APTO - SAN ISIDRO - CONQUISTADORES', 1, 1);
 
 COMMIT;
 
@@ -878,7 +928,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `SGSTT`;
-INSERT INTO `SGSTT`.`USUARIO` (`idUSUARIO`, `idPERFIL`, `idEMPLEADO`, `NICK`, `CLAVE`, `ESTADO`) VALUES (1, 1, 1, 'admin', 'admin1234', 1);
+INSERT INTO `SGSTT`.`USUARIO` (`idUSUARIO`, `idPERFIL`, `idEMPLEADO`, `idSede`, `NICK`, `CLAVE`, `ESTADO`) VALUES (1, 1, 1, 1, 'admin', 'admin1234', 1);
 
 COMMIT;
 

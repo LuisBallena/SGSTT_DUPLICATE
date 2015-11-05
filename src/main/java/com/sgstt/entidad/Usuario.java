@@ -19,40 +19,43 @@ import javax.persistence.Table;
  */
 @Entity
 @Table
-public class Usuario implements Serializable{
-    
+public class Usuario implements Serializable {
+
     private static final long serialVersionUID = -8091733890281842073L;
-    
+
     @Id
     @GeneratedValue
     @Column(name = "IDUSUARIO")
     Integer id;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "IDPERFIL" , nullable = false)
+    @JoinColumn(name = "IDPERFIL", nullable = false)
     Perfil perfil;
-    
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IDEMPLEADO", nullable = false)
-    Empleado empleado; 
-    
-    @Column( nullable = false)
+    Empleado empleado;
+
+    @Column(nullable = false)
     String nick;
-    
+
     @Column(nullable = false)
     String clave;
-    
+
     @Enumerated(EnumType.ORDINAL)
-    @Column(nullable = false,insertable = false)
+    @Column(nullable = false, insertable = false)
     Estado estado;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idSede")
+    Sede sede;
 
     public Usuario() {
         perfil = new Perfil();
         empleado = new Empleado();
     }
-    
+
     /* GETTERS AND SETTERS */
-    
     public Integer getId() {
         return id;
     }
@@ -100,5 +103,15 @@ public class Usuario implements Serializable{
     public void setEmpleado(Empleado empleado) {
         this.empleado = empleado;
     }
+
+    public Sede getSede() {
+        return sede;
+    }
+
+    public void setSede(Sede sede) {
+        this.sede = sede;
+    }
     
+    
+
 }

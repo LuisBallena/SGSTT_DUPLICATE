@@ -1,6 +1,7 @@
 package com.sgstt.dao.impl;
 
 import com.sgstt.dao.ServicioDao;
+import com.sgstt.entidad.Estado;
 import com.sgstt.entidad.Servicio;
 import com.sgstt.hibernate.HibernateConexion;
 import com.sgstt.hibernate.HibernateImpl;
@@ -17,7 +18,8 @@ import org.hibernate.sql.JoinType;
  *
  * @author Luis Alonso Ballena Garcia
  */
-public class ServicioImpl extends HibernateImpl<Servicio,Integer> implements ServicioDao,Serializable{
+public class ServicioImpl extends HibernateImpl<Servicio, Integer> implements ServicioDao, Serializable {
+
     private static final long serialVersionUID = 5584452060019576703L;
 
     public ServicioImpl(HibernateConexion conexion) {
@@ -27,12 +29,12 @@ public class ServicioImpl extends HibernateImpl<Servicio,Integer> implements Ser
     @Override
     public List<Servicio> obtenerServiciosPorTipoServicioId(Integer id) {
         List<Servicio> lista = null;
-        try{
+        try {
             Session session = conexion.getSession();
-            Criteria criteria = session.createCriteria(Servicio.class,"servicio")
+            Criteria criteria = session.createCriteria(Servicio.class, "servicio")
                     .add(Restrictions.eq("servicio.tipoServicio.id", id));
             lista = criteria.list();
-        }catch(HibernateException e){
+        } catch (HibernateException e) {
             e.printStackTrace();
         }
         return lista;
@@ -41,15 +43,32 @@ public class ServicioImpl extends HibernateImpl<Servicio,Integer> implements Ser
     @Override
     public Servicio obtenerServicioConDestinos(Integer id) {
         Servicio auxServicio = null;
-        try{
+        try {
             Session session = conexion.getSession();
-            Query query = session.createQuery("from Servicio as servicio join fetch servicio.destinos as destinos where servicio.id = :dato");
+            Query query = session.createQuery("from Servicio as servicio left join fetch servicio.destinos as destinos where servicio.id = :dato");
             query.setInteger("dato", id);
             auxServicio = (Servicio) query.uniqueResult();
-        }catch(HibernateException e){
+        } catch (HibernateException e) {
             e.printStackTrace();
         }
         return auxServicio;
     }
+
+    @Override
+    public List<Servicio> getServiciosWithSede(Integer idSede) {
+        List<Servicio> lista = null;
+        try {
+            Session session = conexion.getSession();
+            Criteria criteria = session.createCriteria(Servicio.class, "servicio")
+                    .add(Restrictions.eq("servicio.sede.id", idSede))
+                    .add(Restrictions.eq("servicio.estado",Estado.ACTIVO));
+            lista = criteria.list();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+    
+
 
 }

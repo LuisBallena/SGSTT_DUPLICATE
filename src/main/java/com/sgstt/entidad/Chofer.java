@@ -6,8 +6,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -42,6 +45,10 @@ public class Chofer implements Serializable{
    
     @Transient
     private String datosCompletos;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idSede")
+    private Sede sede;
 
     public Chofer() {
     }
@@ -94,10 +101,16 @@ public class Chofer implements Serializable{
         this.estado = estado;
     }
 
+    public Sede getSede() {
+        return sede;
+    }
+
+    public void setSede(Sede sede) {
+        this.sede = sede;
+    }
+    
     public String getDatosCompletos() {
         return String.format("%s %s",Utilitario.esNulo(getNombre()) ? "" : getNombre(),Utilitario.esNulo(getApellido()) ? "" : getApellido());
     }
-    
-    
     
 }

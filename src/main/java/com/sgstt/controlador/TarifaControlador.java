@@ -10,6 +10,7 @@ import com.sgstt.util.Utilitario;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -26,6 +27,8 @@ public class TarifaControlador implements Serializable {
     private List<TipoVehiculo> tipoVehiculos;
     private List<Servicio> servicios;
     private CotizacionServicio cotizacionServicio;
+    @ManagedProperty(value = "#{sesionControlador}")
+    private SesionControlador sesionControlador;
 
     public TarifaControlador() {
     }
@@ -43,7 +46,7 @@ public class TarifaControlador implements Serializable {
             cotizacionServicio = new CotizacionServicio();
             tarifa = new Tarifa();
             tipoVehiculos = cotizacionServicio.obtenerTipoVehiculos();
-            servicios = cotizacionServicio.obtenerServicios();
+            servicios = cotizacionServicio.obtenerServiciosPorSede(sesionControlador.getUsuarioSesion().getSede().getId());
         }
     }
 
@@ -58,7 +61,7 @@ public class TarifaControlador implements Serializable {
             cotizacionServicio = new CotizacionServicio();
             tarifa = cotizacionServicio.obtenerTarifa(id);
             tipoVehiculos = cotizacionServicio.obtenerTipoVehiculos();
-            servicios = cotizacionServicio.obtenerServicios();
+            servicios = cotizacionServicio.obtenerServiciosPorSede(sesionControlador.getUsuarioSesion().getSede().getId());
         }
     }
 
@@ -174,4 +177,8 @@ public class TarifaControlador implements Serializable {
         this.servicios = servicios;
     }
 
+    public void setSesionControlador(SesionControlador sesionControlador) {
+        this.sesionControlador = sesionControlador;
+    }
+    
 }

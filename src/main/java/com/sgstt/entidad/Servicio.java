@@ -43,6 +43,10 @@ public class Servicio implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "IDTIPO_SERVICIO", nullable = false)
     private TipoServicio tipoServicio;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idSede")
+    private Sede sede;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "servicio_destinos", joinColumns = {
@@ -121,6 +125,12 @@ public class Servicio implements Serializable {
     public void setEstado(Estado estado) {
         this.estado = estado;
     }
-    
-    
+
+    public Sede getSede() {
+        return sede;
+    }
+
+    public void setSede(Sede sede) {
+        this.sede = sede;
+    }
 }
