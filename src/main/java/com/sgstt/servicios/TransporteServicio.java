@@ -172,9 +172,8 @@ public class TransporteServicio implements Serializable {
         conexion.closeConexion();
     }
     
-    public void registrarServiciosVTA(List<ServicioDetalle> servicioDetalles) throws TransporteException{
+    public void registrarServiciosVTA(List<ServicioDetalle> servicioDetalles,Venta venta) throws TransporteException{
         conexion.beginConexion();
-        Venta venta = new Venta();
         ventaDao.agregar(venta);
         for (ServicioDetalle detalle : servicioDetalles) {
             detalle.setFile(null);
@@ -319,6 +318,14 @@ public class TransporteServicio implements Serializable {
         servicioDao.actualizar(servicio);
         conexion.closeConexion();
         Utilitario.enviarMensajeGlobalValido("Se ha eliminado correctamente");
+    }
+
+    public Cliente obtenerCliente(Integer idCliente){
+        Cliente cliente = null;
+        conexion.beginConexion();
+        cliente = clienteDao.obtenerEntidad(idCliente);
+        conexion.closeConexion();
+        return cliente;
     }
 
     private boolean estaAsignadoChoferVehiculo(ServicioDetalle servicioDetalle) {
