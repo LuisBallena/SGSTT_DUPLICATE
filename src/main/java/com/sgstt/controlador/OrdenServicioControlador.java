@@ -1,14 +1,6 @@
 package com.sgstt.controlador;
 
-import com.sgstt.entidad.Aerolinea;
-import com.sgstt.entidad.Chofer;
-import com.sgstt.entidad.File;
-import com.sgstt.entidad.Servicio;
-import com.sgstt.entidad.ServicioDetalle;
-import com.sgstt.entidad.Tarifa;
-import com.sgstt.entidad.Trasladista;
-import com.sgstt.entidad.Vehiculo;
-import com.sgstt.entidad.Vuelo;
+import com.sgstt.entidad.*;
 import com.sgstt.excepciones.TransporteException;
 import com.sgstt.hibernate.HibernatePaginador;
 import com.sgstt.paginacion.ServicioDetallePaginador;
@@ -44,12 +36,14 @@ public class OrdenServicioControlador implements Serializable {
     private List<File> files;
     private List<Chofer> choferes;
     private List<Vehiculo> vehiculos;
+    private List<Cliente> clientes;
     private Servicio servicioSeleccionado;
     private ServicioDetalle servicioDetalle;
     private Trasladista trasladistaSeleccionado;
     private Date fechaActual;
     private HibernatePaginador<ServicioDetalle> servicioDetallePaginador;
     private Date fechaAuxiliar;
+    private Cliente cliente;
     private List<ServicioDetalle> ordenesServicios;
     private Map<Integer, Vuelo> mapaVuelos;
     @ManagedProperty(value = "#{sesionControlador}")
@@ -61,6 +55,7 @@ public class OrdenServicioControlador implements Serializable {
     public void initLista() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
             transporteServicio = new TransporteServicio();
+            clientes = transporteServicio.obtenerClientes();
             servicioDetallePaginador = new ServicioDetallePaginador();
             servicioDetallePaginador.initPaginador(sesionControlador.getUsuarioSesion().getSede().getId());
         }
@@ -82,8 +77,15 @@ public class OrdenServicioControlador implements Serializable {
 
     public void initCreateOrdenVTA() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
+            Object value = Utilitario.getFlash("idCliente");
+            if (value == null) {
+                Utilitario.redireccionarJSF(FacesContext.getCurrentInstance(), "/vistas/ordenServicio/list.xhtml");
+                return;
+            }
+            Integer idCliente = Integer.valueOf(value.toString());
             fechaActual = new Date();
             transporteServicio = new TransporteServicio();
+            cliente = transporteServicio.obtenerCliente(idCliente);
             initCollectionsVTA();
             servicioDetalle = new ServicioDetalle();
             fechaAuxiliar = new Date();
@@ -184,7 +186,9 @@ public class OrdenServicioControlador implements Serializable {
 
     public void registrarDetalleVTA() {
         try {
-            transporteServicio.registrarServiciosVTA(ordenesServicios);
+            Venta venta = new Venta();
+            venta.setCliente(cliente);
+            transporteServicio.registrarServiciosVTA(ordenesServicios,venta);
             ordenesServicios.clear();
         } catch (TransporteException ex) {
             Utilitario.enviarMensajeGlobalError(ex.getMessage());
@@ -232,6 +236,11 @@ public class OrdenServicioControlador implements Serializable {
         }
         Utilitario.putFlash("idServicioDetalle", servicioDetalle.getId());
         return "cotizacion.xhtml?faces-redirect=true;";
+    }
+
+    public String irVentaDirecta(Integer idCliente){
+        Utilitario.putFlash("idCliente",idCliente);
+        return "create_orden_vta.xhtml?faces-redirect=true;";
     }
 
     public void capturarServicioDetalle(Integer id) {
@@ -415,5 +424,12 @@ public class OrdenServicioControlador implements Serializable {
     public void setSesionControlador(SesionControlador sesionControlador) {
         this.sesionControlador = sesionControlador;
     }
-    
+
+    public List<Cliente> getClientes() {
+        return clientes;
+    }
+
+    public void setClientes(List<Cliente> clientes) {
+        this.clientes = clientes;
+    }
 }

@@ -458,8 +458,16 @@ DROP TABLE IF EXISTS `SGSTT`.`venta_directa` ;
 
 CREATE  TABLE IF NOT EXISTS `SGSTT`.`venta_directa` (
   `idventa` INT NOT NULL AUTO_INCREMENT ,
+  `idCliente` INT NOT NULL ,
   `serie` VARCHAR(10) NOT NULL DEFAULT 'VTA' ,
-  PRIMARY KEY (`idventa`) )
+  PRIMARY KEY (`idventa`,`idCliente`) ,
+  INDEX `fk_venta_Cliente1_idx` (`idCliente` ASC) ,
+  CONSTRAINT `fk_venta_Cliente1`
+  FOREIGN KEY (`idCliente` )
+  REFERENCES `SGSTT`.`Cliente` (`idCliente` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+)
 ENGINE = InnoDB;
 
 

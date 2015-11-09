@@ -3,11 +3,7 @@
 package com.sgstt.entidad;
 
 import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  *
@@ -24,6 +20,10 @@ public class Venta implements Serializable{
     
     @Column(insertable = false)
     private String serie;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idCliente")
+    private Cliente cliente;
 
     public Venta() {
     }
@@ -44,4 +44,11 @@ public class Venta implements Serializable{
         this.serie = serie;
     }
 
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
 }
