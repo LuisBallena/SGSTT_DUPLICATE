@@ -81,10 +81,10 @@
                                         <div class="form-group has-feedback">
                                             <label class="col-md-2 control-label" >Vuelo :</label>
                                             <div class="col-md-3">
-                                                <h:selectOneMenu styleClass="form-control"   value="#{ordenServicioControlador.servicioDetalle.vuelo.id}">
-                                                    <f:ajax event="change" render="aerolinea" listener="#{ordenServicioControlador.onChangeVuelo}" />
-                                                    <f:selectItem itemLabel="Seleccionar" itemValue="0" />
-                                                    <f:selectItems value="#{ordenServicioControlador.vuelos}" var="vuelos" itemLabel="#{vuelos.descripcion}" itemValue="#{vuelos.id}" />
+                                                <h:selectOneMenu styleClass="form-control"   value="#{ordenServicioControlador.servicioDetalle.vuelo}" converter="omnifaces.SelectItemsConverter" >
+                                                    <f:ajax event="change" render="aerolinea"  />
+                                                    <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
+                                                    <f:selectItems value="#{ordenServicioControlador.vuelos}" var="vuelos" itemLabel="#{vuelos.descripcion}" itemValue="#{vuelos}" />
                                                 </h:selectOneMenu>
                                             </div> 
                                             <label class="col-md-2 control-label" >Aerolinea :</label>

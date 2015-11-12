@@ -112,7 +112,14 @@
         <dependency>
             <groupId>net.sf.jasperreports</groupId>
             <artifactId>jasperreports</artifactId>
-            <version>5.6.1</version>
+            <version>6.0.0</version>
+        </dependency>
+
+        <!-- Omnifaces -->
+        <dependency>
+            <groupId>org.omnifaces</groupId>
+            <artifactId>omnifaces</artifactId>
+            <version>1.11</version>
         </dependency>
 
         <!-- MySql Connector-->

@@ -165,7 +165,6 @@ public class TransporteServicio implements Serializable {
     public void registrarServicios(List<ServicioDetalle> servicioDetalles) throws TransporteException {
         conexion.beginConexion();
         for (ServicioDetalle detalle : servicioDetalles) {
-            detalle.setVuelo(detalle.getVuelo().getId() != 0 ? detalle.getVuelo() : null);
             detalle.setEstadoServicio(EstadoServicio.SIN_ASIGNAR);
             servicioDetalleDao.agregar(detalle);
         }
@@ -177,7 +176,6 @@ public class TransporteServicio implements Serializable {
         conexion.beginConexion();
         ventaDao.agregar(venta);
         for (ServicioDetalle detalle : servicioDetalles) {
-            detalle.setVuelo(detalle.getVuelo().getId() != 0 ? detalle.getVuelo() : null);
             detalle.setFile(null);
             detalle.setVenta(venta);
             detalle.setEstadoServicio(EstadoServicio.SIN_ASIGNAR);
@@ -189,7 +187,6 @@ public class TransporteServicio implements Serializable {
 
     public void actualizarServicioDetalle(ServicioDetalle servicioDetalle) {
         conexion.beginConexion();
-        servicioDetalle.setVuelo(servicioDetalle.getVuelo()!= null && servicioDetalle.getVuelo().getId() != 0 ? servicioDetalle.getVuelo() : null);
         if (estaAsignadoChoferVehiculo(servicioDetalle)) {
             servicioDetalle.setEstadoServicio(EstadoServicio.PENDIENTE);
             Tarifa tarifa = tarifaDao.getTarifaFilterByTipoVehiculoAndServicio(servicioDetalle.getVehiculo().getTipoVehiculo().getId(), servicioDetalle.getServicio().getId());
@@ -200,7 +197,6 @@ public class TransporteServicio implements Serializable {
         servicioDetalleDao.actualizar(servicioDetalle);
         Utilitario.enviarMensajeGlobalValido("Se ha actualizado correctamente");
         conexion.closeConexion();
-        servicioDetalle.setVuelo(servicioDetalle.getVuelo() != null ? servicioDetalle.getVuelo() : new Vuelo());
     }
 
     public void actualizarCotizacion(ServicioDetalle servicioDetalle) {

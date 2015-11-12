@@ -45,7 +45,6 @@ public class OrdenServicioControlador implements Serializable {
     private Date fechaAuxiliar;
     private Cliente cliente;
     private List<ServicioDetalle> ordenesServicios;
-    private Map<Integer, Vuelo> mapaVuelos;
     @ManagedProperty(value = "#{sesionControlador}")
     private SesionControlador sesionControlador;
 
@@ -129,24 +128,16 @@ public class OrdenServicioControlador implements Serializable {
     }
 
     private void initCollections() {
-        mapaVuelos = new HashMap<>();
         servicios = transporteServicio.obtenerServiciosPorSede(sesionControlador.getUsuarioSesion().getSede().getId());
         vuelos = transporteServicio.obtenerVuelos();
-        for (Vuelo vuelo : vuelos) {
-            mapaVuelos.put(vuelo.getId(), vuelo);
-        }
         guias = transporteServicio.obtenerGuias();
         files = transporteServicio.obtenerFilesActivos();
     }
 
     private void initCollectionsVTA() {
-        mapaVuelos = new HashMap<>();
         ordenesServicios = new ArrayList<>();
         servicios = transporteServicio.obtenerServiciosPorSede(sesionControlador.getUsuarioSesion().getSede().getId());
         vuelos = transporteServicio.obtenerVuelos();
-        for (Vuelo vuelo : vuelos) {
-            mapaVuelos.put(vuelo.getId(), vuelo);
-        }
         guias = transporteServicio.obtenerGuias();
     }
 
@@ -169,9 +160,9 @@ public class OrdenServicioControlador implements Serializable {
             servicioDetalle.setFechaRegistro(new Date());
             servicioDetalle.setFechaModificacion(new Date());
             ordenesServicios.add(servicioDetalle);
-            if (servicioDetalle.getVuelo().getId() != 0) {
-                servicioDetalle.setVuelo(mapaVuelos.get(servicioDetalle.getVuelo().getId()));
-            }
+            //if (servicioDetalle.getVuelo().getId() != 0) {
+            //    servicioDetalle.setVuelo(mapaVuelos.get(servicioDetalle.getVuelo().getId()));
+            //}
             limpiarTraslado();
         }
     }
@@ -254,15 +245,6 @@ public class OrdenServicioControlador implements Serializable {
         servicioDetalle = new ServicioDetalle();
         servicioDetalle.setFecha(new Date());
         servicioDetalle.setFile(new File());
-    }
-
-    public void onChangeVuelo() {
-        Vuelo auxiVuelo = mapaVuelos.get(servicioDetalle.getVuelo().getId());
-        Aerolinea auAerolinea = null;
-        if (auxiVuelo != null) {
-            auAerolinea = auxiVuelo.getAerolinea();
-        }
-        servicioDetalle.getVuelo().setAerolinea(auAerolinea);
     }
 
     private boolean esVistaValida() {
