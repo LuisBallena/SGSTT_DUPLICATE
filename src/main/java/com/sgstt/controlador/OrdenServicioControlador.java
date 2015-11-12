@@ -108,6 +108,7 @@ public class OrdenServicioControlador implements Serializable {
             servicioDetalle = transporteServicio.obtenerServicioDetalleConTipoVehiculo(id);
             servicioDetalle.setChofer(servicioDetalle.getChofer() != null ? servicioDetalle.getChofer() : null);
             servicioDetalle.setVehiculo(servicioDetalle.getVehiculo() != null ? servicioDetalle.getVehiculo() : null);
+            servicioDetalle.setVuelo(servicioDetalle.getVuelo() != null ? servicioDetalle.getVuelo() : new Vuelo());
             servicioSeleccionado = servicioDetalle.getServicio();
             trasladistaSeleccionado = (servicioDetalle.getTrasladista() == null ? new Trasladista() : servicioDetalle.getTrasladista());
             initCollectionsUpdate();
@@ -188,7 +189,7 @@ public class OrdenServicioControlador implements Serializable {
         try {
             Venta venta = new Venta();
             venta.setCliente(cliente);
-            transporteServicio.registrarServiciosVTA(ordenesServicios,venta);
+            transporteServicio.registrarServiciosVTA(ordenesServicios, venta);
             ordenesServicios.clear();
         } catch (TransporteException ex) {
             Utilitario.enviarMensajeGlobalError(ex.getMessage());
@@ -238,8 +239,8 @@ public class OrdenServicioControlador implements Serializable {
         return "cotizacion.xhtml?faces-redirect=true;";
     }
 
-    public String irVentaDirecta(Integer idCliente){
-        Utilitario.putFlash("idCliente",idCliente);
+    public String irVentaDirecta(Integer idCliente) {
+        Utilitario.putFlash("idCliente", idCliente);
         return "create_orden_vta.xhtml?faces-redirect=true;";
     }
 
@@ -256,7 +257,11 @@ public class OrdenServicioControlador implements Serializable {
     }
 
     public void onChangeVuelo() {
-        Aerolinea auAerolinea = mapaVuelos.get(servicioDetalle.getVuelo().getId()).getAerolinea();
+        Vuelo auxiVuelo = mapaVuelos.get(servicioDetalle.getVuelo().getId());
+        Aerolinea auAerolinea = null;
+        if (auxiVuelo != null) {
+            auAerolinea = auxiVuelo.getAerolinea();
+        }
         servicioDetalle.getVuelo().setAerolinea(auAerolinea);
     }
 
@@ -267,9 +272,6 @@ public class OrdenServicioControlador implements Serializable {
             resultado = false;
         } else if (!esNroPersonasValida(servicioDetalle)) {
             Utilitario.enviarMensajeGlobalError("Debe ingresar la cantidad de Personas");
-            resultado = false;
-        } else if (!esLineaValida(servicioDetalle.getVuelo())) {
-            Utilitario.enviarMensajeGlobalError("Debe seleccionar una linea");
             resultado = false;
         } else if (files != null && !esFileValido(servicioDetalle.getFile())) {
             Utilitario.enviarMensajeGlobalError("Debe seleccionar un file");
@@ -285,9 +287,6 @@ public class OrdenServicioControlador implements Serializable {
             resultado = false;
         } else if (!esNroPersonasValida(servicioDetalle)) {
             Utilitario.enviarMensajeGlobalError("Debe ingresar la cantidad de Personas");
-            resultado = false;
-        } else if (!esLineaValida(servicioDetalle.getVuelo())) {
-            Utilitario.enviarMensajeGlobalError("Debe seleccionar una linea");
             resultado = false;
         } else if (servicioDetalle.getVenta() == null && !esFileValido(servicioDetalle.getFile())) {
             Utilitario.enviarMensajeGlobalError("Debe seleccionar un file");
@@ -440,5 +439,5 @@ public class OrdenServicioControlador implements Serializable {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-    
+
 }

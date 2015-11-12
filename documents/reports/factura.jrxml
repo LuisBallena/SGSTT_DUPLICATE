@@ -1,39 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="factura" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="61ec99cb-d6c8-4700-a209-1e1918af79fc">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="444"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="IDFILE" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT FILE.NRO_CORRELATIVO,SERVICE.DESCRIPCION,TAR.PRECIO FROM FILE AS FILE
-INNER JOIN SERVICIO_DETALLE AS DETALLE ON FILE.IDFILE = DETALLE.IDFILE
-INNER JOIN SERVICIO AS SERVICE ON DETALLE.IDSERVICIO = SERVICE.IDSERVICIO
-INNER JOIN TARIFA AS TAR ON TAR.IDSERVICIO = SERVICE.IDSERVICIO
-WHERE FILE.IDFILE = $P{IDFILE}
-ORDER BY FILE.NRO_CORRELATIVO]]>
+		<![CDATA[SELECT
+    DETALLE.FECHA,
+    FILE.PAX,
+    DETALLE.NUM_PERSONAS,
+    FILE.NRO_CORRELATIVO,
+    SERVICE.DESCRIPCION,
+    VEHI.DESCRIPCION,
+    DETALLE.PRECIO_SERVICIO,
+    DETALLE.DESCUENTO,
+    DETALLE.ADICIONAL,
+	DETALLE.DIAS_VIAJE
+FROM
+    FILE AS FILE
+        INNER JOIN
+    SERVICIO_DETALLE AS DETALLE ON FILE.IDFILE = DETALLE.IDFILE
+        INNER JOIN
+    SERVICIO AS SERVICE ON DETALLE.IDSERVICIO = SERVICE.IDSERVICIO
+        INNER JOIN
+    VEHICULO AS VEHI ON DETALLE.IDVEHICULO = VEHI.IDVEHICULO
+        INNER JOIN
+    TIPO_VEHICULO AS TIPO_VEHI ON VEHI.IDTIPO_VEHICULO = TIPO_VEHI.IDTIPO_VEHICULO
+WHERE
+    FILE.IDFILE = $P{IDFILE}
+ORDER BY DETALLE.FECHA]]>
 	</queryString>
+	<field name="FECHA" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PAX" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NUM_PERSONAS" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="NRO_CORRELATIVO" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="DESCRIPCION" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="PRECIO" class="java.math.BigDecimal">
+	<field name="PRECIO_SERVICIO" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DESCUENTO" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ADICIONAL" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DIAS_VIAJE" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<variable name="costo_total_sin_igv" class="java.lang.Double" calculation="Sum">
-		<variableExpression><![CDATA[$F{PRECIO}]]></variableExpression>
+		<variableExpression><![CDATA[($F{PRECIO_SERVICIO}*($F{DIAS_VIAJE}==null || $F{DIAS_VIAJE} == 0 ? 1.0 :$F{DIAS_VIAJE}.doubleValue()))-$F{DESCUENTO}+$F{ADICIONAL}]]></variableExpression>
 	</variable>
 	<variable name="total_igv" class="java.lang.Double">
-		<variableExpression><![CDATA[$V{costo_total_sin_igv} + ($V{costo_total_sin_igv}*0.2)]]></variableExpression>
+		<variableExpression><![CDATA[$V{costo_total_sin_igv} + ($V{costo_total_sin_igv}*0.18)]]></variableExpression>
+	</variable>
+	<variable name="dias_horas" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{DIAS_VIAJE}.equals(null) || $F{DIAS_VIAJE} == 0 ? 1.0 :$F{DIAS_VIAJE}.doubleValue()]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="33" splitType="Stretch">
+		<band height="34" splitType="Stretch">
 			<staticText>
 				<reportElement x="153" y="9" width="132" height="20" uuid="34c5e434-4367-4858-9344-542fdf854840"/>
 				<textElement>
@@ -54,32 +93,88 @@ ORDER BY FILE.NRO_CORRELATIVO]]>
 	<columnHeader>
 		<band height="22" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="153" height="20" uuid="8dfb2a59-f621-41af-8565-e9b91c5d976f"/>
-				<textElement textAlignment="Center">
-					<font fontName="Arial" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Servicio]]></text>
+				<reportElement x="0" y="0" width="53" height="20" uuid="4203c5c5-14b5-4b0d-9328-14b1f463833e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Fecha]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="153" y="0" width="100" height="20" uuid="abc357cb-e973-4f9c-bb6c-d3f48ae6ac7f"/>
-				<textElement textAlignment="Center">
-					<font fontName="Arial" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Costo (Sin IGV)]]></text>
+				<reportElement x="53" y="0" width="69" height="20" uuid="1376d83c-381b-48e4-8b08-e119fe1df81a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Pax]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="122" y="0" width="67" height="20" uuid="5e62cc2a-ef7f-4f49-8ace-540ebe33c561"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Nro. Personas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="189" y="0" width="165" height="20" uuid="b53b81ad-3ab0-4fcc-95bc-b6884e100bc2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Descripción]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="354" y="0" width="47" height="20" uuid="fbaab5bd-3011-4070-a8ff-e663c9c62096"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Precio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="401" y="0" width="55" height="20" uuid="0d81fc1b-e192-463f-afc6-1fc0f4bb50cc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Descuento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="456" y="0" width="46" height="20" uuid="8af6bb67-bee0-4f49-834f-6ab73c23e268"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Adicional]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="502" y="0" width="53" height="20" uuid="c31e0b3a-f900-46a5-b109-de564f6934aa"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Dias/Viaje]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="21" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="0" y="1" width="53" height="20" uuid="535ddf61-b07d-4943-9eab-6b07ee47b644"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{FECHA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="53" y="1" width="69" height="20" uuid="306e9b63-039a-451d-a257-3e83d4686493"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{PAX}]]></textFieldExpression>
+			</textField>
 			<textField>
-				<reportElement x="0" y="0" width="153" height="20" uuid="c2439646-6878-47aa-b970-84967e5b3647"/>
+				<reportElement x="122" y="1" width="67" height="20" uuid="64f77aca-00c8-4316-9638-d7ade99a36d2"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{NUM_PERSONAS}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="189" y="1" width="165" height="20" uuid="222ad318-4b91-4a0a-b291-83c696b8b948"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{DESCRIPCION}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="153" y="0" width="100" height="20" uuid="8c4f76d8-6cc4-4919-ac87-2769dda04e35"/>
+				<reportElement x="354" y="1" width="47" height="20" uuid="9eaceb50-e259-4589-b8f9-997c0053386b"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{PRECIO}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{PRECIO_SERVICIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="401" y="1" width="55" height="20" uuid="f432363a-8905-439d-a1a9-3d0b80f2660a"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{DESCUENTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="456" y="1" width="46" height="20" uuid="e2ffa9ec-84b5-45a2-9cec-be6d7b2a0865"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{ADICIONAL}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="502" y="1" width="53" height="20" uuid="cce5bf22-e481-4a9d-b3e3-5de1aa49da70"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{DIAS_VIAJE}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

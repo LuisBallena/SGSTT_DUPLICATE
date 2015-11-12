@@ -42,7 +42,7 @@ public class ServicioDetalle implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @Fetch(FetchMode.JOIN)
-    @JoinColumn(name = "IDVUELO", nullable = false)
+    @JoinColumn(name = "IDVUELO", nullable = true)
     private Vuelo vuelo;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -109,10 +109,10 @@ public class ServicioDetalle implements Serializable {
     @Column(name = "PRECIO_SERVICIO")
     private Double precioServicio;
 
-    @Column
+    @Column(insertable = false)
     private Double descuento;
 
-    @Column
+    @Column(insertable = false)
     private Double adicional;
 
     @Column(name = "DIAS_VIAJE")
@@ -123,6 +123,9 @@ public class ServicioDetalle implements Serializable {
 
     @Column(insertable = false)
     private boolean gravada;
+    
+    @Column
+    private String pax;
 
     public ServicioDetalle() {
         vuelo = new Vuelo();
@@ -323,6 +326,14 @@ public class ServicioDetalle implements Serializable {
 
     public void setVenta(Venta venta) {
         this.venta = venta;
+    }
+
+    public String getPax() {
+        return pax;
+    }
+
+    public void setPax(String pax) {
+        this.pax = pax;
     }
     
 }

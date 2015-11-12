@@ -460,14 +460,13 @@ CREATE  TABLE IF NOT EXISTS `SGSTT`.`venta_directa` (
   `idventa` INT NOT NULL AUTO_INCREMENT ,
   `idCliente` INT NOT NULL ,
   `serie` VARCHAR(10) NOT NULL DEFAULT 'VTA' ,
-  PRIMARY KEY (`idventa`,`idCliente`) ,
-  INDEX `fk_venta_Cliente1_idx` (`idCliente` ASC) ,
-  CONSTRAINT `fk_venta_Cliente1`
-  FOREIGN KEY (`idCliente` )
-  REFERENCES `SGSTT`.`Cliente` (`idCliente` )
+  PRIMARY KEY (`idventa`, `idCliente`) ,
+  INDEX `fk_venta_directa_Cliente1` (`idCliente` ASC) ,
+  CONSTRAINT `fk_venta_directa_Cliente1`
+    FOREIGN KEY (`idCliente` )
+    REFERENCES `SGSTT`.`Cliente` (`idCliente` )
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION
-)
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -483,10 +482,11 @@ CREATE  TABLE IF NOT EXISTS `SGSTT`.`servicio_detalle` (
   `FECHA` DATETIME NOT NULL ,
   `externalizado` VARCHAR(2) NOT NULL DEFAULT 'NO' ,
   `PRECIO_SERVICIO` DECIMAL(12,2) NULL ,
-  `DESCUENTO` DECIMAL(12,2) NULL ,
-  `ADICIONAL` DECIMAL(12,2) NULL ,
+  `DESCUENTO` DECIMAL(12,2) NOT NULL DEFAULT 0.00 ,
+  `ADICIONAL` DECIMAL(12,2) NOT NULL DEFAULT 0.00 ,
   `GRAVADA` TINYINT(1) NOT NULL DEFAULT 1 ,
   `DIAS_VIAJE` INT NULL ,
+  `PAX` VARCHAR(80) NULL ,
   `ESTADO` TINYINT(1) NOT NULL DEFAULT 1 ,
   `ESTADO_SERVICIO` VARCHAR(60) NULL ,
   `FECHA_REGISTRO` DATETIME NOT NULL ,
