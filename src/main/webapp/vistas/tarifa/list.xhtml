@@ -31,12 +31,6 @@
                                               paginator="true" rows="10" lazy="true" rowIndexVar="rowIndex"
                                               paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
 
-                                    <p:column  style="text-align: center;width: 8%;">
-                                        <f:facet name="header">
-                                            #
-                                        </f:facet>
-                                        <h:outputText value="#{rowIndex+1}" />
-                                    </p:column>
                                     <p:column  headerText="Horas" style="text-align: center;">
                                         <h:outputText value="#{list.horas}" />
                                     </p:column>
@@ -50,7 +44,7 @@
                                         <h:outputText value="#{list.servicio.descripcion}" />
                                     </p:column>
                                     <p:column  headerText="Precio" style="text-align: center;">
-                                        <h:outputText value="#{list.precio}" />
+                                        <h:outputText  value="$/. #{list.precio}" />
                                     </p:column>
                                     <p:column  style="text-align: center;width: 8%;">
                                         <p:commandButton rendered="#{sesionControlador.permisoModulo.actualizar}" style="font-size: 12px;" icon="icon-update" action="#{tarifaControlador.irActualizar(list.id)}"    >

@@ -116,10 +116,10 @@
                                         </div>
                                         <div class="form-group has-feedback">
                                             <h:panelGroup id="panelVehiculo">
-                                                <label  class="col-md-2 control-label" >Vehiculo Placa :</label>
+                                                <label  class="col-md-2 control-label" >Vehiculo :</label>
                                                 <div  style="padding-right: 0px;"  class="col-xs-11 col-md-2" >
                                                     <p class="form-control" style="background-color: #f5f5f5;border: 1px solid #ccc;">
-                                                        #{ordenServicioControlador.servicioDetalle.vehiculo.placa}
+                                                        #{ordenServicioControlador.servicioDetalle.vehiculo.descripcion}
                                                     </p>
                                                 </div>
                                                 <div class="col-xs-1 col-md-1" style="padding-left: 0px;" >
@@ -136,7 +136,7 @@
                                             </h:panelGroup>
                                         </div>
                                         <div class="form-group has-feedback">
-                                            <label class="col-md-2 control-label" >Dias Viaje :</label>
+                                            <label class="col-md-2 control-label" >Horas/Dias :</label>
                                             <div class="col-md-3">
                                                 <p:inputMask mask="9?9" placeHolder="" value="#{ordenServicioControlador.servicioDetalle.diasViaje}" />
                                             </div>
@@ -176,15 +176,9 @@
                               paginator="true" rows="10"  rowIndexVar="rowIndex"
                               paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
 
-                    <p:column style="text-align: center;width: 10%;">
-                        <f:facet name="header">
-                            #
-                        </f:facet>
-                        <h:outputText value="#{rowIndex+1}" />
-                    </p:column>
                     <p:column style="text-align: center;">
                         <f:facet name="header">
-                            Nro Correlativo
+                            Nro File
                         </f:facet>
                         <h:outputText value="#{listFile.nroCorrelativo}" >
                         </h:outputText>
@@ -217,12 +211,6 @@
                               paginator="true" rows="10"  rowIndexVar="rowIndex"
                               paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
 
-                    <p:column style="text-align: center;width: 10%;">
-                        <f:facet name="header">
-                            #
-                        </f:facet>
-                        <h:outputText value="#{rowIndex+1}" />
-                    </p:column>
                     <p:column style="text-align: center;">
                         <f:facet name="header">
                             Chofer
@@ -232,9 +220,9 @@
                     </p:column>
                     <p:column style="text-align: center;">
                         <f:facet name="header">
-                            DNI
+                            Categoria
                         </f:facet>
-                        <h:outputText value="#{listChofer.dni}" >
+                        <h:outputText value="#{listChofer.categoria}" >
                         </h:outputText>
                     </p:column>
                     <p:column style="text-align: center;width: 12%;">
@@ -251,24 +239,18 @@
                               paginator="true" rows="10"  rowIndexVar="rowIndex"
                               paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
 
-                    <p:column style="text-align: center;width: 10%;">
-                        <f:facet name="header">
-                            #
-                        </f:facet>
-                        <h:outputText value="#{rowIndex+1}" />
-                    </p:column>
                     <p:column style="text-align: center;">
                         <f:facet name="header">
-                            Vehiculo
+                           Tipo Vehiculo
                         </f:facet>
                         <h:outputText value="#{listVehiculo.tipoVehiculo.nombre}" >
                         </h:outputText>
                     </p:column>
                     <p:column style="text-align: center;">
                         <f:facet name="header">
-                            Placa
+                            Centro de Costo
                         </f:facet>
-                        <h:outputText value="#{listVehiculo.placa}" >
+                        <h:outputText value="#{listVehiculo.descripcion}" >
                         </h:outputText>
                     </p:column>
                     <p:column style="text-align: center;width: 12%;">

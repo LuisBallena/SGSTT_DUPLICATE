@@ -66,7 +66,7 @@
                                     </p:column>
                                     <p:column style="text-align: center;font-size: 13px;">
                                         <f:facet name="header">
-                                            File
+                                            File/VTA
                                         </f:facet>
                                         <h:outputText value="#{list.fileAuxiliar}"/>
                                     </p:column>
@@ -87,13 +87,14 @@
                                             Trasladista
                                         </f:facet>
                                         <h:outputText
-                                                value="#{list.trasladista eq null ? 'NO ASIGNADO' :  list.trasladista.datosCompletos}"/>
+                                                value="#{list.trasladista eq null ? 'No Asignado' :  list.trasladista.datosCompletos}"/>
                                     </p:column>
                                     <p:column style="text-align: center;font-size: 13px;">
                                         <f:facet name="header">
                                             Vuelo
                                         </f:facet>
-                                        <h:outputText value="#{list.vuelo.descripcion}"/>
+                                        <h:outputText
+                                                value="#{list.vuelo eq null ? 'No Aplica' : list.vuelo.descripcion}"/>
                                     </p:column>
                                     <p:column style="text-align: center;font-size: 13px;">
                                         <f:facet name="header">
@@ -112,14 +113,14 @@
                                             Vehiculo
                                         </f:facet>
                                         <h:outputText
-                                                value="#{list.vehiculo eq null ? 'NO ASIGNADO' : list.vehiculo.descripcion}"/>
+                                                value="#{list.vehiculo eq null ? 'No Asignado' : list.vehiculo.descripcion}"/>
                                     </p:column>
                                     <p:column style="text-align: center;font-size: 13px;">
                                         <f:facet name="header">
                                             Chofer
                                         </f:facet>
                                         <h:outputText
-                                                value="#{list.chofer eq null ? 'NO ASIGNADO' : list.chofer.datosCompletos}"/>
+                                                value="#{list.chofer eq null ? 'No Asignado' : list.chofer.datosCompletos}"/>
                                     </p:column>
 
                                     <p:column style="text-align: center;width: 8%;">

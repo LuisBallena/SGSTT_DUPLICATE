@@ -163,13 +163,13 @@
                                                 <f:facet name="header">
                                                     Vuelo
                                                 </f:facet>
-                                                <h:outputText value="#{listOrden.vuelo.descripcion}" />
+                                                <h:outputText value="#{listOrden.vuelo.descripcion eq null ? 'No Aplica' : listOrden.vuelo.descripcion}"/>
                                             </p:column>
                                             <p:column    style="text-align: center;font-size: 13px;">
                                                 <f:facet name="header">
                                                     Serv. Externo
                                                 </f:facet>
-                                                <h:outputText value="#{listOrden.externalizado}" />
+                                                <h:outputText value="#{listOrden.externalizado eq null ? 'No' : listOrden.externalizado}"/>
                                             </p:column>
                                         </p:dataTable> 
                                         <p:commandButton value="Registrar Ordenes" actionListener="#{ordenServicioControlador.registrarDetalle}"  styleClass="btn btn-primary" update="@form :frmRegistrarOTraslado:msg"  >
@@ -190,15 +190,9 @@
                               paginator="true" rows="10"  rowIndexVar="rowIndex"
                               paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
 
-                    <p:column style="text-align: center;width: 10%;">
-                        <f:facet name="header">
-                            #
-                        </f:facet>
-                        <h:outputText value="#{rowIndex+1}" />
-                    </p:column>
                     <p:column style="text-align: center;">
                         <f:facet name="header">
-                            Nro Correlativo
+                            Nro File
                         </f:facet>
                         <h:outputText value="#{list.nroCorrelativo}" >
                         </h:outputText>
