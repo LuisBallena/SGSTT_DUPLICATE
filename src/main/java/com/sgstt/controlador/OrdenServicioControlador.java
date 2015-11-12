@@ -432,4 +432,13 @@ public class OrdenServicioControlador implements Serializable {
     public void setClientes(List<Cliente> clientes) {
         this.clientes = clientes;
     }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+    
 }

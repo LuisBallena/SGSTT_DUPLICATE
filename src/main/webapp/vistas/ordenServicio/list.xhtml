@@ -28,8 +28,8 @@
                                 </div>
                                 <div class="col-sm-2">
                                     <h:panelGroup rendered="#{sesionControlador.permisoModulo.crear eq true}">
-                                        <h:button value="Nueva Orden VTA" styleClass="btn btn-primary"
-                                                  outcome="create_orden_vta.xhtml"/>
+                                        <h:commandButton value="Nueva Orden VTA" styleClass="btn btn-primary" onclick="PF('dialogClient').show();"
+                                                  />
                                     </h:panelGroup>
 
                                 </div>
@@ -168,7 +168,7 @@
             </h:form>
         </p:dialog>
         <!-- FORMULARIO PARA ESCOGER EL CLIENTE PARA UNA VENTA DIRECTA -->
-        <p:dialog modal="true" position="center top" id="dialogClient" widgetVar="dialogClient" resizable="false"
+        <p:dialog modal="true" position="center top" header="Lista de Clientes" id="dialogClient"  widgetVar="dialogClient" resizable="false" width="600"
                   showEffect="fade">
             <h:form>
                 <p:dataTable value="#{ordenServicioControlador.clientes}" var="listCliente"
@@ -191,7 +191,7 @@
                     </p:column>
                     <p:column style="text-align: center;width: 8%;">
                         <p:commandButton style="font-size: 12px;" icon="icon-choice"
-                                         action="#{ordenServicioControlador.irActualizar(list.id)}">
+                                         action="#{ordenServicioControlador.irVentaDirecta(listCliente.idCliente)}">
                         </p:commandButton>
                     </p:column>
                 </p:dataTable>
