@@ -96,7 +96,7 @@ public class FileControlador implements Serializable{
     public void exportarFactura(Integer id){
         /* tu lo modificias como quieras para que sea un codigo mas limpio :D */
         String realPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
-        String rutaJasper = String.format("%sresources\\reports\\factura.jasper",realPath);
+        String rutaJasper = String.format("%sresources//reports//factura.jasper",realPath);
         log.info("La ruta final es : "+rutaJasper);
         Map map = new HashMap();
         map.put("IDFILE",id);
