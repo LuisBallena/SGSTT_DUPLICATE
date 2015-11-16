@@ -10,15 +10,15 @@ import java.util.Date;
  */
 public class BaseFilter {
 
-    Integer idBase;
+    private Integer idBase;
 
-    Integer idSede;
+    private Integer idSede;
 
-    Integer estado;
+    private Integer estado;
 
-    Date fechaDesde;
+    private Date fechaDesde;
 
-    Date fechaHasta;
+    private Date fechaHasta;
 
     public BaseFilter() {
     }
@@ -36,7 +36,14 @@ public class BaseFilter {
         if(mensajeError != null){
             throw new FilterException(mensajeError);
         }
+    }
 
+    public boolean esValidoId(Integer id){
+        boolean valido = false;
+        if(id != null && id != 0){
+            valido = true;
+        }
+        return valido;
     }
 
     public Integer getIdBase() {

@@ -9,7 +9,7 @@ package com.sgstt.excepciones;
  *
  * @author Luis Alonso Ballena Garcia
  */
-public class FilterException extends Exception{
+public class FilterException extends RuntimeException{
     private static final long serialVersionUID = -6808570203055113585L;
     
     public FilterException() {

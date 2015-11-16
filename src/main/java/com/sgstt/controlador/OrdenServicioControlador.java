@@ -1,6 +1,7 @@
 package com.sgstt.controlador;
 
 import com.sgstt.entidad.*;
+import com.sgstt.excepciones.FilterException;
 import com.sgstt.excepciones.TransporteException;
 import com.sgstt.filters.ServicioDetalleFilter;
 import com.sgstt.hibernate.HibernatePaginador;
@@ -30,6 +31,7 @@ public class OrdenServicioControlador implements Serializable {
     private static final Logger log = Logger.getLogger(OrdenServicioControlador.class.getPackage().getName());
     private TransporteServicio transporteServicio;
     private List<Servicio> servicios;
+    private List<TipoServicio> tipoServicios;
     private List<Trasladista> guias;
     private List<Vuelo> vuelos;
     private List<File> files;
@@ -57,6 +59,7 @@ public class OrdenServicioControlador implements Serializable {
             servicioDetalleFilter = new ServicioDetalleFilter();
             servicioDetalleFilter.setIdSede(sesionControlador.getUsuarioSesion().getSede().getId());
             clientes = transporteServicio.obtenerClientes();
+            tipoServicios = transporteServicio.obtenerTiposServicios();
             servicioDetallePaginador = new ServicioDetallePaginador();
             servicioDetallePaginador.initPaginador(servicioDetalleFilter);
         }
@@ -186,11 +189,6 @@ public class OrdenServicioControlador implements Serializable {
         }
     }
 
-    public void registrarServicioTercializado() {
-        transporteServicio.registrarServicioTercializado(servicioDetalle);
-        limpiarTraslado();
-    }
-
     public void actualizarDetalle() {
         if (!esVistaUpdateValida()) {
             return;
@@ -207,6 +205,14 @@ public class OrdenServicioControlador implements Serializable {
 
     public void eliminarDetalle() {
         transporteServicio.eliminarServicioDetalle(servicioDetalle);
+    }
+
+    public void ejecutarBusqueda(){
+        try{
+            servicioDetallePaginador.createFilterDynamic(servicioDetalleFilter);
+        }catch (FilterException e){
+            Utilitario.enviarMensajeGlobalError(e.getMessage());
+        }
     }
 
     public String irActualizar(Integer id) {
@@ -236,6 +242,12 @@ public class OrdenServicioControlador implements Serializable {
 
     public void capturarServicioDetalle(Integer id) {
         servicioDetalle = transporteServicio.obtenerServicioDetalle(id);
+    }
+
+    public void onChangeTipoServicioFilter(){
+        if(servicioDetalleFilter.getIdTipoServicio() != null){
+            servicios = transporteServicio.obtenerServiciosPorTipoServicio(servicioDetalleFilter.getIdTipoServicio());
+        }
     }
 
     private void limpiarTraslado() {
@@ -428,5 +440,12 @@ public class OrdenServicioControlador implements Serializable {
     public void setServicioDetalleFilter(ServicioDetalleFilter servicioDetalleFilter) {
         this.servicioDetalleFilter = servicioDetalleFilter;
     }
-    
+
+    public List<TipoServicio> getTipoServicios() {
+        return tipoServicios;
+    }
+
+    public void setTipoServicios(List<TipoServicio> tipoServicios) {
+        this.tipoServicios = tipoServicios;
+    }
 }

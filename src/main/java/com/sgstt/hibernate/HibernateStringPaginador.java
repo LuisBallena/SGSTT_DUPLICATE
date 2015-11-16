@@ -135,7 +135,7 @@ public class HibernateStringPaginador<T> extends HibernatePaginador<T> {
     }
 
     @Override
-    protected void createFilterDynamic(Object value) {
+    public void createFilterDynamic(Object value) {
         throw new UnsupportedOperationException("No soporta la creacion dinamica de querys");
     }
 
