@@ -2,6 +2,7 @@ package com.sgstt.controlador;
 
 import com.sgstt.entidad.*;
 import com.sgstt.excepciones.TransporteException;
+import com.sgstt.filters.ServicioDetalleFilter;
 import com.sgstt.hibernate.HibernatePaginador;
 import com.sgstt.paginacion.ServicioDetallePaginador;
 import com.sgstt.servicios.CotizacionServicio;
@@ -10,9 +11,7 @@ import com.sgstt.util.Utilitario;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -47,6 +46,7 @@ public class OrdenServicioControlador implements Serializable {
     private List<ServicioDetalle> ordenesServicios;
     @ManagedProperty(value = "#{sesionControlador}")
     private SesionControlador sesionControlador;
+    private ServicioDetalleFilter servicioDetalleFilter;
 
     public OrdenServicioControlador() {
     }
@@ -54,6 +54,7 @@ public class OrdenServicioControlador implements Serializable {
     public void initLista() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
             transporteServicio = new TransporteServicio();
+            servicioDetalleFilter = new ServicioDetalleFilter();
             clientes = transporteServicio.obtenerClientes();
             servicioDetallePaginador = new ServicioDetallePaginador();
             servicioDetallePaginador.initPaginador(sesionControlador.getUsuarioSesion().getSede().getId());
@@ -160,9 +161,6 @@ public class OrdenServicioControlador implements Serializable {
             servicioDetalle.setFechaRegistro(new Date());
             servicioDetalle.setFechaModificacion(new Date());
             ordenesServicios.add(servicioDetalle);
-            //if (servicioDetalle.getVuelo().getId() != 0) {
-            //    servicioDetalle.setVuelo(mapaVuelos.get(servicioDetalle.getVuelo().getId()));
-            //}
             limpiarTraslado();
         }
     }
@@ -422,4 +420,12 @@ public class OrdenServicioControlador implements Serializable {
         this.cliente = cliente;
     }
 
+    public ServicioDetalleFilter getServicioDetalleFilter() {
+        return servicioDetalleFilter;
+    }
+
+    public void setServicioDetalleFilter(ServicioDetalleFilter servicioDetalleFilter) {
+        this.servicioDetalleFilter = servicioDetalleFilter;
+    }
+    
 }

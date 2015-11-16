@@ -14,7 +14,7 @@ DROP TABLE IF EXISTS `sgstt`.`tipo_servicio` ;
 CREATE  TABLE IF NOT EXISTS `sgstt`.`tipo_servicio` (
   `idtipo_servicio` INT NOT NULL AUTO_INCREMENT ,
   `descripcion` VARCHAR(45) NULL ,
-  `ESTADO` TINYINT(1) NOT NULL DEFAULT 1 ,
+  `estado` TINYINT(1) NOT NULL DEFAULT 1 ,
   PRIMARY KEY (`idtipo_servicio`) )
 ENGINE = InnoDB;
 
@@ -39,14 +39,14 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `sgstt`.`Sede`
+-- Table `sgstt`.`sede`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sgstt`.`Sede` ;
+DROP TABLE IF EXISTS `sgstt`.`sede` ;
 
-CREATE  TABLE IF NOT EXISTS `sgstt`.`Sede` (
-  `idSede` INT NOT NULL AUTO_INCREMENT ,
+CREATE  TABLE IF NOT EXISTS `sgstt`.`sede` (
+  `idsede` INT NOT NULL AUTO_INCREMENT ,
   `descripcion` VARCHAR(200) NOT NULL ,
-  PRIMARY KEY (`idSede`) )
+  PRIMARY KEY (`idsede`) )
 ENGINE = InnoDB;
 
 
@@ -57,17 +57,17 @@ DROP TABLE IF EXISTS `sgstt`.`chofer` ;
 
 CREATE  TABLE IF NOT EXISTS `sgstt`.`chofer` (
   `idchofer` INT NOT NULL AUTO_INCREMENT ,
-  `idSede` INT NOT NULL ,
+  `idsede` INT NOT NULL ,
   `nombre` VARCHAR(45) NULL ,
   `apellido` VARCHAR(45) NULL ,
   `dni` VARCHAR(45) NULL ,
   `categoria` VARCHAR(45) NULL ,
-  `ESTADO` TINYINT(1) NOT NULL DEFAULT 1 ,
-  PRIMARY KEY (`idchofer`, `idSede`) ,
-  INDEX `fk_chofer_Sede1` (`idSede` ASC) ,
-  CONSTRAINT `fk_chofer_Sede1`
-    FOREIGN KEY (`idSede` )
-    REFERENCES `sgstt`.`Sede` (`idSede` )
+  `estado` TINYINT(1) NOT NULL DEFAULT 1 ,
+  PRIMARY KEY (`idchofer`, `idsede`) ,
+  INDEX `fk_chofer_sede1` (`idsede` ASC) ,
+  CONSTRAINT `fk_chofer_sede1`
+    FOREIGN KEY (`idsede` )
+    REFERENCES `sgstt`.`sede` (`idsede` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -105,10 +105,10 @@ DROP TABLE IF EXISTS `sgstt`.`vehiculo` ;
 
 CREATE  TABLE IF NOT EXISTS `sgstt`.`vehiculo` (
   `idvehiculo` INT NOT NULL AUTO_INCREMENT ,
-  `idSede` INT NOT NULL ,
+  `idsede` INT NOT NULL ,
   `descripcion` VARCHAR(45) NULL ,
   `placa` VARCHAR(7) NULL ,
-  `ESTADO` TINYINT(1) NOT NULL DEFAULT 1 ,
+  `estado` TINYINT(1) NOT NULL DEFAULT 1 ,
   `año_fabricacion` VARCHAR(4) NULL ,
   `capacidad_max` VARCHAR(3) NULL ,
   `capacidad_recomendada` VARCHAR(3) NULL ,
@@ -117,10 +117,10 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`vehiculo` (
   `marca_idmarca` INT NOT NULL ,
   `fecha_registro` DATETIME NULL ,
   `fecha_modificacion` DATETIME NULL ,
-  PRIMARY KEY (`idvehiculo`, `idSede`) ,
+  PRIMARY KEY (`idvehiculo`, `idsede`) ,
   INDEX `fk_vehículo_marca1_idx` (`marca_idmarca` ASC) ,
   INDEX `fk_vehículo_tipo vehiculo1_idx` (`idtipo_vehiculo` ASC) ,
-  INDEX `fk_vehiculo_Sede1` (`idSede` ASC) ,
+  INDEX `fk_vehiculo_sede1` (`idsede` ASC) ,
   CONSTRAINT `fk_vehículo_marca1`
     FOREIGN KEY (`marca_idmarca` )
     REFERENCES `sgstt`.`marca` (`idmarca` )
@@ -131,9 +131,9 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`vehiculo` (
     REFERENCES `sgstt`.`tipo_vehiculo` (`idtipo_vehiculo` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_vehiculo_Sede1`
-    FOREIGN KEY (`idSede` )
-    REFERENCES `sgstt`.`Sede` (`idSede` )
+  CONSTRAINT `fk_vehiculo_sede1`
+    FOREIGN KEY (`idsede` )
+    REFERENCES `sgstt`.`sede` (`idsede` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -204,21 +204,21 @@ DROP TABLE IF EXISTS `sgstt`.`servicio` ;
 
 CREATE  TABLE IF NOT EXISTS `sgstt`.`servicio` (
   `idservicio` INT NOT NULL AUTO_INCREMENT ,
-  `idSede` INT NOT NULL ,
+  `idsede` INT NOT NULL ,
   `descripcion` VARCHAR(300) NOT NULL ,
-  `ESTADO` TINYINT(1) NOT NULL DEFAULT 1 ,
+  `estado` TINYINT(1) NOT NULL DEFAULT 1 ,
   `idtipo_servicio` INT NOT NULL ,
-  PRIMARY KEY (`idservicio`, `idSede`) ,
+  PRIMARY KEY (`idservicio`, `idsede`) ,
   INDEX `fk_servicio_tipo_servicio1_idx` (`idtipo_servicio` ASC) ,
-  INDEX `fk_servicio_Sede1` (`idSede` ASC) ,
+  INDEX `fk_servicio_sede1` (`idsede` ASC) ,
   CONSTRAINT `fk_servicio_tipo_servicio1`
     FOREIGN KEY (`idtipo_servicio` )
     REFERENCES `sgstt`.`tipo_servicio` (`idtipo_servicio` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_servicio_Sede1`
-    FOREIGN KEY (`idSede` )
-    REFERENCES `sgstt`.`Sede` (`idSede` )
+  CONSTRAINT `fk_servicio_sede1`
+    FOREIGN KEY (`idsede` )
+    REFERENCES `sgstt`.`sede` (`idsede` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -230,16 +230,16 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `sgstt`.`tarifa` ;
 
 CREATE  TABLE IF NOT EXISTS `sgstt`.`tarifa` (
-  `idTarifa` INT NOT NULL AUTO_INCREMENT ,
+  `idtarifa` INT NOT NULL AUTO_INCREMENT ,
   `horas` VARCHAR(45) NULL ,
   `descripcion` VARCHAR(45) NULL ,
   `precio` DECIMAL(10,2) NULL ,
   `idtipo_vehiculo` INT NOT NULL ,
   `idservicio` INT NOT NULL ,
-  `ESTADO` TINYINT(1) NOT NULL DEFAULT 1 ,
-  `FECHA_REGISTRO` DATETIME NULL ,
-  `FECHA_MODIFICACION` DATETIME NULL ,
-  PRIMARY KEY (`idTarifa`) ,
+  `estado` TINYINT(1) NOT NULL DEFAULT 1 ,
+  `fecha_registro` DATETIME NULL ,
+  `fecha_modificacion` DATETIME NULL ,
+  PRIMARY KEY (`idtarifa`) ,
   INDEX `fk_tarifa_tipo_vehiculo1_idx` (`idtipo_vehiculo` ASC) ,
   INDEX `fk_tarifa_servicio1_idx` (`idservicio` ASC) ,
   CONSTRAINT `fk_tarifa_tipo_vehiculo1`
@@ -371,81 +371,81 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `sgstt`.`Tipo_Cliente`
+-- Table `sgstt`.`tipo_cliente`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sgstt`.`Tipo_Cliente` ;
+DROP TABLE IF EXISTS `sgstt`.`tipo_cliente` ;
 
-CREATE  TABLE IF NOT EXISTS `sgstt`.`Tipo_Cliente` (
-  `id_TipoCliente` INT NOT NULL AUTO_INCREMENT ,
-  `Tipo_Cliente` VARCHAR(45) NULL ,
-  PRIMARY KEY (`id_TipoCliente`) )
+CREATE  TABLE IF NOT EXISTS `sgstt`.`tipo_cliente` (
+  `id_tipocliente` INT NOT NULL AUTO_INCREMENT ,
+  `tipo_cliente` VARCHAR(45) NULL ,
+  PRIMARY KEY (`id_tipocliente`) )
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `sgstt`.`Cliente`
+-- Table `sgstt`.`cliente`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sgstt`.`Cliente` ;
+DROP TABLE IF EXISTS `sgstt`.`cliente` ;
 
-CREATE  TABLE IF NOT EXISTS `sgstt`.`Cliente` (
-  `idCliente` INT NOT NULL AUTO_INCREMENT ,
-  `Nombre` VARCHAR(45) NULL ,
-  `NumeroDocumento` VARCHAR(12) NULL ,
-  `RazonSocial` VARCHAR(45) NULL ,
-  `Direccion` VARCHAR(45) NULL ,
-  `ESTADO` TINYINT(1) NOT NULL DEFAULT 1 ,
-  `TIPO_DOCUMENTO` VARCHAR(50) NULL ,
-  `Correo` VARCHAR(45) NULL ,
-  `id_TipoCliente` INT NOT NULL ,
-  PRIMARY KEY (`idCliente`) ,
-  INDEX `fk_Cliente_Tipo_Cliente1_idx` (`id_TipoCliente` ASC) ,
-  CONSTRAINT `fk_Cliente_Tipo_Cliente1`
-    FOREIGN KEY (`id_TipoCliente` )
-    REFERENCES `sgstt`.`Tipo_Cliente` (`id_TipoCliente` )
+CREATE  TABLE IF NOT EXISTS `sgstt`.`cliente` (
+  `idcliente` INT NOT NULL AUTO_INCREMENT ,
+  `nombre` VARCHAR(45) NULL ,
+  `numerodocumento` VARCHAR(12) NULL ,
+  `razonsocial` VARCHAR(45) NULL ,
+  `direccion` VARCHAR(45) NULL ,
+  `estado` TINYINT(1) NOT NULL DEFAULT 1 ,
+  `tipo_documento` VARCHAR(50) NULL ,
+  `correo` VARCHAR(45) NULL ,
+  `id_tipocliente` INT NOT NULL ,
+  PRIMARY KEY (`idcliente`) ,
+  INDEX `fk_cliente_tipo_cliente1_idx` (`id_tipocliente` ASC) ,
+  CONSTRAINT `fk_cliente_tipo_cliente1`
+    FOREIGN KEY (`id_tipocliente` )
+    REFERENCES `sgstt`.`tipo_cliente` (`id_tipocliente` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `sgstt`.`EMPLEADO`
+-- Table `sgstt`.`empleado`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sgstt`.`EMPLEADO` ;
+DROP TABLE IF EXISTS `sgstt`.`empleado` ;
 
-CREATE  TABLE IF NOT EXISTS `sgstt`.`EMPLEADO` (
-  `idEMPLEADO` INT NOT NULL AUTO_INCREMENT ,
-  `NOMBRE` VARCHAR(45) NOT NULL ,
-  `APELLIDOS` VARCHAR(45) NOT NULL ,
-  `DNI` VARCHAR(8) NOT NULL ,
-  PRIMARY KEY (`idEMPLEADO`) )
+CREATE  TABLE IF NOT EXISTS `sgstt`.`empleado` (
+  `idempleado` INT NOT NULL AUTO_INCREMENT ,
+  `nombre` VARCHAR(45) NOT NULL ,
+  `apellidos` VARCHAR(45) NOT NULL ,
+  `dni` VARCHAR(8) NOT NULL ,
+  PRIMARY KEY (`idempleado`) )
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `sgstt`.`File`
+-- Table `sgstt`.`file`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sgstt`.`File` ;
+DROP TABLE IF EXISTS `sgstt`.`file` ;
 
-CREATE  TABLE IF NOT EXISTS `sgstt`.`File` (
-  `idFile` INT NOT NULL AUTO_INCREMENT ,
-  `idCliente` INT NOT NULL ,
-  `idEMPLEADO` INT NOT NULL ,
-  `PAX` VARCHAR(80) NOT NULL ,
-  `FECHA_REGISTRO` DATETIME NOT NULL ,
-  `FECHA_MODIFICACION` DATETIME NOT NULL ,
-  `NRO_CORRELATIVO` VARCHAR(45) NULL ,
-  `ESTADO` TINYINT(1) NOT NULL DEFAULT 1 ,
-  PRIMARY KEY (`idFile`, `idCliente`, `idEMPLEADO`) ,
-  INDEX `fk_File_Cliente1_idx` (`idCliente` ASC) ,
-  INDEX `fk_File_EMPLEADO1_idx` (`idEMPLEADO` ASC) ,
-  CONSTRAINT `fk_File_Cliente1`
-    FOREIGN KEY (`idCliente` )
-    REFERENCES `sgstt`.`Cliente` (`idCliente` )
+CREATE  TABLE IF NOT EXISTS `sgstt`.`file` (
+  `idfile` INT NOT NULL AUTO_INCREMENT ,
+  `idcliente` INT NOT NULL ,
+  `idempleado` INT NOT NULL ,
+  `pax` VARCHAR(80) NOT NULL ,
+  `fecha_registro` DATETIME NOT NULL ,
+  `fecha_modificacion` DATETIME NOT NULL ,
+  `nro_correlativo` VARCHAR(45) NULL ,
+  `estado` TINYINT(1) NOT NULL DEFAULT 1 ,
+  PRIMARY KEY (`idfile`, `idcliente`, `idempleado`) ,
+  INDEX `fk_file_cliente1_idx` (`idcliente` ASC) ,
+  INDEX `fk_file_empleado1_idx` (`idempleado` ASC) ,
+  CONSTRAINT `fk_file_cliente1`
+    FOREIGN KEY (`idcliente` )
+    REFERENCES `sgstt`.`cliente` (`idcliente` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_File_EMPLEADO1`
-    FOREIGN KEY (`idEMPLEADO` )
-    REFERENCES `sgstt`.`EMPLEADO` (`idEMPLEADO` )
+  CONSTRAINT `fk_file_empleado1`
+    FOREIGN KEY (`idempleado` )
+    REFERENCES `sgstt`.`empleado` (`idempleado` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -458,13 +458,13 @@ DROP TABLE IF EXISTS `sgstt`.`venta_directa` ;
 
 CREATE  TABLE IF NOT EXISTS `sgstt`.`venta_directa` (
   `idventa` INT NOT NULL AUTO_INCREMENT ,
-  `idCliente` INT NOT NULL ,
+  `idcliente` INT NOT NULL ,
   `serie` VARCHAR(10) NOT NULL DEFAULT 'VTA' ,
-  PRIMARY KEY (`idventa`, `idCliente`) ,
-  INDEX `fk_venta_directa_Cliente1` (`idCliente` ASC) ,
-  CONSTRAINT `fk_venta_directa_Cliente1`
-    FOREIGN KEY (`idCliente` )
-    REFERENCES `sgstt`.`Cliente` (`idCliente` )
+  PRIMARY KEY (`idventa`, `idcliente`) ,
+  INDEX `fk_venta_directa_cliente1` (`idcliente` ASC) ,
+  CONSTRAINT `fk_venta_directa_cliente1`
+    FOREIGN KEY (`idcliente` )
+    REFERENCES `sgstt`.`cliente` (`idcliente` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -479,18 +479,18 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`servicio_detalle` (
   `idservicio_detalle` INT NOT NULL AUTO_INCREMENT ,
   `idservicio` INT NOT NULL ,
   `num_personas` INT NOT NULL ,
-  `FECHA` DATETIME NOT NULL ,
+  `fecha` DATETIME NOT NULL ,
   `externalizado` VARCHAR(2) NOT NULL DEFAULT 'NO' ,
-  `PRECIO_SERVICIO` DECIMAL(12,2) NULL ,
-  `DESCUENTO` DECIMAL(12,2) NOT NULL DEFAULT 0.00 ,
-  `ADICIONAL` DECIMAL(12,2) NOT NULL DEFAULT 0.00 ,
-  `GRAVADA` TINYINT(1) NOT NULL DEFAULT 1 ,
-  `DIAS_VIAJE` INT NULL ,
-  `PAX` VARCHAR(80) NULL ,
-  `ESTADO` TINYINT(1) NOT NULL DEFAULT 1 ,
-  `ESTADO_SERVICIO` VARCHAR(60) NULL ,
-  `FECHA_REGISTRO` DATETIME NOT NULL ,
-  `FECHA_MODIFICACION` DATETIME NOT NULL ,
+  `precio_servicio` DECIMAL(12,2) NULL ,
+  `descuento` DECIMAL(12,2) NOT NULL DEFAULT 0.00 ,
+  `adicional` DECIMAL(12,2) NOT NULL DEFAULT 0.00 ,
+  `gravada` TINYINT(1) NOT NULL DEFAULT 1 ,
+  `dias_viaje` INT NULL ,
+  `pax` VARCHAR(80) NULL ,
+  `estado` TINYINT(1) NOT NULL DEFAULT 1 ,
+  `estado_SERVICIO` VARCHAR(60) NULL ,
+  `fecha_registro` DATETIME NOT NULL ,
+  `fecha_modificacion` DATETIME NOT NULL ,
   `idvuelo` INT NULL ,
   `idchofer` INT NULL ,
   `idtrasladista` INT NULL ,
@@ -498,7 +498,7 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`servicio_detalle` (
   `idvehiculo` INT NULL ,
   `idempresa_chofer` INT NULL ,
   `idempresa_vehiculo` INT NULL ,
-  `idFile` INT NULL ,
+  `idfile` INT NULL ,
   `idventa` INT NULL ,
   PRIMARY KEY (`idservicio_detalle`, `idservicio`) ,
   INDEX `fk_servicio_detalle_trasladista1_idx` (`idtrasladista` ASC) ,
@@ -509,7 +509,7 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`servicio_detalle` (
   INDEX `fk_servicio_detalle_vehiculo1_idx` (`idvehiculo` ASC) ,
   INDEX `fk_servicio_detalle_empresa_chofer1_idx` (`idempresa_chofer` ASC) ,
   INDEX `fk_servicio_detalle_empresa_vehiculo1_idx` (`idempresa_vehiculo` ASC) ,
-  INDEX `fk_servicio_detalle_File1` (`idFile` ASC) ,
+  INDEX `fk_servicio_detalle_file1` (`idfile` ASC) ,
   INDEX `fk_servicio_detalle_venta_directa1` (`idventa` ASC) ,
   CONSTRAINT `fk_servicio_detalle_trasladista1`
     FOREIGN KEY (`idtrasladista` )
@@ -551,9 +551,9 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`servicio_detalle` (
     REFERENCES `sgstt`.`empresa_vehiculo` (`idempresa_vehiculo` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_servicio_detalle_File1`
-    FOREIGN KEY (`idFile` )
-    REFERENCES `sgstt`.`File` (`idFile` )
+  CONSTRAINT `fk_servicio_detalle_file1`
+    FOREIGN KEY (`idfile` )
+    REFERENCES `sgstt`.`file` (`idfile` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_servicio_detalle_venta_directa1`
@@ -575,9 +575,9 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`incidencia` (
   `idestado_incidencia` INT NOT NULL ,
   `idtipo_incidencia` INT NOT NULL ,
   `idservicio_detalle` INT NOT NULL ,
-  `FECHA_REGISTRO` DATETIME NOT NULL ,
-  `FECHA_MODIFICACION` DATETIME NOT NULL ,
-  `ESTADO` TINYINT(2) NULL DEFAULT '1' ,
+  `fecha_registro` DATETIME NOT NULL ,
+  `fecha_modificacion` DATETIME NOT NULL ,
+  `estado` TINYINT(2) NULL DEFAULT '1' ,
   PRIMARY KEY (`idincidencia`, `idservicio_detalle`) ,
   INDEX `fk_incidencia_tipo_incidencia1_idx` (`idtipo_incidencia` ASC) ,
   INDEX `fk_incidencia_estado_incidencia1_idx` (`idestado_incidencia` ASC) ,
@@ -601,112 +601,112 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `sgstt`.`PERFIL`
+-- Table `sgstt`.`perfil`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sgstt`.`PERFIL` ;
+DROP TABLE IF EXISTS `sgstt`.`perfil` ;
 
-CREATE  TABLE IF NOT EXISTS `sgstt`.`PERFIL` (
-  `idPERFIL` INT NOT NULL AUTO_INCREMENT ,
-  `NOMBRE` VARCHAR(200) NOT NULL ,
-  `ESTADO` TINYINT(1) NOT NULL DEFAULT 1 ,
-  PRIMARY KEY (`idPERFIL`) )
+CREATE  TABLE IF NOT EXISTS `sgstt`.`perfil` (
+  `idperfil` INT NOT NULL AUTO_INCREMENT ,
+  `nombre` VARCHAR(200) NOT NULL ,
+  `estado` TINYINT(1) NOT NULL DEFAULT 1 ,
+  PRIMARY KEY (`idperfil`) )
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `sgstt`.`USUARIO`
+-- Table `sgstt`.`usuario`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sgstt`.`USUARIO` ;
+DROP TABLE IF EXISTS `sgstt`.`usuario` ;
 
-CREATE  TABLE IF NOT EXISTS `sgstt`.`USUARIO` (
-  `idUSUARIO` INT NOT NULL AUTO_INCREMENT ,
-  `idPERFIL` INT NOT NULL ,
-  `idEMPLEADO` INT NOT NULL ,
-  `idSede` INT NOT NULL ,
-  `NICK` VARCHAR(20) NOT NULL ,
-  `CLAVE` VARCHAR(20) NOT NULL ,
-  `ESTADO` TINYINT(1) NOT NULL DEFAULT 1 ,
-  PRIMARY KEY (`idUSUARIO`, `idPERFIL`, `idEMPLEADO`, `idSede`) ,
-  INDEX `fk_USUARIO_PERFIL1_idx` (`idPERFIL` ASC) ,
-  INDEX `fk_USUARIO_EMPLEADO1_idx` (`idEMPLEADO` ASC) ,
-  INDEX `fk_USUARIO_Sede1` (`idSede` ASC) ,
-  CONSTRAINT `fk_USUARIO_PERFIL1`
-    FOREIGN KEY (`idPERFIL` )
-    REFERENCES `sgstt`.`PERFIL` (`idPERFIL` )
+CREATE  TABLE IF NOT EXISTS `sgstt`.`usuario` (
+  `idusuario` INT NOT NULL AUTO_INCREMENT ,
+  `idperfil` INT NOT NULL ,
+  `idempleado` INT NOT NULL ,
+  `idsede` INT NOT NULL ,
+  `nick` VARCHAR(20) NOT NULL ,
+  `clave` VARCHAR(20) NOT NULL ,
+  `estado` TINYINT(1) NOT NULL DEFAULT 1 ,
+  PRIMARY KEY (`idusuario`, `idperfil`, `idempleado`, `idsede`) ,
+  INDEX `fk_usuario_perfil1_idx` (`idperfil` ASC) ,
+  INDEX `fk_usuario_empleado1_idx` (`idempleado` ASC) ,
+  INDEX `fk_usuario_sede1` (`idsede` ASC) ,
+  CONSTRAINT `fk_usuario_perfil1`
+    FOREIGN KEY (`idperfil` )
+    REFERENCES `sgstt`.`perfil` (`idperfil` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_USUARIO_EMPLEADO1`
-    FOREIGN KEY (`idEMPLEADO` )
-    REFERENCES `sgstt`.`EMPLEADO` (`idEMPLEADO` )
+  CONSTRAINT `fk_usuario_empleado1`
+    FOREIGN KEY (`idempleado` )
+    REFERENCES `sgstt`.`empleado` (`idempleado` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_USUARIO_Sede1`
-    FOREIGN KEY (`idSede` )
-    REFERENCES `sgstt`.`Sede` (`idSede` )
+  CONSTRAINT `fk_usuario_sede1`
+    FOREIGN KEY (`idsede` )
+    REFERENCES `sgstt`.`sede` (`idsede` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `sgstt`.`MODULO`
+-- Table `sgstt`.`modulo`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sgstt`.`MODULO` ;
+DROP TABLE IF EXISTS `sgstt`.`modulo` ;
 
-CREATE  TABLE IF NOT EXISTS `sgstt`.`MODULO` (
-  `idMODULO` INT NOT NULL AUTO_INCREMENT ,
-  `NOMBRE` VARCHAR(100) NOT NULL ,
-  `URL` VARCHAR(50) NOT NULL ,
-  `LISTAR` TINYINT(1) NOT NULL ,
-  `CREAR` TINYINT(1) NOT NULL ,
-  `ACTUALIZAR` TINYINT(1) NOT NULL ,
-  `ELIMINAR` TINYINT(1) NOT NULL ,
-  `ESTADO` TINYINT(1) NOT NULL DEFAULT 1 ,
-  PRIMARY KEY (`idMODULO`) )
+CREATE  TABLE IF NOT EXISTS `sgstt`.`modulo` (
+  `idmodulo` INT NOT NULL AUTO_INCREMENT ,
+  `nombre` VARCHAR(100) NOT NULL ,
+  `url` VARCHAR(50) NOT NULL ,
+  `listar` TINYINT(1) NOT NULL ,
+  `crear` TINYINT(1) NOT NULL ,
+  `actualizar` TINYINT(1) NOT NULL ,
+  `eliminar` TINYINT(1) NOT NULL ,
+  `estado` TINYINT(1) NOT NULL DEFAULT 1 ,
+  PRIMARY KEY (`idmodulo`) )
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `sgstt`.`PERMISO`
+-- Table `sgstt`.`permiso`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sgstt`.`PERMISO` ;
+DROP TABLE IF EXISTS `sgstt`.`permiso` ;
 
-CREATE  TABLE IF NOT EXISTS `sgstt`.`PERMISO` (
-  `idPERMISO` INT NOT NULL AUTO_INCREMENT ,
-  `idPERFIL` INT NOT NULL ,
-  `idMODULO` INT NOT NULL ,
-  `LISTAR` TINYINT(1) NULL ,
-  `CREAR` TINYINT(1) NULL ,
-  `ACTUALIZAR` TINYINT(1) NULL ,
-  `ELIMINAR` TINYINT(1) NULL ,
-  PRIMARY KEY (`idPERMISO`, `idPERFIL`, `idMODULO`) ,
-  INDEX `fk_PERMISO_PERFIL1_idx` (`idPERFIL` ASC) ,
-  INDEX `fk_PERMISO_MODULO1_idx` (`idMODULO` ASC) ,
-  CONSTRAINT `fk_PERMISO_PERFIL1`
-    FOREIGN KEY (`idPERFIL` )
-    REFERENCES `sgstt`.`PERFIL` (`idPERFIL` )
+CREATE  TABLE IF NOT EXISTS `sgstt`.`permiso` (
+  `idpermiso` INT NOT NULL AUTO_INCREMENT ,
+  `idperfil` INT NOT NULL ,
+  `idmodulo` INT NOT NULL ,
+  `listar` TINYINT(1) NULL ,
+  `crear` TINYINT(1) NULL ,
+  `actualizar` TINYINT(1) NULL ,
+  `eliminar` TINYINT(1) NULL ,
+  PRIMARY KEY (`idpermiso`, `idperfil`, `idmodulo`) ,
+  INDEX `fk_permiso_perfil1_idx` (`idperfil` ASC) ,
+  INDEX `fk_permiso_modulo1_idx` (`idmodulo` ASC) ,
+  CONSTRAINT `fk_permiso_perfil1`
+    FOREIGN KEY (`idperfil` )
+    REFERENCES `sgstt`.`perfil` (`idperfil` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_PERMISO_MODULO1`
-    FOREIGN KEY (`idMODULO` )
-    REFERENCES `sgstt`.`MODULO` (`idMODULO` )
+  CONSTRAINT `fk_permiso_modulo1`
+    FOREIGN KEY (`idmodulo` )
+    REFERENCES `sgstt`.`modulo` (`idmodulo` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `sgstt`.`Destinos`
+-- Table `sgstt`.`destinos`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sgstt`.`Destinos` ;
+DROP TABLE IF EXISTS `sgstt`.`destinos` ;
 
-CREATE  TABLE IF NOT EXISTS `sgstt`.`Destinos` (
-  `idDestinos` INT NOT NULL AUTO_INCREMENT ,
-  `NOMBRE` VARCHAR(300) NOT NULL ,
-  `LATITUD` VARCHAR(50) NULL ,
-  `LONGITUD` VARCHAR(50) NULL ,
-  `ESTADO` TINYINT(1) NOT NULL DEFAULT 1 ,
-  PRIMARY KEY (`idDestinos`) )
+CREATE  TABLE IF NOT EXISTS `sgstt`.`destinos` (
+  `iddestinos` INT NOT NULL AUTO_INCREMENT ,
+  `nombre` VARCHAR(300) NOT NULL ,
+  `latitud` VARCHAR(50) NULL ,
+  `longitud` VARCHAR(50) NULL ,
+  `estado` TINYINT(1) NOT NULL DEFAULT 1 ,
+  PRIMARY KEY (`iddestinos`) )
 ENGINE = InnoDB;
 
 
@@ -717,18 +717,18 @@ DROP TABLE IF EXISTS `sgstt`.`servicio_destinos` ;
 
 CREATE  TABLE IF NOT EXISTS `sgstt`.`servicio_destinos` (
   `servicio_idservicio` INT NOT NULL ,
-  `Destinos_idDestinos` INT NOT NULL ,
-  PRIMARY KEY (`servicio_idservicio`, `Destinos_idDestinos`) ,
-  INDEX `fk_servicio_has_Destinos_Destinos1` (`Destinos_idDestinos` ASC) ,
-  INDEX `fk_servicio_has_Destinos_servicio1` (`servicio_idservicio` ASC) ,
-  CONSTRAINT `fk_servicio_has_Destinos_servicio1`
+  `destinos_iddestinos` INT NOT NULL ,
+  PRIMARY KEY (`servicio_idservicio`, `destinos_iddestinos`) ,
+  INDEX `fk_servicio_has_destinos_destinos1` (`destinos_iddestinos` ASC) ,
+  INDEX `fk_servicio_has_destinos_servicio1` (`servicio_idservicio` ASC) ,
+  CONSTRAINT `fk_servicio_has_destinos_servicio1`
     FOREIGN KEY (`servicio_idservicio` )
     REFERENCES `sgstt`.`servicio` (`idservicio` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_servicio_has_Destinos_Destinos1`
-    FOREIGN KEY (`Destinos_idDestinos` )
-    REFERENCES `sgstt`.`Destinos` (`idDestinos` )
+  CONSTRAINT `fk_servicio_has_destinos_destinos1`
+    FOREIGN KEY (`destinos_iddestinos` )
+    REFERENCES `sgstt`.`destinos` (`iddestinos` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -744,10 +744,10 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sgstt`;
-INSERT INTO `sgstt`.`tipo_servicio` (`idtipo_servicio`, `descripcion`, `ESTADO`) VALUES (1, 'Traslado', 1);
-INSERT INTO `sgstt`.`tipo_servicio` (`idtipo_servicio`, `descripcion`, `ESTADO`) VALUES (2, 'Tour/Excursion', 1);
-INSERT INTO `sgstt`.`tipo_servicio` (`idtipo_servicio`, `descripcion`, `ESTADO`) VALUES (3, 'Viaje', 1);
-INSERT INTO `sgstt`.`tipo_servicio` (`idtipo_servicio`, `descripcion`, `ESTADO`) VALUES (4, 'Servicio Adicional', 1);
+INSERT INTO `sgstt`.`tipo_servicio` (`idtipo_servicio`, `descripcion`, `estado`) VALUES (1, 'Traslado', 1);
+INSERT INTO `sgstt`.`tipo_servicio` (`idtipo_servicio`, `descripcion`, `estado`) VALUES (2, 'Tour/Excursion', 1);
+INSERT INTO `sgstt`.`tipo_servicio` (`idtipo_servicio`, `descripcion`, `estado`) VALUES (3, 'Viaje', 1);
+INSERT INTO `sgstt`.`tipo_servicio` (`idtipo_servicio`, `descripcion`, `estado`) VALUES (4, 'Servicio Adicional', 1);
 
 COMMIT;
 
@@ -772,12 +772,12 @@ INSERT INTO `sgstt`.`trasladista` (`idtrasladista`, `nombre`, `apellido`, `dni`,
 COMMIT;
 
 -- -----------------------------------------------------
--- Data for table `sgstt`.`Sede`
+-- Data for table `sgstt`.`sede`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sgstt`;
-INSERT INTO `sgstt`.`Sede` (`idSede`, `descripcion`) VALUES (1, 'LIMA');
-INSERT INTO `sgstt`.`Sede` (`idSede`, `descripcion`) VALUES (2, 'CUSCO');
+INSERT INTO `sgstt`.`sede` (`idsede`, `descripcion`) VALUES (1, 'LIMA');
+INSERT INTO `sgstt`.`sede` (`idsede`, `descripcion`) VALUES (2, 'CUSCO');
 
 COMMIT;
 
@@ -786,16 +786,16 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sgstt`;
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idSede`, `nombre`, `apellido`, `dni`, `categoria`, `ESTADO`) VALUES (1, 2, 'JAIME', 'AGUILAR EGOAVIL', '23885693', 'A1', 1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idSede`, `nombre`, `apellido`, `dni`, `categoria`, `ESTADO`) VALUES (2, 2, 'CESAR AMADO', 'ARELLANOS MUÑOZ', '25662462', 'A2', 1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idSede`, `nombre`, `apellido`, `dni`, `categoria`, `ESTADO`) VALUES (3, 1, 'MARIO HERNAN', 'CUADROS HUAPAYA', '25577045', 'A3', 1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idSede`, `nombre`, `apellido`, `dni`, `categoria`, `ESTADO`) VALUES (4, 1, 'PEPE', 'DAMIAN JURO', '10550499', 'A1', 1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idSede`, `nombre`, `apellido`, `dni`, `categoria`, `ESTADO`) VALUES (5, 1, 'KATTY DORIS', 'ESCOBAR PUMACALLAO', '07884541', 'A2', 1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idSede`, `nombre`, `apellido`, `dni`, `categoria`, `ESTADO`) VALUES (6, 1, 'CARLOS ALBERTO', 'HERRERA NAVARRO', '10630551', 'A3', 1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idSede`, `nombre`, `apellido`, `dni`, `categoria`, `ESTADO`) VALUES (7, 1, 'JOSE EDUARDO', 'HUAPALLA BALCAZAR', '10144415', 'A1', 1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idSede`, `nombre`, `apellido`, `dni`, `categoria`, `ESTADO`) VALUES (8, 1, 'RODOLFO CESAR', 'LAZO CALDERON', '25717877', 'A2', 1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idSede`, `nombre`, `apellido`, `dni`, `categoria`, `ESTADO`) VALUES (9, 1, 'JOSE LUIS', 'NUÑEZ CUENCA ROJAS', '09461980', 'A3', 1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idSede`, `nombre`, `apellido`, `dni`, `categoria`, `ESTADO`) VALUES (10, 1, 'ADRIAN', 'TICONA APAZA', '10520991', 'A1', 1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`) VALUES (1, 2, 'JAIME', 'AGUILAR EGOAVIL', '23885693', 'A1', 1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`) VALUES (2, 2, 'CESAR AMADO', 'ARELLANOS MUÑOZ', '25662462', 'A2', 1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`) VALUES (3, 1, 'MARIO HERNAN', 'CUADROS HUAPAYA', '25577045', 'A3', 1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`) VALUES (4, 1, 'PEPE', 'DAMIAN JURO', '10550499', 'A1', 1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`) VALUES (5, 1, 'KATTY DORIS', 'ESCOBAR PUMACALLAO', '07884541', 'A2', 1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`) VALUES (6, 1, 'CARLOS ALBERTO', 'HERRERA NAVARRO', '10630551', 'A3', 1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`) VALUES (7, 1, 'JOSE EDUARDO', 'HUAPALLA BALCAZAR', '10144415', 'A1', 1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`) VALUES (8, 1, 'RODOLFO CESAR', 'LAZO CALDERON', '25717877', 'A2', 1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`) VALUES (9, 1, 'JOSE LUIS', 'NUÑEZ CUENCA ROJAS', '09461980', 'A3', 1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`) VALUES (10, 1, 'ADRIAN', 'TICONA APAZA', '10520991', 'A1', 1);
 COMMIT;
 
 -- -----------------------------------------------------
@@ -829,17 +829,17 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sgstt`;
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idSede`, `descripcion`, `placa`, `ESTADO`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (1, 1, 'V-01', 'B6F-962', 1, '2006', '12', '10', 'negro', 1, 4, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idSede`, `descripcion`, `placa`, `ESTADO`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (2, 2, 'V-04', 'B3Z-954', 1, '2009', '40', '36', 'plata', 4, 2, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idSede`, `descripcion`, `placa`, `ESTADO`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (3, 1, 'V-05', 'B6H-966', 1, '2009', '50', '45', 'plata', 5, 5, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idSede`, `descripcion`, `placa`, `ESTADO`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (4, 1, 'V-06', 'A3H-968', 1, '2010', '12', '10', 'negro', 4, 2, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idSede`, `descripcion`, `placa`, `ESTADO`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (5, 2, 'V-08', 'B8P-788', 1, '2012', '40', '36', 'plata', 4, 4, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idSede`, `descripcion`, `placa`, `ESTADO`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (6, 1, 'V-09', 'B0F-958', 1, '2012', '50', '45', 'plata', 2, 3, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idSede`, `descripcion`, `placa`, `ESTADO`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (7, 1, 'V-10', 'C3H-964', 1, '2012', '12', '10', 'negro', 2, 1, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idSede`, `descripcion`, `placa`, `ESTADO`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (8, 1, 'V-11', 'C3E-953', 1, '2013', '40', '36', 'plata', 3, 3, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idSede`, `descripcion`, `placa`, `ESTADO`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (9, 1, 'V-12', 'C5J-959', 1, '2013', '50', '45', 'plata', 4, 2, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idSede`, `descripcion`, `placa`, `ESTADO`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (10, 1, 'V-13', 'C6Q-967', 1, '2014', '12', '10', 'negro', 2, 1, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idSede`, `descripcion`, `placa`, `ESTADO`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (11, 1, 'V-14', 'C6T-963', 1, '2014', '40', '36', 'plata', 1, 4, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (1, 1, 'V-01', 'B6F-962', 1, '2006', '12', '10', 'negro', 1, 4, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (2, 2, 'V-04', 'B3Z-954', 1, '2009', '40', '36', 'plata', 4, 2, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (3, 1, 'V-05', 'B6H-966', 1, '2009', '50', '45', 'plata', 5, 5, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (4, 1, 'V-06', 'A3H-968', 1, '2010', '12', '10', 'negro', 4, 2, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (5, 2, 'V-08', 'B8P-788', 1, '2012', '40', '36', 'plata', 4, 4, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (6, 1, 'V-09', 'B0F-958', 1, '2012', '50', '45', 'plata', 2, 3, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (7, 1, 'V-10', 'C3H-964', 1, '2012', '12', '10', 'negro', 2, 1, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (8, 1, 'V-11', 'C3E-953', 1, '2013', '40', '36', 'plata', 3, 3, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (9, 1, 'V-12', 'C5J-959', 1, '2013', '50', '45', 'plata', 4, 2, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (10, 1, 'V-13', 'C6Q-967', 1, '2014', '12', '10', 'negro', 2, 1, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (11, 1, 'V-14', 'C6T-963', 1, '2014', '40', '36', 'plata', 1, 4, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
 COMMIT;
 
 -- -----------------------------------------------------
@@ -868,44 +868,44 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sgstt`;
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (1, 1, 'APTO-LIMA-MIRAFLORES-SAN ISIDRO', 1, 1);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (2, 1, 'APTO-SURCO-LA MOLINA', 1, 1);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (3, 1, 'RESTAURANT (LIMA-SAN ISIDRO-MIRAFLORES)', 1, 1);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (4, 1, 'RECOJO DE TRASLADISTA', 1, 1);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (5, 1, 'RECOJO Y DEJADA DE TRASLADISTA', 1, 1);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (6, 1, 'APTO - HOTEL EL PUEBLO', 1, 1);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (7, 1, 'MOVIL- ORMEÑO-CRUZ DEL SUR S.I./HOTEL', 1, 1);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (8, 1, 'PUERTO CALLAO/APTO', 1, 1);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (9, 1, 'PUERTO CALLAO/ MIRAFLORES O SAN ISIDRO', 1, 1);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (10, 1, 'ASISTENCIA', 1, 1);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (11, 1, 'CITY TOUR (COLONIAL Y MODERNO)', 1, 2);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (12, 1, 'UN MUSEO O COMPRAS', 1, 2);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (13, 1, 'CITY + MUSEO O COMPRAS', 1, 2);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (14, 1, 'CITY + RESTAURANT + MUSEO O COMPRAS', 1, 2);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (15, 1, 'DOS MUSEOS', 1, 2);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (16, 1, 'RUINAS (PACHACAMAC,PURUCHUCO)', 1, 2);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (17, 1, 'RUINAS + MUSEO O RESTAURANT', 1, 2);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (18, 1, 'RUINAS + RESTAURANT + CITY + MUSEO', 1, 2);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (19, 1, 'ISLAS PALOMINO (RT)', 1, 2);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (20, 1, 'LIMA - PARACAS O ICA', 1, 3);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (21, 1, 'LIMA - NAZCA', 1, 3);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (22, 1, 'LIMA - AREQUIPA - HUARAZ O HUANCAYO', 1, 3);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (23, 1, 'LIMA - AREQUIPA Serie Polish - Philiberth', 1, 3);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (24, 1, 'FULL DAY PARACAS O ICA', 1, 3);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (25, 1, 'FULL DAY CARAL', 1, 3);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (26, 1, 'VIATICOS POR CADA CHOFER X  DIA', 1, 3);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (27, 1, 'LIMA-ASIA', 1, 3);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (28, 1, 'LIMA/AREQUIPA S.MILLER', 1, 3);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (29, 1, 'LIM/NAZCA/LIMA 2 DIAS S. MILLER', 1, 3);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (30, 1, 'LIM/NAZCA/LIMA 3 DIAS S. MILLER', 1, 3);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (31, 1, 'LIMA-CARAL-BARRANCA-SECHIN-TRUJILLO', 1, 3);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (32, 1, 'CITY BY NIGHT', 1, 2);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (33, 1, 'FUENTES MAGICAS DE AGUA', 1, 2);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (34, 1, 'FUENTES MAGICAS DE AGUA', 1, 2);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (35, 1, 'FUENTES MAGICAS + CENA SHOW', 1, 2);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (36, 1, 'CITY BY NIGH + CENA SHOW', 1, 2);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (37, 1, 'CITY BY NIGHT + F. MAGICAS+CENA SHOW', 1, 2);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idSede`, `descripcion`, `ESTADO`, `idtipo_servicio`) VALUES (38, 1, 'CITY + MUSEO P.OSMA', 1, 2);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (1, 1, 'APTO-LIMA-MIRAFLORES-SAN ISIDRO', 1, 1);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (2, 1, 'APTO-SURCO-LA MOLINA', 1, 1);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (3, 1, 'RESTAURANT (LIMA-SAN ISIDRO-MIRAFLORES)', 1, 1);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (4, 1, 'RECOJO DE TRASLADISTA', 1, 1);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (5, 1, 'RECOJO Y DEJADA DE TRASLADISTA', 1, 1);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (6, 1, 'APTO - HOTEL EL PUEBLO', 1, 1);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (7, 1, 'MOVIL- ORMEÑO-CRUZ DEL SUR S.I./HOTEL', 1, 1);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (8, 1, 'PUERTO CALLAO/APTO', 1, 1);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (9, 1, 'PUERTO CALLAO/ MIRAFLORES O SAN ISIDRO', 1, 1);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (10, 1, 'ASISTENCIA', 1, 1);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (11, 1, 'CITY TOUR (COLONIAL Y MODERNO)', 1, 2);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (12, 1, 'UN MUSEO O COMPRAS', 1, 2);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (13, 1, 'CITY + MUSEO O COMPRAS', 1, 2);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (14, 1, 'CITY + RESTAURANT + MUSEO O COMPRAS', 1, 2);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (15, 1, 'DOS MUSEOS', 1, 2);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (16, 1, 'RUINAS (PACHACAMAC,PURUCHUCO)', 1, 2);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (17, 1, 'RUINAS + MUSEO O RESTAURANT', 1, 2);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (18, 1, 'RUINAS + RESTAURANT + CITY + MUSEO', 1, 2);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (19, 1, 'ISLAS PALOMINO (RT)', 1, 2);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (20, 1, 'LIMA - PARACAS O ICA', 1, 3);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (21, 1, 'LIMA - NAZCA', 1, 3);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (22, 1, 'LIMA - AREQUIPA - HUARAZ O HUANCAYO', 1, 3);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (23, 1, 'LIMA - AREQUIPA Serie Polish - Philiberth', 1, 3);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (24, 1, 'FULL DAY PARACAS O ICA', 1, 3);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (25, 1, 'FULL DAY CARAL', 1, 3);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (26, 1, 'VIATICOS POR CADA CHOFER X  DIA', 1, 3);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (27, 1, 'LIMA-ASIA', 1, 3);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (28, 1, 'LIMA/AREQUIPA S.MILLER', 1, 3);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (29, 1, 'LIM/NAZCA/LIMA 2 DIAS S. MILLER', 1, 3);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (30, 1, 'LIM/NAZCA/LIMA 3 DIAS S. MILLER', 1, 3);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (31, 1, 'LIMA-CARAL-BARRANCA-SECHIN-TRUJILLO', 1, 3);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (32, 1, 'CITY BY NIGHT', 1, 2);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (33, 1, 'FUENTES MAGICAS DE AGUA', 1, 2);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (34, 1, 'FUENTES MAGICAS DE AGUA', 1, 2);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (35, 1, 'FUENTES MAGICAS + CENA SHOW', 1, 2);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (36, 1, 'CITY BY NIGH + CENA SHOW', 1, 2);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (37, 1, 'CITY BY NIGHT + F. MAGICAS+CENA SHOW', 1, 2);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (38, 1, 'CITY + MUSEO P.OSMA', 1, 2);
 
 COMMIT;
 
@@ -957,105 +957,105 @@ INSERT INTO `sgstt`.`empresa_vehiculo` (`idempresa_vehiculo`, `marca`, `placa`, 
 COMMIT;
 
 -- -----------------------------------------------------
--- Data for table `sgstt`.`Tipo_Cliente`
+-- Data for table `sgstt`.`tipo_cliente`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sgstt`;
-INSERT INTO `sgstt`.`Tipo_Cliente` (`id_TipoCliente`, `Tipo_Cliente`) VALUES (1, 'NATURAL');
-INSERT INTO `sgstt`.`Tipo_Cliente` (`id_TipoCliente`, `Tipo_Cliente`) VALUES (2, 'JURIDICO');
+INSERT INTO `sgstt`.`tipo_cliente` (`id_tipocliente`, `tipo_cliente`) VALUES (1, 'NATURAL');
+INSERT INTO `sgstt`.`tipo_cliente` (`id_tipocliente`, `tipo_cliente`) VALUES (2, 'JURIDICO');
 
 COMMIT;
 
 -- -----------------------------------------------------
--- Data for table `sgstt`.`Cliente`
+-- Data for table `sgstt`.`cliente`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sgstt`;
-INSERT INTO `sgstt`.`Cliente` (`idCliente`, `Nombre`, `NumeroDocumento`, `RazonSocial`, `Direccion`, `ESTADO`, `TIPO_DOCUMENTO`, `Correo`, `id_TipoCliente`) VALUES (1, '', NULL, 'GEBECO', NULL, 1, 'RUC', NULL, 2);
-INSERT INTO `sgstt`.`Cliente` (`idCliente`, `Nombre`, `NumeroDocumento`, `RazonSocial`, `Direccion`, `ESTADO`, `TIPO_DOCUMENTO`, `Correo`, `id_TipoCliente`) VALUES (2, '', NULL, 'AVS', NULL, 1, 'RUC', NULL, 2);
-INSERT INTO `sgstt`.`Cliente` (`idCliente`, `Nombre`, `NumeroDocumento`, `RazonSocial`, `Direccion`, `ESTADO`, `TIPO_DOCUMENTO`, `Correo`, `id_TipoCliente`) VALUES (3, '', NULL, 'SETOURS', NULL, 1, 'RUC', NULL, 2);
+INSERT INTO `sgstt`.`cliente` (`idcliente`, `Nombre`, `NumeroDocumento`, `RazonSocial`, `Direccion`, `estado`, `tipo_documento`, `Correo`, `id_tipocliente`) VALUES (1, '', NULL, 'GEBECO', NULL, 1, 'RUC', NULL, 2);
+INSERT INTO `sgstt`.`cliente` (`idcliente`, `Nombre`, `NumeroDocumento`, `RazonSocial`, `Direccion`, `estado`, `tipo_documento`, `Correo`, `id_tipocliente`) VALUES (2, '', NULL, 'AVS', NULL, 1, 'RUC', NULL, 2);
+INSERT INTO `sgstt`.`cliente` (`idcliente`, `Nombre`, `NumeroDocumento`, `RazonSocial`, `Direccion`, `estado`, `tipo_documento`, `Correo`, `id_tipocliente`) VALUES (3, '', NULL, 'SETOURS', NULL, 1, 'RUC', NULL, 2);
 
 COMMIT;
 
 -- -----------------------------------------------------
--- Data for table `sgstt`.`EMPLEADO`
+-- Data for table `sgstt`.`empleado`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sgstt`;
-INSERT INTO `sgstt`.`EMPLEADO` (`idEMPLEADO`, `NOMBRE`, `APELLIDOS`, `DNI`) VALUES (1, 'Sistema', 'Administrador', 'admin');
+INSERT INTO `sgstt`.`empleado` (`idempleado`, `nombre`, `apellidos`, `dni`) VALUES (1, 'Sistema', 'Administrador', 'admin');
 
 COMMIT;
 
 -- -----------------------------------------------------
--- Data for table `sgstt`.`PERFIL`
+-- Data for table `sgstt`.`perfil`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sgstt`;
-INSERT INTO `sgstt`.`PERFIL` (`idPERFIL`, `NOMBRE`, `ESTADO`) VALUES (1, 'Administrador del Sistema', 1);
-INSERT INTO `sgstt`.`PERFIL` (`idPERFIL`, `NOMBRE`, `ESTADO`) VALUES (2, 'Encargador de Servicios', 1);
+INSERT INTO `sgstt`.`perfil` (`idperfil`, `nombre`, `estado`) VALUES (1, 'Administrador del Sistema', 1);
+INSERT INTO `sgstt`.`perfil` (`idperfil`, `nombre`, `estado`) VALUES (2, 'Encargador de Servicios', 1);
 
 COMMIT;
 
 -- -----------------------------------------------------
--- Data for table `sgstt`.`USUARIO`
+-- Data for table `sgstt`.`usuario`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sgstt`;
-INSERT INTO `sgstt`.`USUARIO` (`idUSUARIO`, `idPERFIL`, `idEMPLEADO`, `idSede`, `NICK`, `CLAVE`, `ESTADO`) VALUES (1, 1, 1, 1, 'admin', 'admin1234', 1);
+INSERT INTO `sgstt`.`usuario` (`idusuario`, `idperfil`, `idempleado`, `idsede`, `nick`, `clave`, `estado`) VALUES (1, 1, 1, 1, 'admin', 'admin1234', 1);
 
 COMMIT;
 
 -- -----------------------------------------------------
--- Data for table `sgstt`.`MODULO`
+-- Data for table `sgstt`.`modulo`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sgstt`;
-INSERT INTO `sgstt`.`MODULO` (`idMODULO`, `NOMBRE`, `URL`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`, `ESTADO`) VALUES (1, 'Administrar Perfil', 'perfil', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`MODULO` (`idMODULO`, `NOMBRE`, `URL`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`, `ESTADO`) VALUES (2, 'Administrar Modulos', 'modulo', 1, 0, 1, 0, 1);
-INSERT INTO `sgstt`.`MODULO` (`idMODULO`, `NOMBRE`, `URL`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`, `ESTADO`) VALUES (3, 'Administrar Cuenta', 'cuenta', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`MODULO` (`idMODULO`, `NOMBRE`, `URL`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`, `ESTADO`) VALUES (4, 'Administrar File', 'file', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`MODULO` (`idMODULO`, `NOMBRE`, `URL`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`, `ESTADO`) VALUES (5, 'Administrar Orden Servicios', 'ordenServicio', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`MODULO` (`idMODULO`, `NOMBRE`, `URL`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`, `ESTADO`) VALUES (6, 'Administrar Tarifario', 'tarifa', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`MODULO` (`idMODULO`, `NOMBRE`, `URL`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`, `ESTADO`) VALUES (7, 'Administrar Vehiculo', 'vehiculo', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`MODULO` (`idMODULO`, `NOMBRE`, `URL`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`, `ESTADO`) VALUES (8, 'Administrar Incidencia', 'incidencia', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`MODULO` (`idMODULO`, `NOMBRE`, `URL`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`, `ESTADO`) VALUES (9, 'Administrar Choferes', 'chofer', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`MODULO` (`idMODULO`, `NOMBRE`, `URL`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`, `ESTADO`) VALUES (10, 'Administrar Cliente', 'cliente', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`MODULO` (`idMODULO`, `NOMBRE`, `URL`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`, `ESTADO`) VALUES (11, 'Administrar Destino', 'destino', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`MODULO` (`idMODULO`, `NOMBRE`, `URL`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`, `ESTADO`) VALUES (12, 'Administrar Tipo Servicio', 'tipoServicio', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`MODULO` (`idMODULO`, `NOMBRE`, `URL`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`, `ESTADO`) VALUES (13, 'Administrar Servicios', 'servicio', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (1, 'Administrar Perfil', 'perfil', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (2, 'Administrar Modulos', 'modulo', 1, 0, 1, 0, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (3, 'Administrar Cuenta', 'cuenta', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (4, 'Administrar file', 'file', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (5, 'Administrar Orden Servicios', 'ordenServicio', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (6, 'Administrar tarifario', 'tarifa', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (7, 'Administrar Vehiculo', 'vehiculo', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (8, 'Administrar Incidencia', 'incidencia', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (9, 'Administrar Choferes', 'chofer', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (10, 'Administrar cliente', 'cliente', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (11, 'Administrar Destino', 'destino', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (12, 'Administrar Tipo Servicio', 'tipoServicio', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (13, 'Administrar Servicios', 'servicio', 1, 1, 1, 1, 1);
 
 COMMIT;
 
 -- -----------------------------------------------------
--- Data for table `sgstt`.`PERMISO`
+-- Data for table `sgstt`.`permiso`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sgstt`;
-INSERT INTO `sgstt`.`PERMISO` (`idPERMISO`, `idPERFIL`, `idMODULO`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`) VALUES (1, 1, 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`PERMISO` (`idPERMISO`, `idPERFIL`, `idMODULO`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`) VALUES (2, 1, 2, 1, 0, 1, 0);
-INSERT INTO `sgstt`.`PERMISO` (`idPERMISO`, `idPERFIL`, `idMODULO`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`) VALUES (3, 1, 3, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`PERMISO` (`idPERMISO`, `idPERFIL`, `idMODULO`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`) VALUES (4, 1, 4, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`PERMISO` (`idPERMISO`, `idPERFIL`, `idMODULO`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`) VALUES (5, 1, 5, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`PERMISO` (`idPERMISO`, `idPERFIL`, `idMODULO`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`) VALUES (6, 1, 6, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`PERMISO` (`idPERMISO`, `idPERFIL`, `idMODULO`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`) VALUES (7, 1, 7, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`PERMISO` (`idPERMISO`, `idPERFIL`, `idMODULO`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`) VALUES (8, 1, 8, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`PERMISO` (`idPERMISO`, `idPERFIL`, `idMODULO`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`) VALUES (9, 1, 9, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`PERMISO` (`idPERMISO`, `idPERFIL`, `idMODULO`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`) VALUES (10, 1, 10, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`PERMISO` (`idPERMISO`, `idPERFIL`, `idMODULO`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`) VALUES (11, 1, 11, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`PERMISO` (`idPERMISO`, `idPERFIL`, `idMODULO`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`) VALUES (12, 1, 12, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`PERMISO` (`idPERMISO`, `idPERFIL`, `idMODULO`, `LISTAR`, `CREAR`, `ACTUALIZAR`, `ELIMINAR`) VALUES (13, 1, 13, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (1, 1, 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (2, 1, 2, 1, 0, 1, 0);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (3, 1, 3, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (4, 1, 4, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (5, 1, 5, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (6, 1, 6, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (7, 1, 7, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (8, 1, 8, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (9, 1, 9, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (10, 1, 10, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (11, 1, 11, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (12, 1, 12, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (13, 1, 13, 1, 1, 1, 1);
 
 COMMIT;
 
 -- -----------------------------------------------------
--- Data for table `sgstt`.`Destinos`
+-- Data for table `sgstt`.`destinos`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sgstt`;
-INSERT INTO `sgstt`.`Destinos` (`idDestinos`, `NOMBRE`, `LATITUD`, `LONGITUD`, `ESTADO`) VALUES (1, 'AEROPUERTO LAN', '1', '1', 1);
-INSERT INTO `sgstt`.`Destinos` (`idDestinos`, `NOMBRE`, `LATITUD`, `LONGITUD`, `ESTADO`) VALUES (2, 'HOTEL SHERATON', '2', '2', 1);
-INSERT INTO `sgstt`.`Destinos` (`idDestinos`, `NOMBRE`, `LATITUD`, `LONGITUD`, `ESTADO`) VALUES (3, 'HOTEL MARRIOT', '1', '2', 1);
-INSERT INTO `sgstt`.`Destinos` (`idDestinos`, `NOMBRE`, `LATITUD`, `LONGITUD`, `ESTADO`) VALUES (4, 'HOTEL CONQUISTADORES', '1', '2', 1);
+INSERT INTO `sgstt`.`destinos` (`iddestinos`, `nombre`, `latitud`, `longitud`, `estado`) VALUES (1, 'AEROPUERTO LAN', '1', '1', 1);
+INSERT INTO `sgstt`.`destinos` (`iddestinos`, `nombre`, `latitud`, `longitud`, `estado`) VALUES (2, 'HOTEL SHERATON', '2', '2', 1);
+INSERT INTO `sgstt`.`destinos` (`iddestinos`, `nombre`, `latitud`, `longitud`, `estado`) VALUES (3, 'HOTEL MARRIOT', '1', '2', 1);
+INSERT INTO `sgstt`.`destinos` (`iddestinos`, `nombre`, `latitud`, `longitud`, `estado`) VALUES (4, 'HOTEL CONQUISTADORES', '1', '2', 1);
 
 COMMIT;
 
@@ -1064,11 +1064,11 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sgstt`;
-INSERT INTO `sgstt`.`servicio_destinos` (`servicio_idservicio`, `Destinos_idDestinos`) VALUES (1, 1);
-INSERT INTO `sgstt`.`servicio_destinos` (`servicio_idservicio`, `Destinos_idDestinos`) VALUES (1, 2);
-INSERT INTO `sgstt`.`servicio_destinos` (`servicio_idservicio`, `Destinos_idDestinos`) VALUES (2, 1);
-INSERT INTO `sgstt`.`servicio_destinos` (`servicio_idservicio`, `Destinos_idDestinos`) VALUES (2, 3);
-INSERT INTO `sgstt`.`servicio_destinos` (`servicio_idservicio`, `Destinos_idDestinos`) VALUES (3, 1);
-INSERT INTO `sgstt`.`servicio_destinos` (`servicio_idservicio`, `Destinos_idDestinos`) VALUES (3, 4);
+INSERT INTO `sgstt`.`servicio_destinos` (`servicio_idservicio`, `destinos_iddestinos`) VALUES (1, 1);
+INSERT INTO `sgstt`.`servicio_destinos` (`servicio_idservicio`, `destinos_iddestinos`) VALUES (1, 2);
+INSERT INTO `sgstt`.`servicio_destinos` (`servicio_idservicio`, `destinos_iddestinos`) VALUES (2, 1);
+INSERT INTO `sgstt`.`servicio_destinos` (`servicio_idservicio`, `destinos_iddestinos`) VALUES (2, 3);
+INSERT INTO `sgstt`.`servicio_destinos` (`servicio_idservicio`, `destinos_iddestinos`) VALUES (3, 1);
+INSERT INTO `sgstt`.`servicio_destinos` (`servicio_idservicio`, `destinos_iddestinos`) VALUES (3, 4);
 
 COMMIT;
