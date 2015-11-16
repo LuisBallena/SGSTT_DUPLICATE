@@ -52,6 +52,10 @@ public abstract class HibernatePaginador<T> extends LazyDataModel<T> {
     **/
     protected abstract Object createFilter(Object ... values);
     
+    protected abstract void orderBy(String element);
+    
+    protected abstract void createFilterDynamic(Object value);
+    
     /**
      * Método que inicializa los posibles valores a utilizar la implementación,
      * este método debera ejecutarse antes de realizar todas las operaciones.

@@ -1,5 +1,6 @@
 package com.sgstt.hibernate;
 
+import com.sgstt.util.Utilitario;
 import java.util.List;
 import java.util.Map;
 import org.apache.log4j.Logger;
@@ -18,9 +19,11 @@ public class HibernateStringPaginador<T> extends HibernatePaginador<T> {
 
     private static final Logger log = Logger.getLogger(HibernateStringPaginador.class.getPackage().getName());
 
-    private String queryCriteria = null;
+    protected String queryCriteria = null;
 
     private String queryTotal = null;
+
+    private String orderByElement = "";
 
     @Override
     public void initPaginador() {
@@ -38,8 +41,8 @@ public class HibernateStringPaginador<T> extends HibernatePaginador<T> {
      * Método que retorna un Query String(HQL) de la clase que es pasada como
      * valor en la anotación Paginator.
      *
-     * @return String 
-    *
+     * @return String
+     *
      */
     @Override
     protected String createFilter() {
@@ -51,8 +54,8 @@ public class HibernateStringPaginador<T> extends HibernatePaginador<T> {
      * Método que retorna un Query String(HQL) de la clase que es pasada como
      * valor en la anotación Paginator.
      *
-     * @return String 
-    *
+     * @return String
+     *
      */
     @Override
     protected String createFilter(Object... values) {
@@ -98,7 +101,9 @@ public class HibernateStringPaginador<T> extends HibernatePaginador<T> {
             builder.append(sortOrder != SortOrder.ASCENDING ? "desc" : "");
             query = conexion.getSession().createQuery(builder.toString());
         } else {
-            query = conexion.getSession().createQuery(queryCriteria);
+            if (!Utilitario.esNulo(orderByElement)) {
+                query = conexion.getSession().createQuery(String.format("%s order by %s",queryCriteria,orderByElement));
+            }
         }
         return query;
     }
@@ -122,6 +127,16 @@ public class HibernateStringPaginador<T> extends HibernatePaginador<T> {
         builder.append("select count(*) ");
         builder.append(queryCriteria.replaceFirst("select", "").replaceAll("fetch", "").trim());
         queryTotal = builder.toString();
+    }
+
+    @Override
+    protected void orderBy(String element) {
+        orderByElement = element;
+    }
+
+    @Override
+    protected void createFilterDynamic(Object value) {
+        throw new UnsupportedOperationException("No soporta la creacion dinamica de querys");
     }
 
 }

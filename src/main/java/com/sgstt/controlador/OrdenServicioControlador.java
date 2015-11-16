@@ -55,9 +55,10 @@ public class OrdenServicioControlador implements Serializable {
         if (!FacesContext.getCurrentInstance().isPostback()) {
             transporteServicio = new TransporteServicio();
             servicioDetalleFilter = new ServicioDetalleFilter();
+            servicioDetalleFilter.setIdSede(sesionControlador.getUsuarioSesion().getSede().getId());
             clientes = transporteServicio.obtenerClientes();
             servicioDetallePaginador = new ServicioDetallePaginador();
-            servicioDetallePaginador.initPaginador(sesionControlador.getUsuarioSesion().getSede().getId());
+            servicioDetallePaginador.initPaginador(servicioDetalleFilter);
         }
     }
 

@@ -1,6 +1,7 @@
-
 package com.sgstt.filters;
 
+import com.sgstt.excepciones.FilterException;
+import com.sgstt.util.Utilitario;
 import java.util.Date;
 
 /**
@@ -8,18 +9,34 @@ import java.util.Date;
  * @author Luis Alonso Ballena Garcia
  */
 public class BaseFilter {
-    
+
     Integer idBase;
-    
+
     Integer idSede;
-    
+
     Integer estado;
-    
-    Date fechaInicio;
-    
-    Date fechaFin;
+
+    Date fechaDesde;
+
+    Date fechaHasta;
 
     public BaseFilter() {
+    }
+
+    public void validarFiltroFecha() throws FilterException {
+        String mensajeError = null;
+        if(getFechaDesde() == null){
+            mensajeError = "Debe ingresar la fecha Desde";
+        }else if(getFechaHasta() == null){
+            mensajeError = "Debe ingresar la fecha Hasta";
+        }
+        else if (Utilitario.esFechaMayor(getFechaDesde(), getFechaHasta())) {
+            mensajeError = "La fecha Desde es mayor que la Fecha Hasta";
+        }
+        if(mensajeError != null){
+            throw new FilterException(mensajeError);
+        }
+
     }
 
     public Integer getIdBase() {
@@ -38,20 +55,28 @@ public class BaseFilter {
         this.estado = estado;
     }
 
-    public Date getFechaInicio() {
-        return fechaInicio;
+    public Date getFechaDesde() {
+        return fechaDesde;
     }
 
-    public void setFechaInicio(Date fechaInicio) {
-        this.fechaInicio = fechaInicio;
+    public void setFechaDesde(Date fechaDesde) {
+        this.fechaDesde = fechaDesde;
     }
 
-    public Date getFechaFin() {
-        return fechaFin;
+    public Date getFechaHasta() {
+        return fechaHasta;
     }
 
-    public void setFechaFin(Date fechaFin) {
-        this.fechaFin = fechaFin;
+    public void setFechaHasta(Date fechaHasta) {
+        this.fechaHasta = fechaHasta;
     }
-    
+
+    public Integer getIdSede() {
+        return idSede;
+    }
+
+    public void setIdSede(Integer idSede) {
+        this.idSede = idSede;
+    }
+
 }
