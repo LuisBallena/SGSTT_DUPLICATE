@@ -19,7 +19,9 @@ public class HibernateStringPaginador<T> extends HibernatePaginador<T> {
 
     private static final Logger log = Logger.getLogger(HibernateStringPaginador.class.getPackage().getName());
 
-    protected String queryCriteria = null;
+    private String queryCriteria = null;
+
+    protected String queryDynamicCriteria = "";
 
     private String queryTotal = null;
 
@@ -82,7 +84,8 @@ public class HibernateStringPaginador<T> extends HibernatePaginador<T> {
         int totalRows = getTotalRows();
         log.debug("[HibernatePaginador/load] total de filas : " + totalRows);
         setRowCount(totalRows);
-        Query query = agregarOrdenamiento(queryCriteria, sortField, sortOrder);
+        String queryTransformer = String.format("%s %s",queryCriteria,queryDynamicCriteria);
+        Query query = agregarOrdenamiento(queryTransformer, sortField, sortOrder);
         query = prepararQueryPaginacion(query, first, pageSize);
         List<T> auxList = executeCriteriaList(query);
         log.debug("[HibernatePaginador/load] total de registros : " + auxList.size());
@@ -103,6 +106,8 @@ public class HibernateStringPaginador<T> extends HibernatePaginador<T> {
         } else {
             if (!Utilitario.esNulo(orderByElement)) {
                 query = conexion.getSession().createQuery(String.format("%s order by %s",queryCriteria,orderByElement));
+            }else{
+                query = conexion.getSession().createQuery(queryCriteria);
             }
         }
         return query;
@@ -110,7 +115,8 @@ public class HibernateStringPaginador<T> extends HibernatePaginador<T> {
 
     private int getTotalRows() {
         int totalRows = 0;
-        totalRows = ((Long) conexion.getSession().createQuery(queryTotal).uniqueResult()).intValue();
+        String queryTotalTransformer =String.format("%s %s", queryTotal,queryDynamicCriteria);
+        totalRows = ((Long) conexion.getSession().createQuery(queryTotalTransformer).uniqueResult()).intValue();
         return totalRows;
     }
 

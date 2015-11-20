@@ -64,10 +64,18 @@ public class TransporteServicio implements Serializable {
         return aux;
     }
 
-    public List<Vehiculo> obtenerVehiculosConTipoVehiculosPorEstado(Integer idSede) {
+    public List<Vehiculo> obtenerVehiculos(Integer idSede) {
         List<Vehiculo> aux = null;
         conexion.beginConexion();
-        aux = vehiculoDao.getVehiculosWithTipoVehiculos();
+        aux = vehiculoDao.getVehiculosFilterbySede(idSede);
+        conexion.closeConexion();
+        return aux;
+    }
+
+    public List<Vehiculo> obtenerVehiculosConTipoVehiculosPorSede(Integer idSede) {
+        List<Vehiculo> aux = null;
+        conexion.beginConexion();
+        aux = vehiculoDao.getVehiculosWithTipoVehiculosFilterbySede(idSede);
         conexion.closeConexion();
         return aux;
     }

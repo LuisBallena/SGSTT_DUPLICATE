@@ -60,6 +60,8 @@ public class OrdenServicioControlador implements Serializable {
             servicioDetalleFilter.setIdSede(sesionControlador.getUsuarioSesion().getSede().getId());
             clientes = transporteServicio.obtenerClientes();
             tipoServicios = transporteServicio.obtenerTiposServicios();
+            choferes = transporteServicio.obtenerChoferesPorSede(sesionControlador.getUsuarioSesion().getSede().getId());
+            vehiculos = transporteServicio.obtenerVehiculos(sesionControlador.getUsuarioSesion().getSede().getId());
             servicioDetallePaginador = new ServicioDetallePaginador();
             servicioDetallePaginador.initPaginador(servicioDetalleFilter);
         }
@@ -148,7 +150,7 @@ public class OrdenServicioControlador implements Serializable {
 
     private void initCollectionsUpdate() {
         initCollections();
-        vehiculos = transporteServicio.obtenerVehiculosConTipoVehiculosPorEstado(sesionControlador.getUsuarioSesion().getSede().getId());
+        vehiculos = transporteServicio.obtenerVehiculosConTipoVehiculosPorSede(sesionControlador.getUsuarioSesion().getSede().getId());
         choferes = transporteServicio.obtenerChoferesPorSede(sesionControlador.getUsuarioSesion().getSede().getId());
     }
 

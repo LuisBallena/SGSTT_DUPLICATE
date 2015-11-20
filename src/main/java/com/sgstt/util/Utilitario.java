@@ -55,7 +55,8 @@ public class Utilitario {
     public static final String PATTERN_NUMEROS_DECIMAL = "^\\d+(\\.\\d{1,3})?$";
     public static final String PATTERN_WORD_TXT = "(\\.txt$)|(\\.docx$)";
     public static final String PATTERN_JRE = "(jre|JRE)_[\\d|.|_]+(.zip$)";
-    public static final String FORMATO_SQL_DATE = "YYYY-MM-DD HH:mm:ss";
+    public static final String FORMATO_SQL_DATE_TIME = "yyyy-MM-dd HH:mm:ss";
+    public static final String FORMATO_SQL_DATE = "yyyy-MM-dd";
     public static final String FORMATO_DATE_POR_DEFECTO = "dd/MM/yyyy HH:mm:ss";
 
     private static final Logger log = Logger.getLogger(Utilitario.class.getPackage().getName());

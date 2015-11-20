@@ -2,10 +2,10 @@ package com.sgstt.filters;
 
 import com.sgstt.excepciones.FilterException;
 import com.sgstt.util.Utilitario;
+
 import java.util.Date;
 
 /**
- *
  * @author Luis Alonso Ballena Garcia
  */
 public class BaseFilter {
@@ -24,23 +24,21 @@ public class BaseFilter {
     }
 
     public void validarFiltroFecha() throws FilterException {
-        String mensajeError = null;
-        if(getFechaDesde() == null){
-            mensajeError = "Debe ingresar la fecha Desde";
-        }else if(getFechaHasta() == null){
-            mensajeError = "Debe ingresar la fecha Hasta";
-        }
-        else if (Utilitario.esFechaMayor(getFechaDesde(), getFechaHasta())) {
-            mensajeError = "La fecha Desde es mayor que la Fecha Hasta";
-        }
-        if(mensajeError != null){
-            throw new FilterException(mensajeError);
+        if (getFechaDesde() != null || getFechaHasta() != null) {
+            if (getFechaDesde() == null) {
+                throw new FilterException("Debe seleccionar la fecha Desde");
+            } else if (getFechaHasta() == null) {
+                throw new FilterException("Debe seleccionar la fecha Hasta");
+            } else if (Utilitario.esFechaMayor(getFechaDesde(), getFechaHasta())) {
+                throw new FilterException("La fecha Desde es mayor que la Fecha Hasta");
+            }
         }
     }
 
-    public boolean esValidoId(Integer id){
+
+    public boolean esValidoId(Integer id) {
         boolean valido = false;
-        if(id != null && id != 0){
+        if (id != null && id != 0) {
             valido = true;
         }
         return valido;

@@ -50,4 +50,19 @@ public class VehiculoImpl extends HibernateImpl<Vehiculo,Integer> implements Veh
         return auList;
     }
 
+    @Override
+    public List<Vehiculo> getVehiculosFilterbySede(Integer idSede) {
+        List<Vehiculo> auList = null;
+        Session session = null;
+        try{
+            session = conexion.getSession();
+            Query query = session.createQuery("from Vehiculo as vehiculo where vehiculo.estado = 1 and vehiculo.sede.id = :dato");
+            query.setInteger("dato", idSede);
+            auList = query.list();
+        }catch(HibernateException e){
+            e.printStackTrace();
+        }
+        return auList;
+    }
+
 }

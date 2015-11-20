@@ -36,11 +36,19 @@ public class ServicioDetallePaginador extends HibernateStringPaginador implement
         if (value instanceof ServicioDetalleFilter) {
             ServicioDetalleFilter filter = (ServicioDetalleFilter) value;
             filter.validarFiltroFecha();
-            queryCriteria = String.format("%s %s", queryCriteria.trim(),filter.esValidoId(filter.getIdTipoServicio()) ? "serviciodetalle.servicio.tipoServicio.id" : "");
-            queryCriteria = String.format("%s %s", queryCriteria.trim(),filter.esValidoId(filter.getIdServicio()) ? "serviciodetalle.servicio.id" : "");
-            queryCriteria = String.format("%s serviciodetalle.fecha between %s and  %s",queryCriteria.trim(),
-                    Utilitario.convertirFormatoFecha(filter.getFechaDesde(),Utilitario.FORMATO_SQL_DATE),
-                    Utilitario.convertirFormatoFecha(filter.getFechaHasta(),Utilitario.FORMATO_SQL_DATE));
+            StringBuilder builder = new StringBuilder();
+            builder.append(filter.esValidoId(filter.getIdTipoServicio()) ? String.format("and serviciodetalle.servicio.tipoServicio.id = %d ", filter.getIdTipoServicio()) : "");
+            builder.append(filter.esValidoId(filter.getIdServicio()) ? String.format("and serviciodetalle.servicio.id = %d ",filter.getIdServicio()) : "");
+            builder.append(filter.esValidoId(filter.getIdServicio()) ? String.format("and serviciodetalle.vehiculo.id = %d ",filter.getIdVehiculo()) : "");
+            builder.append(filter.esValidoId(filter.getIdServicio()) ? String.format("and serviciodetalle.chofer.id = %d ",filter.getIdChofer()) : "");
+            builder.append(String.format("and serviciodetalle.externalizado = '%s'",filter.isServicioExterno() ? "SI" : "NO"));
+            builder.append(String.format("and serviciodetalle.estadoServicio = '%s'",filter.getEstadoServicio()));
+            if (filter.getFechaDesde() != null && filter.getFechaHasta() != null) {
+                builder.append(String.format("and serviciodetalle.fecha between '%s' and  '%s'",
+                        Utilitario.convertirFormatoFecha(filter.getFechaDesde(), Utilitario.FORMATO_SQL_DATE_TIME),
+                        Utilitario.convertirFormatoFecha(filter.getFechaHasta(), Utilitario.FORMATO_SQL_DATE_TIME)));
+            }
+            queryDynamicCriteria = builder.toString().trim();
         }
     }
 
