@@ -41,6 +41,7 @@ public class ServicioControlador implements Serializable {
             servicioPaginador = new ServicioPaginador();
             servicioPaginador.initPaginador(sesionControlador.getUsuarioSesion().getSede().getId());
             transporteServicio = new TransporteServicio();
+            tiposServicios = transporteServicio.obtenerTiposServicios();
         }
     }
 

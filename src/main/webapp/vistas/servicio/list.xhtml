@@ -37,7 +37,14 @@
                                             Servicio
                                         </f:facet>
                                         <h:outputText value="#{list.descripcion}" />
+                                        
                                     </p:column>
+                                    <p:column    style="text-align: center;font-size: 15px;">
+                                    <f:facet name="header">
+                                            Tipo de Servicio
+                                        </f:facet>
+                                        <h:outputText value="#{list.tipoServicio.descripcion}" />
+                                         </p:column>
                                     <p:column  style="text-align: center;width: 12%;">
                                         <p:commandButton rendered="#{sesionControlador.permisoModulo.actualizar eq true}" style="font-size: 12px;"  icon="icon-update" action="#{servicioControlador.irActualizar(list.id)}"    >
                                         </p:commandButton>
