@@ -13,6 +13,10 @@ public class ServicioDetalleDto implements Serializable{
     
     String pax;
     
+    String cuenta;
+    
+    String comentario;
+    
     String agencia;
     
     String estado;
@@ -49,6 +53,22 @@ public class ServicioDetalleDto implements Serializable{
         this.pax = pax;
     }
 
+    public String getCuenta() {
+        return cuenta;
+    }
+
+    public void setCuenta(String cuenta) {
+        this.cuenta = cuenta;
+    }
+    
+    public String getComentario() {
+        return comentario;
+    }
+
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
+    }
+    
     public String getAgencia() {
         return agencia;
     }

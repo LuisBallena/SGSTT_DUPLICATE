@@ -94,6 +94,12 @@
                                                 </p>
                                             </div> 
                                         </div>
+                                        <div class="form-group has-feedback">
+                                        	<label class="col-md-2 control-label" >Comentario :</label>
+                                            <div class="col-md-3">
+                                                <p:inputText  styleClass="form-control"  value="#{ordenServicioControlador.servicioDetalle.comentario}" />
+                                            </div>
+                                        </div>                                        
                                         <div class="col-sm-3 control-label">
                                             <p:commandButton value="Agregar" actionListener="#{ordenServicioControlador.agregarOrdenServicio}"  styleClass="btn btn-primary" update="@form :frmTablaOrdenes"  >
 

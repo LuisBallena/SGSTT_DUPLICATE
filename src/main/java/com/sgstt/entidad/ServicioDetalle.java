@@ -2,6 +2,7 @@ package com.sgstt.entidad;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -15,6 +16,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -116,6 +118,12 @@ public class ServicioDetalle implements Serializable {
     
     @Column
     private String pax;
+    
+    @Column
+    private String cuenta;
+    
+    @Column
+    private String comentario;
 
     public ServicioDetalle() {
         vuelo = new Vuelo();
@@ -310,4 +318,19 @@ public class ServicioDetalle implements Serializable {
         this.pax = pax;
     }
     
+    public String getCuenta() {
+        return cuenta;
+    }
+
+    public void setCuenta(String cuenta) {
+        this.cuenta = cuenta;
+    }
+    
+    public String getComentario() {
+        return comentario;
+    }
+
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
+    }
 }

@@ -97,7 +97,7 @@
                                         <div class="form-group has-feedback">
                                             <h:panelGroup id="panelChofer">
                                                 <label class="col-md-2 control-label" >Chofer :</label>
-                                                <div  style="padding-right: 0px;"  class="col-xs-11 col-md-2" >
+                                                <div  style="padding-right: 0px;"  class="col-xs-11 col-md-3" >
                                                     <p class="form-control" style="background-color: #f5f5f5;border: 1px solid #ccc;">
                                                         #{ordenServicioControlador.servicioDetalle.chofer.datosCompletos}
                                                     </p>
@@ -107,7 +107,7 @@
                                                         <img src="#{request.contextPath}/resources/images/add.png" />
                                                     </div>
                                                 </div>
-                                                <label  class="col-md-2 control-label" >Categoria :</label>
+                                                <label  class="col-md-1 control-label" >Categoria :</label>
                                                 <div class="col-md-3">
                                                     <p class="form-control" style="background-color: #f5f5f5;border: 1px solid #ccc;">
                                                         #{ordenServicioControlador.servicioDetalle.chofer.categoria}
@@ -118,7 +118,7 @@
                                         <div class="form-group has-feedback">
                                             <h:panelGroup id="panelVehiculo">
                                                 <label  class="col-md-2 control-label" >Vehiculo :</label>
-                                                <div  style="padding-right: 0px;"  class="col-xs-11 col-md-2" >
+                                                <div  style="padding-right: 0px;"  class="col-xs-11 col-md-3" >
                                                     <p class="form-control" style="background-color: #f5f5f5;border: 1px solid #ccc;">
                                                         #{ordenServicioControlador.servicioDetalle.vehiculo.descripcion}
                                                     </p>
@@ -128,7 +128,7 @@
                                                         <img src="#{request.contextPath}/resources/images/add.png" />
                                                     </div>
                                                 </div>
-                                                <label  class="col-md-2 control-label" >Tipo Vehiculo :</label>
+                                                <label  class="col-md-1 control-label" >Tipo Vehiculo:</label>
                                                 <div class="col-md-3">
                                                     <p class="form-control" style="background-color: #f5f5f5;border: 1px solid #ccc;">
                                                         #{ordenServicioControlador.servicioDetalle.vehiculo.tipoVehiculo.nombre}
@@ -148,6 +148,18 @@
                                                 </div> 
                                             </h:panelGroup>
 
+                                        </div>
+                                         <div class="form-group has-feedback">
+                                         	<h:panelGroup rendered="#{ordenServicioControlador.servicioDetalle.cuenta != null}">
+                                            	<label class="col-md-2 control-label" >Cuenta :</label>
+                                            <div class="col-md-3">
+                                                <p:inputMask mask="9?9" placeHolder="" value="#{ordenServicioControlador.servicioDetalle.cuenta}" />
+                                            </div>
+                                            </h:panelGroup>
+                                                <label class="col-md-2 control-label" >Comentario :</label>
+                                                <div class="col-md-3">
+                                                    <p:inputText styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.comentario}"  />
+                                                </div>                                           
                                         </div>
                                         <div class="form-group has-feedback">
                                             <label class="col-md-2 control-label" >Oper. Gravada :</label>

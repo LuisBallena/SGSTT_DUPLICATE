@@ -38,6 +38,9 @@ public class File implements java.io.Serializable {
     @Column(nullable = false)
     private String pax;
     
+    @Column(nullable = false)
+    private String cuenta;
+    
     @Column(name = "FECHA_REGISTRO")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaRegistro;
@@ -80,6 +83,14 @@ public class File implements java.io.Serializable {
 
     public void setPax(String pax) {
         this.pax = pax;
+    }
+    
+    public String getCuenta() {
+        return cuenta;
+    }
+
+    public void setCuenta(String cuenta) {
+        this.cuenta = cuenta;
     }
 
     public Date getFechaRegistro() {

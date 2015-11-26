@@ -171,7 +171,7 @@
                                              paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}">
                                     <p:column style="text-align: center;font-size: 13px;">
                                         <f:facet name="header">
-                                            Fecha
+                                            Fecha del Servico
                                         </f:facet>
                                         <h:outputText value="#{list.fecha}">
                                             <f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-5"/>
@@ -203,6 +203,12 @@
                                     </p:column>
                                     <p:column style="text-align: center;font-size: 13px;">
                                         <f:facet name="header">
+                                            Cuenta
+                                        </f:facet>
+                                        <h:outputText value="#{list.file.cuenta}#{list.cuenta}"/>
+                                    </p:column>
+                                    <p:column style="text-align: center;font-size: 13px;">
+                                        <f:facet name="header">
                                             Nro Pasajeros
                                         </f:facet>
                                         <h:outputText value="#{list.nroPersonas}"/>
@@ -223,13 +229,13 @@
                                     </p:column>
                                     <p:column style="text-align: center;font-size: 13px;">
                                         <f:facet name="header">
-                                            Estado
+                                            Estado Servicio
                                         </f:facet>
                                         <h:outputText value="#{list.estadoServicio == 'SIN_ASIGNAR' ? 'Sin Asignar' : list.estadoServicio}"/>
                                     </p:column>
                                     <p:column style="text-align: center;font-size: 13px;">
                                         <f:facet name="header">
-                                            Serv. Externo
+                                            Tercerizado
                                         </f:facet>
                                         <h:outputText value="#{list.externalizado}"/>
                                     </p:column>

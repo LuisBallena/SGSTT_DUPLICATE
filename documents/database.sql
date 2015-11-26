@@ -396,6 +396,7 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`file` (
   `idcliente` INT NOT NULL ,
   `idempleado` INT NOT NULL ,
   `pax` VARCHAR(80) NOT NULL ,
+  `cuenta` VARCHAR(80) NOT NULL ,
   `fecha_registro` DATETIME NOT NULL ,
   `fecha_modificacion` DATETIME NOT NULL ,
   `nro_correlativo` VARCHAR(45) NULL ,
@@ -452,6 +453,8 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`servicio_detalle` (
   `gravada` TINYINT(1) NOT NULL DEFAULT 1 ,
   `dias_viaje` INT NULL ,
   `pax` VARCHAR(80) NULL ,
+  `cuenta` VARCHAR(80) NULL ,
+  `comentario` VARCHAR(80) NULL ,
   `estado` TINYINT(1) NOT NULL DEFAULT 1 ,
   `estado_SERVICIO` VARCHAR(60) NULL ,
   `fecha_registro` DATETIME NOT NULL ,
@@ -945,19 +948,20 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sgstt`;
-INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (1, 'Administrar Perfil', 'perfil', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (2, 'Administrar Modulos', 'modulo', 1, 0, 1, 0, 1);
+
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (1, 'Administrar Cliente', 'cliente', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (2, 'Administrar Choferes', 'chofer', 1, 1, 1, 1, 1);
 INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (3, 'Administrar Cuenta', 'cuenta', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (4, 'Administrar file', 'file', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (5, 'Administrar Orden Servicios', 'ordenServicio', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (6, 'Administrar tarifario', 'tarifa', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (7, 'Administrar Vehiculo', 'vehiculo', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (8, 'Administrar Incidencia', 'incidencia', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (9, 'Administrar Choferes', 'chofer', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (10, 'Administrar cliente', 'cliente', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (11, 'Administrar Destino', 'destino', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (4, 'Administrar Destino', 'destino', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (5, 'Administrar File', 'file', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (6, 'Administrar Incidencia', 'incidencia', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (7, 'Administrar Modulos', 'modulo', 1, 0, 1, 0, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (8, 'Administrar Orden Servicios', 'ordenServicio', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (9, 'Administrar Perfil', 'perfil', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (10, 'Administrar Servicios', 'servicio', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (11, 'Administrar Tarifario', 'tarifa', 1, 1, 1, 1, 1);
 INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (12, 'Administrar Tipo Servicio', 'tipoServicio', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (13, 'Administrar Servicios', 'servicio', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (, 'Administrar Vehiculo', 'vehiculo', 1, 1, 1, 1, 1);
 
 COMMIT;
 
