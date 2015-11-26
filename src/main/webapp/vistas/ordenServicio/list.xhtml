@@ -225,7 +225,7 @@
                                         <f:facet name="header">
                                             Estado
                                         </f:facet>
-                                        <h:outputText value="#{list.estadoServicio}"/>
+                                        <h:outputText value="#{list.estadoServicio == 'SIN_ASIGNAR' ? 'Sin Asignar' : list.estadoServicio}"/>
                                     </p:column>
                                     <p:column style="text-align: center;font-size: 13px;">
                                         <f:facet name="header">

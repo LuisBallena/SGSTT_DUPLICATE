@@ -22,18 +22,33 @@ public class ChoferImpl extends HibernateImpl<Chofer,Integer> implements ChoferD
     }
 
     @Override
-    public List<Chofer> getVehiculosFilterbySede(Integer idSede) {
+    public List<Chofer> getChoferesWithEmpresaFilterbySede(Integer idSede) {
         List<Chofer> choferes = null;
         Session session = null;
         try{
             session = conexion.getSession();
-            Query query = session.createQuery("from Chofer as chofer where chofer.sede.id = :dato");
+            Query query = session.createQuery("from Chofer as chofer join fetch chofer.empresa where chofer.sede.id = :dato");
             query.setInteger("dato", idSede);
             choferes = query.list();
         }catch(HibernateException e){
             e.printStackTrace();
         }
         return choferes;
+    }
+
+    @Override
+    public Chofer getChoferWithEmpresa(Integer idChofer) {
+        Chofer auxChofer = null;
+        Session session = null;
+        try{
+            session = conexion.getSession();
+            Query query = session.createQuery("from Chofer as chofer join fetch chofer.empresa where chofer.id = :idChofer");
+            query.setInteger("idChofer", idChofer);
+            auxChofer = (Chofer) query.uniqueResult();
+        }catch(HibernateException e){
+            e.printStackTrace();
+        }
+        return auxChofer;
     }
 
 }

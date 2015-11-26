@@ -64,16 +64,6 @@ public class ServicioDetalle implements Serializable {
     @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "IDCHOFER", nullable = true)
     private Chofer chofer;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @Fetch(FetchMode.JOIN)
-    @JoinColumn(name = "IDEMPRESA_CHOFER", nullable = true)
-    private EmpresaChofer empresaChofer;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @Fetch(FetchMode.JOIN)
-    @JoinColumn(name = "IDEMPRESA_VEHICULO", nullable = true)
-    private EmpresaVehiculo empresaVehiculo;
     
     @ManyToOne(fetch = FetchType.EAGER)
     @Fetch(FetchMode.JOIN)
@@ -245,22 +235,6 @@ public class ServicioDetalle implements Serializable {
 
     public void setChofer(Chofer chofer) {
         this.chofer = chofer;
-    }
-
-    public EmpresaChofer getEmpresaChofer() {
-        return empresaChofer;
-    }
-
-    public void setEmpresaChofer(EmpresaChofer empresaChofer) {
-        this.empresaChofer = empresaChofer;
-    }
-
-    public EmpresaVehiculo getEmpresaVehiculo() {
-        return empresaVehiculo;
-    }
-
-    public void setEmpresaVehiculo(EmpresaVehiculo empresaVehiculo) {
-        this.empresaVehiculo = empresaVehiculo;
     }
 
     public EstadoServicio getEstadoServicio() {

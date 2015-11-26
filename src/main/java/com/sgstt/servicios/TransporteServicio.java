@@ -50,7 +50,7 @@ public class TransporteServicio implements Serializable {
     public List<Chofer> obtenerChoferesPorSede(Integer idSede) {
         List<Chofer> aux = null;
         conexion.beginConexion();
-        aux = choferDao.getVehiculosFilterbySede(idSede);
+        aux = choferDao.getChoferesWithEmpresaFilterbySede(idSede);
         conexion.closeConexion();
         return aux;
 
@@ -197,6 +197,7 @@ public class TransporteServicio implements Serializable {
         conexion.beginConexion();
         if (estaAsignadoChoferVehiculo(servicioDetalle)) {
             servicioDetalle.setEstadoServicio(EstadoServicio.PENDIENTE);
+            asignarServicioExterno(servicioDetalle.getChofer(), servicioDetalle);
             Tarifa tarifa = tarifaDao.getTarifaFilterByTipoVehiculoAndServicio(servicioDetalle.getVehiculo().getTipoVehiculo().getId(), servicioDetalle.getServicio().getId());
             if (tarifa != null) {
                 servicioDetalle.setPrecioServicio(tarifa.getPrecio());
@@ -339,6 +340,12 @@ public class TransporteServicio implements Serializable {
     private boolean estaAsignadoChoferVehiculo(ServicioDetalle servicioDetalle) {
         return (servicioDetalle.getChofer() != null)
                 && (servicioDetalle.getVehiculo() != null);
+    }
+    
+    private void asignarServicioExterno(Chofer chofer, ServicioDetalle servicioDetalle){
+        if(chofer.getEmpresa().getId() != 1){
+            servicioDetalle.setExternalizado("SI");
+        }
     }
 
 }

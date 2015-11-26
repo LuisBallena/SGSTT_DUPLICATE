@@ -24,7 +24,7 @@ public class ChoferPaginador extends HibernateStringPaginador implements Seriali
     
     @Override
     protected String createFilter(Object...values) {
-        return String.format("%s where chofer.estado = 1 and chofer.sede.id = %d",super.createFilter(),(Integer)values[0]);
+        return String.format("%s join fetch chofer.empresa where chofer.estado = 1 and chofer.sede.id = %d",super.createFilter(),(Integer)values[0]);
     }
     
 }

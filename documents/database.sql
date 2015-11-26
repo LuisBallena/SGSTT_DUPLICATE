@@ -63,11 +63,18 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`chofer` (
   `dni` VARCHAR(45) NULL ,
   `categoria` VARCHAR(45) NULL ,
   `estado` TINYINT(1) NOT NULL DEFAULT 1 ,
+  `idempresa` INT NOT NULL, 
   PRIMARY KEY (`idchofer`, `idsede`) ,
   INDEX `fk_chofer_sede1` (`idsede` ASC) ,
+  INDEX `fk_chofer_idempresa1` (`idempresa` ASC) ,
   CONSTRAINT `fk_chofer_sede1`
     FOREIGN KEY (`idsede` )
     REFERENCES `sgstt`.`sede` (`idsede` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+CONSTRAINT `fk_chofer_idempresa1`
+    FOREIGN KEY (`idempresa` )
+    REFERENCES `sgstt`.`empresa` (`idempresa` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -328,48 +335,6 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`empresa` (
   PRIMARY KEY (`idempresa`) )
 ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `sgstt`.`empresa_chofer`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `sgstt`.`empresa_chofer` ;
-
-CREATE  TABLE IF NOT EXISTS `sgstt`.`empresa_chofer` (
-  `idempresa_chofer` INT NOT NULL AUTO_INCREMENT ,
-  `nombre` VARCHAR(60) NULL ,
-  `apellido` VARCHAR(60) NULL ,
-  `dni` VARCHAR(8) NULL ,
-  `empresa_idempresa` INT NOT NULL ,
-  PRIMARY KEY (`idempresa_chofer`) ,
-  INDEX `fk_empresa_chofer_empresa1_idx` (`empresa_idempresa` ASC) ,
-  CONSTRAINT `fk_empresa_chofer_empresa1`
-    FOREIGN KEY (`empresa_idempresa` )
-    REFERENCES `sgstt`.`empresa` (`idempresa` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `sgstt`.`empresa_vehiculo`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `sgstt`.`empresa_vehiculo` ;
-
-CREATE  TABLE IF NOT EXISTS `sgstt`.`empresa_vehiculo` (
-  `idempresa_vehiculo` INT NOT NULL AUTO_INCREMENT ,
-  `marca` VARCHAR(25) NULL ,
-  `placa` VARCHAR(16) NULL ,
-  `empresa_idempresa` INT NOT NULL ,
-  PRIMARY KEY (`idempresa_vehiculo`) ,
-  INDEX `fk_empresa_vehiculo_empresa1_idx` (`empresa_idempresa` ASC) ,
-  CONSTRAINT `fk_empresa_vehiculo_empresa1`
-    FOREIGN KEY (`empresa_idempresa` )
-    REFERENCES `sgstt`.`empresa` (`idempresa` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
 -- -----------------------------------------------------
 -- Table `sgstt`.`tipo_cliente`
 -- -----------------------------------------------------
@@ -496,8 +461,6 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`servicio_detalle` (
   `idtrasladista` INT NULL ,
   `idcobro` INT NULL ,
   `idvehiculo` INT NULL ,
-  `idempresa_chofer` INT NULL ,
-  `idempresa_vehiculo` INT NULL ,
   `idfile` INT NULL ,
   `idventa` INT NULL ,
   PRIMARY KEY (`idservicio_detalle`, `idservicio`) ,
@@ -507,8 +470,6 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`servicio_detalle` (
   INDEX `fk_servicio_detalle_vuelo1_idx` (`idvuelo` ASC) ,
   INDEX `fk_servicio_detalle_chofer1_idx` (`idchofer` ASC) ,
   INDEX `fk_servicio_detalle_vehiculo1_idx` (`idvehiculo` ASC) ,
-  INDEX `fk_servicio_detalle_empresa_chofer1_idx` (`idempresa_chofer` ASC) ,
-  INDEX `fk_servicio_detalle_empresa_vehiculo1_idx` (`idempresa_vehiculo` ASC) ,
   INDEX `fk_servicio_detalle_file1` (`idfile` ASC) ,
   INDEX `fk_servicio_detalle_venta_directa1` (`idventa` ASC) ,
   CONSTRAINT `fk_servicio_detalle_trasladista1`
@@ -539,16 +500,6 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`servicio_detalle` (
   CONSTRAINT `fk_servicio_detalle_vehiculo1`
     FOREIGN KEY (`idvehiculo` )
     REFERENCES `sgstt`.`vehiculo` (`idvehiculo` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_servicio_detalle_empresa_chofer1`
-    FOREIGN KEY (`idempresa_chofer` )
-    REFERENCES `sgstt`.`empresa_chofer` (`idempresa_chofer` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_servicio_detalle_empresa_vehiculo1`
-    FOREIGN KEY (`idempresa_vehiculo` )
-    REFERENCES `sgstt`.`empresa_vehiculo` (`idempresa_vehiculo` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_servicio_detalle_file1`
@@ -782,20 +733,31 @@ INSERT INTO `sgstt`.`sede` (`idsede`, `descripcion`) VALUES (2, 'CUSCO');
 COMMIT;
 
 -- -----------------------------------------------------
+-- Data for table `sgstt`.`empresa`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `sgstt`;
+INSERT INTO `sgstt`.`empresa` (`idempresa`, `razon_social`, `ruc`, `telefono`, `celular`, `correo`) VALUES (1, 'TRANSLIVIK', NULL, NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`, `razon_social`, `ruc`, `telefono`, `celular`, `correo`) VALUES (2, 'TARAKATOURS', NULL, NULL, NULL, NULL);
+
+
+COMMIT;
+
+-- -----------------------------------------------------
 -- Data for table `sgstt`.`chofer`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sgstt`;
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`) VALUES (1, 2, 'JAIME', 'AGUILAR EGOAVIL', '23885693', 'A1', 1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`) VALUES (2, 2, 'CESAR AMADO', 'ARELLANOS MUÑOZ', '25662462', 'A2', 1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`) VALUES (3, 1, 'MARIO HERNAN', 'CUADROS HUAPAYA', '25577045', 'A3', 1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`) VALUES (4, 1, 'PEPE', 'DAMIAN JURO', '10550499', 'A1', 1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`) VALUES (5, 1, 'KATTY DORIS', 'ESCOBAR PUMACALLAO', '07884541', 'A2', 1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`) VALUES (6, 1, 'CARLOS ALBERTO', 'HERRERA NAVARRO', '10630551', 'A3', 1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`) VALUES (7, 1, 'JOSE EDUARDO', 'HUAPALLA BALCAZAR', '10144415', 'A1', 1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`) VALUES (8, 1, 'RODOLFO CESAR', 'LAZO CALDERON', '25717877', 'A2', 1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`) VALUES (9, 1, 'JOSE LUIS', 'NUÑEZ CUENCA ROJAS', '09461980', 'A3', 1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`) VALUES (10, 1, 'ADRIAN', 'TICONA APAZA', '10520991', 'A1', 1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`,`idempresa`) VALUES (1, 2, 'JAIME', 'AGUILAR EGOAVIL', '23885693', 'A1', 1,1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`,`idempresa`) VALUES (2, 2, 'CESAR AMADO', 'ARELLANOS MUÑOZ', '25662462', 'A2', 1,1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`,`idempresa`) VALUES (3, 1, 'MARIO HERNAN', 'CUADROS HUAPAYA', '25577045', 'A3', 1,1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`,`idempresa`) VALUES (4, 1, 'PEPE', 'DAMIAN JURO', '10550499', 'A1', 1,1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`,`idempresa`) VALUES (5, 1, 'KATTY DORIS', 'ESCOBAR PUMACALLAO', '07884541', 'A2', 1,1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`,`idempresa`) VALUES (6, 1, 'CARLOS ALBERTO', 'HERRERA NAVARRO', '10630551', 'A3', 1,1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`,`idempresa`) VALUES (7, 1, 'JOSE EDUARDO', 'HUAPALLA BALCAZAR', '10144415', 'A1', 1,1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`,`idempresa`) VALUES (8, 1, 'RODOLFO CESAR', 'LAZO CALDERON', '25717877', 'A2', 1,1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`,`idempresa`) VALUES (9, 1, 'JOSE LUIS', 'NUÑEZ CUENCA ROJAS', '09461980', 'A3', 1,1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`,`idempresa`) VALUES (10, 1, 'ADRIAN', 'TICONA APAZA', '10520991', 'A1', 1,1);
 COMMIT;
 
 -- -----------------------------------------------------
@@ -926,33 +888,6 @@ START TRANSACTION;
 USE `sgstt`;
 INSERT INTO `sgstt`.`estado_incidencia` (`idestado_incidencia`, `descripcion`) VALUES (1, 'pendiente');
 INSERT INTO `sgstt`.`estado_incidencia` (`idestado_incidencia`, `descripcion`) VALUES (2, 'atendida');
-
-COMMIT;
-
--- -----------------------------------------------------
--- Data for table `sgstt`.`empresa`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `sgstt`;
-INSERT INTO `sgstt`.`empresa` (`idempresa`, `razon_social`, `ruc`, `telefono`, `celular`, `correo`) VALUES (1, 'TARAKATOURS', NULL, NULL, NULL, NULL);
-
-COMMIT;
-
--- -----------------------------------------------------
--- Data for table `sgstt`.`empresa_chofer`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `sgstt`;
-INSERT INTO `sgstt`.`empresa_chofer` (`idempresa_chofer`, `nombre`, `apellido`, `dni`, `empresa_idempresa`) VALUES (1, 'Rodrigo', 'Rosas', '12345678', 1);
-
-COMMIT;
-
--- -----------------------------------------------------
--- Data for table `sgstt`.`empresa_vehiculo`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `sgstt`;
-INSERT INTO `sgstt`.`empresa_vehiculo` (`idempresa_vehiculo`, `marca`, `placa`, `empresa_idempresa`) VALUES (1, 'hyundai', '124-afg', 1);
 
 COMMIT;
 

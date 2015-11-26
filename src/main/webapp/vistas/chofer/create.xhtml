@@ -34,7 +34,7 @@
                                                 </p:inputText>
                                             </div>
                                         </div>
-                                       <div class="form-group has-feedback">
+                                        <div class="form-group has-feedback">
                                             <label for="nombre" class="col-sm-3 control-label" >Apellido :</label>
                                             <div    class="col-sm-6" >
                                                 <p:inputText styleClass="form-control"  value="#{choferControlador.chofer.apellido}"     >
@@ -53,6 +53,14 @@
                                             <div    class="col-sm-6" >
                                                 <p:inputText styleClass="form-control"  value="#{choferControlador.chofer.categoria}"     >
                                                 </p:inputText>
+                                            </div>
+                                        </div>
+                                        <div class="form-group has-feedback">
+                                            <label for="nombre" class="col-sm-3 control-label" >Empresa :</label>
+                                            <div    class="col-sm-6" >
+                                                <h:selectOneMenu styleClass="form-control" value="#{choferControlador.chofer.empresa.id}" >
+                                                    <f:selectItems value="#{choferControlador.empresas}" var="listEmpresa"  itemValue="#{listEmpresa.id}" itemLabel="#{listEmpresa.razonSocial}" />
+                                                </h:selectOneMenu>
                                             </div>
                                         </div>
                                         <div class="col-sm-3 control-label">

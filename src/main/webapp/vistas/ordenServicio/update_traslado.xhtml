@@ -206,10 +206,10 @@
                 </p:dataTable>
             </h:form>
         </p:dialog>
-        <p:dialog modal="true" width="500"  height="300" header="Lista de Choferes" position="center top" id="dialogChoferes" widgetVar="dialogChoferes">
+        <p:dialog modal="true" width="600"  height="400" resizable="true" header="Lista de Choferes" position="center top" id="dialogChoferes" widgetVar="dialogChoferes">
             <h:form id="frmDialogChoferes">
-                <p:dataTable  value="#{ordenServicioControlador.choferes}" var="listChofer" 
-                              paginator="true" rows="10"  rowIndexVar="rowIndex"
+                <p:dataTable  value="#{ordenServicioControlador.choferes}" style="font-size: 12px;" var="listChofer" 
+                              rows="8"  rowIndexVar="rowIndex" paginator="true"
                               paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
 
                     <p:column style="text-align: center;">
@@ -224,6 +224,13 @@
                             Categoria
                         </f:facet>
                         <h:outputText value="#{listChofer.categoria}" >
+                        </h:outputText>
+                    </p:column>
+                    <p:column style="text-align: center;">
+                        <f:facet name="header">
+                            Empresa
+                        </f:facet>
+                        <h:outputText value="#{listChofer.empresa.razonSocial}" >
                         </h:outputText>
                     </p:column>
                     <p:column style="text-align: center;width: 12%;">

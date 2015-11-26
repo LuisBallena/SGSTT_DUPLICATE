@@ -1,14 +1,10 @@
 package com.sgstt.entidad;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -39,12 +35,6 @@ public class Empresa implements Serializable{
     
     @Column(name = "CORREO")
     String correo;
-    
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "empresa")
-    Set<EmpresaChofer> choferes = new HashSet<>(0);
-    
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "empresa")
-    Set<EmpresaVehiculo> vehiculos = new HashSet<>(0);
 
     public Empresa() {
     }

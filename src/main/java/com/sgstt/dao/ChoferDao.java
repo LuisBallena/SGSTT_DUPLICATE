@@ -9,6 +9,8 @@ import java.util.List;
  */
 public interface ChoferDao extends GenericDao<Chofer,Integer>{
     
-    public List<Chofer> getVehiculosFilterbySede(Integer idSede);
+    public List<Chofer> getChoferesWithEmpresaFilterbySede(Integer idSede);
+    
+    public Chofer getChoferWithEmpresa(Integer idChofer);
 
 }

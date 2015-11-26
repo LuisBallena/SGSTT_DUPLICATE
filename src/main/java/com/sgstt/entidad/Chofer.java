@@ -49,6 +49,10 @@ public class Chofer implements Serializable{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idSede")
     private Sede sede;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idempresa")
+    private Empresa empresa;
 
     public Chofer() {
     }
@@ -107,6 +111,14 @@ public class Chofer implements Serializable{
 
     public void setSede(Sede sede) {
         this.sede = sede;
+    }
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
     }
     
     public String getDatosCompletos() {

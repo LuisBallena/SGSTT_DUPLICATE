@@ -7,7 +7,7 @@
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/sgstt?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.connection.password">redhat</property>
+    <property name="hibernate.connection.password">123</property>
     <property name="hibernate.current_session_context_class">thread</property>
     <mapping class="com.sgstt.entidad.TipoCliente" />
     <mapping class="com.sgstt.entidad.Cliente" />
@@ -32,8 +32,6 @@
     <mapping class="com.sgstt.entidad.Tarifa" />
     <mapping class="com.sgstt.entidad.Marca" />
     <mapping class="com.sgstt.entidad.Empresa" />
-    <mapping class="com.sgstt.entidad.EmpresaChofer" />
-    <mapping class="com.sgstt.entidad.EmpresaVehiculo" />
     <mapping class="com.sgstt.entidad.Destino" />
     <mapping class="com.sgstt.entidad.Aerolinea" />
     <mapping class="com.sgstt.entidad.Venta" />

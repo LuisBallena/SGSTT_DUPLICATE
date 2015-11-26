@@ -6,8 +6,11 @@
 package com.sgstt.servicios;
 
 import com.sgstt.dao.ChoferDao;
+import com.sgstt.dao.EmpresaDao;
 import com.sgstt.dao.impl.ChoferImpl;
+import com.sgstt.dao.impl.EmpresaImpl;
 import com.sgstt.entidad.Chofer;
+import com.sgstt.entidad.Empresa;
 import com.sgstt.entidad.Estado;
 import com.sgstt.hibernate.HibernateConexion;
 import com.sgstt.util.Utilitario;
@@ -21,10 +24,12 @@ public class ChoferServicio {
 
     private final HibernateConexion conexion;
     private ChoferDao choferDao;
+    private EmpresaDao empresaDao;
 
     public ChoferServicio() {
         conexion = new HibernateConexion();
         choferDao = new ChoferImpl(conexion);
+        empresaDao = new EmpresaImpl(conexion);
     }
     
     public void guardarChofer(Chofer chofer){
@@ -49,10 +54,18 @@ public class ChoferServicio {
         Utilitario.enviarMensajeGlobalValido("Se ha eliminado correctamente");
     }
     
+    public List<Empresa> obtenerEmpresas(){
+        List<Empresa> empresas = null;
+        conexion.beginConexion();
+        empresas = empresaDao.obtenerTodos();
+        conexion.closeConexion();
+        return empresas;
+    }
+    
     public Chofer obtenerChofer(Integer id){
         Chofer aux = null;
         conexion.beginConexion();
-        aux = choferDao.obtenerEntidad(id);
+        aux = choferDao.getChoferWithEmpresa(id);
         conexion.closeConexion();
         return aux;
     }

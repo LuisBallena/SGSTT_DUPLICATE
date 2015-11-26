@@ -2,11 +2,13 @@
 package com.sgstt.controlador;
 
 import com.sgstt.entidad.Chofer;
+import com.sgstt.entidad.Empresa;
 import com.sgstt.hibernate.HibernatePaginador;
 import com.sgstt.paginacion.ChoferPaginador;
 import com.sgstt.servicios.ChoferServicio;
 import com.sgstt.util.Utilitario;
 import java.io.Serializable;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -23,6 +25,7 @@ public class ChoferControlador implements Serializable{
     private HibernatePaginador<Chofer> choferPaginador;
     private ChoferServicio choferServicio;
     private Chofer chofer;
+    private List<Empresa> empresas;
     @ManagedProperty(value = "#{sesionControlador}")
     private SesionControlador sesionControlador;
     
@@ -44,6 +47,8 @@ public class ChoferControlador implements Serializable{
         if (!FacesContext.getCurrentInstance().isPostback()) {
             choferServicio = new ChoferServicio();
             chofer = new Chofer();
+            chofer.setEmpresa(new Empresa());
+            empresas = choferServicio.obtenerEmpresas();
         }
     }
     
@@ -56,6 +61,7 @@ public class ChoferControlador implements Serializable{
             }
             choferServicio = new ChoferServicio();
             chofer = choferServicio.obtenerChofer(Integer.parseInt(value.toString()));
+            empresas = choferServicio.obtenerEmpresas();
         }
     }
     
@@ -103,5 +109,13 @@ public class ChoferControlador implements Serializable{
     public void setSesionControlador(SesionControlador sesionControlador) {
         this.sesionControlador = sesionControlador;
     }
-    
+
+    public List<Empresa> getEmpresas() {
+        return empresas;
+    }
+
+    public void setEmpresas(List<Empresa> empresas) {
+        this.empresas = empresas;
+    }
+
 }
