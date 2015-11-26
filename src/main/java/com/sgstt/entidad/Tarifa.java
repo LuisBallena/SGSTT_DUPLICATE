@@ -21,7 +21,7 @@ import javax.persistence.TemporalType;
  * @author Luis Alonso Ballena Garcia
  */
 @Entity
-@Table
+@Table(name = "tarifa", catalog = "sgstt")
 public class Tarifa implements Serializable{
     
     @Id

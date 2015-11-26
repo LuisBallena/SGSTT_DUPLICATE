@@ -14,7 +14,7 @@ import javax.persistence.Table;
  * @author Luis Alonso Ballena Garcia
  */
 @Entity
-@Table
+@Table(name = "aerolinea", catalog = "sgstt")
 public class Aerolinea implements Serializable{
     private static final long serialVersionUID = 176865665254727767L;
     

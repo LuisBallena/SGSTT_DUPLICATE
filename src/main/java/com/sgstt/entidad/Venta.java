@@ -10,7 +10,7 @@ import javax.persistence.*;
  * @author Luis Alonso Ballena Garcia
  */
 @Entity
-@Table(name = "VENTA_DIRECTA")
+@Table(name = "venta_directa")
 public class Venta implements Serializable{
 
     @Id

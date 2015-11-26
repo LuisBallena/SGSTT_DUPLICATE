@@ -20,8 +20,6 @@ import javax.persistence.Transient;
 public class Cliente implements java.io.Serializable {
     private static final long serialVersionUID = 600842115606509566L;
     
-    
-
     @Id
     @GeneratedValue
     @Column

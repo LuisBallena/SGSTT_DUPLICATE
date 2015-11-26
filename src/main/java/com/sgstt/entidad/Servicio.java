@@ -23,7 +23,7 @@ import javax.persistence.Table;
  * @author Luis Alonso Ballena Garcia
  */
 @Entity
-@Table
+@Table(name = "servicio", catalog = "sgstt")
 public class Servicio implements Serializable {
 
     private static final long serialVersionUID = 1718302434051606848L;

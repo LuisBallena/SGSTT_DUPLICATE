@@ -12,7 +12,7 @@ import javax.persistence.Table;
  * @author Luis Alonso Ballena Garcia
  */
 @Entity
-@Table
+@Table(name = "empresa", catalog = "sgstt")
 public class Empresa implements Serializable{
     private static final long serialVersionUID = 133721735866927440L;
     

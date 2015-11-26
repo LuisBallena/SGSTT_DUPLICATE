@@ -20,7 +20,7 @@ import javax.persistence.TemporalType;
  * @author Luis Alonso Ballena Garcia
  */
 @Entity
-@Table
+@Table(name = "vehiculo", catalog = "sgstt")
 public class Vehiculo implements Serializable {
 
     private static final long serialVersionUID = 7505235797844118310L;

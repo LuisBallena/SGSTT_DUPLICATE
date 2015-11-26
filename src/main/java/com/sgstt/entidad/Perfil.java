@@ -19,7 +19,7 @@ import javax.persistence.Table;
  * @author Luis Alonso Ballena Garcia
  */
 @Entity
-@Table
+@Table(name = "perfil", catalog = "sgstt")
 public class Perfil implements Serializable {
     
     private static final long serialVersionUID = 4019293119229068576L;

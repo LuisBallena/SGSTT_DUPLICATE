@@ -15,7 +15,7 @@ import javax.persistence.Table;
  * @author Luis Alonso Ballena Garcia
  */
 @Entity
-@Table
+@Table(name = "permiso", catalog = "sgstt")
 public class Permiso implements Serializable,Comparable<Permiso>{
     private static final long serialVersionUID = 5029216645765585212L;
 

@@ -14,7 +14,7 @@ import javax.persistence.Table;
  * @author Luis Alonso Ballena Garcia
  */
 @Entity
-@Table(name = "TIPO_SERVICIO")
+@Table(name = "tipo_servicio")
 public class TipoServicio implements Serializable{
     private static final long serialVersionUID = 1982143437793814920L;
     

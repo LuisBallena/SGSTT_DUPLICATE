@@ -16,7 +16,7 @@ import javax.persistence.Transient;
  * @author Luis Alonso Ballena Garcia
  */
 @Entity
-@Table
+@Table(name = "trasladista", catalog = "sgstt")
 public class Trasladista implements Serializable{
     private static final long serialVersionUID = -1532232426473533339L;
 

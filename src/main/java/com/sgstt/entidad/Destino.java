@@ -16,7 +16,7 @@ import javax.persistence.Table;
  * @author Luis Alonso Ballena Garcia
  */
 @Entity
-@Table(name = "DESTINOS")
+@Table(name = "destinos")
 public class Destino implements Serializable{
     private static final long serialVersionUID = -3440845929516787332L;
     

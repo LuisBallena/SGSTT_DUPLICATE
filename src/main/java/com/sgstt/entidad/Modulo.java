@@ -15,7 +15,7 @@ import javax.persistence.Transient;
  * @author Luis Alonso Ballena Garcia
  */
 @Entity
-@Table(name = "MODULO")
+@Table(name = "modulo")
 public class Modulo implements Serializable,Comparable<Modulo>{
     
     private static final long serialVersionUID = 8295057005100088900L;

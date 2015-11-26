@@ -14,7 +14,7 @@ import javax.persistence.Table;
  * @author Luis Alonso Ballena Garcia
  */
 @Entity
-@Table
+@Table(name = "marca", catalog = "sgstt")
 public class Marca implements Serializable{
     
     @Id

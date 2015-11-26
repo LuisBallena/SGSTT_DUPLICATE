@@ -19,7 +19,7 @@ import javax.persistence.Transient;
  * @author Luis Alonso Ballena Garcia
  */
 @Entity
-@Table
+@Table(name = "chofer", catalog = "sgstt")
 public class Chofer implements Serializable{
     private static final long serialVersionUID = 8461028162424381534L;
     @Id

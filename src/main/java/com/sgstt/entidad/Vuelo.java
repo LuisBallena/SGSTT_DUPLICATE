@@ -18,7 +18,7 @@ import org.hibernate.annotations.FetchMode;
  * @author Luis Alonso Ballena Garcia
  */
 @Entity
-@Table
+@Table(name = "vuelo", catalog = "sgstt")
 public class Vuelo implements Serializable{
     private static final long serialVersionUID = 3398378437801726136L;
     

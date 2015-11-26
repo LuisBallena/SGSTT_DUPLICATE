@@ -25,7 +25,7 @@ import org.hibernate.annotations.FetchMode;
  * @author Luis Alonso Ballena Garcia
  */
 @Entity
-@Table(name = "SERVICIO_DETALLE")
+@Table(name = "servicio_detalle")
 public class ServicioDetalle implements Serializable {
 
     private static final long serialVersionUID = 165099556331434992L;

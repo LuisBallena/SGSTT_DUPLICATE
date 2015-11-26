@@ -12,7 +12,7 @@ import javax.persistence.Table;
  * @author Luis Alonso Ballena Garcia
  */
 @Entity
-@Table(name = "ESTADO_INCIDENCIA")
+@Table(name = "estado_incidencia")
 public class EstadoIncidencia implements Serializable{
     private static final long serialVersionUID = -4001072323443350624L;
 

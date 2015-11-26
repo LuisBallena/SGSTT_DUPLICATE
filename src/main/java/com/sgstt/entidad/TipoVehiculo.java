@@ -12,7 +12,7 @@ import javax.persistence.Table;
  * @author Luis Alonso Ballena Garcia
  */
 @Entity
-@Table(name = "TIPO_VEHICULO")
+@Table(name = "tipo_vehiculo")
 public class TipoVehiculo implements Serializable{
     
     @Id
