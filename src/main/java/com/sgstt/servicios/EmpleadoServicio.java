@@ -9,17 +9,19 @@ import com.sgstt.dao.impl.PerfilImpl;
 import com.sgstt.dao.impl.SedeImpl;
 import com.sgstt.dao.impl.UsuarioImpl;
 import com.sgstt.entidad.Empleado;
+import com.sgstt.entidad.Empresa;
+import com.sgstt.entidad.Estado;
 import com.sgstt.entidad.Perfil;
 import com.sgstt.entidad.Sede;
 import com.sgstt.entidad.Usuario;
 import com.sgstt.hibernate.HibernateConexion;
 import com.sgstt.util.Utilitario;
+
 import java.io.Serializable;
 import java.util.List;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
  */
 public class EmpleadoServicio implements Serializable{
     private static final long serialVersionUID = -3363802084347894552L;
@@ -94,6 +96,37 @@ public class EmpleadoServicio implements Serializable{
     private boolean existeNick(String nick) {
         Usuario usuario = usuarioDao.getUsuarioPorNick(nick);
         return usuario != null;
+    }
+    
+    
+    public void guardarEmpleado(Empleado empleado){
+        conexion.beginConexion();
+        empleadoDao.agregar(empleado);
+        conexion.closeConexion();
+        Utilitario.enviarMensajeGlobalValido("Se ha registrado correctamente");
+    }
+    
+    public void actualizarEmpleado(Empleado empleado){
+        conexion.beginConexion();
+        empleadoDao.actualizar(empleado);
+        conexion.closeConexion();
+        Utilitario.enviarMensajeGlobalValido("Se ha actualizado correctamente");
+    }
+    
+    public void eliminarEmpleado(Empleado empleado){
+        conexion.beginConexion();
+        empleado.setEstado(Estado.ELIMINADO);
+        empleadoDao.actualizar(empleado);
+        conexion.closeConexion();
+        Utilitario.enviarMensajeGlobalValido("Se ha eliminado correctamente");
+    }
+
+    public Empleado obtenerEmpleado(Integer id){
+    	Empleado aux = null;
+        conexion.beginConexion();
+        aux = empleadoDao.getEmpleadoWithSede(id);
+        conexion.closeConexion();
+        return aux;
     }
 
 }

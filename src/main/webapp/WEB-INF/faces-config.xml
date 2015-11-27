@@ -79,6 +79,15 @@
             <to-view-id>/vistas/empresa/list.xhtml</to-view-id>
             <redirect />
         </navigation-case>
-       
+       <navigation-case>
+            <from-outcome>trasladista</from-outcome>
+            <to-view-id>/vistas/trasladista/list.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>empleado</from-outcome>
+            <to-view-id>/vistas/empleado/list.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
     </navigation-rule>
 </faces-config>

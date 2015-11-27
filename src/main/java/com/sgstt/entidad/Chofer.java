@@ -1,7 +1,10 @@
 package com.sgstt.entidad;
 
 import com.sgstt.util.Utilitario;
+
 import java.io.Serializable;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import javax.persistence.Transient;
 
 /**
@@ -45,6 +49,10 @@ public class Chofer implements Serializable{
 	@Column
     private String categoria;
     
+	@Column
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date fecha;	
+	
     @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false,insertable = false)
     private Estado estado;
@@ -102,7 +110,15 @@ public class Chofer implements Serializable{
     public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
+    
+    public Date getFecha() {
+        return fecha;
+    }
 
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+    
     public Estado getEstado() {
         return estado;
     }

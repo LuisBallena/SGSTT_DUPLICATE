@@ -2,11 +2,13 @@ package com.sgstt.controlador;
 
 import com.sgstt.entidad.Empresa;
 import com.sgstt.entidad.Sede;
+import com.sgstt.entidad.Vehiculo;
 import com.sgstt.hibernate.HibernatePaginador;
 import com.sgstt.paginacion.EmpresaPaginador;
 import com.sgstt.servicios.EmpresaServicio;
 import com.sgstt.servicios.TransporteServicio;
 import com.sgstt.util.Utilitario;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -66,10 +68,16 @@ public class EmpresaControlador implements Serializable {
 
     public void guardarEmpresa() {
         if (esVistaValida()) {
+            empresa.setSede(sesionControlador.getUsuarioSesion().getSede());
         	empresaServicio.guardarEmpresa(empresa);
+        	limpiar();
         }
     }
-
+    
+    private void limpiar(){
+    	empresa = new Empresa();
+    }
+    
     public void actualizarEmpresa() {
         if (esVistaValida()) {
         	empresaServicio.actualizarEmpresa(empresa);

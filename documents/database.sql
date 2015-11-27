@@ -26,6 +26,7 @@ DROP TABLE IF EXISTS `sgstt`.`trasladista` ;
 
 CREATE  TABLE IF NOT EXISTS `sgstt`.`trasladista` (
   `idtrasladista` INT NOT NULL AUTO_INCREMENT ,
+  `idsede` INT NOT NULL ,
   `nombre` VARCHAR(60) NULL DEFAULT NULL ,
   `apellido` VARCHAR(80) NULL DEFAULT NULL ,
   `dni` VARCHAR(8) NULL DEFAULT NULL ,
@@ -34,9 +35,14 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`trasladista` (
   `telefono` VARCHAR(9) NULL ,
   `celular` VARCHAR(11) NULL ,
   `estado` TINYINT(4) NULL DEFAULT '1' ,
-  PRIMARY KEY (`idtrasladista`) )
+  PRIMARY KEY (`idtrasladista`,`idsede`),
+  INDEX `fk_trasladista_sede1` (`idsede` ASC) ,
+  CONSTRAINT `fk_trasladista_sede1`
+    FOREIGN KEY (`idsede` )
+    REFERENCES `sgstt`.`sede` (`idsede` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `sgstt`.`sede`
@@ -63,6 +69,7 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`chofer` (
   `dni` VARCHAR(45) NULL ,
   `celular` VARCHAR(45) NULL ,
   `brevete` VARCHAR(45) NULL ,
+  `fecha` DATETIME NOT NULL ,
   `categoria` VARCHAR(45) NULL ,
   `estado` TINYINT(1) NOT NULL DEFAULT 1 ,
   `idempresa` INT NOT NULL, 
@@ -263,22 +270,6 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`tarifa` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `sgstt`.`cobro`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `sgstt`.`cobro` ;
-
-CREATE  TABLE IF NOT EXISTS `sgstt`.`cobro` (
-  `idcobro` INT NOT NULL ,
-  `descuento` VARCHAR(45) NULL ,
-  `adicional` VARCHAR(45) NULL ,
-  `neto` VARCHAR(45) NULL ,
-  `total` VARCHAR(45) NULL ,
-  PRIMARY KEY (`idcobro`) )
-ENGINE = InnoDB;
-
-
 -- -----------------------------------------------------
 -- Table `sgstt`.`modelo`
 -- -----------------------------------------------------
@@ -390,10 +381,20 @@ DROP TABLE IF EXISTS `sgstt`.`empleado` ;
 
 CREATE  TABLE IF NOT EXISTS `sgstt`.`empleado` (
   `idempleado` INT NOT NULL AUTO_INCREMENT ,
+  `idsede` INT NOT NULL ,
   `nombre` VARCHAR(45) NOT NULL ,
   `apellidos` VARCHAR(45) NOT NULL ,
   `dni` VARCHAR(8) NOT NULL ,
-  PRIMARY KEY (`idempleado`) )
+  `telefono` VARCHAR(10) NOT NULL ,
+  `celular` VARCHAR(10) NOT NULL ,
+  `correo` VARCHAR(40) NOT NULL ,
+  `estado` TINYINT(1) NOT NULL DEFAULT 1 ,
+  PRIMARY KEY (`idempleado`, `idsede`), 
+  CONSTRAINT `fk_empleado_sede1`
+    FOREIGN KEY (`idsede` )
+    REFERENCES `sgstt`.`sede` (`idsede` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -717,32 +718,33 @@ INSERT INTO `sgstt`.`tipo_servicio` (`idtipo_servicio`, `descripcion`, `estado`)
 COMMIT;
 
 -- -----------------------------------------------------
--- Data for table `sgstt`.`trasladista`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `sgstt`;
-INSERT INTO `sgstt`.`trasladista` (`idtrasladista`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (1, 'Margarita', 'Stuard', '00000000', 'Domeyer 128 Dpto 502 ', 'No disponible', '7437434', '992096541', 1);
-INSERT INTO `sgstt`.`trasladista` (`idtrasladista`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (2, 'Victor', 'Aranda', '00000000', 'Av. El laurel rosa 411, Dpto 502 Los sauces', 'No disponible', '5457854', '965874123', 1);
-INSERT INTO `sgstt`.`trasladista` (`idtrasladista`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (3, 'Silvia', 'de Vettor', 'v', 'Ramón Castilla 418 Urb. Aurora', 'No disponible', '7437434', '987654345', 1);
-INSERT INTO `sgstt`.`trasladista` (`idtrasladista`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (4, 'Ursula', 'Collas', '00000000', 'Calle. Alfredo silva 142, Casa 115', 'No disponible', '5457854', '965874123', 1);
-INSERT INTO `sgstt`.`trasladista` (`idtrasladista`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (5, 'Nelida', 'Manrique', '00000000', 'Calle. Manco Capac 421-Dpto 102 ', 'No disponible', '7437434', '987654345', 1);
-INSERT INTO `sgstt`.`trasladista` (`idtrasladista`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (6, 'Franz', 'Alarcon', '00000000', 'Av. Grau 341 – Dpto 602', 'No disponible', '5457854', '965874123', 1);
-INSERT INTO `sgstt`.`trasladista` (`idtrasladista`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (7, 'Nieves', 'Echegaray', '00000000', 'Parque echenique 741 Dpto. 501', 'No disponible', '7437434', '987654345', 1);
-INSERT INTO `sgstt`.`trasladista` (`idtrasladista`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (8, 'Oscar', 'Von Bishopsahussen', '00000000', 'Av. Castilla con Av. Ayacucho G in 17 - Urbanización La Capullana', 'No disponible', '5457854', '965874123', 1);
-INSERT INTO `sgstt`.`trasladista` (`idtrasladista`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (9, 'Ernesto', 'Riedner', '00000000', 'Jr. Fernando castrat #320', 'No disponible', '7437434', '987654345', 1);
-INSERT INTO `sgstt`.`trasladista` (`idtrasladista`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (10, 'Guillermo', 'Torres', '00000000', 'Enrique Barrón Nº 845 – Dpto. 202 – Santa Beatriz / Referencia al frente del parque de las aguas.', 'No disponible', '5457854', '965874123', 1);
-INSERT INTO `sgstt`.`trasladista` (`idtrasladista`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (11, 'Mariana', 'Garcia', '00000000', 'Calle La Península Mz C1 Lt 21 Urb. La Ensenada', 'No disponible', '7437434', '987654345', 1);
-INSERT INTO `sgstt`.`trasladista` (`idtrasladista`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (12, 'Karina', 'Bartens', '00000000', 'Jr. El escorial F-3 urb comopus', 'No disponible', '5457854', '965874123', 1);
-
-COMMIT;
-
--- -----------------------------------------------------
 -- Data for table `sgstt`.`sede`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sgstt`;
 INSERT INTO `sgstt`.`sede` (`idsede`, `descripcion`) VALUES (1, 'LIMA');
 INSERT INTO `sgstt`.`sede` (`idsede`, `descripcion`) VALUES (2, 'CUSCO');
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `sgstt`.`trasladista`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `sgstt`;
+INSERT INTO `sgstt`.`trasladista` (`idtrasladista`,`idsede`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (1, 1, 'Margarita', 'Stuard', '00000000', 'Domeyer 128 Dpto 502 ', 'No disponible', '7437434', '992096541', 1);
+INSERT INTO `sgstt`.`trasladista` (`idtrasladista`,`idsede`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (2, 1, 'Victor', 'Aranda', '00000000', 'Av. El laurel rosa 411, Dpto 502 Los sauces', 'No disponible', '5457854', '965874123', 1);
+INSERT INTO `sgstt`.`trasladista` (`idtrasladista`,`idsede`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (3, 1, 'Silvia', 'de Vettor', '00000000', 'Ramón Castilla 418 Urb. Aurora', 'No disponible', '7437434', '987654345', 1);
+INSERT INTO `sgstt`.`trasladista` (`idtrasladista`,`idsede`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (4, 1, 'Ursula', 'Collas', '00000000', 'Calle. Alfredo silva 142, Casa 115', 'No disponible', '5457854', '965874123', 1);
+INSERT INTO `sgstt`.`trasladista` (`idtrasladista`,`idsede`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (5, 1, 'Nelida', 'Manrique', '00000000', 'Calle. Manco Capac 421-Dpto 102 ', 'No disponible', '7437434', '987654345', 1);
+INSERT INTO `sgstt`.`trasladista` (`idtrasladista`,`idsede`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (6, 1, 'Franz', 'Alarcon', '00000000', 'Av. Grau 341 – Dpto 602', 'No disponible', '5457854', '965874123', 1);
+INSERT INTO `sgstt`.`trasladista` (`idtrasladista`,`idsede`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (7, 1, 'Nieves', 'Echegaray', '00000000', 'Parque echenique 741 Dpto. 501', 'No disponible', '7437434', '987654345', 1);
+INSERT INTO `sgstt`.`trasladista` (`idtrasladista`,`idsede`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (8, 1, 'Oscar', 'Von Bishopsahussen', '00000000', 'Av. Castilla con Av. Ayacucho G in 17 - Urbanización La Capullana', 'No disponible', '5457854', '965874123', 1);
+INSERT INTO `sgstt`.`trasladista` (`idtrasladista`,`idsede`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (9, 1, 'Ernesto', 'Riedner', '00000000', 'Jr. Fernando castrat #320', 'No disponible', '7437434', '987654345', 1);
+INSERT INTO `sgstt`.`trasladista` (`idtrasladista`,`idsede`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (10, 1, 'Guillermo', 'Torres', '00000000', 'Enrique Barrón Nº 845 – Dpto. 202 – Santa Beatriz / Referencia al frente del parque de las aguas.', 'No disponible', '5457854', '965874123', 1);
+INSERT INTO `sgstt`.`trasladista` (`idtrasladista`,`idsede`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (11, 1, 'Mariana', 'Garcia', '00000000', 'Calle La Península Mz C1 Lt 21 Urb. La Ensenada', 'No disponible', '7437434', '987654345', 1);
+INSERT INTO `sgstt`.`trasladista` (`idtrasladista`,`idsede`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (12, 1, 'Karina', 'Bartens', '00000000', 'Jr. El escorial F-3 urb comopus', 'No disponible', '5457854', '965874123', 1);
+INSERT INTO `sgstt`.`trasladista` (`idtrasladista`,`idsede`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (13, 2, 'Karina', 'Bartens', '00000000', 'Jr. El escorial F-3 urb comopus', 'No disponible', '5457854', '965874123', 1);
 
 COMMIT;
 
@@ -804,16 +806,16 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sgstt`;
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`,`idempresa`) VALUES (1, 2, 'JAIME', 'AGUILAR EGOAVIL', '23885693', 'A1', 1,1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`,`idempresa`) VALUES (2, 2, 'CESAR AMADO', 'ARELLANOS MUÑOZ', '25662462', 'A2', 1,1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`,`idempresa`) VALUES (3, 1, 'MARIO HERNAN', 'CUADROS HUAPAYA', '25577045', 'A3', 1,1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`,`idempresa`) VALUES (4, 1, 'PEPE', 'DAMIAN JURO', '10550499', 'A1', 1,1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`,`idempresa`) VALUES (5, 1, 'KATTY DORIS', 'ESCOBAR PUMACALLAO', '07884541', 'A2', 1,1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`,`idempresa`) VALUES (6, 1, 'CARLOS ALBERTO', 'HERRERA NAVARRO', '10630551', 'A3', 1,1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`,`idempresa`) VALUES (7, 1, 'JOSE EDUARDO', 'HUAPALLA BALCAZAR', '10144415', 'A1', 1,1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`,`idempresa`) VALUES (8, 1, 'RODOLFO CESAR', 'LAZO CALDERON', '25717877', 'A2', 1,1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`,`idempresa`) VALUES (9, 1, 'JOSE LUIS', 'NUÑEZ CUENCA ROJAS', '09461980', 'A3', 1,1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `estado`,`idempresa`) VALUES (10, 1, 'ADRIAN', 'TICONA APAZA', '10520991', 'A1', 1,1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`,`fecha`, `estado`,`idempresa`) VALUES (1, 2, 'JAIME', 'AGUILAR EGOAVIL', '23885693', 'A1',"2015-11-07 00:00:00", 1,1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`,`fecha`, `estado`,`idempresa`) VALUES (2, 2, 'CESAR AMADO', 'ARELLANOS MUÑOZ', '25662462', 'A2',"2015-11-07 00:00:00", 1,1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`,`fecha`, `estado`,`idempresa`) VALUES (3, 1, 'MARIO HERNAN', 'CUADROS HUAPAYA', '25577045', 'A3',"2015-11-07 00:00:00", 1,1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`,`fecha`, `estado`,`idempresa`) VALUES (4, 1, 'PEPE', 'DAMIAN JURO', '10550499', 'A1',"2015-11-07 00:00:00", 1,1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`,`fecha`, `estado`,`idempresa`) VALUES (5, 1, 'KATTY DORIS', 'ESCOBAR PUMACALLAO', '07884541', 'A2',"2015-11-07 00:00:00", 1,1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`,`fecha`, `estado`,`idempresa`) VALUES (6, 1, 'CARLOS ALBERTO', 'HERRERA NAVARRO', '10630551', 'A3',"2015-11-07 00:00:00", 1,1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`,`fecha`, `estado`,`idempresa`) VALUES (7, 1, 'JOSE EDUARDO', 'HUAPALLA BALCAZAR', '10144415', 'A1',"2015-11-07 00:00:00", 1,1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`,`fecha`, `estado`,`idempresa`) VALUES (8, 1, 'RODOLFO CESAR', 'LAZO CALDERON', '25717877', 'A2',"2015-11-07 00:00:00", 1,1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`,`fecha`, `estado`,`idempresa`) VALUES (9, 1, 'JOSE LUIS', 'NUÑEZ CUENCA ROJAS', '09461980', 'A3',"2015-11-07 00:00:00", 1,1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`,`fecha`, `estado`,`idempresa`) VALUES (10, 1, 'ADRIAN', 'TICONA APAZA', '10520991', 'A1',"2015-11-07 00:00:00", 1,1);
 COMMIT;
 
 -- -----------------------------------------------------
@@ -973,7 +975,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sgstt`;
-INSERT INTO `sgstt`.`empleado` (`idempleado`, `nombre`, `apellidos`, `dni`) VALUES (1, 'Sistema', 'Administrador', 'admin');
+INSERT INTO `sgstt`.`empleado` (`idempleado`,`idsede`, `nombre`, `apellidos`, `dni`, `telefono`, `celular`, `correo`, `estado`) VALUES (1, 1, 'Sistema', 'Administrador', '11111111', '11111111', '11111111', '11111111', 1);
 
 COMMIT;
 
@@ -983,7 +985,8 @@ COMMIT;
 START TRANSACTION;
 USE `sgstt`;
 INSERT INTO `sgstt`.`perfil` (`idperfil`, `nombre`, `estado`) VALUES (1, 'Administrador del Sistema', 1);
-INSERT INTO `sgstt`.`perfil` (`idperfil`, `nombre`, `estado`) VALUES (2, 'Encargador de Servicios', 1);
+INSERT INTO `sgstt`.`perfil` (`idperfil`, `nombre`, `estado`) VALUES (2, 'Gerente Administrativo', 1);
+INSERT INTO `sgstt`.`perfil` (`idperfil`, `nombre`, `estado`) VALUES (3, 'Encargador de Servicios', 1);
 
 COMMIT;
 
@@ -1007,16 +1010,17 @@ INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `a
 INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (3, 'Administrar Cuenta', 'cuenta', 1, 1, 1, 1, 1);
 INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (4, 'Administrar Destino', 'destino', 1, 1, 1, 1, 1);
 INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (5, 'Administrar Empresas', 'empresa', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (6, 'Administrar File', 'file', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (7, 'Administrar Incidencia', 'incidencia', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (8, 'Administrar Modulos', 'modulo', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (9, 'Administrar Ordenes', 'ordenServicio', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (10, 'Administrar Perfil', 'perfil', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (11, 'Administrar Servicios', 'servicio', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (12, 'Administrar Tarifario', 'tarifa', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (13, 'Administrar Trasladista', 'trasladista', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (14, 'Administrar Tipo Servicio', 'tipoServicio', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (15, 'Administrar Vehiculo', 'vehiculo', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (6, 'Administrar Empleado', 'empleado', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (7, 'Administrar File', 'file', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (8, 'Administrar Incidencia', 'incidencia', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (9, 'Administrar Modulos', 'modulo', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (10, 'Administrar Ordenes', 'ordenServicio', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (11, 'Administrar Perfil', 'perfil', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (12, 'Administrar Servicios', 'servicio', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (13, 'Administrar Tarifario', 'tarifa', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (14, 'Administrar Trasladista', 'trasladista', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (15, 'Administrar Tipo Servicio', 'tipoServicio', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (16, 'Administrar Vehiculo', 'vehiculo', 1, 1, 1, 1, 1);
 
 COMMIT;
 
@@ -1040,6 +1044,42 @@ INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `c
 INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (13, 1, 13, 1, 1, 1, 1);
 INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (14, 1, 14, 1, 1, 1, 1);
 INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (15, 1, 15, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (16, 1, 16, 1, 1, 1, 1);
+
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (17, 2, 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (18, 2, 2, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (19, 2, 3, 0, 0, 0, 0);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (20, 2, 4, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (21, 2, 5, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (22, 2, 6, 0, 0, 0, 0);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (23, 2, 7, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (24, 2, 8, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (25, 2, 9, 0, 0, 0, 0);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (26, 2, 10, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (27, 2, 11, 0, 0, 0, 0);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (28, 2, 12, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (29, 2, 13, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (30, 2, 14, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (31, 2, 15, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (32, 2, 16, 1, 1, 1, 1);
+
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (33, 3, 1, 1, 1, 1, 0);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (34, 3, 2, 1, 1, 0, 0);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (35, 3, 3, 0, 0, 0, 0);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (36, 3, 4, 1, 1, 1, 0);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (37, 3, 5, 1, 1, 1, 0);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (38, 3, 6, 0, 0, 0, 0);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (39, 3, 7, 1, 1, 1, 0);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (40, 3, 8, 1, 1, 0, 0);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (41, 3, 9, 0, 0, 0, 0);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (42, 3, 10, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (43, 3, 11, 0, 0, 0, 0);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (44, 3, 12, 1, 1, 1, 0);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (45, 3, 13, 1, 1, 0, 0);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (46, 3, 14, 1, 1, 0, 0);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (47, 3, 15, 1, 1, 0, 0);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (48, 3, 16, 1, 1, 0, 0);
+
 
 COMMIT;
 

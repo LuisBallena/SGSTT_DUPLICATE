@@ -8,11 +8,14 @@ package com.sgstt.dao.impl;
 
 import com.sgstt.dao.EmpleadoDao;
 import com.sgstt.entidad.Empleado;
+import com.sgstt.entidad.Empresa;
 import com.sgstt.hibernate.HibernateConexion;
 import com.sgstt.hibernate.HibernateImpl;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -40,5 +43,20 @@ public class EmpleadoImpl extends HibernateImpl<Empleado,Integer> implements Emp
         }
         return operadores;
     }
+    
+    @Override
+	public Empleado getEmpleadoWithSede(Integer idempleado) {
+    	Empleado auxempleado = null;
+        Session session = null;
+        try{
+            session = conexion.getSession();
+            Query query = session.createQuery("from Empleado as empleado join fetch empleado.sede where empleado.id = :idempleado");
+            query.setInteger("idempleado", idempleado);
+            auxempleado = (Empleado) query.uniqueResult();
+        }catch(HibernateException e){
+            e.printStackTrace();
+        }
+        return auxempleado;
+	}
     
 }

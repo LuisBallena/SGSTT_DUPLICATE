@@ -72,7 +72,7 @@
                                         <p:commandButton rendered="#{sesionControlador.permisoModulo.actualizar eq true}" style="font-size: 12px;"  icon="icon-update" action="#{empresaControlador.irActualizar(list.id)}"    >
                                         </p:commandButton>
                                         <p:commandButton rendered="#{sesionControlador.permisoModulo.eliminar eq true}" style="font-size: 12px;" icon="icon-delete"  oncomplete="PF('deleteempresa').show();"   >
-                                            <f:setPropertyActionListener value="#{list}" target="#{empresaControlador.destino}" />
+                                            <f:setPropertyActionListener value="#{list}" target="#{empresaControlador.empresa}" />
                                         </p:commandButton>
                                     </p:column>
                                 </p:dataTable> 
@@ -95,7 +95,7 @@
                         </p:commandButton>
                     </div>
                     <div class="col-lg-6">
-                        <p:commandButton    value="No" onclick="PF('deletedempresa').hide();"   >
+                        <p:commandButton    value="No" onclick="PF('deleteempresa').hide();"   >
 
                         </p:commandButton>
                     </div>

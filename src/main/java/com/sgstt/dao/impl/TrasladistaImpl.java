@@ -4,7 +4,12 @@ import com.sgstt.dao.TrasladistaDao;
 import com.sgstt.entidad.Trasladista;
 import com.sgstt.hibernate.HibernateConexion;
 import com.sgstt.hibernate.HibernateImpl;
+
 import java.io.Serializable;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
 
 /**
  *
@@ -16,5 +21,18 @@ public class TrasladistaImpl extends HibernateImpl<Trasladista,Integer> implemen
     public TrasladistaImpl(HibernateConexion conexion) {
         super(conexion);
     }
-
+    @Override
+	public Trasladista getTrasladistaWithSede(Integer idtrasladista) {
+    	Trasladista auxtrasladista = null;
+        Session session = null;
+        try{
+            session = conexion.getSession();
+            Query query = session.createQuery("from Trasladista as trasladista join fetch trasladista.sede where trasladista.id = :idtrasladista");
+            query.setInteger("idtrasladista", idtrasladista);
+            auxtrasladista = (Trasladista) query.uniqueResult();
+        }catch(HibernateException e){
+            e.printStackTrace();
+        }
+        return auxtrasladista;
+	}
 }

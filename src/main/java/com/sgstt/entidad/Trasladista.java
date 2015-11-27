@@ -2,12 +2,16 @@ package com.sgstt.entidad;
 
 import java.io.Serializable;
 import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -49,6 +53,10 @@ public class Trasladista implements Serializable{
     @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false,insertable = false)
     Estado estado;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idSede")
+    private Sede sede;
     
     @Transient
     private String datosCompletos;
@@ -154,6 +162,12 @@ public class Trasladista implements Serializable{
         return String.format("%s %s",getNombre(),getApellido());
     }
 
-    
+    public Sede getSede() {
+        return sede;
+    }
+
+    public void setSede(Sede sede) {
+        this.sede = sede;
+    }
     
 }
