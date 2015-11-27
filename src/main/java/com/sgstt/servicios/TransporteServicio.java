@@ -30,7 +30,8 @@ public class TransporteServicio implements Serializable {
     private final TipoServicioDao tipoServicioDao;
     private final TarifaDao tarifaDao;
     private final VentaDao ventaDao;
-
+    private final EmpresaDao empresaDao;
+    
     public TransporteServicio() {
         conexion = new HibernateConexion();
         choferDao = new ChoferImpl(conexion);
@@ -45,6 +46,7 @@ public class TransporteServicio implements Serializable {
         tipoServicioDao = new TipoServicioImpl(conexion);
         tarifaDao = new TarifaImpl(conexion);
         ventaDao = new VentaImpl(conexion);
+        empresaDao = new EmpresaImpl(conexion);
     }
 
     public List<Chofer> obtenerChoferesPorSede(Integer idSede) {
@@ -279,6 +281,43 @@ public class TransporteServicio implements Serializable {
         List<TipoServicio> auxiliar = null;
         conexion.beginConexion();
         auxiliar = tipoServicioDao.obtenerTodosActivos();
+        conexion.closeConexion();
+        return auxiliar;
+    }
+    
+    public void guardarEmpresa(Empresa empresa) {
+        conexion.beginConexion();
+        empresaDao.agregar(empresa);
+        conexion.closeConexion();
+        Utilitario.enviarMensajeGlobalValido("Se ha registrado correctamente");
+    }
+
+    public void actualizarEmpresa(Empresa empresa) {
+        conexion.beginConexion();
+        empresaDao.actualizar(empresa);
+        conexion.closeConexion();
+        Utilitario.enviarMensajeGlobalValido("Se ha actualizado correctamente");
+    }
+    
+    public void eliminarEmpresa(Empresa empresa) {
+        conexion.beginConexion();
+        empresa.setEstado(Estado.ELIMINADO);
+        empresaDao.actualizar(empresa);
+        conexion.closeConexion();
+        Utilitario.enviarMensajeGlobalValido("Se ha eliminado correctamente");
+    }
+    
+    public Empresa obtenerEmpresa(Integer id) {
+    	Empresa empresa = null;
+        conexion.beginConexion();
+        empresa = empresaDao.obtenerEntidad(id);
+        conexion.closeConexion();
+        return empresa;
+    }
+    public List<Empresa> obtenerEmpresa() {
+        List<Empresa> auxiliar = null;
+        conexion.beginConexion();
+        auxiliar = empresaDao.obtenerTodosActivos();
         conexion.closeConexion();
         return auxiliar;
     }

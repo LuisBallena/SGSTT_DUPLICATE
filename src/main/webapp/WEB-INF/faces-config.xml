@@ -74,5 +74,11 @@
             <to-view-id>/vistas/tipoServicio/list.xhtml</to-view-id>
             <redirect />
         </navigation-case>
+        <navigation-case>
+            <from-outcome>empresa</from-outcome>
+            <to-view-id>/vistas/empresa/list.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+       
     </navigation-rule>
 </faces-config>

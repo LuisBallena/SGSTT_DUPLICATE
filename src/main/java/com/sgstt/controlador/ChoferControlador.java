@@ -31,7 +31,7 @@ public class ChoferControlador implements Serializable{
     
     
     /**
-     * Creates a new instance of ChoferControlador
+     * Creates a ew instance of ChoferControlador
      */
     public ChoferControlador() {
     }

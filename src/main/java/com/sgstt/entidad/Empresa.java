@@ -3,8 +3,13 @@ package com.sgstt.entidad;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -30,12 +35,23 @@ public class Empresa implements Serializable{
     @Column(name = "TELEFONO")
     String telefono;
     
+    @Column(name = "CENTROCOSTO")
+    String centrocosto;
+    
     @Column(name = "CELULAR")
     String celular;
     
     @Column(name = "CORREO")
     String correo;
-
+    
+    @Enumerated(EnumType.ORDINAL)
+    @Column(nullable = false,insertable = false)
+    private Estado estado;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idSede")
+    private Sede sede;
+    
     public Empresa() {
     }
 
@@ -83,8 +99,31 @@ public class Empresa implements Serializable{
         return correo;
     }
 
+    public void setCentrocosto(String centrocosto) {
+        this.centrocosto = centrocosto;
+    }
+    
+    public String getCentrocosto() {
+        return centrocosto;
+    }
+
     public void setCorreo(String correo) {
         this.correo = correo;
     }
     
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
+    
+    public Sede getSede() {
+        return sede;
+    }
+
+    public void setSede(Sede sede) {
+        this.sede = sede;
+    }
 }

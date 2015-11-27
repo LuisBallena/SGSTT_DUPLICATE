@@ -10,7 +10,7 @@
     <ui:define name="content">
         <div class="row">
             <div class="col-lg-12">
-                <h3 class="page-header">Administrar Choferes</h3>
+                <h3 class="page-header">Administrar Empresas Externas</h3>
             </div>
             <div class="row">
                 <div class="col-lg-12">
@@ -19,36 +19,42 @@
                             <div class="row">
                                 <div class="col-sm-2">
                                     <h:panelGroup rendered="#{sesionControlador.permisoModulo.crear eq true}">
-                                        <h:button value="Nuevo Chofer" styleClass="btn btn-primary" outcome="create.xhtml" />
+                                        <h:button value="Nuevo Empresa" styleClass="btn btn-primary" outcome="create.xhtml" />
                                     </h:panelGroup>
                                 </div>
                             </div>      
                             <br/>
                             <h:form id="formperfil">
-                                <f:event type="preRenderView" listener="#{choferControlador.initLista}" />
+                                <f:event type="preRenderView" listener="#{empresaControlador.initLista}" />
                                 <h:messages id="msg" globalOnly="true" styleClass="list-group" infoClass="list-group-item list-group-item-success"
                                                     errorClass="list-group-item list-group-item-danger" />
-                                <p:dataTable    value="#{choferControlador.choferPaginador}"    var="list" emptyMessage="No existen registros de choferes" 
+                                <p:dataTable    value="#{empresaControlador.empresaPaginador}"    var="list" emptyMessage="No existen registros de empresas externas" 
                                                 paginator="true" rows="10" lazy="true" rowIndexVar="rowIndex"
                                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
 
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
-                                            Nombre
+                                            Razon Social
                                         </f:facet>
-                                        <h:outputText value="#{list.nombre}" />
+                                        <h:outputText value="#{list.razonSocial}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
-                                            Apellido
+                                            RUC
                                         </f:facet>
-                                        <h:outputText value="#{list.apellido}" />
+                                        <h:outputText value="#{list.ruc}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
-                                            DNI
+                                            Centro de Costo
                                         </f:facet>
-                                        <h:outputText value="#{list.dni}" />
+                                        <h:outputText value="#{list.centrocosto}" />
+                                    </p:column>
+                                    <p:column    style="text-align: center;font-size: 15px;">
+                                        <f:facet name="header">
+                                            Telefono
+                                        </f:facet>
+                                        <h:outputText value="#{list.telefono}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
@@ -58,27 +64,15 @@
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
-                                            Brevete
+                                            Correo
                                         </f:facet>
-                                        <h:outputText value="#{list.brevete}" />
-                                    </p:column>
-                                    <p:column    style="text-align: center;font-size: 15px;">
-                                        <f:facet name="header">
-                                            Categoría
-                                        </f:facet>
-                                        <h:outputText value="#{list.categoria}" />
-                                    </p:column>
-                                    <p:column    style="text-align: center;font-size: 15px;">
-                                        <f:facet name="header">
-                                            Empresa
-                                        </f:facet>
-                                        <h:outputText value="#{list.empresa.razonSocial}" />
+                                        <h:outputText value="#{list.correo}" />
                                     </p:column>
                                     <p:column  style="text-align: center;width: 12%;">
-                                        <p:commandButton rendered="#{sesionControlador.permisoModulo.actualizar eq true}" style="font-size: 12px;"  icon="icon-update" action="#{choferControlador.irActualizar(list.id)}"    >
+                                        <p:commandButton rendered="#{sesionControlador.permisoModulo.actualizar eq true}" style="font-size: 12px;"  icon="icon-update" action="#{empresaControlador.irActualizar(list.id)}"    >
                                         </p:commandButton>
-                                        <p:commandButton rendered="#{sesionControlador.permisoModulo.eliminar eq true}" style="font-size: 12px;" icon="icon-delete"  oncomplete="PF('deletefile').show();"   >
-                                            <f:setPropertyActionListener value="#{list}" target="#{choferControlador.chofer}" />
+                                        <p:commandButton rendered="#{sesionControlador.permisoModulo.eliminar eq true}" style="font-size: 12px;" icon="icon-delete"  oncomplete="PF('deleteempresa').show();"   >
+                                            <f:setPropertyActionListener value="#{list}" target="#{empresaControlador.destino}" />
                                         </p:commandButton>
                                     </p:column>
                                 </p:dataTable> 
@@ -89,18 +83,20 @@
             </div>
             <!-- /.col-lg-12 -->
         </div>    
-         <p:dialog modal="true" position="center top"  widgetVar="deletefile" resizable="false" showEffect="fade" >
+        <p:dialog modal="true" position="center top"  widgetVar="deleteempresa" resizable="false" showEffect="fade" >
             <h:form >
                 <div   id="row" style="font-weight: bold;font-size: 14px;">
-                    ¿Desea Eliminar al Chofer ?
+                    ¿Desea Eliminar la Empresa ?
                 </div>
                 <div   id="row">
                     <div class="col-lg-6">
-                        <p:commandButton  actionListener="#{choferControlador.eliminarChofer}" update=":formperfil" value="Si" oncomplete="PF('deletefile').hide();"   >
+                        <p:commandButton  actionListener="#{empresaControlador.eliminarEmpresa}" update=":formperfil" value="Si" oncomplete="PF('deleteempresa').hide();"   >
+
                         </p:commandButton>
                     </div>
                     <div class="col-lg-6">
-                        <p:commandButton    value="No" onclick="PF('deletefile').hide();"   >
+                        <p:commandButton    value="No" onclick="PF('deletedempresa').hide();"   >
+
                         </p:commandButton>
                     </div>
                 </div>

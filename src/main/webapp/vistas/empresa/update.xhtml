@@ -11,75 +11,74 @@
     <ui:define name="content">
         <div class="row">
             <div class="col-lg-12">
-                <h3 class="page-header">Administrar Chofer</h3>
+                <h3 class="page-header">Actualizar Empresa Externa</h3>
             </div>
             <div class="row">
                 <div class="col-lg-12 opcion-listado" >
-                    <h:link style="font-size: 16px;font-weight: bold;" value="Lista de Choferes" outcome="list.xhtml"></h:link>
+                    <h:link style="font-size: 16px;font-weight: bold;" value="Lista de Empresa" outcome="list.xhtml"></h:link>
                 </div>
                 <div class="col-lg-12">
                     <div class="panel panel-success">
-                        <div class="panel-heading"  >Actualizar Chofer</div>
+                        <div class="panel-heading"  >Actualizar Empresa Externa</div>
                         <div class="panel-body">
-                            <div class="row" id="modificarComercio">
+                            <div class="row" id="modificarEmpresa">
                                 <div class="col-lg-12">
-                                    <h:form id="frmRegistrarCliente" styleClass="form-horizontal" >
-                                        <f:event type="preRenderView" listener="#{choferControlador.initUpdate}" />
+                                    <h:form id="frmRegistrarEmpresa" styleClass="form-horizontal" >
+                                        <f:event type="preRenderView" listener="#{empresaControlador.initUpdate}" />
                                         <h:messages id="msg" globalOnly="true" styleClass="list-group" infoClass="list-group-item list-group-item-success"
                                                     errorClass="list-group-item list-group-item-danger" />
                                         <div class="form-group has-feedback">
-                                            <label for="nombre" class="col-sm-3 control-label" >Nombre :</label>
+                                            <label for="nombre" class="col-sm-3 control-label" >Razon Social :</label>
                                             <div    class="col-sm-6" >
-                                                <p:inputText styleClass="form-control"  value="#{choferControlador.chofer.nombre}"     >
-                                                </p:inputText>
-                                            </div>
-                                        </div>
-                                       <div class="form-group has-feedback">
-                                            <label for="nombre" class="col-sm-3 control-label" >Apellido :</label>
-                                            <div    class="col-sm-6" >
-                                                <p:inputText styleClass="form-control"  value="#{choferControlador.chofer.apellido}"     >
+                                                <p:inputText styleClass="form-control"  value="#{empresaControlador.empresa.razonSocial}"     >
                                                 </p:inputText>
                                             </div>
                                         </div>
                                         <div class="form-group has-feedback">
-                                            <label for="nombre" class="col-sm-3 control-label" >DNI :</label>
+                                            <label for="nombre" class="col-sm-3 control-label" >RUC :</label>
                                             <div    class="col-sm-6" >
-                                                <p:inputMask styleClass="form-control" mask="9?9999999" placeHolder=""  value="#{choferControlador.chofer.dni}"     >
-                                                </p:inputMask>
+                                                <p:inputText styleClass="form-control"  value="#{empresaControlador.empresa.ruc}"     >
+                                                </p:inputText>
                                             </div>
                                         </div>
                                         <div class="form-group has-feedback">
+                                            <label for="nombre" class="col-sm-3 control-label" >Centro de Costo :</label>
+                                            <div    class="col-sm-6" >
+                                                <p:inputText styleClass="form-control"  value="#{empresaControlador.empresa.centrocosto}"     >
+                                                </p:inputText>
+                                            </div>
+                                        </div>
+                                         <div class="form-group has-feedback">
+                                            <label for="nombre" class="col-sm-3 control-label" >Telefono :</label>
+                                            <div    class="col-sm-6" >
+                                                <p:inputText styleClass="form-control"  value="#{empresaControlador.empresa.telefono}"     >
+                                                </p:inputText>
+                                            </div>
+                                        </div>
+                                         <div class="form-group has-feedback">
                                             <label for="nombre" class="col-sm-3 control-label" >Celular :</label>
                                             <div    class="col-sm-6" >
-                                                <p:inputText styleClass="form-control"  value="#{choferControlador.chofer.celular}"     >
+                                                <p:inputText styleClass="form-control"  value="#{empresaControlador.empresa.celular}"     >
                                                 </p:inputText>
                                             </div>
                                         </div>
-                                        <div class="form-group has-feedback">
-                                            <label for="nombre" class="col-sm-3 control-label" >Brevete :</label>
+                                         <div class="form-group has-feedback">
+                                            <label for="nombre" class="col-sm-3 control-label" >Correo :</label>
                                             <div    class="col-sm-6" >
-                                                <p:inputText styleClass="form-control"  value="#{choferControlador.chofer.brevete}"     >
+                                                <p:inputText styleClass="form-control"  value="#{empresaControlador.empresa.correo}"     >
                                                 </p:inputText>
                                             </div>
                                         </div>
-                                        <div class="form-group has-feedback">
-                                            <label for="nombre" class="col-sm-3 control-label" >Categoría :</label>
-                                            <div    class="col-sm-6" >
-                                                <p:inputText styleClass="form-control"  value="#{choferControlador.chofer.categoria}"     >
-                                                </p:inputText>
-                                            </div>
-                                        </div>
-                                        <div class="form-group has-feedback">
+                                          <div class="form-group has-feedback">
                                             <label for="nombre" class="col-sm-3 control-label" >Empresa :</label>
                                             <div    class="col-sm-6" >
-                                                <h:selectOneMenu styleClass="form-control" value="#{choferControlador.chofer.empresa.id}" >
-                                                    <f:selectItems value="#{choferControlador.empresas}" var="listEmpresa"  itemValue="#{listEmpresa.id}" itemLabel="#{listEmpresa.razonSocial}" />
+                                                <h:selectOneMenu styleClass="form-control" value="#{empresaControlador.empresa.sede.id}" >
+                                                    <f:selectItems value="#{empresaControlador.sedes}" var="listSede"  itemValue="#{listSede.id}" itemLabel="#{listSede.descripcion}" />
                                                 </h:selectOneMenu>
                                             </div>
-                                            
                                         </div>
                                         <div class="col-sm-3 control-label">
-                                            <p:commandButton value="Actualizar" actionListener="#{choferControlador.actualizarChofer}" update="@form" styleClass="btn btn-primary"/>
+                                            <p:commandButton value="Guardar" actionListener="#{empresaControlador.actualizarEmpresa}" update="@form" styleClass="btn btn-primary"/>
                                         </div>
                                     </h:form>  
                                 </div>

@@ -30,9 +30,8 @@
                                 <p:dataTable  value="#{vehiculoControlador.vehiculoPaginador}"    var="list" emptyMessage="No existen registros de vehiculos" 
                                               paginator="true" rows="10" lazy="true" rowIndexVar="rowIndex"
                                               paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
-
                                     
-                                    <p:column  headerText="Descripción" style="text-align: center;">
+                                    <p:column  headerText="Centro de Costo" style="text-align: center;">
                                         <h:outputText value="#{list.descripcion}" />
                                     </p:column>
                                     <p:column  headerText="Placa" style="text-align: center;">

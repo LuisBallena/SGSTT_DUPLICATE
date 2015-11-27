@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14325983592720" configfile="/SGSTT/src/main/webapp/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="1714" id="pf14325998566431" outlinks="pf14325998566432 pf14325998566433 pf14325998566434 pf14325998566435 pf14325998566436 pf14325998566437 pf14325998566438 pf14325998566439 pf143260240419318" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="2674" id="pf14325998566431" outlinks="pf14325998566432 pf14325998566433 pf14325998566434 pf14325998566435 pf14325998566436 pf14325998566437 pf14325998566438 pf14325998566439 pf143260240419318 pf14485882439270 pf14485882439271 pf14485882439272 pf14485882439273 pf14485882439274 pf14485882439276 pf144858835312614" path="*"/>
   <nodes xsi:type="pageflow:PFPage" name="index.xhtml" x="338" y="178" id="pf143259985664410" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf14325998566432" path="/index.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="vistas/perfil/list.xhtml" x="338" y="562" id="pf143259985664411" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf14325998566433" path="/vistas/perfil/list.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="vistas/modulo/list.xhtml" x="338" y="946" id="pf143259985664412" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf14325998566434" path="/vistas/modulo/list.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="vistas/cuenta/list.xhtml" x="338" y="1330" id="pf143259985664413" referenceLink="//@navigationRule.0/@navigationCase.3/@toViewId|" inlinks="pf14325998566435" path="/vistas/cuenta/list.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="vistas/file/list.xhtml" x="338" y="1714" id="pf143259985664414" referenceLink="//@navigationRule.0/@navigationCase.4/@toViewId|" inlinks="pf14325998566436" path="/vistas/file/list.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="vistas/servicio/list.xhtml" x="338" y="2098" id="pf143259985664415" referenceLink="//@navigationRule.0/@navigationCase.6/@toViewId|" inlinks="pf14325998566437" path="/vistas/servicio/list.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="vistas/tarifa/list.xhtml" x="338" y="2482" id="pf143259985664416" referenceLink="//@navigationRule.0/@navigationCase.7/@toViewId|" inlinks="pf14325998566438" path="/vistas/tarifa/list.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="vistas/vehiculo/list.xhtml" x="338" y="2866" id="pf143259985664417" referenceLink="//@navigationRule.0/@navigationCase.8/@toViewId|" inlinks="pf14325998566439" path="/vistas/vehiculo/list.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="vistas/incidencia/list.xhtml" x="96" y="2866" id="pf143260240419319" referenceLink="//@navigationRule.0/@navigationCase.5/@toViewId|" inlinks="pf143260240419318" path="/vistas/incidencia/list.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="vistas/tarifa/list.xhtml" x="338" y="2482" id="pf143259985664416" referenceLink="//@navigationRule.0/@navigationCase.8/@toViewId|" inlinks="pf14325998566438" path="/vistas/tarifa/list.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="vistas/vehiculo/list.xhtml" x="338" y="2866" id="pf143259985664417" referenceLink="//@navigationRule.0/@navigationCase.9/@toViewId|" inlinks="pf14325998566439" path="/vistas/vehiculo/list.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="vistas/incidencia/list.xhtml" x="338" y="3250" id="pf143260240419319" referenceLink="//@navigationRule.0/@navigationCase.5/@toViewId|" inlinks="pf143260240419318" path="/vistas/incidencia/list.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="vistas/ordenServicio/list.xhtml" x="338" y="3634" id="pf14485882439277" referenceLink="//@navigationRule.0/@navigationCase.7/@toViewId|" inlinks="pf14485882439270" path="/vistas/ordenServicio/list.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="vistas/chofer/list.xhtml" x="338" y="4018" id="pf14485882439278" referenceLink="//@navigationRule.0/@navigationCase.10/@toViewId|" inlinks="pf14485882439271" path="/vistas/chofer/list.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="vistas/cliente/list.xhtml" x="338" y="4402" id="pf14485882439279" referenceLink="//@navigationRule.0/@navigationCase.11/@toViewId|" inlinks="pf14485882439272" path="/vistas/cliente/list.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="vistas/destino/list.xhtml" x="338" y="4786" id="pf144858824392710" referenceLink="//@navigationRule.0/@navigationCase.12/@toViewId|" inlinks="pf14485882439273" path="/vistas/destino/list.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="vistas/tipoServicio/list.xhtml" x="338" y="5170" id="pf144858824392711" referenceLink="//@navigationRule.0/@navigationCase.13/@toViewId|" inlinks="pf14485882439274" path="/vistas/tipoServicio/list.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="vistas/trasladista/list.xhtml" x="76" y="24" id="pf144858824392713" referenceLink="//@navigationRule.0/@navigationCase.15/@toViewId|" inlinks="pf14485882439276" path="/vistas/trasladista/list.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="vistas/empresas/list.xhtml" x="262" y="24" id="pf144858835312615" referenceLink="//@navigationRule.0/@navigationCase.14/@toViewId|" inlinks="pf144858835312614" path="/vistas/empresas/list.xhtml"/>
   <links id="pf14325998566432" target="pf143259985664410" source="pf14325998566431" outcome="salir" redirect="true"/>
   <links id="pf14325998566433" target="pf143259985664411" source="pf14325998566431" outcome="perfil" redirect="true"/>
   <links id="pf14325998566434" target="pf143259985664412" source="pf14325998566431" outcome="modulo" redirect="true"/>
@@ -19,4 +26,11 @@
   <links id="pf14325998566438" target="pf143259985664416" source="pf14325998566431" outcome="tarifa" redirect="true"/>
   <links id="pf14325998566439" target="pf143259985664417" source="pf14325998566431" outcome="vehiculo" redirect="true"/>
   <links id="pf143260240419318" target="pf143260240419319" source="pf14325998566431" outcome="incidencia" redirect="true"/>
+  <links id="pf14485882439270" target="pf14485882439277" source="pf14325998566431" outcome="ordenServicio" redirect="true"/>
+  <links id="pf14485882439271" target="pf14485882439278" source="pf14325998566431" outcome="chofer" redirect="true"/>
+  <links id="pf14485882439272" target="pf14485882439279" source="pf14325998566431" outcome="cliente" redirect="true"/>
+  <links id="pf14485882439273" target="pf144858824392710" source="pf14325998566431" outcome="destino" redirect="true"/>
+  <links id="pf14485882439274" target="pf144858824392711" source="pf14325998566431" outcome="tipoServicio" redirect="true"/>
+  <links id="pf14485882439276" target="pf144858824392713" source="pf14325998566431" outcome="trasladista" redirect="true"/>
+  <links id="pf144858835312614" target="pf144858835312615" source="pf14325998566431" outcome="empresas" redirect="true"/>
 </pageflow:Pageflow>

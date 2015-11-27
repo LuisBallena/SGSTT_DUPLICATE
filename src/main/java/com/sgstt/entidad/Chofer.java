@@ -37,6 +37,12 @@ public class Chofer implements Serializable{
     private String dni;
     
     @Column
+    private String celular;
+
+	@Column
+    private String brevete;
+    
+	@Column
     private String categoria;
     
     @Enumerated(EnumType.ORDINAL)
@@ -120,7 +126,24 @@ public class Chofer implements Serializable{
     public void setEmpresa(Empresa empresa) {
         this.empresa = empresa;
     }
-    
+
+    public String getCelular() {
+		return celular;
+	}
+
+	public void setCelular(String celular) {
+		this.celular = celular;
+	}
+	
+
+    public String getBrevete() {
+		return brevete;
+	}
+
+	public void setBrevete(String brevete) {
+		this.brevete = brevete;
+	}
+	
     public String getDatosCompletos() {
         return String.format("%s %s",Utilitario.esNulo(getNombre()) ? "" : getNombre(),Utilitario.esNulo(getApellido()) ? "" : getApellido());
     }
