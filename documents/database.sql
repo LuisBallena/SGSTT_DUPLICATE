@@ -327,12 +327,20 @@ DROP TABLE IF EXISTS `sgstt`.`empresa` ;
 
 CREATE  TABLE IF NOT EXISTS `sgstt`.`empresa` (
   `idempresa` INT NOT NULL AUTO_INCREMENT ,
+  `idsede` INT NOT NULL ,
   `razon_social` VARCHAR(45) NULL ,
   `ruc` VARCHAR(45) NULL ,
+  `centrocosto` VARCHAR(45) NULL ,
   `telefono` VARCHAR(45) NULL ,
   `celular` VARCHAR(45) NULL ,
   `correo` VARCHAR(45) NULL ,
-  PRIMARY KEY (`idempresa`) )
+  PRIMARY KEY (`idempresa`, `idsede` ),
+  INDEX `fk_empresa_sede1_idx` (`idsede` ASC) ,
+  CONSTRAINT `fk_empresa_sede1`
+    FOREIGN KEY (`idsede`)
+    REFERENCES `sgstt`.`sede` (`idsede` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
@@ -740,8 +748,50 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sgstt`;
-INSERT INTO `sgstt`.`empresa` (`idempresa`, `razon_social`, `ruc`, `telefono`, `celular`, `correo`) VALUES (1, 'TRANSLIVIK', NULL, NULL, NULL, NULL);
-INSERT INTO `sgstt`.`empresa` (`idempresa`, `razon_social`, `ruc`, `telefono`, `celular`, `correo`) VALUES (2, 'TARAKATOURS', NULL, NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (1, 1, 'TRANSLIVIK', NULL,"VT-00", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (2, 1, 'TRANSP.BOCANEGRA', NULL,"VT-01", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (3, 1, 'TRANSP.CESPEDES', NULL,"VT-02", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (4, 1, 'TRANSP.MOVIL TOURS', NULL,"VT-03", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (5, 1, 'TRANSP.TAN', NULL,"VT-04", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (6, 1, 'TRANSP.ARANDA', NULL,"VT-05", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (7, 1, 'TRANSP.3 REYES', NULL,"VT-06", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (8, 1, 'TRANSP.TARUKA TOURS', NULL,"VT-07", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (9, 1, 'TRANSP.A & V TOUR', NULL,"VT-08", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (10, 1, 'TRANSP.TRANSPERU', NULL,"VT-09", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (11, 1, 'TRANSP.D1', NULL,"VT-11", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (12, 1, 'TRANSP.DC TRAVEL', NULL,"VT-11", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (13, 1, 'TRANSP.DIOSES', NULL,"VT-12", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (14, 1, 'TRANSP.CARRILLO', NULL,"VT-13", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (15, 1, 'TRANSP.TURISMO CAR', NULL,"VT-14", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (16, 1, 'TRANSP.WILLIAM', NULL,"VT-15", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (17, 1, 'TRANP.MANCHEGO', NULL,"VT-16", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (18, 1, 'TRANSP.TRANSZELA', NULL,"VT-17", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (19, 1, 'TRANSP.YESKA', NULL,"VT-18", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (20, 1, 'TRANSP.ANDES', NULL,"VT-19", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (21, 1, 'TRANSP.SAMANIEGO', NULL,"VT-20", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (22, 1, 'INVERSIONES KINTARO', NULL,"VT-22", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (23, 1, 'PERU MAGIC TOURS', NULL,"VT-23", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (24, 1, 'TRANSP.WILKAMAR', NULL,"VT-24", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (25, 1, 'TRANSP.LONGA', NULL,"VT-25", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (26, 1, 'TRANSP. CMV', NULL,"VT-26", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (27, 1, 'TRANSP.TRANSMARTIN', NULL,"VT-27", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (28, 1, 'TRANSP.WIÑATOUR', NULL,"VT-28", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (29, 1, 'TRANSP.VSM', NULL,"VT-29", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (30, 1, 'TRANSPTRANSP.EDUFER.VALLE', NULL,"VT-30", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (31, 2, 'TRANSP.MOUNTAIN TRAVEL', NULL,"VTC-01", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (32, 2, 'TRANSP.TUFILS', NULL,"VTC-02", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (33, 2, 'TRANSP.PERU ANDES', NULL,"VTC-03", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (34, 2, 'TRANSP.PATR TRAVEL', NULL,"VTC-04", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (35, 2, 'TRANSP.NENFIZ', NULL,"VTC-05", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (36, 2, 'TRANSP.HERMANOS QUISPE', NULL,"VTC-06", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (37, 2, 'TRANSP.YESKA TOURS', NULL,"VTC-07", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (38, 2, 'TRANSP.VS TOUR', NULL,"VTC-08", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (39, 2, 'TRANSP.CUBAC', NULL,"VTC-09", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (40, 2, 'TRANSP.RUMISUR', NULL,"VTC-11", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (41, 2, 'TRANSP.AVALOS', NULL,"VTC-12", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (42, 2, 'TRANSP.CUSI TOURS', NULL,"VTC-13", NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (43, 2, 'TRANSP.ROSARIO TOURS', NULL,"VTC-14",  NULL, NULL, NULL);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`) VALUES (44, 2, 'TRANSP.ALO URUBAMBA', NULL,"VTC-15",  NULL, NULL, NULL);
 
 
 COMMIT;
