@@ -5,6 +5,11 @@ import com.sgstt.entidad.Cliente;
 import com.sgstt.hibernate.HibernateConexion;
 import com.sgstt.hibernate.HibernateImpl;
 import java.io.Serializable;
+import java.util.List;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
 
 /**
  *
@@ -16,5 +21,20 @@ public class ClienteImpl extends HibernateImpl<Cliente,Integer> implements Clien
     public ClienteImpl(HibernateConexion conexion) {
         super(conexion);
     }
+    
+    @Override
+	public Cliente getClienteWithSede(Integer idcliente) {
+    	Cliente auxcliente = null;
+        Session session = null;
+        try{
+            session = conexion.getSession();
+            Query query = session.createQuery("from Cliente as cliente join fetch cliente.sede where cliente.id = :idcliente");
+            query.setInteger("idcliente", idcliente);
+            auxcliente = (Cliente) query.uniqueResult();
+        }catch(HibernateException e){
+            e.printStackTrace();
+        }
+        return auxcliente;
+	}
 
 }

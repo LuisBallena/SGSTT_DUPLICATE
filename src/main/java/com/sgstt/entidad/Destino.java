@@ -7,8 +7,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -33,6 +36,10 @@ public class Destino implements Serializable{
     
     @Column
     private String latitud;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idSede")
+    private Sede sede;
     
     @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false,insertable = false)
@@ -82,7 +89,15 @@ public class Destino implements Serializable{
     public void setEstado(Estado estado) {
         this.estado = estado;
     }
+    
+    public Sede getSede() {
+        return sede;
+    }
 
+    public void setSede(Sede sede) {
+        this.sede = sede;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 5;
@@ -90,7 +105,8 @@ public class Destino implements Serializable{
         hash = 53 * hash + Objects.hashCode(this.nombre);
         hash = 53 * hash + Objects.hashCode(this.longitud);
         hash = 53 * hash + Objects.hashCode(this.latitud);
-        hash = 53 * hash + Objects.hashCode(this.estado);
+        hash = 53 * hash + Objects.hashCode(this.sede);
+        hash = 53 * hash + Objects.hashCode(this.estado);    
         return hash;
     }
 
@@ -113,6 +129,9 @@ public class Destino implements Serializable{
             return false;
         }
         if (!Objects.equals(this.latitud, other.latitud)) {
+            return false;
+        }
+        if (!Objects.equals(this.sede, other.sede)) {
             return false;
         }
         if (this.estado != other.estado) {

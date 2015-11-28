@@ -57,6 +57,10 @@ public class Tarifa implements Serializable{
     @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false,insertable = false)
     Estado estado;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idSede")
+    private Sede sede;
 
     public Tarifa() {
         servicio = new Servicio();
@@ -117,6 +121,14 @@ public class Tarifa implements Serializable{
 
     public void setEstado(Estado estado) {
         this.estado = estado;
+    }
+    
+    public Sede getSede() {
+        return sede;
+    }
+
+    public void setSede(Sede sede) {
+        this.sede = sede;
     }
 
     /**

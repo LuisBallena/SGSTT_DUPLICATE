@@ -24,7 +24,7 @@
                                 </div>
                             </div>      
                             <br/>
-                            <h:form id="formperfil">
+                            <h:form id="formchofer">
                                 <f:event type="preRenderView" listener="#{choferControlador.initLista}" />
                                 <h:messages id="msg" globalOnly="true" styleClass="list-group" infoClass="list-group-item list-group-item-success"
                                                     errorClass="list-group-item list-group-item-danger" />
@@ -104,7 +104,7 @@
                 </div>
                 <div   id="row">
                     <div class="col-lg-6">
-                        <p:commandButton  actionListener="#{choferControlador.eliminarChofer}" update=":formperfil" value="Si" oncomplete="PF('deletefile').hide();"   >
+                        <p:commandButton  actionListener="#{choferControlador.eliminarChofer}" update=":formchofer" value="Si" oncomplete="PF('deletefile').hide();"   >
                         </p:commandButton>
                     </div>
                     <div class="col-lg-6">

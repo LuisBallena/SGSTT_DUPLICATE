@@ -1,6 +1,7 @@
 package com.sgstt.controlador;
 
 import com.sgstt.entidad.Cliente;
+import com.sgstt.entidad.Sede;
 import com.sgstt.entidad.TipoCliente;
 import com.sgstt.entidad.TipoDocumento;
 import com.sgstt.hibernate.HibernatePaginador;
@@ -10,6 +11,7 @@ import com.sgstt.util.Utilitario;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -27,6 +29,10 @@ public class ClienteControlador implements Serializable {
     private HibernatePaginador<Cliente> clientePaginador;
     private ClienteServicio clienteServicio;
     private Integer auxTipoDocumento;
+    private List<Sede> sedes;
+    @ManagedProperty(value = "#{sesionControlador}")
+    private SesionControlador sesionControlador;
+
 
     public ClienteControlador() {
     }
@@ -35,7 +41,7 @@ public class ClienteControlador implements Serializable {
         if (!FacesContext.getCurrentInstance().isPostback()) {
             clienteServicio = new ClienteServicio();
             clientePaginador = new ClientePaginador();
-            clientePaginador.initPaginador();
+            clientePaginador.initPaginador(sesionControlador.getUsuarioSesion().getSede().getId());
         }
     }
 
@@ -46,6 +52,7 @@ public class ClienteControlador implements Serializable {
             tiposClientes = clienteServicio.obtenerTiposClientes();
             auxTipoDocumento = TipoDocumento.DNI.ordinal();
             cliente.getTipoCliente().setIdTipoCliente(TipoCliente.NATURAL);
+            setSedes(clienteServicio.obtenerSedes());
         }
     }
 
@@ -60,6 +67,7 @@ public class ClienteControlador implements Serializable {
             cliente = clienteServicio.obtenerCliente(Integer.parseInt(value.toString()));
             auxTipoDocumento = cliente.getTipoDocumento().ordinal();
             tiposClientes = clienteServicio.obtenerTiposClientes();
+            sedes = clienteServicio.obtenerSedes();
         }
     }
 
@@ -241,5 +249,17 @@ public class ClienteControlador implements Serializable {
     public void setAuxTipoDocumento(Integer auxTipoDocumento) {
         this.auxTipoDocumento = auxTipoDocumento;
     }
+    
+    public void setSesionControlador(SesionControlador sesionControlador) {
+        this.sesionControlador = sesionControlador;
+    }
+    
+    public List<Sede> getSedes() {
+		return sedes;
+	}
+
+	public void setSedes(List<Sede> sedes) {
+		this.sedes = sedes;
+	}
 
 }

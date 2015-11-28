@@ -35,7 +35,6 @@ public class EmpleadoControlador implements Serializable {
 
 	public void initLista() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
-        	empleadoServicio = new EmpleadoServicio();
         	empleadoPaginador = new EmpleadoPaginador();
         	empleadoPaginador.initPaginador(sesionControlador.getUsuarioSesion().getSede().getId());
         }

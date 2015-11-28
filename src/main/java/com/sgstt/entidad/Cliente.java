@@ -48,7 +48,11 @@ public class Cliente implements java.io.Serializable {
     private String correo;
     @Transient
     private String nombreAuxiliar;
-
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idSede")
+    private Sede sede;
+    
     public Cliente() {
         tipoCliente = new TipoCliente();
     }
@@ -131,6 +135,14 @@ public class Cliente implements java.io.Serializable {
 
     public void setTipoDocumento(TipoDocumento tipoDocumento) {
         this.tipoDocumento = tipoDocumento;
+    }
+    
+    public Sede getSede() {
+        return sede;
+    }
+
+    public void setSede(Sede sede) {
+        this.sede = sede;
     }
 
     public String getNombreAuxiliar() {

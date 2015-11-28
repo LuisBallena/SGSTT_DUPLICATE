@@ -17,4 +17,9 @@ public class ClientePaginador extends HibernateStringPaginador implements Serial
     protected String createFilter() {
         return String.format("%s %s",super.createFilter(),"where cliente.estado = 1");
     }
+    
+    @Override
+    protected String createFilter(Object...values) {
+        return String.format("%s where cliente.estado = 1 and cliente.sede.id = %d",super.createFilter(),(Integer)values[0]);
+    }
 }

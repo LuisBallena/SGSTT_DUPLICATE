@@ -134,9 +134,7 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`vehiculo` (
   `fecha_registro` DATETIME NULL ,
   `fecha_modificacion` DATETIME NULL ,
   PRIMARY KEY (`idvehiculo`, `idsede`) ,
-  INDEX `fk_vehículo_marca1_idx` (`marca_idmarca` ASC) ,
-  INDEX `fk_vehículo_tipo vehiculo1_idx` (`idtipo_vehiculo` ASC) ,
-  INDEX `fk_vehiculo_sede1` (`idsede` ASC) ,
+  INDEX `descripcion` (`descripcion` ASC) ,
   CONSTRAINT `fk_vehículo_marca1`
     FOREIGN KEY (`marca_idmarca` )
     REFERENCES `sgstt`.`marca` (`idmarca` )
@@ -247,6 +245,7 @@ DROP TABLE IF EXISTS `sgstt`.`tarifa` ;
 
 CREATE  TABLE IF NOT EXISTS `sgstt`.`tarifa` (
   `idtarifa` INT NOT NULL AUTO_INCREMENT ,
+  `idsede` INT NOT NULL ,
   `horas` VARCHAR(45) NULL ,
   `descripcion` VARCHAR(45) NULL ,
   `precio` DECIMAL(10,2) NULL ,
@@ -255,9 +254,10 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`tarifa` (
   `estado` TINYINT(1) NOT NULL DEFAULT 1 ,
   `fecha_registro` DATETIME NULL ,
   `fecha_modificacion` DATETIME NULL ,
-  PRIMARY KEY (`idtarifa`) ,
+  PRIMARY KEY (`idtarifa`, `idsede` ) ,
   INDEX `fk_tarifa_tipo_vehiculo1_idx` (`idtipo_vehiculo` ASC) ,
   INDEX `fk_tarifa_servicio1_idx` (`idservicio` ASC) ,
+  INDEX `fk_tarifa_sede1_idx` (`idsede` ASC) ,
   CONSTRAINT `fk_tarifa_tipo_vehiculo1`
     FOREIGN KEY (`idtipo_vehiculo` )
     REFERENCES `sgstt`.`tipo_vehiculo` (`idtipo_vehiculo` )
@@ -266,6 +266,11 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`tarifa` (
   CONSTRAINT `fk_tarifa_servicio1`
     FOREIGN KEY (`idservicio` )
     REFERENCES `sgstt`.`servicio` (`idservicio` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_idsede_sede1`
+    FOREIGN KEY (`idsede`)
+    REFERENCES `sgstt`.`sede` (`idsede` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -356,6 +361,7 @@ DROP TABLE IF EXISTS `sgstt`.`cliente` ;
 
 CREATE  TABLE IF NOT EXISTS `sgstt`.`cliente` (
   `idcliente` INT NOT NULL AUTO_INCREMENT ,
+  `idsede` INT NOT NULL ,
   `nombre` VARCHAR(45) NULL ,
   `numerodocumento` VARCHAR(12) NULL ,
   `razonsocial` VARCHAR(45) NULL ,
@@ -364,14 +370,20 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`cliente` (
   `tipo_documento` VARCHAR(50) NULL ,
   `correo` VARCHAR(45) NULL ,
   `id_tipocliente` INT NOT NULL ,
-  PRIMARY KEY (`idcliente`) ,
+  PRIMARY KEY (`idcliente`, `idsede`) ,
   INDEX `fk_cliente_tipo_cliente1_idx` (`id_tipocliente` ASC) ,
   CONSTRAINT `fk_cliente_tipo_cliente1`
     FOREIGN KEY (`id_tipocliente` )
     REFERENCES `sgstt`.`tipo_cliente` (`id_tipocliente` )
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON UPDATE NO ACTION,
+   CONSTRAINT `fk_cliente_sede1`
+    FOREIGN KEY (`idsede` )
+    REFERENCES `sgstt`.`sede` (`idsede` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)  
 ENGINE = InnoDB;
+
 
 
 -- -----------------------------------------------------
@@ -668,11 +680,17 @@ DROP TABLE IF EXISTS `sgstt`.`destinos` ;
 
 CREATE  TABLE IF NOT EXISTS `sgstt`.`destinos` (
   `iddestinos` INT NOT NULL AUTO_INCREMENT ,
+  `idsede` INT NOT NULL ,
   `nombre` VARCHAR(300) NOT NULL ,
   `latitud` VARCHAR(50) NULL ,
   `longitud` VARCHAR(50) NULL ,
   `estado` TINYINT(1) NOT NULL DEFAULT 1 ,
-  PRIMARY KEY (`iddestinos`) )
+  PRIMARY KEY (`iddestinos`, `idsede`),
+  CONSTRAINT `fk_destinos_sede1`
+    FOREIGN KEY (`idsede` )
+    REFERENCES `sgstt`.`sede` (`idsede` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -964,9 +982,9 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sgstt`;
-INSERT INTO `sgstt`.`cliente` (`idcliente`, `Nombre`, `NumeroDocumento`, `RazonSocial`, `Direccion`, `estado`, `tipo_documento`, `Correo`, `id_tipocliente`) VALUES (1, '', NULL, 'GEBECO', NULL, 1, 'RUC', NULL, 2);
-INSERT INTO `sgstt`.`cliente` (`idcliente`, `Nombre`, `NumeroDocumento`, `RazonSocial`, `Direccion`, `estado`, `tipo_documento`, `Correo`, `id_tipocliente`) VALUES (2, '', NULL, 'AVS', NULL, 1, 'RUC', NULL, 2);
-INSERT INTO `sgstt`.`cliente` (`idcliente`, `Nombre`, `NumeroDocumento`, `RazonSocial`, `Direccion`, `estado`, `tipo_documento`, `Correo`, `id_tipocliente`) VALUES (3, '', NULL, 'SETOURS', NULL, 1, 'RUC', NULL, 2);
+INSERT INTO `sgstt`.`cliente` (`idcliente`,`idsede`, `Nombre`, `NumeroDocumento`, `RazonSocial`, `Direccion`, `estado`, `tipo_documento`, `Correo`, `id_tipocliente`) VALUES (1,1, '', NULL, 'SETOURS', NULL, 1, 'RUC', NULL, 2);
+INSERT INTO `sgstt`.`cliente` (`idcliente`,`idsede`, `Nombre`, `NumeroDocumento`, `RazonSocial`, `Direccion`, `estado`, `tipo_documento`, `Correo`, `id_tipocliente`) VALUES (2,1, '', NULL, 'AVS', NULL, 1, 'RUC', NULL, 2);
+INSERT INTO `sgstt`.`cliente` (`idcliente`,`idsede`, `Nombre`, `NumeroDocumento`, `RazonSocial`, `Direccion`, `estado`, `tipo_documento`, `Correo`, `id_tipocliente`) VALUES (3,2, '', NULL, 'GEBECO', NULL, 1, 'RUC', NULL, 2);
 
 COMMIT;
 
@@ -1088,10 +1106,10 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sgstt`;
-INSERT INTO `sgstt`.`destinos` (`iddestinos`, `nombre`, `latitud`, `longitud`, `estado`) VALUES (1, 'AEROPUERTO LAN', '1', '1', 1);
-INSERT INTO `sgstt`.`destinos` (`iddestinos`, `nombre`, `latitud`, `longitud`, `estado`) VALUES (2, 'HOTEL SHERATON', '2', '2', 1);
-INSERT INTO `sgstt`.`destinos` (`iddestinos`, `nombre`, `latitud`, `longitud`, `estado`) VALUES (3, 'HOTEL MARRIOT', '1', '2', 1);
-INSERT INTO `sgstt`.`destinos` (`iddestinos`, `nombre`, `latitud`, `longitud`, `estado`) VALUES (4, 'HOTEL CONQUISTADORES', '1', '2', 1);
+INSERT INTO `sgstt`.`destinos` (`iddestinos`,`idsede`, `nombre`, `latitud`, `longitud`, `estado`) VALUES (1, 1, 'AEROPUERTO LAN', '1', '1', 1);
+INSERT INTO `sgstt`.`destinos` (`iddestinos`,`idsede`, `nombre`, `latitud`, `longitud`, `estado`) VALUES (2, 1,'HOTEL SHERATON', '2', '2', 1);
+INSERT INTO `sgstt`.`destinos` (`iddestinos`,`idsede`, `nombre`, `latitud`, `longitud`, `estado`) VALUES (3, 1,'HOTEL MARRIOT', '1', '2', 1);
+INSERT INTO `sgstt`.`destinos` (`iddestinos`,`idsede`, `nombre`, `latitud`, `longitud`, `estado`) VALUES (4, 2,'HOTEL CONQUISTADORES', '1', '2', 1);
 
 COMMIT;
 

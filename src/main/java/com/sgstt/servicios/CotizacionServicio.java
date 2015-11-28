@@ -3,13 +3,16 @@ package com.sgstt.servicios;
 
 import com.sgstt.dao.TarifaDao;
 import com.sgstt.dao.TipoServicioDao;
+import com.sgstt.dao.SedeDao;
 import com.sgstt.dao.ServicioDao;
 import com.sgstt.dao.TipoVehiculoDao;
+import com.sgstt.dao.impl.SedeImpl;
 import com.sgstt.dao.impl.ServicioImpl;
 import com.sgstt.dao.impl.TarifaImpl;
 import com.sgstt.dao.impl.TipoServicioImpl;
 import com.sgstt.dao.impl.TipoVehiculoImpl;
 import com.sgstt.entidad.Estado;
+import com.sgstt.entidad.Sede;
 import com.sgstt.entidad.Tarifa;
 import com.sgstt.entidad.TipoServicio;
 import com.sgstt.entidad.TipoVehiculo;
@@ -30,6 +33,7 @@ public class CotizacionServicio {
     private final TipoVehiculoDao tipoVehiculoDao;
     private final TipoServicioDao tipoServicioDao;
     private final ServicioDao ServicioDao;
+    private SedeDao sedeDao;
 
     public CotizacionServicio() {
         conexion = new HibernateConexion();
@@ -37,6 +41,7 @@ public class CotizacionServicio {
         tipoVehiculoDao = new TipoVehiculoImpl(conexion);
         tipoServicioDao = new TipoServicioImpl(conexion);
         ServicioDao = new ServicioImpl(conexion);
+        sedeDao = new SedeImpl(conexion);
     }
     
     public List<TipoVehiculo> obtenerTipoVehiculos(){
@@ -105,5 +110,12 @@ public class CotizacionServicio {
         conexion.closeConexion();
     }
     
+    public  List<Sede> obtenerSedes(){
+        List<Sede> aux = null;
+        conexion.beginConexion();
+        aux = sedeDao.obtenerTodos();
+        conexion.closeConexion();
+        return aux;
+    }
     
 }

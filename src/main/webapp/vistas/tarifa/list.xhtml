@@ -27,7 +27,9 @@
                             <br/>
                             <h:form id="frmTarifa">
                                 <f:event type="preRenderView" listener="#{tarifaControlador.initLista}" />
-                                <p:dataTable  value="#{tarifaControlador.tarifaPaginador}"    var="list" emptyMessage="No existen registros de tarifa" 
+                                 <h:messages id="msg" globalOnly="true" styleClass="list-group" infoClass="list-group-item list-group-item-success"
+                                                    errorClass="list-group-item list-group-item-danger" />
+                                 <p:dataTable  value="#{tarifaControlador.tarifaPaginador}"    var="list" emptyMessage="No existen registros de tarifa" 
                                               paginator="true" rows="10" lazy="true" rowIndexVar="rowIndex"
                                               paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
 

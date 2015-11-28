@@ -2,11 +2,15 @@
 package com.sgstt.servicios;
 
 import com.sgstt.dao.ClienteDao;
+import com.sgstt.dao.SedeDao;
 import com.sgstt.dao.TipoClienteDao;
 import com.sgstt.dao.impl.ClienteImpl;
+import com.sgstt.dao.impl.SedeImpl;
 import com.sgstt.dao.impl.TipoClienteImpl;
 import com.sgstt.entidad.Cliente;
+import com.sgstt.entidad.Empresa;
 import com.sgstt.entidad.Estado;
+import com.sgstt.entidad.Sede;
 import com.sgstt.entidad.TipoCliente;
 import com.sgstt.hibernate.HibernateConexion;
 import com.sgstt.util.Utilitario;
@@ -23,11 +27,14 @@ public class ClienteServicio implements Serializable{
     private final HibernateConexion conexion;
     private final ClienteDao clienteDao;
     private final TipoClienteDao tipoClienteDao;
+    private SedeDao sedeDao;
 
     public ClienteServicio() {
         this.conexion = new HibernateConexion();
         this.clienteDao = new ClienteImpl(conexion);
         this.tipoClienteDao = new TipoClienteImpl(conexion);
+        sedeDao = new SedeImpl(conexion);
+
     }
     
     
@@ -69,5 +76,11 @@ public class ClienteServicio implements Serializable{
         Utilitario.enviarMensajeGlobalValido("Se ha eliminado correctamente");
     }
     
-    
+    public  List<Sede> obtenerSedes(){
+        List<Sede> aux = null;
+        conexion.beginConexion();
+        aux = sedeDao.obtenerTodos();
+        conexion.closeConexion();
+        return aux;
+    }
 }

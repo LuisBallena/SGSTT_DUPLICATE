@@ -2,12 +2,16 @@
 package com.sgstt.controlador;
 
 import com.sgstt.entidad.Destino;
+import com.sgstt.entidad.Sede;
 import com.sgstt.hibernate.HibernatePaginador;
 import com.sgstt.paginacion.DestinoPaginador;
 import com.sgstt.servicios.TransporteServicio;
 import com.sgstt.util.Utilitario;
 import java.io.Serializable;
+import java.util.List;
+
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -21,7 +25,11 @@ public class DestinoControlador implements Serializable{
     private static final long serialVersionUID = 7880854385146843817L;
     private HibernatePaginador<Destino> destinoPaginador;
     private Destino destino;
+    private List<Sede> sedes;
     private TransporteServicio transporteServicio;
+    @ManagedProperty(value = "#{sesionControlador}")
+    private SesionControlador sesionControlador;
+    
 
     public DestinoControlador() {
     }
@@ -30,7 +38,7 @@ public class DestinoControlador implements Serializable{
         if (!FacesContext.getCurrentInstance().isPostback()) {
             transporteServicio = new TransporteServicio();
             destinoPaginador = new DestinoPaginador();
-            destinoPaginador.initPaginador();
+            destinoPaginador.initPaginador(sesionControlador.getUsuarioSesion().getSede().getId());
         }
     }
     
@@ -38,6 +46,8 @@ public class DestinoControlador implements Serializable{
         if (!FacesContext.getCurrentInstance().isPostback()) {
             transporteServicio = new TransporteServicio();
             destino = new Destino();
+            destino.setSede(new Sede());
+            setSedes(transporteServicio.obtenerSedes());
         }
     }
     
@@ -50,6 +60,8 @@ public class DestinoControlador implements Serializable{
             }
             transporteServicio = new TransporteServicio();
             destino = transporteServicio.obtenerDestino(Integer.parseInt(value.toString()));
+            sedes = transporteServicio.obtenerSedes();
+
         }
     }
     
@@ -111,5 +123,17 @@ public class DestinoControlador implements Serializable{
     public void setDestino(Destino destino) {
         this.destino = destino;
     }
+
+    public void setSesionControlador(SesionControlador sesionControlador) {
+        this.sesionControlador = sesionControlador;
+    }
+    
+    public List<Sede> getSedes() {
+		return sedes;
+	}
+
+	public void setSedes(List<Sede> sedes) {
+		this.sedes = sedes;
+	}
     
 }

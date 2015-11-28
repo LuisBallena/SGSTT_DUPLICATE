@@ -18,4 +18,8 @@ public class TarifaPaginador extends HibernateStringPaginador implements Seriali
         return String.format("%s %s",super.createFilter(),"where tarifa.estado = 1");
     }
     
+    @Override
+    protected String createFilter(Object...values) {
+        return String.format("%s where tarifa.estado = 1 and tarifa.sede.id = %d",super.createFilter(),(Integer)values[0]);
+    }
 }

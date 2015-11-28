@@ -1,6 +1,7 @@
 package com.sgstt.controlador;
 
 import com.sgstt.entidad.Tarifa;
+import com.sgstt.entidad.Sede;
 import com.sgstt.entidad.Servicio;
 import com.sgstt.entidad.TipoVehiculo;
 import com.sgstt.hibernate.HibernatePaginador;
@@ -22,10 +23,12 @@ import javax.faces.context.FacesContext;
 @ViewScoped
 public class TarifaControlador implements Serializable {
 
-    private HibernatePaginador<Tarifa> tarifaPaginador;
+	private static final long serialVersionUID = 8066631256078163099L;
+	private HibernatePaginador<Tarifa> tarifaPaginador;
     private Tarifa tarifa;
     private List<TipoVehiculo> tipoVehiculos;
     private List<Servicio> servicios;
+    private List<Sede> sedes;
     private CotizacionServicio cotizacionServicio;
     @ManagedProperty(value = "#{sesionControlador}")
     private SesionControlador sesionControlador;
@@ -35,7 +38,7 @@ public class TarifaControlador implements Serializable {
 
     public void initLista() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
-            cotizacionServicio = new CotizacionServicio();
+        	cotizacionServicio = new CotizacionServicio();
             tarifaPaginador = new TarifaPaginador();
             tarifaPaginador.initPaginador();
         }
@@ -47,6 +50,9 @@ public class TarifaControlador implements Serializable {
             tarifa = new Tarifa();
             tipoVehiculos = cotizacionServicio.obtenerTipoVehiculos();
             servicios = cotizacionServicio.obtenerServiciosPorSede(sesionControlador.getUsuarioSesion().getSede().getId());
+            tarifa.setSede(sesionControlador.getUsuarioSesion().getSede());
+            setSedes(cotizacionServicio.obtenerSedes());
+            
         }
     }
 
@@ -62,6 +68,7 @@ public class TarifaControlador implements Serializable {
             tarifa = cotizacionServicio.obtenerTarifa(id);
             tipoVehiculos = cotizacionServicio.obtenerTipoVehiculos();
             servicios = cotizacionServicio.obtenerServiciosPorSede(sesionControlador.getUsuarioSesion().getSede().getId());
+            sedes = cotizacionServicio.obtenerSedes();
         }
     }
 
@@ -181,4 +188,11 @@ public class TarifaControlador implements Serializable {
         this.sesionControlador = sesionControlador;
     }
     
+    public List<Sede> getSedes() {
+		return sedes;
+	}
+    
+	public void setSedes(List<Sede> sedes) {
+		this.sedes = sedes;
+	}
 }

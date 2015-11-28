@@ -17,4 +17,8 @@ public class DestinoPaginador extends HibernateStringPaginador implements Serial
         return String.format("%s %s",super.createFilter(),"where destino.estado = 1");
     }
     
+    @Override
+    protected String createFilter(Object...values) {
+        return String.format("%s where destino.estado = 1 and destino.sede.id = %d",super.createFilter(),(Integer)values[0]);
+    }
 }

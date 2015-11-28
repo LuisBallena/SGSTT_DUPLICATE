@@ -31,6 +31,8 @@ public class TransporteServicio implements Serializable {
     private final TarifaDao tarifaDao;
     private final VentaDao ventaDao;
     private final EmpresaDao empresaDao;
+    private SedeDao sedeDao;
+
     
     public TransporteServicio() {
         conexion = new HibernateConexion();
@@ -47,6 +49,8 @@ public class TransporteServicio implements Serializable {
         tarifaDao = new TarifaImpl(conexion);
         ventaDao = new VentaImpl(conexion);
         empresaDao = new EmpresaImpl(conexion);
+        sedeDao = new SedeImpl(conexion);
+
     }
 
     public List<Chofer> obtenerChoferesPorSede(Integer idSede) {
@@ -385,6 +389,14 @@ public class TransporteServicio implements Serializable {
         if(chofer.getEmpresa().getId() != 1){
             servicioDetalle.setExternalizado("SI");
         }
+    }
+    
+    public  List<Sede> obtenerSedes(){
+        List<Sede> aux = null;
+        conexion.beginConexion();
+        aux = sedeDao.obtenerTodos();
+        conexion.closeConexion();
+        return aux;
     }
 
 }
