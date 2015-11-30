@@ -1,11 +1,15 @@
 package com.sgstt.dao.impl;
 
 import com.sgstt.dao.VueloDao;
+import com.sgstt.entidad.Empresa;
+import com.sgstt.entidad.Vehiculo;
 import com.sgstt.entidad.Vuelo;
 import com.sgstt.hibernate.HibernateConexion;
 import com.sgstt.hibernate.HibernateImpl;
+
 import java.io.Serializable;
 import java.util.List;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -33,5 +37,20 @@ public class VueloImpl extends HibernateImpl<Vuelo,Integer> implements VueloDao,
         }
         return vuelos;
     }
+    
+    @Override
+	public Vuelo getVueloWithSede(Integer idvuelo) {
+    	Vuelo auxvuelo = null;
+        Session session = null;
+        try{
+            session = conexion.getSession();
+            Query query = session.createQuery("from Vuelo as vuelo join fetch vuelo.sede where vuelo.id = :idvuelo");
+            query.setInteger("idvuelo", idvuelo);
+            auxvuelo = (Vuelo) query.uniqueResult();
+        }catch(HibernateException e){
+            e.printStackTrace();
+        }
+        return auxvuelo;
+	}
 
 }

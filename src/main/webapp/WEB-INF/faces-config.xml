@@ -89,5 +89,10 @@
             <to-view-id>/vistas/empleado/list.xhtml</to-view-id>
             <redirect />
         </navigation-case>
+        <navigation-case>
+            <from-outcome>vuelo</from-outcome>
+            <to-view-id>/vistas/vuelo/list.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
     </navigation-rule>
 </faces-config>

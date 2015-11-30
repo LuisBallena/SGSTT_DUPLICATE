@@ -1,6 +1,7 @@
 package com.sgstt.controlador;
 
 import com.sgstt.entidad.Incidencia;
+import com.sgstt.entidad.Sede;
 import com.sgstt.entidad.ServicioDetalle;
 import com.sgstt.entidad.TipoIncidencia;
 import com.sgstt.hibernate.HibernatePaginador;
@@ -12,6 +13,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -28,6 +30,10 @@ public class IncidenciaControlador implements Serializable {
     private List<TipoIncidencia> tipoIncidencia;
     private List<ServicioDetalle> serviciodetalles;
     private IncidenciaServicio incidenciaServicio;
+    private List<Sede> sedes;
+    @ManagedProperty(value = "#{sesionControlador}")
+    private SesionControlador sesionControlador;
+
 
     public IncidenciaControlador() {
     }
@@ -36,7 +42,9 @@ public class IncidenciaControlador implements Serializable {
         if (!FacesContext.getCurrentInstance().isPostback()) {
         	incidenciaServicio = new IncidenciaServicio();
             incidenciaPaginador = new IncidenciaPaginador();
-            incidenciaPaginador.initPaginador();
+            incidenciaPaginador.initPaginador(sesionControlador.getUsuarioSesion().getSede().getId());
+            tipoIncidencia = incidenciaServicio.obtenerTipoIncidencias();
+
         }
     }
 
@@ -46,6 +54,8 @@ public class IncidenciaControlador implements Serializable {
             incidencia = new Incidencia();
             tipoIncidencia = incidenciaServicio.obtenerTipoIncidencias();
             serviciodetalles = incidenciaServicio.obtenerServiciosDetalle();
+            incidencia.setSede(new Sede());
+            setSedes(incidenciaServicio.obtenerSedes());
         }
     }
 
@@ -61,29 +71,28 @@ public class IncidenciaControlador implements Serializable {
             incidencia = incidenciaServicio.obtenerIncidencia(id);
             tipoIncidencia = incidenciaServicio.obtenerTipoIncidencias();
             serviciodetalles = incidenciaServicio.obtenerServiciosDetalle();
+            sedes = incidenciaServicio.obtenerSedes();
+
         }
     }
 
-    public void registrarTarifa() {
+    public void registrarIncidencia() {
         if (!esVistaValida()) {
             return;
         }
+        incidencia.setSede(sesionControlador.getUsuarioSesion().getSede());
         incidenciaServicio.registrarIncidencia(incidencia);
     }
     
-    public void actualizarTarifa(){
+    public void actualizarIncidencia(){
         if (!esVistaValida()) {
             return;
         }
         incidenciaServicio.actualizarIncidencia(incidencia);
     }
     
-    public void eliminarTarifa(){
+    public void eliminarIncidencia(){
     	incidenciaServicio.eliminarIncidencia(incidencia);
-    }
-    
-    public void capturarIncidencia(Incidencia aux){
-    	incidencia = aux;
     }
     
     public String irActualizar(Integer id){
@@ -164,5 +173,17 @@ public class IncidenciaControlador implements Serializable {
     public void setServicioDetalles(List<ServicioDetalle> serviciodetalles) {
         this.serviciodetalles = serviciodetalles;
     }
+    
+    public void setSesionControlador(SesionControlador sesionControlador) {
+        this.sesionControlador = sesionControlador;
+    }
+
+	public List<Sede> getSedes() {
+		return sedes;
+	}
+
+	public void setSedes(List<Sede> sedes) {
+		this.sedes = sedes;
+	}
 }
 

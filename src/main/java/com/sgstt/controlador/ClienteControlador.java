@@ -52,7 +52,9 @@ public class ClienteControlador implements Serializable {
             tiposClientes = clienteServicio.obtenerTiposClientes();
             auxTipoDocumento = TipoDocumento.DNI.ordinal();
             cliente.getTipoCliente().setIdTipoCliente(TipoCliente.NATURAL);
+            cliente.setSede(new Sede());
             setSedes(clienteServicio.obtenerSedes());
+            
         }
     }
 
@@ -73,7 +75,9 @@ public class ClienteControlador implements Serializable {
 
     public void guardarCliente() {
         cliente.setTipoDocumento(convertTipoDocumento(auxTipoDocumento));
+        
         if (esVistaValida()) {
+        	cliente.setSede(sesionControlador.getUsuarioSesion().getSede());
             clienteServicio.registrarCliente(cliente);
         }
     }
@@ -94,11 +98,18 @@ public class ClienteControlador implements Serializable {
             auxTipoDocumento = TipoDocumento.DNI.ordinal();
         } else if (cliente.getTipoCliente().getIdTipoCliente() == TipoCliente.JURIDICO) {
             auxTipoDocumento = TipoDocumento.RUC.ordinal();
+        }else if (cliente.getTipoCliente().getIdTipoCliente() == TipoCliente.NATURAL) {
+            auxTipoDocumento = TipoDocumento.CARNET_EXTRANJERIA.ordinal();
         }
     }
 
     private TipoDocumento convertTipoDocumento(Integer id) {
-        return id == 0 ? TipoDocumento.DNI : TipoDocumento.RUC;
+        if (id == 0)
+			return TipoDocumento.DNI;
+        if (id == 1)
+			return TipoDocumento.RUC;
+		else			
+			return TipoDocumento.CARNET_EXTRANJERIA;
     }
 
     public String irActualizar(Integer id) {
@@ -118,6 +129,7 @@ public class ClienteControlador implements Serializable {
                 case TipoCliente.NATURAL:
                     resultado = esClienteNaturalValido();
                     break;
+                    
             }
         }
         return resultado;
@@ -140,7 +152,10 @@ public class ClienteControlador implements Serializable {
         } else if (cliente.getTipoDocumento() == TipoDocumento.DNI) {
             Utilitario.enviarMensajeGlobalError("No puede escoger el documento DNI, escoja RUC");
             resultado = false;
-        } else if (!Utilitario.esRangoValido(cliente.getNumeroDocumento(), 11, 11)) {
+        } else if (cliente.getTipoDocumento() == TipoDocumento.CARNET_EXTRANJERIA) {
+            Utilitario.enviarMensajeGlobalError("No puede escoger el documento CARNET_EXTRANJERIA, escoja RUC");
+            resultado = false;
+        }else if (!Utilitario.esRangoValido(cliente.getNumeroDocumento(), 11, 11)) {
             Utilitario.enviarMensajeGlobalError("El ruc son 11 caracteres");
             resultado = false;
         } else if (!esDireccionValida()) {
@@ -161,7 +176,10 @@ public class ClienteControlador implements Serializable {
         } else if (cliente.getTipoDocumento() == TipoDocumento.RUC && !Utilitario.esRangoValido(cliente.getNumeroDocumento(), 11, 11)) {
             Utilitario.enviarMensajeGlobalError("El ruc son 11 caracteres");
             resultado = false;
-        } else if (!esDireccionValida()) {
+        } else if (cliente.getTipoDocumento() == TipoDocumento.CARNET_EXTRANJERIA && !Utilitario.esRangoValido(cliente.getNumeroDocumento(), 12, 12)) {
+            Utilitario.enviarMensajeGlobalError("El CARNET_EXTRANJERIA son 12 caracteres");
+            resultado = false;
+        }  else if (!esDireccionValida()) {
             resultado = false;
         } else if (!esCorreoValido()) {
             resultado = false;
@@ -175,7 +193,7 @@ public class ClienteControlador implements Serializable {
             Utilitario.enviarMensajeGlobalError("Debe ingresar la razon social");
             resultado = false;
         } else if (!Utilitario.esRangoValido(cliente.getRazonSocial(), 45)) {
-            Utilitario.enviarMensajeGlobalError("El rango máximo de la razon social es de 45 caracteres");
+            Utilitario.enviarMensajeGlobalError("El rango máximo de la razon social es de 11 caracteres");
             resultado = false;
         }
         return resultado;

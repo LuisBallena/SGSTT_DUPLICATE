@@ -54,11 +54,14 @@ public class Incidencia implements Serializable{
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaModificacion;
     
-    @ManyToOne(fetch = FetchType.EAGER)
-    @Fetch(FetchMode.JOIN)
-    @JoinColumn(name = "IDESTADO_INCIDENCIA", nullable = false)
-    private EstadoIncidencia estadoincidencia;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ESTADO_INCIDENCIA")
+    private EstadoIncidencia estadoIncidencia;
     
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idSede")
+    private Sede sede;
+        
     @ManyToOne(fetch = FetchType.EAGER)
     @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "IDTIPO_INCIDENCIA", nullable = false)
@@ -107,14 +110,15 @@ public class Incidencia implements Serializable{
 		this.fechaModificacion = fechaModificacion;
 	}
 
-	public EstadoIncidencia getEstadoincidencia() {
-		return estadoincidencia;
+	public EstadoIncidencia getEstadoIncidencia() {
+	        return estadoIncidencia;
 	}
 
-	public void setEstadoincidencia(EstadoIncidencia estadoincidencia) {
-		this.estadoincidencia = estadoincidencia;
+	public void setEstadoIncidencia(EstadoIncidencia estadoIncidencia) {
+	        this.estadoIncidencia = estadoIncidencia;
 	}
 
+	
 	public TipoIncidencia getTipoincidencia() {
 		return tipoincidencia;
 	}
@@ -130,4 +134,13 @@ public class Incidencia implements Serializable{
     public void setEstado(Estado estado) {
         this.estado = estado;
     } 
+    
+    
+    public Sede getSede() {
+        return sede;
+    }
+
+    public void setSede(Sede sede) {
+        this.sede = sede;
+    }
 }

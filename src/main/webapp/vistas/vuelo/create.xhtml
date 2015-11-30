@@ -11,57 +11,60 @@
     <ui:define name="content">
         <div class="row">
             <div class="col-lg-12">
-                <h3 class="page-header">Administrar Destinos</h3>
+                <h3 class="page-header">Administrar Vuelos</h3>
             </div>
             <div class="row">
                 <div class="col-lg-12 opcion-listado" >
-                    <h:link style="font-size: 16px;font-weight: bold;" value="Lista de Cliente" outcome="list.xhtml"></h:link>
+                    <h:link style="font-size: 16px;font-weight: bold;" value="Lista de empresa" outcome="list.xhtml"></h:link>
                 </div>
                 <div class="col-lg-12">
                     <div class="panel panel-success">
-                        <div class="panel-heading"  >Registrar Destino</div>
+                        <div class="panel-heading"  >Registrar Vuelo</div>
                         <div class="panel-body">
-                            <div class="row" id="modificarComercio">
+                            <div class="row" id="modificarVuelo">
                                 <div class="col-lg-12">
-                                    <h:form id="frmRegistrarCliente" styleClass="form-horizontal" >
-                                        <f:event type="preRenderView" listener="#{destinoControlador.initCreate}" />
+                                    <h:form id="frmRegistrarVuelo" styleClass="form-horizontal" >
+                                        <f:event type="preRenderView" listener="#{vueloControlador.initCreate}" />
                                         <h:messages id="msg" globalOnly="true" styleClass="list-group" infoClass="list-group-item list-group-item-success"
                                                     errorClass="list-group-item list-group-item-danger" />
                                         <div class="form-group has-feedback">
-                                            <label for="nombre" class="col-sm-3 control-label" >Nombre :</label>
+                                            <label for="nombre" class="col-sm-3 control-label" >Código de Vuelo :</label>
                                             <div    class="col-sm-6" >
-                                                <p:inputText styleClass="form-control"  value="#{destinoControlador.destino.nombre}"     >
+                                                <p:inputText styleClass="form-control"  value="#{vueloControlador.vuelo.descripcion}"     >
                                                 </p:inputText>
                                             </div>
                                         </div>
                                         <div class="form-group has-feedback">
-                                            <label for="nombre" class="col-sm-3 control-label" >Latitud :</label>
+                                            <label for="nombre" class="col-sm-3 control-label" >Origen :</label>
                                             <div    class="col-sm-6" >
-                                                <p:inputText styleClass="form-control"  value="#{destinoControlador.destino.latitud}"     >
+                                                <p:inputText styleClass="form-control"  value="#{vueloControlador.vuelo.origen}"     >
                                                 </p:inputText>
                                             </div>
                                         </div>
                                         <div class="form-group has-feedback">
-                                            <label for="nombre" class="col-sm-3 control-label" >Longitud :</label>
+                                            <label for="nombre" class="col-sm-3 control-label" >Destino :</label>
                                             <div    class="col-sm-6" >
-                                                <p:inputText styleClass="form-control"  value="#{destinoControlador.destino.longitud}"     >
+                                                <p:inputText styleClass="form-control"  value="#{vueloControlador.vuelo.destino}"     >
                                                 </p:inputText>
                                             </div>
                                         </div>
                                         <div class="form-group has-feedback">
-                                            <label for="nombre" class="col-sm-3 control-label" >Tipo Destino :</label>
+                                            <label for="nombre" class="col-sm-3 control-label" >Horario :</label>
                                             <div    class="col-sm-6" >
-                                                <h:selectOneMenu id="tipoDestino" value="#{destinoControlador.auxTipoDocumento}" styleClass="form-control"  >
-                                                    <f:selectItem itemValue="0" itemLabel="Hotel" />
-                                                    <f:selectItem itemValue="1" itemLabel="Restaurant" />
-                                                    <f:selectItem itemValue="2" itemLabel="Museo" />
-                                                    <f:selectItem itemValue="3" itemLabel="Sitio_Arqueológico" />
-                                                    <f:selectItem itemValue="4" itemLabel="Lugar_Turístico" />
+                                                <p:inputText styleClass="form-control"  value="#{vueloControlador.vuelo.horario}"     >
+                                                </p:inputText>
+                                            </div>
+                                        </div>
+                                        <div class="form-group has-feedback">
+                                            <label for="nombre" class="col-sm-3 control-label" >Aerolinea :</label>
+                                            <div    class="col-sm-6" >
+                                                <h:selectOneMenu styleClass="form-control" value="#{vueloControlador.vuelo.aerolinea.descripcion}" >
+                                                    <f:selectItems value="#{vueloControlador.aerolinea}" var="listVuelo"  itemValue="#{listAerolinea.id}" itemLabel="#{listAerolinea.descripcion}" />
                                                 </h:selectOneMenu>
                                             </div>
-                                        </div>
+                                        </div>                                      
                                         <div class="col-sm-3 control-label">
-                                            <p:commandButton value="Guardar" actionListener="#{destinoControlador.guardarDestino}" update="@form" styleClass="btn btn-primary"/>
+                                            <p:commandButton value="Guardar" actionListener="#{vueloControlador.guardarVuelo}" update="@form" styleClass="btn btn-primary"/>
                                         </div>
                                     </h:form>  
                                 </div>

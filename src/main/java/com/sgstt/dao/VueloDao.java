@@ -1,6 +1,7 @@
 package com.sgstt.dao;
 
 import com.sgstt.entidad.Vuelo;
+
 import java.util.List;
 
 /**
@@ -11,4 +12,5 @@ public interface VueloDao extends GenericDao<Vuelo,Integer>{
     
     public List<Vuelo> getVuelosWithStateActiveWithAerolinea();
 
+    public Vuelo getVueloWithSede(Integer idvuelo);
 }

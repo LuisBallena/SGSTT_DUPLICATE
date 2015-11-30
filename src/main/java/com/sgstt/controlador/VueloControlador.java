@@ -1,0 +1,148 @@
+package com.sgstt.controlador;
+
+import com.sgstt.entidad.Aerolinea;
+import com.sgstt.entidad.Empresa;
+import com.sgstt.entidad.Sede;
+import com.sgstt.entidad.Vuelo;
+import com.sgstt.hibernate.HibernatePaginador;
+import com.sgstt.paginacion.VueloPaginador;
+import com.sgstt.servicios.EmpresaServicio;
+import com.sgstt.servicios.VueloServicio;
+import com.sgstt.util.Utilitario;
+
+import java.io.Serializable;
+import java.util.List;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+
+/**
+ *
+ * @author Luis Alonso Ballena Garcia
+ */
+@ManagedBean(name = "vueloControlador")
+@ViewScoped
+public class VueloControlador implements Serializable {
+
+    private static final long serialVersionUID = -6462819170789631724L;
+    private Vuelo vuelo;
+    private List<Aerolinea> aerolineas;
+    private HibernatePaginador<Vuelo> vueloPaginador;
+    private VueloServicio vueloServicio;
+    private List<Sede> sedes;
+    @ManagedProperty(value = "#{sesionControlador}")
+    private SesionControlador sesionControlador;
+
+
+    public VueloControlador() {
+    }
+
+    public void initLista() {
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+        	vueloServicio = new VueloServicio();
+        	vueloPaginador = new VueloPaginador();
+        	vueloPaginador.initPaginador(sesionControlador.getUsuarioSesion().getSede().getId());
+        }
+    }
+
+    public void initCreate() {
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+        	vueloServicio = new VueloServicio();
+        	vuelo = new Vuelo();
+            vuelo.setSede(new Sede());
+            aerolineas = vueloServicio.obtenerAerolineas();
+            setSedes(vueloServicio.obtenerSedes());
+        }
+    }
+    
+    public void initUpdate(){
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+            Object value = Utilitario.getFlash("idvuelo");
+            if(value == null){
+                Utilitario.redireccionarJSF(FacesContext.getCurrentInstance(), "/vistas/vuelo/list.xhtml");
+                return;
+            }
+            vueloServicio = new VueloServicio();
+            vuelo = vueloServicio.obtenerVuelo(Integer.parseInt(value.toString()));           
+            sedes = vueloServicio.obtenerSedes();
+        }
+    }
+
+    public void guardarVuelo() {
+        if (esVistaValida()) {
+        	vuelo.setSede(sesionControlador.getUsuarioSesion().getSede());
+        	vueloServicio.guardarVuelo(vuelo);
+        	limpiar();
+        }
+    }
+    
+    private void limpiar(){
+    	vuelo = new Vuelo();
+    }
+    
+    public void actualizarVuelo() {
+        if (esVistaValida()) {
+        	vueloServicio.actualizarVuelo(vuelo);
+        }
+    }
+    
+    public void eliminarVuelo(){
+    	vueloServicio.eliminarVuelo(vuelo);
+    }
+    
+    public String irActualizar(Integer id){
+        Utilitario.putFlash("idvuelo", id);
+        return "update.xhtml?faces-redirect=true;";
+    }
+
+    private boolean esVistaValida() {
+        boolean resultado = true;
+        if(Utilitario.esNulo(vuelo.getDescripcion())){
+            Utilitario.enviarMensajeGlobalError("Debe ingresar la Razon social");
+            resultado = false;
+        }else if(!Utilitario.esRangoValido(vuelo.getDescripcion(), 45)){
+            Utilitario.enviarMensajeGlobalError("El rango máximo de la descripción es de 45 caracteres");
+            resultado = false;
+        }
+        return resultado;
+    }
+
+    /* GETTERS AND SETTERS */
+    public HibernatePaginador<Vuelo> getVueloPaginador() {
+        return vueloPaginador;
+    }
+
+    public void setVueloPaginador(HibernatePaginador<Vuelo> vueloPaginador) {
+        this.vueloPaginador = vueloPaginador;
+    }
+
+    public Vuelo getVuelo() {
+        return vuelo;
+    }
+
+    public void setVuelo(Vuelo vuelo) {
+        this.vuelo = vuelo;
+    }
+    
+    public void setSesionControlador(SesionControlador sesionControlador) {
+        this.sesionControlador = sesionControlador;
+    }
+
+	public List<Sede> getSedes() {
+		return sedes;
+	}
+
+	public void setSedes(List<Sede> sedes) {
+		this.sedes = sedes;
+	}
+	
+	public List<Aerolinea> getAerolinea() {
+		return aerolineas;
+	}
+
+	public void setAerolinea(List<Aerolinea> aerolineas) {
+		this.aerolineas = aerolineas;
+	}
+}

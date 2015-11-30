@@ -6,5 +6,5 @@ package com.sgstt.entidad;
  * @author Luis Alonso
  */
 public enum TipoDocumento {
-    DNI,RUC
+    DNI,RUC,CARNET_EXTRANJERIA
 }

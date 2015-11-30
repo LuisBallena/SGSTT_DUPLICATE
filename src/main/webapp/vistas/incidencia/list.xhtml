@@ -25,7 +25,7 @@
                                 </div>
                             </div>
                             <br/>
-                            <h:form id="frmTarifa">
+                            <h:form id="frmIncidencia">
                                 <f:event type="preRenderView" listener="#{incidenciaControlador.initLista}" />
                                 <p:dataTable  value="#{incidenciaControlador.incidenciaPaginador}"    var="list" emptyMessage="No existen registros de tarifa" 
                                               paginator="true" rows="10" lazy="true" rowIndexVar="rowIndex"
@@ -41,38 +41,36 @@
                                         <h:outputText value="#{list.tipoincidencia.descripcion}" />
                                     </p:column>
                                      <p:column  headerText="Estado Incidencia" style="text-align: center;">
-                                        <h:outputText value="#{list.estadoincidencia.descripcion}" />
+                                        <h:outputText value="#{list.estadoIncidencia}" />
                                     </p:column>
                                     <p:column  headerText="Fecha Registro" style="text-align: center;">
                                         <h:outputText value="#{list.fechaRegistro}" />
                                     </p:column>
-                                    <p:column  style="text-align: center;width: 8%;">
-                                        <p:commandButton rendered="#{sesionControlador.permisoModulo.actualizar}" style="font-size: 12px;" icon="icon-update" action="#{incidenciaControlador.irActualizar(list.id)}"    >
-                                        </p:commandButton>
-                                        <p:commandButton rendered="#{sesionControlador.permisoModulo.eliminar}" style="font-size: 12px;" icon="icon-delete" action="#{incidenciaControlador.capturarIncidencia(list)}" oncomplete="PF('deletefile').show();"   >
+                                    <p:column  headerText="Operaciones" style="text-align: center;width: 8%;">
+                                        <p:commandButton rendered="#{sesionControlador.permisoModulo.actualizar eq true}" style="font-size: 12px;" icon="icon-delete"  oncomplete="PF('deleteincidencia').show();">
+                                            <f:setPropertyActionListener value="#{list}" target="#{incidenciaControlador.incidencia}"/>
                                         </p:commandButton>
                                     </p:column>
                                 </p:dataTable> 
                             </h:form>
-
                         </div>
                     </div>
                 </div>
             </div>
             <!-- /.col-lg-12 -->
         </div>
-        <p:dialog modal="true" position="center top"  widgetVar="deletefile" resizable="false" showEffect="fade" >
+        <p:dialog modal="true" position="center top"  widgetVar="deleteincidencia" resizable="false" showEffect="fade" >
             <h:form >
                 <div   id="row" style="font-weight: bold;font-size: 14px;">
-                    ¿Desea Eliminar la Tarifa ?
+                    ¿Desea Eliminar la Incidencia ?
                 </div>
                 <div   id="row">
                     <div class="col-lg-6">
-                        <p:commandButton  actionListener="#{tarifaControlador.eliminarTarifa}" update=":frmTarifa" value="Si" oncomplete="PF('deletefile').hide();"   >
+                        <p:commandButton  actionListener="#{incidenciaControlador.actualizarIncidencia}" update=":frmIncidencia" value="Si" oncomplete="PF('deleteincidencia').hide();"   >
                         </p:commandButton>
                     </div>
                     <div class="col-lg-6">
-                        <p:commandButton    value="No" onclick="PF('deletefile').hide();"   >
+                        <p:commandButton    value="No" onclick="PF('deleteincidencia').hide();"   >
                         </p:commandButton>
                     </div>
                 </div>

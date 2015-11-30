@@ -20,6 +20,18 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `sgstt`.`sede`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `sgstt`.`sede` ;
+
+CREATE  TABLE IF NOT EXISTS `sgstt`.`sede` (
+  `idsede` INT NOT NULL AUTO_INCREMENT ,
+  `descripcion` VARCHAR(200) NOT NULL ,
+  PRIMARY KEY (`idsede`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `sgstt`.`trasladista`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `sgstt`.`trasladista` ;
@@ -43,18 +55,6 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`trasladista` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
--- -----------------------------------------------------
--- Table `sgstt`.`sede`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `sgstt`.`sede` ;
-
-CREATE  TABLE IF NOT EXISTS `sgstt`.`sede` (
-  `idsede` INT NOT NULL AUTO_INCREMENT ,
-  `descripcion` VARCHAR(200) NOT NULL ,
-  PRIMARY KEY (`idsede`) )
-ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `sgstt`.`chofer`
@@ -172,10 +172,12 @@ DROP TABLE IF EXISTS `sgstt`.`vuelo` ;
 
 CREATE  TABLE IF NOT EXISTS `sgstt`.`vuelo` (
   `idvuelo` INT NOT NULL AUTO_INCREMENT ,
+  `idsede` INT NOT NULL ,
   `descripcion` VARCHAR(45) NOT NULL ,
   `origen` VARCHAR(45) NULL ,
   `destino` VARCHAR(45) NULL ,
   `horario` VARCHAR(45) NULL ,
+  `estado` TINYINT(1) NOT NULL DEFAULT 1 ,
   `idaerolinea` INT NOT NULL ,
   PRIMARY KEY (`idvuelo`, `idaerolinea`) ,
   INDEX `fk_vuelo_aerolinea1_idx` (`idaerolinea` ASC) ,
@@ -183,9 +185,13 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`vuelo` (
     FOREIGN KEY (`idaerolinea` )
     REFERENCES `sgstt`.`aerolinea` (`idaerolinea` )
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_vuelo_sede1`
+    FOREIGN KEY (`idsede` )
+    REFERENCES `sgstt`.`sede` (`idsede` )
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `sgstt`.`tipo_servicio_has_vehículo`
@@ -304,19 +310,6 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`tipo_incidencia` (
   `descripcion` VARCHAR(45) NULL ,
   PRIMARY KEY (`idtipo_incidencia`) )
 ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `sgstt`.`estado_incidencia`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `sgstt`.`estado_incidencia` ;
-
-CREATE  TABLE IF NOT EXISTS `sgstt`.`estado_incidencia` (
-  `idestado_incidencia` INT NOT NULL AUTO_INCREMENT ,
-  `descripcion` VARCHAR(45) NULL ,
-  PRIMARY KEY (`idestado_incidencia`) )
-ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `sgstt`.`empresa`
@@ -549,34 +542,33 @@ DROP TABLE IF EXISTS `sgstt`.`incidencia` ;
 
 CREATE  TABLE IF NOT EXISTS `sgstt`.`incidencia` (
   `idincidencia` INT NOT NULL ,
-  `descripcion` VARCHAR(45) NULL ,
-  `idestado_incidencia` INT NOT NULL ,
+  `idsede` INT NOT NULL ,
   `idtipo_incidencia` INT NOT NULL ,
   `idservicio_detalle` INT NOT NULL ,
+  `descripcion` VARCHAR(45) NULL ,
+  `estado_INCIDENCIA` VARCHAR(60) NULL ,
   `fecha_registro` DATETIME NOT NULL ,
   `fecha_modificacion` DATETIME NOT NULL ,
-  `estado` TINYINT(2) NULL DEFAULT '1' ,
-  PRIMARY KEY (`idincidencia`, `idservicio_detalle`) ,
+  `estado` TINYINT(1) NOT NULL DEFAULT 1 ,
+  PRIMARY KEY (`idincidencia`, `idservicio_detalle`, `idsede`) ,
   INDEX `fk_incidencia_tipo_incidencia1_idx` (`idtipo_incidencia` ASC) ,
-  INDEX `fk_incidencia_estado_incidencia1_idx` (`idestado_incidencia` ASC) ,
   INDEX `fk_incidencia_servicio_detalle1_idx` (`idservicio_detalle` ASC) ,
   CONSTRAINT `fk_incidencia_tipo_incidencia1`
     FOREIGN KEY (`idtipo_incidencia` )
     REFERENCES `sgstt`.`tipo_incidencia` (`idtipo_incidencia` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_incidencia_estado_incidencia1`
-    FOREIGN KEY (`idestado_incidencia` )
-    REFERENCES `sgstt`.`estado_incidencia` (`idestado_incidencia` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_incidencia_servicio_detalle1`
     FOREIGN KEY (`idservicio_detalle` )
     REFERENCES `sgstt`.`servicio_detalle` (`idservicio_detalle` )
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_incidencia_sede1`
+    FOREIGN KEY (`idsede` )
+    REFERENCES `sgstt`.`sede` (`idsede` )
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `sgstt`.`perfil`
@@ -684,6 +676,7 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`destinos` (
   `nombre` VARCHAR(300) NOT NULL ,
   `latitud` VARCHAR(50) NULL ,
   `longitud` VARCHAR(50) NULL ,
+  `tipo_destino` VARCHAR(50) NULL ,
   `estado` TINYINT(1) NOT NULL DEFAULT 1 ,
   PRIMARY KEY (`iddestinos`, `idsede`),
   CONSTRAINT `fk_destinos_sede1`
@@ -888,9 +881,31 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sgstt`;
-INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (1, 'Avianca');
-INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (2, 'LAN-Peru');
-INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (3, 'LAN-Chile');
+INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (1, 'Aero Transporte');
+INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (2, 'Aerolíneas Argentinas');
+INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (3, 'AeroMéxico');
+INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (4, 'AeroSur');
+INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (5, 'Air Canada');
+INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (6, 'Air Europa');
+INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (7, 'Air France');
+INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (8, 'Alitalia');
+INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (9, 'American Airlines');
+INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (10, 'Avianca');
+INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (11, 'Copa Airlines');
+INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (12, 'Delta Airlines');
+INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (13, 'Iberia');
+INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (14, 'KLM');
+INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (15, 'Lan Airlines');
+INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (16, 'Lan Perú');
+INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (17, 'LC Perú');
+INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (18, 'Peruvian Airlines');
+INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (19, 'Sky Airline');
+INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (20, 'Spirit Airlines');
+INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (21, 'Star Perú');
+INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (22, 'Taca Perú');
+INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (23, 'TAM');
+INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (24, 'United');
+
 
 COMMIT;
 
@@ -899,8 +914,8 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sgstt`;
-INSERT INTO `sgstt`.`vuelo` (`idvuelo`, `descripcion`, `origen`, `destino`, `horario`, `idaerolinea`) VALUES (1, 'AV141', 'BOGOTA', 'LIMA', NULL, 1);
-INSERT INTO `sgstt`.`vuelo` (`idvuelo`, `descripcion`, `origen`, `destino`, `horario`, `idaerolinea`) VALUES (2, 'LA2027', 'CARACAS', 'LIMA', NULL, 2);
+INSERT INTO `sgstt`.`vuelo` (`idvuelo`, `idsede`, `descripcion`, `origen`, `destino`, `horario`, `estado`,`idaerolinea`) VALUES (1, 1, 'AV141', 'BOGOTA', 'LIMA', NULL, 1, 1);
+INSERT INTO `sgstt`.`vuelo` (`idvuelo`, `idsede`, `descripcion`, `origen`, `destino`, `horario`, `estado`, `idaerolinea`) VALUES (2, 1,'LA2027', 'CARACAS', 'LIMA', NULL, 1, 2);
 
 COMMIT;
 
@@ -994,16 +1009,6 @@ INSERT INTO `sgstt`.`tipo_incidencia` (`idtipo_incidencia`, `descripcion`) VALUE
 COMMIT;
 
 -- -----------------------------------------------------
--- Data for table `sgstt`.`estado_incidencia`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `sgstt`;
-INSERT INTO `sgstt`.`estado_incidencia` (`idestado_incidencia`, `descripcion`) VALUES (1, 'pendiente');
-INSERT INTO `sgstt`.`estado_incidencia` (`idestado_incidencia`, `descripcion`) VALUES (2, 'atendida');
-
-COMMIT;
-
--- -----------------------------------------------------
 -- Data for table `sgstt`.`tipo_cliente`
 -- -----------------------------------------------------
 START TRANSACTION;
@@ -1062,22 +1067,23 @@ COMMIT;
 START TRANSACTION;
 USE `sgstt`;
 
-INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (1, 'Administrar Cliente', 'cliente', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (1, 'Administrar Clientes', 'cliente', 1, 1, 1, 1, 1);
 INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (2, 'Administrar Choferes', 'chofer', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (3, 'Administrar Cuenta', 'cuenta', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (4, 'Administrar Destino', 'destino', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (3, 'Administrar Cuentas', 'cuenta', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (4, 'Administrar Destinos', 'destino', 1, 1, 1, 1, 1);
 INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (5, 'Administrar Empresas', 'empresa', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (6, 'Administrar Empleado', 'empleado', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (7, 'Administrar File', 'file', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (8, 'Administrar Incidencia', 'incidencia', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (6, 'Administrar Empleados', 'empleado', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (7, 'Administrar Files', 'file', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (8, 'Administrar Incidencias', 'incidencia', 1, 1, 1, 1, 1);
 INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (9, 'Administrar Modulos', 'modulo', 1, 1, 1, 1, 1);
 INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (10, 'Administrar Ordenes', 'ordenServicio', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (11, 'Administrar Perfil', 'perfil', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (11, 'Administrar Perfiles', 'perfil', 1, 1, 1, 1, 1);
 INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (12, 'Administrar Servicios', 'servicio', 1, 1, 1, 1, 1);
 INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (13, 'Administrar Tarifario', 'tarifa', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (14, 'Administrar Trasladista', 'trasladista', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (15, 'Administrar Tipo Servicio', 'tipoServicio', 1, 1, 1, 1, 1);
-INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (16, 'Administrar Vehiculo', 'vehiculo', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (14, 'Administrar Trasladistas', 'trasladista', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (15, 'Administrar Tipo Servicios', 'tipoServicio', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (16, 'Administrar Vehiculos', 'vehiculo', 1, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`modulo` (`idmodulo`, `nombre`, `url`, `listar`, `crear`, `actualizar`, `eliminar`, `estado`) VALUES (17, 'Administrar Vuelos', 'vuelo', 1, 1, 1, 1, 1);
 
 COMMIT;
 
@@ -1102,6 +1108,7 @@ INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `c
 INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (14, 1, 14, 1, 1, 1, 1);
 INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (15, 1, 15, 1, 1, 1, 1);
 INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (16, 1, 16, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (49, 1, 17, 1, 1, 1, 1);
 
 INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (17, 2, 1, 1, 1, 1, 1);
 INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (18, 2, 2, 1, 1, 1, 1);
@@ -1119,6 +1126,7 @@ INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `c
 INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (30, 2, 14, 1, 1, 1, 1);
 INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (31, 2, 15, 1, 1, 1, 1);
 INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (32, 2, 16, 1, 1, 1, 1);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (50, 2, 17, 1, 1, 1, 1);
 
 INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (33, 3, 1, 1, 1, 1, 0);
 INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (34, 3, 2, 1, 1, 0, 0);
@@ -1136,6 +1144,7 @@ INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `c
 INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (46, 3, 14, 1, 1, 0, 0);
 INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (47, 3, 15, 1, 1, 0, 0);
 INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (48, 3, 16, 1, 1, 0, 0);
+INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (51, 3, 17, 1, 1, 0, 0);
 
 COMMIT;
 

@@ -2,14 +2,18 @@ package com.sgstt.entidad;
 
 import java.io.Serializable;
 import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -43,6 +47,15 @@ public class Vuelo implements Serializable{
      @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "idaerolinea", nullable = false)
     private Aerolinea aerolinea;
+    
+    @Enumerated(EnumType.ORDINAL)
+    @Column(nullable = false,insertable = false)
+    private Estado estado;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idSede")
+    private Sede sede;
+    
 
     public Vuelo() {
     }
@@ -94,5 +107,20 @@ public class Vuelo implements Serializable{
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
     
+    public Sede getSede() {
+        return sede;
+    }
+
+    public void setSede(Sede sede) {
+        this.sede = sede;
+    }
 }

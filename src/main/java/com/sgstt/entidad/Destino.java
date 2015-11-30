@@ -3,6 +3,7 @@ package com.sgstt.entidad;
 
 import java.io.Serializable;
 import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -36,6 +37,10 @@ public class Destino implements Serializable{
     
     @Column
     private String latitud;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name = "TIPO_DESTINO")
+    private TipoDestino tipoDestino;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idSede")
@@ -98,6 +103,14 @@ public class Destino implements Serializable{
         this.sede = sede;
     }
     
+    public TipoDestino getTipoDestino() {
+        return tipoDestino;
+    }
+
+    public void setTipoDestino(TipoDestino tipoDestino) {
+        this.tipoDestino = tipoDestino;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 5;
@@ -106,7 +119,8 @@ public class Destino implements Serializable{
         hash = 53 * hash + Objects.hashCode(this.longitud);
         hash = 53 * hash + Objects.hashCode(this.latitud);
         hash = 53 * hash + Objects.hashCode(this.sede);
-        hash = 53 * hash + Objects.hashCode(this.estado);    
+        hash = 53 * hash + Objects.hashCode(this.estado); 
+        hash = 53 * hash + Objects.hashCode(this.tipoDestino);   
         return hash;
     }
 
@@ -137,11 +151,12 @@ public class Destino implements Serializable{
         if (this.estado != other.estado) {
             return false;
         }
+        if (this.tipoDestino != other.tipoDestino) {
+            return false;
+        }
         return true;
     }
-
     
 
-    
     
 }
