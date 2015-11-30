@@ -1137,7 +1137,6 @@ INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `c
 INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (47, 3, 15, 1, 1, 0, 0);
 INSERT INTO `sgstt`.`permiso` (`idpermiso`, `idperfil`, `idmodulo`, `listar`, `crear`, `actualizar`, `eliminar`) VALUES (48, 3, 16, 1, 1, 0, 0);
 
-
 COMMIT;
 
 -- -----------------------------------------------------
