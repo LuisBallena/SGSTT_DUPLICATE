@@ -856,10 +856,13 @@ COMMIT;
 START TRANSACTION;
 USE `sgstt`;
 INSERT INTO `sgstt`.`tipo_vehiculo` (`idtipo_vehiculo`, `nombre`, `capacidad`) VALUES (1, 'Bus', 30);
-INSERT INTO `sgstt`.`tipo_vehiculo` (`idtipo_vehiculo`, `nombre`, `capacidad`) VALUES (2, 'Mini Bus', 20);
-INSERT INTO `sgstt`.`tipo_vehiculo` (`idtipo_vehiculo`, `nombre`, `capacidad`) VALUES (3, 'Sprinter Larga', 40);
-INSERT INTO `sgstt`.`tipo_vehiculo` (`idtipo_vehiculo`, `nombre`, `capacidad`) VALUES (4, 'Van H1', 10);
-INSERT INTO `sgstt`.`tipo_vehiculo` (`idtipo_vehiculo`, `nombre`, `capacidad`) VALUES (5, 'Van Toyota', 10);
+INSERT INTO `sgstt`.`tipo_vehiculo` (`idtipo_vehiculo`, `nombre`, `capacidad`) VALUES (2, 'Bus-30 Max', 30);
+INSERT INTO `sgstt`.`tipo_vehiculo` (`idtipo_vehiculo`, `nombre`, `capacidad`) VALUES (3, 'Bus-24 Max', 30);
+INSERT INTO `sgstt`.`tipo_vehiculo` (`idtipo_vehiculo`, `nombre`, `capacidad`) VALUES (4, 'Mini Bus', 20);
+INSERT INTO `sgstt`.`tipo_vehiculo` (`idtipo_vehiculo`, `nombre`, `capacidad`) VALUES (5, 'Sprinter Larga', 40);
+INSERT INTO `sgstt`.`tipo_vehiculo` (`idtipo_vehiculo`, `nombre`, `capacidad`) VALUES (6, 'Sprinter Corta', 40);
+INSERT INTO `sgstt`.`tipo_vehiculo` (`idtipo_vehiculo`, `nombre`, `capacidad`) VALUES (7, 'Van H1', 10);
+INSERT INTO `sgstt`.`tipo_vehiculo` (`idtipo_vehiculo`, `nombre`, `capacidad`) VALUES (8, 'Van Toyota', 10);
 COMMIT;
 
 -- -----------------------------------------------------
@@ -945,6 +948,39 @@ INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`,
 INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (37, 1, 'CITY BY NIGHT + F. MAGICAS+CENA SHOW', 1, 2);
 INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (38, 1, 'CITY + MUSEO P.OSMA', 1, 2);
 
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (39, 2, 'APTO / HOTEL O VICIVERSA', 1, 1);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (40, 2, 'HOTEL / ESTACION O VICIVERSA', 1, 1);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (41, 2, 'HOTEL / TERMINAL TERRESTRE O VICIVERSA', 1, 1);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (42, 2, 'CUSCO / ESTACION POROY O VICIVERSA', 1, 1);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (43, 2, 'CUSCO/URUBAMBA-YUCAY O VICIVERSA', 1, 1);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (44, 2, 'CUSCO / ESTACION OLLANTA O VICIVERSA', 1, 1);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (45, 2, 'CUSCO/ESTACION OLLANTA/CUSCO', 1, 1);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (46, 2, 'HTL / RESTAURANT / HTL', 1, 1);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (47, 2, 'SERVICIO A DISPOSICION POR HORAS', 1, 1);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (48, 2, 'RUINAS O CIUDAD', 1, 2);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (49, 2, 'COMBINADA', 1, 2);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (50, 2, 'PISAC MARKET', 1, 2);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (51, 2, 'PISAC MERCADO + RUINAS', 1, 2);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (52, 2, 'CHINCHERO', 1, 2);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (53, 2, 'MORAY + SALINERAS', 1, 2);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (54, 2, 'OLLANTA RUINAS', 1, 2);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (55, 2, 'PIQUILLACTA + ANDAHUAYLILLAS', 1, 2);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (56, 2, 'PISAC MARKET + OLLANTA (F/D VALLE)', 1, 2);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (57, 2, 'PISAC MK + P.RUINAS + OLLANTA', 1, 2);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (58, 2, 'PISAC MK + OLLANTA  + CHINCHERO', 1, 2);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (59, 2, 'PISAC + OLLANTA+ O/N + TRF.ESTAC.OLLANTA', 1, 2);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (60, 2, 'PISAC + OLLANTA + WILLOC + PATACANCHA', 1, 2);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (61, 2, 'PISAC + MORAY + SALINERAS', 1, 2);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (62, 2, 'PISAC + OLLANTA + MORAY + SALINERAS', 1, 2);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (63, 2, 'PIQUILLACTA + ANDAHUAYLILLAS + TIPON', 1, 2);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (64, 2, 'INTI RAYMI', 1, 2);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (65, 2, 'CUSCO / PUNO O VICIVERSA', 1, 3);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (66, 2, 'CUSCO / PUNO O VICIVERSA CON SILLUSTANI EN RUTA', 1, 3);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (67, 2, 'PUNO / AREQUIPA O VICIVERSA', 1, 3);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (68, 2, 'PUNO/AREQUIPA O VICIVERSA CON SILLUSTANI EN RUTA', 1, 3);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (69, 2, 'APTO/HTL O VICEVERSA (MALETAS)', 1, 4);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (70, 2, 'APTO/URUBAMBA O VICIVERSA (MALETAS)', 1, 4);
+
 COMMIT;
 
 -- -----------------------------------------------------
@@ -993,7 +1029,8 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sgstt`;
-INSERT INTO `sgstt`.`empleado` (`idempleado`,`idsede`, `nombre`, `apellidos`, `dni`, `telefono`, `celular`, `correo`, `estado`) VALUES (1, 1, 'Sistema', 'Administrador', '11111111', '11111111', '11111111', '11111111', 1);
+INSERT INTO `sgstt`.`empleado` (`idempleado`,`idsede`, `nombre`, `apellidos`, `dni`, `telefono`, `celular`, `correo`, `estado`) VALUES (1, 1, 'Sistema', 'Administrador Lima', '11111111', '11111111', '11111111', '11111111', 1);
+INSERT INTO `sgstt`.`empleado` (`idempleado`,`idsede`, `nombre`, `apellidos`, `dni`, `telefono`, `celular`, `correo`, `estado`) VALUES (2, 2, 'Sistema', 'Administrador Cusco', '11111111', '11111111', '11111111', '11111111', 1);
 
 COMMIT;
 
@@ -1013,7 +1050,9 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sgstt`;
-INSERT INTO `sgstt`.`usuario` (`idusuario`, `idperfil`, `idempleado`, `idsede`, `nick`, `clave`, `estado`) VALUES (1, 1, 1, 1, 'admin', 'admin1234', 1);
+INSERT INTO `sgstt`.`usuario` (`idusuario`, `idperfil`, `idempleado`, `idsede`, `nick`, `clave`, `estado`) VALUES (1, 1, 1, 1, 'admin-lima', 'admin1234', 1);
+INSERT INTO `sgstt`.`usuario` (`idusuario`, `idperfil`, `idempleado`, `idsede`, `nick`, `clave`, `estado`) VALUES (2, 1, 2, 2, 'admin-cusco', 'admin1234', 1);
+
 
 COMMIT;
 
