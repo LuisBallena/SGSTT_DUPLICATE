@@ -1,12 +1,10 @@
 package com.sgstt.controlador;
 
 import com.sgstt.entidad.Aerolinea;
-import com.sgstt.entidad.Empresa;
 import com.sgstt.entidad.Sede;
 import com.sgstt.entidad.Vuelo;
 import com.sgstt.hibernate.HibernatePaginador;
 import com.sgstt.paginacion.VueloPaginador;
-import com.sgstt.servicios.EmpresaServicio;
 import com.sgstt.servicios.VueloServicio;
 import com.sgstt.util.Utilitario;
 
@@ -67,6 +65,7 @@ public class VueloControlador implements Serializable {
             vueloServicio = new VueloServicio();
             vuelo = vueloServicio.obtenerVuelo(Integer.parseInt(value.toString()));           
             sedes = vueloServicio.obtenerSedes();
+            aerolineas = vueloServicio.obtenerAerolineas();
         }
     }
 
@@ -74,12 +73,7 @@ public class VueloControlador implements Serializable {
         if (esVistaValida()) {
         	vuelo.setSede(sesionControlador.getUsuarioSesion().getSede());
         	vueloServicio.guardarVuelo(vuelo);
-        	limpiar();
         }
-    }
-    
-    private void limpiar(){
-    	vuelo = new Vuelo();
     }
     
     public void actualizarVuelo() {
@@ -138,11 +132,11 @@ public class VueloControlador implements Serializable {
 		this.sedes = sedes;
 	}
 	
-	public List<Aerolinea> getAerolinea() {
+	public List<Aerolinea> getAerolineas() {
 		return aerolineas;
 	}
 
-	public void setAerolinea(List<Aerolinea> aerolineas) {
+	public void setAerolineas(List<Aerolinea> aerolineas) {
 		this.aerolineas = aerolineas;
 	}
 }

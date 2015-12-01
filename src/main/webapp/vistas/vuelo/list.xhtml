@@ -63,7 +63,7 @@
                                         <h:outputText value="#{list.aerolinea.descripcion}" />
                                     </p:column>
                                     <p:column  style="text-align: center;width: 12%;">
-                                        <p:commandButton rendered="#{sesionControlador.permisoModulo.actualizar eq true}" style="font-size: 12px;"  icon="icon-update" action="#{empresaControlador.irActualizar(list.id)}"    >
+                                        <p:commandButton rendered="#{sesionControlador.permisoModulo.actualizar eq true}" style="font-size: 12px;"  icon="icon-update" action="#{vueloControlador.irActualizar(list.id)}"    >
                                         </p:commandButton>
                                         <p:commandButton rendered="#{sesionControlador.permisoModulo.eliminar eq true}" style="font-size: 12px;" icon="icon-delete"  oncomplete="PF('deleteempresa').show();"   >
                                             <f:setPropertyActionListener value="#{list}" target="#{empresaControlador.empresa}" />

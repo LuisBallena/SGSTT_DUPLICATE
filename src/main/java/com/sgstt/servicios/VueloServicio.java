@@ -12,7 +12,6 @@ import com.sgstt.dao.impl.AerolineaImpl;
 import com.sgstt.dao.impl.VueloImpl;
 import com.sgstt.dao.impl.SedeImpl;
 import com.sgstt.entidad.Aerolinea;
-import com.sgstt.entidad.Chofer;
 import com.sgstt.entidad.Vuelo;
 import com.sgstt.entidad.Estado;
 import com.sgstt.entidad.Sede;
@@ -79,10 +78,10 @@ public class VueloServicio {
     }
     
     public List<Aerolinea> obtenerAerolineas() {
-        List<Aerolinea> aerolineas = null;
+        List<Aerolinea> aux = null;
         conexion.beginConexion();
-        aerolineas = aerolineaDao.obtenerTodos();
+        aux = aerolineaDao.obtenerTodos();
         conexion.closeConexion();
-        return aerolineas;
+        return aux;
     }
 }

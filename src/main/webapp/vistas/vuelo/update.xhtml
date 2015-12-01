@@ -11,74 +11,60 @@
     <ui:define name="content">
         <div class="row">
             <div class="col-lg-12">
-                <h3 class="page-header">Actualizar Empresa Externa</h3>
+                <h3 class="page-header">Actualizar vuelo Externa</h3>
             </div>
             <div class="row">
                 <div class="col-lg-12 opcion-listado" >
-                    <h:link style="font-size: 16px;font-weight: bold;" value="Lista de Empresa" outcome="list.xhtml"></h:link>
+                    <h:link style="font-size: 16px;font-weight: bold;" value="Lista de vuelo" outcome="list.xhtml"></h:link>
                 </div>
                 <div class="col-lg-12">
                     <div class="panel panel-success">
-                        <div class="panel-heading"  >Actualizar Empresa Externa</div>
+                        <div class="panel-heading"  >Actualizar vuelo Externa</div>
                         <div class="panel-body">
-                            <div class="row" id="modificarEmpresa">
+                            <div class="row" id="modificarvuelo">
                                 <div class="col-lg-12">
-                                    <h:form id="frmRegistrarEmpresa" styleClass="form-horizontal" >
-                                        <f:event type="preRenderView" listener="#{empresaControlador.initUpdate}" />
+                                    <h:form id="frmRegistrarvuelo" styleClass="form-horizontal" >
+                                        <f:event type="preRenderView" listener="#{vueloControlador.initUpdate}" />
                                         <h:messages id="msg" globalOnly="true" styleClass="list-group" infoClass="list-group-item list-group-item-success"
                                                     errorClass="list-group-item list-group-item-danger" />
                                         <div class="form-group has-feedback">
-                                            <label for="nombre" class="col-sm-3 control-label" >Razon Social :</label>
+                                            <label for="nombre" class="col-sm-3 control-label" >Código de Vuelo :</label>
                                             <div    class="col-sm-6" >
-                                                <p:inputText styleClass="form-control"  value="#{empresaControlador.empresa.razonSocial}"     >
+                                                <p:inputText styleClass="form-control"  value="#{vueloControlador.vuelo.descripcion}"     >
                                                 </p:inputText>
                                             </div>
                                         </div>
                                         <div class="form-group has-feedback">
-                                            <label for="nombre" class="col-sm-3 control-label" >RUC :</label>
+                                            <label for="nombre" class="col-sm-3 control-label" >Origen :</label>
                                             <div    class="col-sm-6" >
-                                                <p:inputText styleClass="form-control"  value="#{empresaControlador.empresa.ruc}"     >
+                                                <p:inputText styleClass="form-control"  value="#{vueloControlador.vuelo.origen}"     >
                                                 </p:inputText>
                                             </div>
                                         </div>
                                         <div class="form-group has-feedback">
-                                            <label for="nombre" class="col-sm-3 control-label" >Centro de Costo :</label>
+                                            <label for="nombre" class="col-sm-3 control-label" >Destino :</label>
                                             <div    class="col-sm-6" >
-                                                <p:inputText styleClass="form-control"  value="#{empresaControlador.empresa.centrocosto}"     >
+                                                <p:inputText styleClass="form-control"  value="#{vueloControlador.vuelo.destino}"     >
                                                 </p:inputText>
                                             </div>
                                         </div>
-                                         <div class="form-group has-feedback">
-                                            <label for="nombre" class="col-sm-3 control-label" >Telefono :</label>
+                                        <div class="form-group has-feedback">
+                                            <label for="nombre" class="col-sm-3 control-label" >Horario :</label>
                                             <div    class="col-sm-6" >
-                                                <p:inputText styleClass="form-control"  value="#{empresaControlador.empresa.telefono}"     >
+                                                <p:inputText styleClass="form-control"  value="#{vueloControlador.vuelo.horario}"     >
                                                 </p:inputText>
                                             </div>
                                         </div>
-                                         <div class="form-group has-feedback">
-                                            <label for="nombre" class="col-sm-3 control-label" >Celular :</label>
+                                       <div class="form-group has-feedback">
+                                            <label for="nombre" class="col-sm-3 control-label" >Aerolinea :</label>
                                             <div    class="col-sm-6" >
-                                                <p:inputText styleClass="form-control"  value="#{empresaControlador.empresa.celular}"     >
-                                                </p:inputText>
-                                            </div>
-                                        </div>
-                                         <div class="form-group has-feedback">
-                                            <label for="nombre" class="col-sm-3 control-label" >Correo :</label>
-                                            <div    class="col-sm-6" >
-                                                <p:inputText styleClass="form-control"  value="#{empresaControlador.empresa.correo}"     >
-                                                </p:inputText>
-                                            </div>
-                                        </div>
-                                          <div class="form-group has-feedback">
-                                            <label for="nombre" class="col-sm-3 control-label" >Empresa :</label>
-                                            <div    class="col-sm-6" >
-                                                <h:selectOneMenu styleClass="form-control" value="#{empresaControlador.empresa.sede.id}" >
-                                                    <f:selectItems value="#{empresaControlador.sedes}" var="listSede"  itemValue="#{listSede.id}" itemLabel="#{listSede.descripcion}" />
+                                                <h:selectOneMenu styleClass="form-control" value="#{vueloControlador.vuelo.aerolinea.idAerolinea}" >
+                                                    <f:selectItems value="#{vueloControlador.aerolineas}" var="listAerolinea"  itemValue="#{listAerolinea.idAerolinea}" itemLabel="#{listAerolinea.descripcion}" />
                                                 </h:selectOneMenu>
-                                            </div>
+                                            </div>  
                                         </div>
                                         <div class="col-sm-3 control-label">
-                                            <p:commandButton value="Guardar" actionListener="#{empresaControlador.actualizarEmpresa}" update="@form" styleClass="btn btn-primary"/>
+                                            <p:commandButton value="Guardar" actionListener="#{vueloControlador.actualizarVuelo}" update="@form" styleClass="btn btn-primary"/>
                                         </div>
                                     </h:form>  
                                 </div>

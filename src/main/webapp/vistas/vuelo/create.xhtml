@@ -55,14 +55,14 @@
                                                 </p:inputText>
                                             </div>
                                         </div>
-                                        <div class="form-group has-feedback">
+                                         <div class="form-group has-feedback">
                                             <label for="nombre" class="col-sm-3 control-label" >Aerolinea :</label>
                                             <div    class="col-sm-6" >
-                                                <h:selectOneMenu styleClass="form-control" value="#{vueloControlador.vuelo.aerolinea.descripcion}" >
-                                                    <f:selectItems value="#{vueloControlador.aerolinea}" var="listVuelo"  itemValue="#{listAerolinea.id}" itemLabel="#{listAerolinea.descripcion}" />
+                                                <h:selectOneMenu styleClass="form-control" value="#{vueloControlador.vuelo.aerolinea.idAerolinea}" >
+                                                    <f:selectItems value="#{vueloControlador.aerolineas}" var="listAerolinea"  itemValue="#{listAerolinea.idAerolinea}" itemLabel="#{listAerolinea.descripcion}" />
                                                 </h:selectOneMenu>
-                                            </div>
-                                        </div>                                      
+                                            </div>  
+                                        </div>                                    
                                         <div class="col-sm-3 control-label">
                                             <p:commandButton value="Guardar" actionListener="#{vueloControlador.guardarVuelo}" update="@form" styleClass="btn btn-primary"/>
                                         </div>
