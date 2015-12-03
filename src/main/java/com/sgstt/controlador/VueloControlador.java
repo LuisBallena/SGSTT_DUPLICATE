@@ -29,74 +29,71 @@ public class VueloControlador implements Serializable {
     private List<Aerolinea> aerolineas;
     private HibernatePaginador<Vuelo> vueloPaginador;
     private VueloServicio vueloServicio;
-    private List<Sede> sedes;
     @ManagedProperty(value = "#{sesionControlador}")
     private SesionControlador sesionControlador;
-
 
     public VueloControlador() {
     }
 
     public void initLista() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
-        	vueloServicio = new VueloServicio();
-        	vueloPaginador = new VueloPaginador();
-        	vueloPaginador.initPaginador(sesionControlador.getUsuarioSesion().getSede().getId());
+            vueloServicio = new VueloServicio();
+            vueloPaginador = new VueloPaginador();
+            vueloPaginador.initPaginador(sesionControlador.getUsuarioSesion().getSede().getId());
         }
     }
 
     public void initCreate() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
-        	vueloServicio = new VueloServicio();
-        	vuelo = new Vuelo();
-            vuelo.setSede(new Sede());
+            vueloServicio = new VueloServicio();
+            vuelo = new Vuelo();
+            vuelo.setAerolinea(new Aerolinea());
+            vuelo.setSede(sesionControlador.getUsuarioSesion().getSede());
             aerolineas = vueloServicio.obtenerAerolineas();
-            setSedes(vueloServicio.obtenerSedes());
         }
     }
-    
-    public void initUpdate(){
+
+    public void initUpdate() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
             Object value = Utilitario.getFlash("idvuelo");
-            if(value == null){
+            if (value == null) {
                 Utilitario.redireccionarJSF(FacesContext.getCurrentInstance(), "/vistas/vuelo/list.xhtml");
                 return;
             }
             vueloServicio = new VueloServicio();
-            vuelo = vueloServicio.obtenerVuelo(Integer.parseInt(value.toString()));           
-            sedes = vueloServicio.obtenerSedes();
+            vuelo = vueloServicio.obtenerVuelo(Integer.parseInt(value.toString()));
             aerolineas = vueloServicio.obtenerAerolineas();
         }
     }
 
     public void guardarVuelo() {
         if (esVistaValida()) {
-        	vuelo.setSede(sesionControlador.getUsuarioSesion().getSede());
-        	vueloServicio.guardarVuelo(vuelo);
+            vuelo.setSede(sesionControlador.getUsuarioSesion().getSede());
+            vueloServicio.guardarVuelo(vuelo);
         }
     }
-    
+
     public void actualizarVuelo() {
         if (esVistaValida()) {
-        	vueloServicio.actualizarVuelo(vuelo);
+            vueloServicio.actualizarVuelo(vuelo);
         }
     }
-    
-    public void eliminarVuelo(){
-    	vueloServicio.eliminarVuelo(vuelo);
+
+    public void eliminarVuelo() {
+        vueloServicio.eliminarVuelo(vuelo);
     }
-    
-    public String irActualizar(Integer id){
+
+    public String irActualizar(Integer id) {
         Utilitario.putFlash("idvuelo", id);
         return "update.xhtml?faces-redirect=true;";
     }
 
     private boolean esVistaValida() {
         boolean resultado = true;
-        if(Utilitario.esNulo(vuelo.getDescripcion())){
+        if (Utilitario.esNulo(vuelo.getDescripcion())) {
             Utilitario.enviarMensajeGlobalError("Debe ingresar la Razon social");
             resultado = false;
-        }else if(!Utilitario.esRangoValido(vuelo.getDescripcion(), 45)){
+        } else if (!Utilitario.esRangoValido(vuelo.getDescripcion(), 45)) {
             Utilitario.enviarMensajeGlobalError("El rango máximo de la descripción es de 45 caracteres");
             resultado = false;
         }
@@ -119,24 +116,16 @@ public class VueloControlador implements Serializable {
     public void setVuelo(Vuelo vuelo) {
         this.vuelo = vuelo;
     }
-    
+
     public void setSesionControlador(SesionControlador sesionControlador) {
         this.sesionControlador = sesionControlador;
     }
 
-	public List<Sede> getSedes() {
-		return sedes;
-	}
+    public List<Aerolinea> getAerolineas() {
+        return aerolineas;
+    }
 
-	public void setSedes(List<Sede> sedes) {
-		this.sedes = sedes;
-	}
-	
-	public List<Aerolinea> getAerolineas() {
-		return aerolineas;
-	}
-
-	public void setAerolineas(List<Aerolinea> aerolineas) {
-		this.aerolineas = aerolineas;
-	}
+    public void setAerolineas(List<Aerolinea> aerolineas) {
+        this.aerolineas = aerolineas;
+    }
 }

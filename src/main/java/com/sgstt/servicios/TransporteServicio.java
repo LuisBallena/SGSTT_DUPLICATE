@@ -86,10 +86,10 @@ public class TransporteServicio implements Serializable {
         return aux;
     }
 
-    public List<Servicio> obtenerServiciosPorTipoServicio(Integer id) {
+    public List<Servicio> obtenerServiciosPorTipoServicio(Integer idTipo,Integer idSede) {
         List<Servicio> aux = null;
         conexion.beginConexion();
-        aux = servicioDao.obtenerServiciosPorTipoServicioId(id);
+        aux = servicioDao.obtenerServiciosPorTipoServicioIdPorSede(idTipo,idSede);
         conexion.closeConexion();
         return aux;
     }
@@ -117,11 +117,19 @@ public class TransporteServicio implements Serializable {
         conexion.closeConexion();
         return aux;
     }
+    
+    public List<Cliente> obtenerClientes(Integer idSede) {
+        List<Cliente> aux = null;
+        conexion.beginConexion();
+        aux = clienteDao.getClientsFilterBySede(idSede);
+        conexion.closeConexion();
+        return aux;
+    }
 
-    public List<Vuelo> obtenerVuelos() {
+    public List<Vuelo> obtenerVuelos(Integer idSede) {
         List<Vuelo> aux = null;
         conexion.beginConexion();
-        aux = vueloDao.getVuelosWithStateActiveWithAerolinea();
+        aux = vueloDao.getVuelosWithStateActiveWithAerolineaFilterBySede(idSede);
         conexion.closeConexion();
         return aux;
     }
@@ -130,6 +138,14 @@ public class TransporteServicio implements Serializable {
         List<Trasladista> aux = null;
         conexion.beginConexion();
         aux = trasladistaDao.obtenerTodos();
+        conexion.closeConexion();
+        return aux;
+    }
+    
+    public List<Trasladista> obtenerGuiasPorSede(Integer idSede){
+        List<Trasladista> aux = null;
+        conexion.beginConexion();
+        aux = trasladistaDao.getTrasladistaFilterBySede(idSede);
         conexion.closeConexion();
         return aux;
     }
@@ -318,6 +334,15 @@ public class TransporteServicio implements Serializable {
         conexion.closeConexion();
         return empresa;
     }
+    
+    public List<Empresa> obtenerEmpresasConChoferRegistrado(Integer idSede) {
+    	List<Empresa> auxiliar = null;
+        conexion.beginConexion();
+        auxiliar = empresaDao.getEmpresasExistChoferFilterBySede(idSede);
+        conexion.closeConexion();
+        return auxiliar;
+    }
+    
     public List<Empresa> obtenerEmpresa() {
         List<Empresa> auxiliar = null;
         conexion.beginConexion();

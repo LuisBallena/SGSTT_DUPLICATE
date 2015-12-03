@@ -125,7 +125,7 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`vehiculo` (
   `descripcion` VARCHAR(45) NULL ,
   `placa` VARCHAR(7) NULL ,
   `estado` TINYINT(1) NOT NULL DEFAULT 1 ,
-  `año_fabricacion` VARCHAR(4) NULL ,
+  `aÃ±o_fabricacion` VARCHAR(4) NULL ,
   `capacidad_max` VARCHAR(3) NULL ,
   `capacidad_recomendada` VARCHAR(3) NULL ,
   `color` VARCHAR(25) NULL ,
@@ -135,12 +135,12 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`vehiculo` (
   `fecha_modificacion` DATETIME NULL ,
   PRIMARY KEY (`idvehiculo`, `idsede`) ,
   INDEX `descripcion` (`descripcion` ASC) ,
-  CONSTRAINT `fk_vehículo_marca1`
+  CONSTRAINT `fk_vehiculo_marca1`
     FOREIGN KEY (`marca_idmarca` )
     REFERENCES `sgstt`.`marca` (`idmarca` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_vehículo_tipo vehiculo1`
+  CONSTRAINT `fk_vehiculo_tipo vehiculo1`
     FOREIGN KEY (`idtipo_vehiculo` )
     REFERENCES `sgstt`.`tipo_vehiculo` (`idtipo_vehiculo` )
     ON DELETE NO ACTION
@@ -194,23 +194,23 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`vuelo` (
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `sgstt`.`tipo_servicio_has_vehículo`
+-- Table `sgstt`.`tipo_servicio_has_vehiculo`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sgstt`.`tipo_servicio_has_vehículo` ;
+DROP TABLE IF EXISTS `sgstt`.`tipo_servicio_has_vehiculo` ;
 
-CREATE  TABLE IF NOT EXISTS `sgstt`.`tipo_servicio_has_vehículo` (
+CREATE  TABLE IF NOT EXISTS `sgstt`.`tipo_servicio_has_vehiculo` (
   `tipo_servicio_idtipo_servicio` INT NOT NULL AUTO_INCREMENT ,
-  `vehículo_idvehículo` INT NOT NULL ,
-  PRIMARY KEY (`tipo_servicio_idtipo_servicio`, `vehículo_idvehículo`) ,
-  INDEX `fk_tipo_servicio_has_vehículo_vehículo1_idx` (`vehículo_idvehículo` ASC) ,
-  INDEX `fk_tipo_servicio_has_vehículo_tipo_servicio1_idx` (`tipo_servicio_idtipo_servicio` ASC) ,
-  CONSTRAINT `fk_tipo_servicio_has_vehículo_tipo_servicio1`
+  `vehiculo_idvehiculo` INT NOT NULL ,
+  PRIMARY KEY (`tipo_servicio_idtipo_servicio`, `vehiculo_idvehiculo`) ,
+  INDEX `fk_tipo_servicio_has_vehiculo_vehiculo1_idx` (`vehiculo_idvehiculo` ASC) ,
+  INDEX `fk_tipo_servicio_has_vehiculo_tipo_servicio1_idx` (`tipo_servicio_idtipo_servicio` ASC) ,
+  CONSTRAINT `fk_tipo_servicio_has_vehiculo_tipo_servicio1`
     FOREIGN KEY (`tipo_servicio_idtipo_servicio` )
     REFERENCES `sgstt`.`tipo_servicio` (`idtipo_servicio` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_tipo_servicio_has_vehículo_vehículo1`
-    FOREIGN KEY (`vehículo_idvehículo` )
+  CONSTRAINT `fk_tipo_servicio_has_vehiculo_vehiculo1`
+    FOREIGN KEY (`vehiculo_idvehiculo` )
     REFERENCES `sgstt`.`vehiculo` (`idvehiculo` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -745,15 +745,15 @@ START TRANSACTION;
 USE `sgstt`;
 INSERT INTO `sgstt`.`trasladista` (`idtrasladista`,`idsede`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (1, 1, 'Margarita', 'Stuard', '00000000', 'Domeyer 128 Dpto 502 ', 'No disponible', '7437434', '992096541', 1);
 INSERT INTO `sgstt`.`trasladista` (`idtrasladista`,`idsede`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (2, 1, 'Victor', 'Aranda', '00000000', 'Av. El laurel rosa 411, Dpto 502 Los sauces', 'No disponible', '5457854', '965874123', 1);
-INSERT INTO `sgstt`.`trasladista` (`idtrasladista`,`idsede`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (3, 1, 'Silvia', 'de Vettor', '00000000', 'Ramón Castilla 418 Urb. Aurora', 'No disponible', '7437434', '987654345', 1);
+INSERT INTO `sgstt`.`trasladista` (`idtrasladista`,`idsede`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (3, 1, 'Silvia', 'de Vettor', '00000000', 'Ramï¿½n Castilla 418 Urb. Aurora', 'No disponible', '7437434', '987654345', 1);
 INSERT INTO `sgstt`.`trasladista` (`idtrasladista`,`idsede`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (4, 1, 'Ursula', 'Collas', '00000000', 'Calle. Alfredo silva 142, Casa 115', 'No disponible', '5457854', '965874123', 1);
 INSERT INTO `sgstt`.`trasladista` (`idtrasladista`,`idsede`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (5, 1, 'Nelida', 'Manrique', '00000000', 'Calle. Manco Capac 421-Dpto 102 ', 'No disponible', '7437434', '987654345', 1);
-INSERT INTO `sgstt`.`trasladista` (`idtrasladista`,`idsede`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (6, 1, 'Franz', 'Alarcon', '00000000', 'Av. Grau 341 – Dpto 602', 'No disponible', '5457854', '965874123', 1);
+INSERT INTO `sgstt`.`trasladista` (`idtrasladista`,`idsede`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (6, 1, 'Franz', 'Alarcon', '00000000', 'Av. Grau 341 ï¿½ Dpto 602', 'No disponible', '5457854', '965874123', 1);
 INSERT INTO `sgstt`.`trasladista` (`idtrasladista`,`idsede`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (7, 1, 'Nieves', 'Echegaray', '00000000', 'Parque echenique 741 Dpto. 501', 'No disponible', '7437434', '987654345', 1);
-INSERT INTO `sgstt`.`trasladista` (`idtrasladista`,`idsede`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (8, 1, 'Oscar', 'Von Bishopsahussen', '00000000', 'Av. Castilla con Av. Ayacucho G in 17 - Urbanización La Capullana', 'No disponible', '5457854', '965874123', 1);
+INSERT INTO `sgstt`.`trasladista` (`idtrasladista`,`idsede`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (8, 1, 'Oscar', 'Von Bishopsahussen', '00000000', 'Av. Castilla con Av. Ayacucho G in 17 - Urbanizaciï¿½n La Capullana', 'No disponible', '5457854', '965874123', 1);
 INSERT INTO `sgstt`.`trasladista` (`idtrasladista`,`idsede`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (9, 1, 'Ernesto', 'Riedner', '00000000', 'Jr. Fernando castrat #320', 'No disponible', '7437434', '987654345', 1);
-INSERT INTO `sgstt`.`trasladista` (`idtrasladista`,`idsede`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (10, 1, 'Guillermo', 'Torres', '00000000', 'Enrique Barrón Nº 845 – Dpto. 202 – Santa Beatriz / Referencia al frente del parque de las aguas.', 'No disponible', '5457854', '965874123', 1);
-INSERT INTO `sgstt`.`trasladista` (`idtrasladista`,`idsede`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (11, 1, 'Mariana', 'Garcia', '00000000', 'Calle La Península Mz C1 Lt 21 Urb. La Ensenada', 'No disponible', '7437434', '987654345', 1);
+INSERT INTO `sgstt`.`trasladista` (`idtrasladista`,`idsede`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (10, 1, 'Guillermo', 'Torres', '00000000', 'Enrique Barrï¿½n Nï¿½ 845 ï¿½ Dpto. 202 ï¿½ Santa Beatriz / Referencia al frente del parque de las aguas.', 'No disponible', '5457854', '965874123', 1);
+INSERT INTO `sgstt`.`trasladista` (`idtrasladista`,`idsede`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (11, 1, 'Mariana', 'Garcia', '00000000', 'Calle La Penï¿½nsula Mz C1 Lt 21 Urb. La Ensenada', 'No disponible', '7437434', '987654345', 1);
 INSERT INTO `sgstt`.`trasladista` (`idtrasladista`,`idsede`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (12, 1, 'Karina', 'Bartens', '00000000', 'Jr. El escorial F-3 urb comopus', 'No disponible', '5457854', '965874123', 1);
 INSERT INTO `sgstt`.`trasladista` (`idtrasladista`,`idsede`, `nombre`, `apellido`, `dni`, `direccion`, `correo`, `telefono`, `celular`, `estado`) VALUES (13, 2, 'Karina', 'Bartens', '00000000', 'Jr. El escorial F-3 urb comopus', 'No disponible', '5457854', '965874123', 1);
 
@@ -791,7 +791,7 @@ INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`cent
 INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`, `estado`) VALUES (25, 1, 'TRANSP.LONGA', NULL,"VT-25", NULL, NULL, NULL,1);
 INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`, `estado`) VALUES (26, 1, 'TRANSP. CMV', NULL,"VT-26", NULL, NULL, NULL,1);
 INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`, `estado`) VALUES (27, 1, 'TRANSP.TRANSMARTIN', NULL,"VT-27", NULL, NULL, NULL,1);
-INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`, `estado`) VALUES (28, 1, 'TRANSP.WIÑATOUR', NULL,"VT-28", NULL, NULL, NULL,1);
+INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`, `estado`) VALUES (28, 1, 'TRANSP.WIï¿½ATOUR', NULL,"VT-28", NULL, NULL, NULL,1);
 INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`, `estado`) VALUES (29, 1, 'TRANSP.VSM', NULL,"VT-29", NULL, NULL, NULL,1);
 INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`, `estado`) VALUES (30, 1, 'TRANSPTRANSP.EDUFER.VALLE', NULL,"VT-30", NULL, NULL, NULL,1);
 INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`centrocosto`, `telefono`, `celular`, `correo`, `estado`) VALUES (31, 2, 'TRANSP.MOUNTAIN TRAVEL', NULL,"VTC-01", NULL, NULL, NULL,1);
@@ -818,14 +818,14 @@ COMMIT;
 START TRANSACTION;
 USE `sgstt`;
 INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`,`fecha`, `estado`,`idempresa`) VALUES (1, 2, 'JAIME', 'AGUILAR EGOAVIL', '23885693', 'A1',"2015-11-07 00:00:00", 1,1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`,`fecha`, `estado`,`idempresa`) VALUES (2, 2, 'CESAR AMADO', 'ARELLANOS MUÑOZ', '25662462', 'A2',"2015-11-07 00:00:00", 1,1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`,`fecha`, `estado`,`idempresa`) VALUES (2, 2, 'CESAR AMADO', 'ARELLANOS MUï¿½OZ', '25662462', 'A2',"2015-11-07 00:00:00", 1,1);
 INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`,`fecha`, `estado`,`idempresa`) VALUES (3, 1, 'MARIO HERNAN', 'CUADROS HUAPAYA', '25577045', 'A3',"2015-11-07 00:00:00", 1,1);
 INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`,`fecha`, `estado`,`idempresa`) VALUES (4, 1, 'PEPE', 'DAMIAN JURO', '10550499', 'A1',"2015-11-07 00:00:00", 1,1);
 INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`,`fecha`, `estado`,`idempresa`) VALUES (5, 1, 'KATTY DORIS', 'ESCOBAR PUMACALLAO', '07884541', 'A2',"2015-11-07 00:00:00", 1,1);
 INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`,`fecha`, `estado`,`idempresa`) VALUES (6, 1, 'CARLOS ALBERTO', 'HERRERA NAVARRO', '10630551', 'A3',"2015-11-07 00:00:00", 1,1);
 INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`,`fecha`, `estado`,`idempresa`) VALUES (7, 1, 'JOSE EDUARDO', 'HUAPALLA BALCAZAR', '10144415', 'A1',"2015-11-07 00:00:00", 1,1);
 INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`,`fecha`, `estado`,`idempresa`) VALUES (8, 1, 'RODOLFO CESAR', 'LAZO CALDERON', '25717877', 'A2',"2015-11-07 00:00:00", 1,1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`,`fecha`, `estado`,`idempresa`) VALUES (9, 1, 'JOSE LUIS', 'NUÑEZ CUENCA ROJAS', '09461980', 'A3',"2015-11-07 00:00:00", 1,1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`,`fecha`, `estado`,`idempresa`) VALUES (9, 1, 'JOSE LUIS', 'NUï¿½EZ CUENCA ROJAS', '09461980', 'A3',"2015-11-07 00:00:00", 1,1);
 INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`,`fecha`, `estado`,`idempresa`) VALUES (10, 1, 'ADRIAN', 'TICONA APAZA', '10520991', 'A1',"2015-11-07 00:00:00", 1,1);
 COMMIT;
 
@@ -863,17 +863,17 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sgstt`;
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (1, 1, 'V-01', 'B6F-962', 1, '2006', '12', '10', 'negro', 1, 4, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (2, 2, 'V-04', 'B3Z-954', 1, '2009', '40', '36', 'plata', 4, 2, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (3, 1, 'V-05', 'B6H-966', 1, '2009', '50', '45', 'plata', 5, 5, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (4, 1, 'V-06', 'A3H-968', 1, '2010', '12', '10', 'negro', 4, 2, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (5, 2, 'V-08', 'B8P-788', 1, '2012', '40', '36', 'plata', 4, 4, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (6, 1, 'V-09', 'B0F-958', 1, '2012', '50', '45', 'plata', 2, 3, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (7, 1, 'V-10', 'C3H-964', 1, '2012', '12', '10', 'negro', 2, 1, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (8, 1, 'V-11', 'C3E-953', 1, '2013', '40', '36', 'plata', 3, 3, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (9, 1, 'V-12', 'C5J-959', 1, '2013', '50', '45', 'plata', 4, 2, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (10, 1, 'V-13', 'C6Q-967', 1, '2014', '12', '10', 'negro', 2, 1, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (11, 1, 'V-14', 'C6T-963', 1, '2014', '40', '36', 'plata', 1, 4, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `aÃ±o_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (1, 1, 'V-01', 'B6F-962', 1, '2006', '12', '10', 'negro', 1, 4, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `aÃ±o_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (2, 2, 'V-04', 'B3Z-954', 1, '2009', '40', '36', 'plata', 4, 2, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `aÃ±o_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (3, 1, 'V-05', 'B6H-966', 1, '2009', '50', '45', 'plata', 5, 5, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `aÃ±o_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (4, 1, 'V-06', 'A3H-968', 1, '2010', '12', '10', 'negro', 4, 2, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `aÃ±o_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (5, 2, 'V-08', 'B8P-788', 1, '2012', '40', '36', 'plata', 4, 4, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `aÃ±o_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (6, 1, 'V-09', 'B0F-958', 1, '2012', '50', '45', 'plata', 2, 3, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `aÃ±o_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (7, 1, 'V-10', 'C3H-964', 1, '2012', '12', '10', 'negro', 2, 1, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `aÃ±o_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (8, 1, 'V-11', 'C3E-953', 1, '2013', '40', '36', 'plata', 3, 3, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `aÃ±o_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (9, 1, 'V-12', 'C5J-959', 1, '2013', '50', '45', 'plata', 4, 2, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `aÃ±o_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (10, 1, 'V-13', 'C6Q-967', 1, '2014', '12', '10', 'negro', 2, 1, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `aÃ±o_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (11, 1, 'V-14', 'C6T-963', 1, '2014', '40', '36', 'plata', 1, 4, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
 COMMIT;
 
 -- -----------------------------------------------------
@@ -882,8 +882,8 @@ COMMIT;
 START TRANSACTION;
 USE `sgstt`;
 INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (1, 'Aero Transporte');
-INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (2, 'Aerolíneas Argentinas');
-INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (3, 'AeroMéxico');
+INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (2, 'Aerolï¿½neas Argentinas');
+INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (3, 'AeroMï¿½xico');
 INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (4, 'AeroSur');
 INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (5, 'Air Canada');
 INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (6, 'Air Europa');
@@ -896,13 +896,13 @@ INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (12, 'Delt
 INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (13, 'Iberia');
 INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (14, 'KLM');
 INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (15, 'Lan Airlines');
-INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (16, 'Lan Perú');
-INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (17, 'LC Perú');
+INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (16, 'Lan Perï¿½');
+INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (17, 'LC Perï¿½');
 INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (18, 'Peruvian Airlines');
 INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (19, 'Sky Airline');
 INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (20, 'Spirit Airlines');
-INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (21, 'Star Perú');
-INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (22, 'Taca Perú');
+INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (21, 'Star Perï¿½');
+INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (22, 'Taca Perï¿½');
 INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (23, 'TAM');
 INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (24, 'United');
 
@@ -930,7 +930,7 @@ INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`,
 INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (4, 1, 'RECOJO DE TRASLADISTA', 1, 1);
 INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (5, 1, 'RECOJO Y DEJADA DE TRASLADISTA', 1, 1);
 INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (6, 1, 'APTO - HOTEL EL PUEBLO', 1, 1);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (7, 1, 'MOVIL- ORMEÑO-CRUZ DEL SUR S.I./HOTEL', 1, 1);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (7, 1, 'MOVIL- ORMEï¿½O-CRUZ DEL SUR S.I./HOTEL', 1, 1);
 INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (8, 1, 'PUERTO CALLAO/APTO', 1, 1);
 INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (9, 1, 'PUERTO CALLAO/ MIRAFLORES O SAN ISIDRO', 1, 1);
 INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (10, 1, 'ASISTENCIA', 1, 1);
@@ -949,7 +949,7 @@ INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`,
 INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (23, 1, 'LIMA - AREQUIPA Serie Polish - Philiberth', 1, 3);
 INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (24, 1, 'FULL DAY PARACAS O ICA', 1, 3);
 INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (25, 1, 'FULL DAY CARAL', 1, 3);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (26, 1, 'VIATICOS POR CADA CHOFER X  DIA', 1, 3);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (26, 1, 'VIATICOS POR CADA CHOFER Xï¿½ DIA', 1, 3);
 INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (27, 1, 'LIMA-ASIA', 1, 3);
 INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (28, 1, 'LIMA/AREQUIPA S.MILLER', 1, 3);
 INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (29, 1, 'LIM/NAZCA/LIMA 2 DIAS S. MILLER', 1, 3);
@@ -1180,10 +1180,10 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sgstt`;
-INSERT INTO `sgstt`.`destinos` (`iddestinos`,`idsede`, `nombre`,`latitud`, `longitud`, `estado`) VALUES (1, 1, 'AEROPUERTO LAN', '1', '1', 1);
-INSERT INTO `sgstt`.`destinos` (`iddestinos`,`idsede`, `nombre`, `latitud`, `longitud`, `estado`) VALUES (2, 1,'HOTEL SHERATON', '2', '2', 1);
-INSERT INTO `sgstt`.`destinos` (`iddestinos`,`idsede`, `nombre`, `latitud`, `longitud`, `estado`) VALUES (3, 1,'HOTEL MARRIOT', '1', '2', 1);
-INSERT INTO `sgstt`.`destinos` (`iddestinos`,`idsede`, `nombre`, `latitud`, `longitud`, `estado`) VALUES (4, 2,'HOTEL CONQUISTADORES', '1', '2', 1);
+INSERT INTO `sgstt`.`destinos` (`iddestinos`,`idsede`, `nombre`,`latitud`, `longitud`,`tipo_destino`, `estado`) VALUES (1, 1, 'AEROPUERTO LAN', '1', '1','Hotel', 1);
+INSERT INTO `sgstt`.`destinos` (`iddestinos`,`idsede`, `nombre`, `latitud`, `longitud`,`tipo_destino`, `estado`) VALUES (2, 1,'HOTEL SHERATON', '2', '2','Hotel', 1);
+INSERT INTO `sgstt`.`destinos` (`iddestinos`,`idsede`, `nombre`, `latitud`, `longitud`,`tipo_destino`, `estado`) VALUES (3, 1,'HOTEL MARRIOT', '1', '2','Hotel', 1);
+INSERT INTO `sgstt`.`destinos` (`iddestinos`,`idsede`, `nombre`, `latitud`, `longitud`,`tipo_destino`, `estado`) VALUES (4, 2,'HOTEL CONQUISTADORES', '1', '2','Hotel', 1);
 
 COMMIT;
 

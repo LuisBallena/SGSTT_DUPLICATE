@@ -149,17 +149,17 @@
                                             </h:panelGroup>
 
                                         </div>
-                                         <div class="form-group has-feedback">
-                                         	<h:panelGroup rendered="#{ordenServicioControlador.servicioDetalle.cuenta != null}">
-                                            	<label class="col-md-2 control-label" >Cuenta :</label>
-                                            <div class="col-md-3">
-                                                <p:inputMask mask="9?9" placeHolder="" value="#{ordenServicioControlador.servicioDetalle.cuenta}" />
-                                            </div>
-                                            </h:panelGroup>
-                                                <label class="col-md-2 control-label" >Comentario :</label>
+                                        <div class="form-group has-feedback">
+                                            <h:panelGroup rendered="#{ordenServicioControlador.servicioDetalle.cuenta != null}">
+                                                <label class="col-md-2 control-label" >Cuenta :</label>
                                                 <div class="col-md-3">
-                                                    <p:inputText styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.comentario}"  />
-                                                </div>                                           
+                                                    <p:inputMask mask="9?9" placeHolder="" value="#{ordenServicioControlador.servicioDetalle.cuenta}" />
+                                                </div>
+                                            </h:panelGroup>
+                                            <label class="col-md-2 control-label" >Comentario :</label>
+                                            <div class="col-md-3">
+                                                <p:inputText styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.comentario}"  />
+                                            </div>                                           
                                         </div>
                                         <div class="form-group has-feedback">
                                             <label class="col-md-2 control-label" >Oper. Gravada :</label>
@@ -218,9 +218,9 @@
                 </p:dataTable>
             </h:form>
         </p:dialog>
-        <p:dialog modal="true" width="600"  height="400" resizable="true" header="Lista de Choferes" position="center top" id="dialogChoferes" widgetVar="dialogChoferes">
+        <p:dialog modal="true" width="700"  height="400" resizable="true" header="Lista de Choferes" position="center top" id="dialogChoferes" widgetVar="dialogChoferes">
             <h:form id="frmDialogChoferes">
-                <p:dataTable  value="#{ordenServicioControlador.choferes}" style="font-size: 12px;" var="listChofer" 
+                <p:dataTable  value="#{ordenServicioControlador.choferes}" widgetVar="tableChoferes" style="font-size: 12px;" var="listChofer" 
                               rows="8"  rowIndexVar="rowIndex" paginator="true"
                               paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
 
@@ -238,10 +238,13 @@
                         <h:outputText value="#{listChofer.categoria}" >
                         </h:outputText>
                     </p:column>
-                    <p:column style="text-align: center;">
-                        <f:facet name="header">
-                            Empresa
-                        </f:facet>
+                    <p:column style="text-align: center;" headerText="Empresa" filterMatchMode="exact" filterBy="#{listChofer.empresa.razonSocial}">
+                        <f:facet name="filter">
+                            <p:selectOneMenu onchange="PF('tableChoferes').filter()" style="width: 100%;" >
+                            <f:selectItem itemLabel="Selecciona Empresa" itemValue="#{null}" noSelectionOption="true" />
+                            <f:selectItems value="#{ordenServicioControlador.empresas}" var="listEmpresa" itemValue="#{listEmpresa.razonSocial}" itemLabel="#{listEmpresa.razonSocial}" />
+                        </p:selectOneMenu>
+                            </f:facet>
                         <h:outputText value="#{listChofer.empresa.razonSocial}" >
                         </h:outputText>
                     </p:column>
@@ -261,7 +264,7 @@
 
                     <p:column style="text-align: center;">
                         <f:facet name="header">
-                           Tipo Vehiculo
+                            Tipo Vehiculo
                         </f:facet>
                         <h:outputText value="#{listVehiculo.tipoVehiculo.nombre}" >
                         </h:outputText>
@@ -282,6 +285,7 @@
             </h:form>
         </p:dialog>
         <h:outputScript name="js/calendar.js" />
+        
     </ui:define>
 
 </ui:composition>

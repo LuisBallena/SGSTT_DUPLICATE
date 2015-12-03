@@ -1,8 +1,6 @@
 package com.sgstt.dao.impl;
 
 import com.sgstt.dao.VueloDao;
-import com.sgstt.entidad.Empresa;
-import com.sgstt.entidad.Vehiculo;
 import com.sgstt.entidad.Vuelo;
 import com.sgstt.hibernate.HibernateConexion;
 import com.sgstt.hibernate.HibernateImpl;
@@ -26,11 +24,12 @@ public class VueloImpl extends HibernateImpl<Vuelo,Integer> implements VueloDao,
     }
 
     @Override
-    public List<Vuelo> getVuelosWithStateActiveWithAerolinea() {
+    public List<Vuelo> getVuelosWithStateActiveWithAerolineaFilterBySede(Integer idSede) {
         List<Vuelo> vuelos = null;
         try{
             Session session = conexion.getSession();
-            Query query = session.createQuery("from Vuelo as vuelo join fetch vuelo.aerolinea");
+            Query query = session.createQuery("from Vuelo as vuelo join fetch vuelo.aerolinea where vuelo.sede.id = :sede");
+            query.setInteger("sede",idSede);
             vuelos = query.list();
         }catch(HibernateException e){
             e.printStackTrace();

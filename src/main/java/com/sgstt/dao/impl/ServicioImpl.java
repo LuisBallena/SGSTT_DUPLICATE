@@ -27,12 +27,13 @@ public class ServicioImpl extends HibernateImpl<Servicio, Integer> implements Se
     }
 
     @Override
-    public List<Servicio> obtenerServiciosPorTipoServicioId(Integer id) {
+    public List<Servicio> obtenerServiciosPorTipoServicioIdPorSede(Integer idTipo,Integer idSede) {
         List<Servicio> lista = null;
         try {
             Session session = conexion.getSession();
             Criteria criteria = session.createCriteria(Servicio.class, "servicio")
-                    .add(Restrictions.eq("servicio.tipoServicio.id", id));
+                    .add(Restrictions.eq("servicio.tipoServicio.id", idTipo))
+                    .add(Restrictions.eq("servicio.sede.id", idSede));
             lista = criteria.list();
         } catch (HibernateException e) {
             e.printStackTrace();

@@ -42,8 +42,11 @@
                             <br/>
                             <!-- INICIO DE FILTRO -->
                             <div class="row" style="margin-left: 2px;margin-right: 2px;">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">Filtros</div>
+                                <div class="panel panel-default panel-busqueda">
+                                    <div class="panel-heading">
+                                        Filtros
+                                        <span style="margin-top: 5px;" class="pull-right clickable"><i class="fa fa-minus"></i></span>
+                                    </div>
                                     <div class="panel-body">
                                         <h:form id="frmFiltroOrden" styleClass="form-horizontal">
                                             <div class="form-group has-feedback">
@@ -330,7 +333,7 @@
                 </p:dataTable>
             </h:form>
         </p:dialog>
-
+        <h:outputScript name="js/collapse_panel.js" />
     </ui:define>
 
 </ui:composition>

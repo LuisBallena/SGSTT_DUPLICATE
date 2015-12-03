@@ -10,7 +10,8 @@ import java.util.List;
  */
 public interface VueloDao extends GenericDao<Vuelo,Integer>{
     
-    public List<Vuelo> getVuelosWithStateActiveWithAerolinea();
+    public List<Vuelo> getVuelosWithStateActiveWithAerolineaFilterBySede(Integer idSede);
 
     public Vuelo getVueloWithSede(Integer idvuelo);
+    
 }

@@ -123,4 +123,45 @@ public class Vuelo implements Serializable{
     public void setSede(Sede sede) {
         this.sede = sede;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 31 * hash + Objects.hashCode(this.id);
+        hash = 31 * hash + Objects.hashCode(this.origen);
+        hash = 31 * hash + Objects.hashCode(this.descripcion);
+        hash = 31 * hash + Objects.hashCode(this.destino);
+        hash = 31 * hash + Objects.hashCode(this.horario);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Vuelo other = (Vuelo) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.origen, other.origen)) {
+            return false;
+        }
+        if (!Objects.equals(this.descripcion, other.descripcion)) {
+            return false;
+        }
+        if (!Objects.equals(this.destino, other.destino)) {
+            return false;
+        }
+        if (!Objects.equals(this.horario, other.horario)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
+    
 }

@@ -38,6 +38,7 @@ public class OrdenServicioControlador implements Serializable {
     private List<Chofer> choferes;
     private List<Vehiculo> vehiculos;
     private List<Cliente> clientes;
+    private List<Empresa> empresas;
     private Servicio servicioSeleccionado;
     private ServicioDetalle servicioDetalle;
     private Trasladista trasladistaSeleccionado;
@@ -58,7 +59,7 @@ public class OrdenServicioControlador implements Serializable {
             transporteServicio = new TransporteServicio();
             servicioDetalleFilter = new ServicioDetalleFilter();
             servicioDetalleFilter.setIdSede(sesionControlador.getUsuarioSesion().getSede().getId());
-            clientes = transporteServicio.obtenerClientes();
+            clientes = transporteServicio.obtenerClientes(sesionControlador.getUsuarioSesion().getSede().getId());
             tipoServicios = transporteServicio.obtenerTiposServicios();
             choferes = transporteServicio.obtenerChoferesPorSede(sesionControlador.getUsuarioSesion().getSede().getId());
             vehiculos = transporteServicio.obtenerVehiculos(sesionControlador.getUsuarioSesion().getSede().getId());
@@ -118,6 +119,7 @@ public class OrdenServicioControlador implements Serializable {
             servicioSeleccionado = servicioDetalle.getServicio();
             trasladistaSeleccionado = (servicioDetalle.getTrasladista() == null ? new Trasladista() : servicioDetalle.getTrasladista());
             initCollectionsUpdate();
+
         }
     }
 
@@ -136,22 +138,23 @@ public class OrdenServicioControlador implements Serializable {
 
     private void initCollections() {
         servicios = transporteServicio.obtenerServiciosPorSede(sesionControlador.getUsuarioSesion().getSede().getId());
-        vuelos = transporteServicio.obtenerVuelos();
-        guias = transporteServicio.obtenerGuias();
+        vuelos = transporteServicio.obtenerVuelos(sesionControlador.getUsuarioSesion().getSede().getId());
+        guias = transporteServicio.obtenerGuiasPorSede(sesionControlador.getUsuarioSesion().getSede().getId());
         files = transporteServicio.obtenerFilesActivos();
     }
 
     private void initCollectionsVTA() {
         ordenesServicios = new ArrayList<>();
         servicios = transporteServicio.obtenerServiciosPorSede(sesionControlador.getUsuarioSesion().getSede().getId());
-        vuelos = transporteServicio.obtenerVuelos();
-        guias = transporteServicio.obtenerGuias();
+        vuelos = transporteServicio.obtenerVuelos(sesionControlador.getUsuarioSesion().getSede().getId());
+        guias = transporteServicio.obtenerGuiasPorSede(sesionControlador.getUsuarioSesion().getSede().getId());
     }
 
     private void initCollectionsUpdate() {
         initCollections();
         vehiculos = transporteServicio.obtenerVehiculosConTipoVehiculosPorSede(sesionControlador.getUsuarioSesion().getSede().getId());
         choferes = transporteServicio.obtenerChoferesPorSede(sesionControlador.getUsuarioSesion().getSede().getId());
+        empresas = transporteServicio.obtenerEmpresasConChoferRegistrado(sesionControlador.getUsuarioSesion().getSede().getId());
     }
 
     private void initTraslado() {
@@ -248,7 +251,7 @@ public class OrdenServicioControlador implements Serializable {
 
     public void onChangeTipoServicioFilter(){
         if(servicioDetalleFilter.getIdTipoServicio() != null){
-            servicios = transporteServicio.obtenerServiciosPorTipoServicio(servicioDetalleFilter.getIdTipoServicio());
+            servicios = transporteServicio.obtenerServiciosPorTipoServicio(servicioDetalleFilter.getIdTipoServicio(),sesionControlador.getUsuarioSesion().getSede().getId());
         }
     }
 
@@ -450,4 +453,14 @@ public class OrdenServicioControlador implements Serializable {
     public void setTipoServicios(List<TipoServicio> tipoServicios) {
         this.tipoServicios = tipoServicios;
     }
+
+    public List<Empresa> getEmpresas() {
+        return empresas;
+    }
+
+    public void setEmpresas(List<Empresa> empresas) {
+        this.empresas = empresas;
+    }
+    
+    
 }

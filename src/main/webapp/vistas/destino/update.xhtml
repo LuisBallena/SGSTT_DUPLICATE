@@ -48,8 +48,20 @@
                                                 </p:inputText>
                                             </div>
                                         </div>
+                                        <div class="form-group has-feedback">
+                                            <label for="nombre" class="col-sm-3 control-label" >Tipo Destino :</label>
+                                            <div    class="col-sm-6" >
+                                                <h:selectOneMenu id="tipoDestino" value="#{destinoControlador.idTipoDestinos}" styleClass="form-control"  >
+                                                    <f:selectItem itemValue="0" itemLabel="Hotel" />
+                                                    <f:selectItem itemValue="1" itemLabel="Restaurant" />
+                                                    <f:selectItem itemValue="2" itemLabel="Museo" />
+                                                    <f:selectItem itemValue="3" itemLabel="Sitio Arqueológico" />
+                                                    <f:selectItem itemValue="4" itemLabel="Lugar Turístico" />
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </div>
                                         <div class="col-sm-3 control-label">
-                                            <p:commandButton value="Guardar" actionListener="#{destinoControlador.actualizarDestino}" update="@form" styleClass="btn btn-primary"/>
+                                            <p:commandButton value="Actualizar" actionListener="#{destinoControlador.actualizarDestino}" update="@form" styleClass="btn btn-primary"/>
                                         </div>
                                     </h:form>  
                                 </div>
