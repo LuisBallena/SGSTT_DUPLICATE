@@ -3,6 +3,9 @@ package com.sgstt.controlador;
 
 import com.sgstt.entidad.Destino;
 import com.sgstt.entidad.Sede;
+import com.sgstt.entidad.TipoCliente;
+import com.sgstt.entidad.TipoDestino;
+import com.sgstt.entidad.TipoDocumento;
 import com.sgstt.hibernate.HibernatePaginador;
 import com.sgstt.paginacion.DestinoPaginador;
 import com.sgstt.servicios.TransporteServicio;
@@ -26,6 +29,7 @@ public class DestinoControlador implements Serializable{
     private HibernatePaginador<Destino> destinoPaginador;
     private Destino destino;
     private List<Sede> sedes;
+    private Integer auxTipoDestino;
     private TransporteServicio transporteServicio;
     @ManagedProperty(value = "#{sesionControlador}")
     private SesionControlador sesionControlador;
@@ -46,6 +50,7 @@ public class DestinoControlador implements Serializable{
         if (!FacesContext.getCurrentInstance().isPostback()) {
             transporteServicio = new TransporteServicio();
             destino = new Destino();
+            auxTipoDestino = TipoDestino.Hotel.ordinal();
             destino.setSede(new Sede());
             setSedes(transporteServicio.obtenerSedes());
         }
@@ -105,6 +110,7 @@ public class DestinoControlador implements Serializable{
         }
         return resultado;
     }
+
     
     /* GETTERS AND SETTERS */
 
@@ -135,5 +141,12 @@ public class DestinoControlador implements Serializable{
 	public void setSedes(List<Sede> sedes) {
 		this.sedes = sedes;
 	}
-    
+	
+	public Integer getAuxTipoDestino() {
+        return auxTipoDestino;
+    }
+
+    public void setAuxTipoDestino(Integer auxTipoDestino) {
+        this.auxTipoDestino = auxTipoDestino;
+    }
 }

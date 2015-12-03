@@ -40,7 +40,7 @@ public class TarifaControlador implements Serializable {
         if (!FacesContext.getCurrentInstance().isPostback()) {
         	cotizacionServicio = new CotizacionServicio();
             tarifaPaginador = new TarifaPaginador();
-            tarifaPaginador.initPaginador();
+            tarifaPaginador.initPaginador(sesionControlador.getUsuarioSesion().getSede().getId());
         }
     }
 
