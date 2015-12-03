@@ -19,7 +19,7 @@ public class VehiculoPaginador extends HibernateStringPaginador implements Seria
     
     @Override
     protected String createFilter(Object...values) {
-        return String.format("%s join fetch vehiculo.tipoVehiculo join fetch vehiculo.marca where vehiculo.estado = 1 and vehiculo.sede.id = %d",super.createFilter(),(Integer)values[0]);
+        return String.format("%s join fetch vehiculo.tipoVehiculo join fetch vehiculo.marca where vehiculo.estado = 1 and vehiculo.sede.id = %d ORDER BY vehiculo.descripcion",super.createFilter(),(Integer)values[0]);
     }
     
 }
