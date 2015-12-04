@@ -65,8 +65,8 @@
                                     <p:column  style="text-align: center;width: 12%;">
                                         <p:commandButton rendered="#{sesionControlador.permisoModulo.actualizar eq true}" style="font-size: 12px;"  icon="icon-update" action="#{vueloControlador.irActualizar(list.id)}"    >
                                         </p:commandButton>
-                                        <p:commandButton rendered="#{sesionControlador.permisoModulo.eliminar eq true}" style="font-size: 12px;" icon="icon-delete"  oncomplete="PF('deleteempresa').show();"   >
-                                            <f:setPropertyActionListener value="#{list}" target="#{empresaControlador.empresa}" />
+                                        <p:commandButton rendered="#{sesionControlador.permisoModulo.eliminar eq true}" style="font-size: 12px;" icon="icon-delete"  oncomplete="PF('deletevuelo').show();"   >
+                                            <f:setPropertyActionListener value="#{list}" target="#{vueloControlador.vuelo}" />
                                         </p:commandButton>
                                     </p:column>
                                 </p:dataTable> 
@@ -77,19 +77,19 @@
             </div>
             <!-- /.col-lg-12 -->
         </div>    
-        <p:dialog modal="true" position="center top"  widgetVar="deleteempresa" resizable="false" showEffect="fade" >
+        <p:dialog modal="true" position="center top"  widgetVar="deletevuelo" resizable="false" showEffect="fade" >
             <h:form >
                 <div   id="row" style="font-weight: bold;font-size: 14px;">
-                    ¿Desea Eliminar la Empresa ?
+                    ¿Desea Eliminar el Vuelo ?
                 </div>
                 <div   id="row">
                     <div class="col-lg-6">
-                        <p:commandButton  actionListener="#{empresaControlador.eliminarEmpresa}" update=":formperfil" value="Si" oncomplete="PF('deleteempresa').hide();"   >
+                        <p:commandButton  actionListener="#{vueloControlador.eliminarVuelo}" update=":formperfil" value="Si" oncomplete="PF('deletevuelo').hide();"   >
 
                         </p:commandButton>
                     </div>
                     <div class="col-lg-6">
-                        <p:commandButton    value="No" onclick="PF('deleteempresa').hide();"   >
+                        <p:commandButton    value="No" onclick="PF('deletevuelo').hide();"   >
 
                         </p:commandButton>
                     </div>

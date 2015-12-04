@@ -23,6 +23,6 @@ public class EmpresaPaginador extends HibernateStringPaginador implements Serial
     
     @Override
     protected String createFilter(Object...values) {
-        return String.format("%s where empresa.estado = 1 and empresa.sede.id = %d",super.createFilter(),(Integer)values[0]);
+        return String.format("%s where empresa.estado = 1 and empresa.sede.id = %d AND empresa.id != 1 AND empresa.id != 31",super.createFilter(),(Integer)values[0]);
     }
 }

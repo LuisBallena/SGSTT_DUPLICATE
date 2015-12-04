@@ -37,7 +37,7 @@
                                         <h:outputText value="#{list.horas}" />
                                     </p:column>
                                     <p:column  headerText="Descripción" style="text-align: center;">
-                                        <h:outputText value="#{list.descripcion}" />
+                                        <h:outputText value="#{list.descripcion eq null ? 'Sin Descripcion' :  list.descripcion}" />
                                     </p:column>
                                     <p:column  headerText="Tipo Vehiculo" style="text-align: center;">
                                         <h:outputText value="#{list.tipoVehiculo.nombre}" />

@@ -29,7 +29,7 @@
                                 <h:messages id="msg" globalOnly="true" styleClass="list-group" infoClass="list-group-item list-group-item-success"
                                                     errorClass="list-group-item list-group-item-danger" />
                                 <p:dataTable    value="#{clienteControlador.clientePaginador}"    var="list" emptyMessage="No existen registros de clientes" 
-                                                paginator="true" rows="10" lazy="true" rowIndexVar="rowIndex"
+                                                paginator="true" rows="12" lazy="true" rowIndexVar="rowIndex"
                                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
 
                                     <p:column    style="text-align: center;font-size: 15px;">
@@ -42,25 +42,31 @@
                                         <f:facet name="header">
                                             Tipo Cliente
                                         </f:facet>
-                                        <h:outputText value="#{list.tipoCliente.tipoCliente}" />
+                                        <h:outputText value="#{list.tipoCliente.tipoCliente eq null ? 'No Disponible' :  list.tipoCliente.tipoCliente}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Tipo Doc.
                                         </f:facet>
-                                        <h:outputText value="#{list.tipoDocumento}" />
+                                        <h:outputText value="#{list.tipoDocumento eq null ? 'No Disponible' :  list.tipoDocumento}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Nro.Documento
                                         </f:facet>
-                                        <h:outputText value="#{list.numeroDocumento}" />
+                                        <h:outputText value="#{list.numeroDocumento eq null ? 'No Disponible' :  list.numeroDocumento}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Correo
                                         </f:facet>
-                                        <h:outputText value="#{list.correo}" />
+                                        <h:outputText value="#{list.correo eq null ? 'No Disponible' :  list.correo}" />
+                                    </p:column>
+                                    <p:column    style="text-align: center;font-size: 15px;">
+                                        <f:facet name="header">
+                                            Direccion
+                                        </f:facet>
+                                        <h:outputText value="#{list.direccion eq null ? 'No Disponible' :  list.direccion}" />
                                     </p:column>
                                     <p:column  style="text-align: center;width: 12%;">
                                         <p:commandButton rendered="#{sesionControlador.permisoModulo.actualizar eq true}" style="font-size: 12px;"  icon="icon-update" action="#{clienteControlador.irActualizar(list.idCliente)}"    >

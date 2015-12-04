@@ -42,31 +42,31 @@
                                         <f:facet name="header">
                                             RUC
                                         </f:facet>
-                                        <h:outputText value="#{list.ruc}" />
+                                        <h:outputText value="#{list.ruc eq null ? 'No Disponible' :  list.ruc}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Centro de Costo
                                         </f:facet>
-                                        <h:outputText value="#{list.centrocosto}" />
+                                        <h:outputText value="#{list.centrocosto eq null ? 'No Disponible' :  list.centrocosto}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Telefono
                                         </f:facet>
-                                        <h:outputText value="#{list.telefono}" />
+                                        <h:outputText value="#{list.telefono eq null ? 'No Disponible' :  list.telefono}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Celular
                                         </f:facet>
-                                        <h:outputText value="#{list.celular}" />
+                                        <h:outputText value="#{list.celular eq null ? 'No Disponible' :  list.celular}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Correo
                                         </f:facet>
-                                        <h:outputText value="#{list.correo}" />
+                                        <h:outputText value="#{list.correo eq null ? 'No Disponible' :  list.correo}" />
                                     </p:column>
                                     <p:column  style="text-align: center;width: 12%;">
                                         <p:commandButton rendered="#{sesionControlador.permisoModulo.actualizar eq true}" style="font-size: 12px;"  icon="icon-update" action="#{empresaControlador.irActualizar(list.id)}"    >
