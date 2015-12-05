@@ -30,9 +30,27 @@ public class Destino implements Serializable{
     private Integer id;
     
     @Column(nullable = false)
-    private String nombre;
+    private String razonsocial;
     
-    @Column
+    @Column(nullable = false)
+    private String razoncomercial;
+    
+    @Column(nullable = false)
+    private String ruc;
+    
+    @Column(nullable = false)
+    private String direccion;
+    
+    @Column(nullable = false)
+    private String telefono;
+    
+    @Column(nullable = false)
+    private String web;
+    
+    @Column(nullable = false)
+    private String ubigeo;
+   
+	@Column
     private String longitud;
     
     @Column
@@ -63,12 +81,12 @@ public class Destino implements Serializable{
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getRazonsocial() {
+        return razonsocial;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setRazonsocial(String razonsocial) {
+        this.razonsocial = razonsocial;
     }
 
     public String getLongitud() {
@@ -111,11 +129,66 @@ public class Destino implements Serializable{
         this.tipoDestino = tipoDestino;
     }
     
+    public String getRazoncomercial() {
+		return razoncomercial;
+	}
+
+	public void setRazoncomercial(String razoncomercial) {
+		this.razoncomercial = razoncomercial;
+	}
+	
+	public String getRuc() {
+		return ruc;
+	}
+
+	public void setRuc(String ruc) {
+		this.ruc = ruc;
+	}
+
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	public String getWeb() {
+		return web;
+	}
+
+	public void setWeb(String web) {
+		this.web = web;
+	}
+
+	public String getUbigeo() {
+		return ubigeo;
+	}
+
+	public void setUbigeo(String ubigeo) {
+		this.ubigeo = ubigeo;
+	}
+    
     @Override
     public int hashCode() {
         int hash = 5;
         hash = 53 * hash + Objects.hashCode(this.id);
-        hash = 53 * hash + Objects.hashCode(this.nombre);
+        hash = 53 * hash + Objects.hashCode(this.razonsocial);
+        hash = 53 * hash + Objects.hashCode(this.razoncomercial);
+        hash = 53 * hash + Objects.hashCode(this.ruc);
+        hash = 53 * hash + Objects.hashCode(this.direccion);
+        hash = 53 * hash + Objects.hashCode(this.telefono);
+        hash = 53 * hash + Objects.hashCode(this.web);
+        hash = 53 * hash + Objects.hashCode(this.ubigeo);
         hash = 53 * hash + Objects.hashCode(this.longitud);
         hash = 53 * hash + Objects.hashCode(this.latitud);
         hash = 53 * hash + Objects.hashCode(this.sede);
@@ -136,7 +209,22 @@ public class Destino implements Serializable{
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        if (!Objects.equals(this.nombre, other.nombre)) {
+        if (!Objects.equals(this.razonsocial, other.razonsocial)) {
+            return false;
+        }
+        if (!Objects.equals(this.razoncomercial, other.razoncomercial)) {
+            return false;
+        }
+        if (!Objects.equals(this.direccion, other.direccion)) {
+            return false;
+        }
+        if (!Objects.equals(this.telefono, other.telefono)) {
+            return false;
+        }
+        if (!Objects.equals(this.web, other.web)) {
+            return false;
+        }
+        if (!Objects.equals(this.ubigeo, other.ubigeo)) {
             return false;
         }
         if (!Objects.equals(this.longitud, other.longitud)) {

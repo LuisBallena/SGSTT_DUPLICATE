@@ -674,7 +674,13 @@ DROP TABLE IF EXISTS `sgstt`.`destinos` ;
 CREATE  TABLE IF NOT EXISTS `sgstt`.`destinos` (
   `iddestinos` INT NOT NULL AUTO_INCREMENT ,
   `idsede` INT NOT NULL ,
-  `nombre` VARCHAR(300) NOT NULL ,
+  `razonsocial` VARCHAR(300)  NULL ,
+  `razoncomercial` VARCHAR(300)  NULL ,
+  `ruc` VARCHAR(300)  NULL ,
+  `direccion` VARCHAR(300)  NULL ,
+  `telefono` VARCHAR(300)  NULL ,
+  `web` VARCHAR(300)  NULL ,
+  `ubigeo` VARCHAR(300) NOT NULL ,
   `latitud` VARCHAR(50) NULL ,
   `longitud` VARCHAR(50) NULL ,
   `tipo_destino` VARCHAR(50) NULL ,
@@ -686,6 +692,8 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`destinos` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+
 
 
 -- -----------------------------------------------------
@@ -1183,10 +1191,10 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sgstt`;
-INSERT INTO `sgstt`.`destinos` (`iddestinos`,`idsede`, `nombre`,`latitud`, `longitud`,`tipo_destino`, `estado`) VALUES (1, 1, 'AEROPUERTO LAN', '1', '1','Hotel', 1);
-INSERT INTO `sgstt`.`destinos` (`iddestinos`,`idsede`, `nombre`, `latitud`, `longitud`,`tipo_destino`, `estado`) VALUES (2, 1,'HOTEL SHERATON', '2', '2','Hotel', 1);
-INSERT INTO `sgstt`.`destinos` (`iddestinos`,`idsede`, `nombre`, `latitud`, `longitud`,`tipo_destino`, `estado`) VALUES (3, 1,'HOTEL MARRIOT', '1', '2','Hotel', 1);
-INSERT INTO `sgstt`.`destinos` (`iddestinos`,`idsede`, `nombre`, `latitud`, `longitud`,`tipo_destino`, `estado`) VALUES (4, 2,'HOTEL CONQUISTADORES', '1', '2','Hotel', 1);
+INSERT INTO `sgstt`.`destinos` (`iddestinos`,`idsede`, `razonsocial`,`razoncomercial`,`ruc`,`direccion`,`telefono`,`web`,`ubigeo`,`latitud`, `longitud`,`tipo_destino`, `estado`)  VALUES (1, 1,'AEROPUERTO LAN','AEROPUERTO LAN','RUC21335523','AEROPUERTO LAN','AEROPUERTO LAN','LAN', 'AEROPUERTO LAN', '1', '1','Hotel', 1);
+INSERT INTO `sgstt`.`destinos` (`iddestinos`,`idsede`, `razonsocial`,`razoncomercial`,`ruc`,`direccion`,`telefono`,`web`,`ubigeo`,`latitud`, `longitud`,`tipo_destino`, `estado`)  VALUES (2, 1,'HOTEL SHERATON','HOTEL SHERATON','RUC21335523','HOTEL SHERATON','HOTEL SHERATON','HOTEL SHERATON','HOTEL SHERATON', '2', '2','Hotel', 1);
+INSERT INTO `sgstt`.`destinos` (`iddestinos`,`idsede`, `razonsocial`,`razoncomercial`,`ruc`,`direccion`,`telefono`,`web`,`ubigeo`,`latitud`, `longitud`,`tipo_destino`, `estado`)  VALUES (3, 1,'HOTEL MARRIOT', 'HOTEL MARRIOT','RUC21335523', 'HOTEL MARRIOT', 'HOTEL MARRIOT', 'HOTEL MARRIOT', 'HOTEL MARRIOT', '1', '2','Hotel', 1);
+INSERT INTO `sgstt`.`destinos` (`iddestinos`,`idsede`, `razonsocial`,`razoncomercial`,`ruc`,`direccion`,`telefono`,`web`,`ubigeo`,`latitud`, `longitud`,`tipo_destino`, `estado`)  VALUES (4, 2,'HOTEL CONQUISTADORES','HOTEL CONQUISTADORES','RUC21335523','HOTEL CONQUISTADORES','HOTEL CONQUISTADORES','HOTEL CONQUISTADORES','HOTEL CONQUISTADORES', '1', '2','Hotel', 1);
 
 COMMIT;
 
