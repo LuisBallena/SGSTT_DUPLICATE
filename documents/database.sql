@@ -71,6 +71,7 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`chofer` (
   `brevete` VARCHAR(45) NULL ,
   `fecha` DATETIME NOT NULL ,
   `categoria` VARCHAR(45) NULL ,
+  `clave` VARCHAR(45) NOT NULL DEFAULT '12345678'  ,
   `estado` TINYINT(1) NOT NULL DEFAULT 1 ,
   `idempresa` INT NOT NULL, 
   PRIMARY KEY (`idchofer`, `idsede`) ,
@@ -819,16 +820,16 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sgstt`;
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`,`fecha`, `estado`,`idempresa`) VALUES (1, 2, 'JAIME', 'AGUILAR EGOAVIL', '23885693', 'A1',"2015-11-07 00:00:00", 1,1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`,`fecha`, `estado`,`idempresa`) VALUES (2, 2, 'CESAR AMADO', 'ARELLANOS MUÑOZ', '25662462', 'A2',"2015-11-07 00:00:00", 1,1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`,`fecha`, `estado`,`idempresa`) VALUES (3, 1, 'MARIO HERNAN', 'CUADROS HUAPAYA', '25577045', 'A3',"2015-11-07 00:00:00", 1,1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`,`fecha`, `estado`,`idempresa`) VALUES (4, 1, 'PEPE', 'DAMIAN JURO', '10550499', 'A1',"2015-11-07 00:00:00", 1,1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`,`fecha`, `estado`,`idempresa`) VALUES (5, 1, 'KATTY DORIS', 'ESCOBAR PUMACALLAO', '07884541', 'A2',"2015-11-07 00:00:00", 1,1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`,`fecha`, `estado`,`idempresa`) VALUES (6, 1, 'CARLOS ALBERTO', 'HERRERA NAVARRO', '10630551', 'A3',"2015-11-07 00:00:00", 1,1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`,`fecha`, `estado`,`idempresa`) VALUES (7, 1, 'JOSE EDUARDO', 'HUAPALLA BALCAZAR', '10144415', 'A1',"2015-11-07 00:00:00", 1,1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`,`fecha`, `estado`,`idempresa`) VALUES (8, 1, 'RODOLFO CESAR', 'LAZO CALDERON', '25717877', 'A2',"2015-11-07 00:00:00", 1,1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`,`fecha`, `estado`,`idempresa`) VALUES (9, 1, 'JOSE LUIS', 'NUÑEZ CUENCA ROJAS', '09461980', 'A3',"2015-11-07 00:00:00", 1,1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`,`fecha`, `estado`,`idempresa`) VALUES (10, 1, 'ADRIAN', 'TICONA APAZA', '10520991', 'A1',"2015-11-07 00:00:00", 1,1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `clave`,`fecha`, `estado`,`idempresa`) VALUES (1, 2, 'JAIME', 'AGUILAR EGOAVIL', '23885693', 'A1', '12345678',"2015-11-07 00:00:00", 1,1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `clave`,`fecha`, `estado`,`idempresa`) VALUES (2, 2, 'CESAR AMADO', 'ARELLANOS MUÑOZ', '25662462', 'A2', '12345678',"2015-11-07 00:00:00", 1,1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `clave`,`fecha`, `estado`,`idempresa`) VALUES (3, 1, 'MARIO HERNAN', 'CUADROS HUAPAYA', '25577045', 'A3', '12345678',"2015-11-07 00:00:00", 1,1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `clave`,`fecha`, `estado`,`idempresa`) VALUES (4, 1, 'PEPE', 'DAMIAN JURO', '10550499', 'A1', '12345678',"2015-11-07 00:00:00", 1,1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `clave`,`fecha`, `estado`,`idempresa`) VALUES (5, 1, 'KATTY DORIS', 'ESCOBAR PUMACALLAO', '07884541', 'A2', '12345678',"2015-11-07 00:00:00", 1,1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `clave`,`fecha`, `estado`,`idempresa`) VALUES (6, 1, 'CARLOS ALBERTO', 'HERRERA NAVARRO', '10630551', 'A3', '12345678',"2015-11-07 00:00:00", 1,1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `clave`,`fecha`, `estado`,`idempresa`) VALUES (7, 1, 'JOSE EDUARDO', 'HUAPALLA BALCAZAR', '10144415', 'A1', '12345678',"2015-11-07 00:00:00", 1,1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `clave`,`fecha`, `estado`,`idempresa`) VALUES (8, 1, 'RODOLFO CESAR', 'LAZO CALDERON', '25717877', 'A2', '12345678',"2015-11-07 00:00:00", 1,1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `clave`,`fecha`, `estado`,`idempresa`) VALUES (9, 1, 'JOSE LUIS', 'NUÑEZ CUENCA ROJAS', '09461980', 'A3', '12345678',"2015-11-07 00:00:00", 1,1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `categoria`, `clave`,`fecha`, `estado`,`idempresa`) VALUES (10, 1, 'ADRIAN', 'TICONA APAZA', '10520991', 'A1', '12345678',"2015-11-07 00:00:00", 1,1);
 COMMIT;
 
 -- -----------------------------------------------------
