@@ -264,7 +264,7 @@
                                         <p:commandButton title="Cotizacion por Item" style="font-size: 12px;"
                                                          rendered="#{list.estadoServicio == 'PENDIENTE'}"
                                                          icon="icon-money"
-                                                         action="#{ordenServicioControlador.irCotizar}" update="@form">
+                                                         action="#{ordenServicioControlador.irCotizar}" update=":msg">
                                             <f:setPropertyActionListener value="#{list}"
                                                                          target="#{ordenServicioControlador.servicioDetalle}"/>
                                         </p:commandButton>

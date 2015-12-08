@@ -1,17 +1,12 @@
 package com.sgstt.controlador;
 
+import com.sgstt.entidad.EstadoIncidencia;
 import com.sgstt.entidad.Incidencia;
-import com.sgstt.entidad.Sede;
-import com.sgstt.entidad.ServicioDetalle;
-import com.sgstt.entidad.TipoIncidencia;
 import com.sgstt.hibernate.HibernatePaginador;
 import com.sgstt.paginacion.IncidenciaPaginador;
 import com.sgstt.servicios.IncidenciaServicio;
 import com.sgstt.util.Utilitario;
-
 import java.io.Serializable;
-import java.util.List;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -24,122 +19,49 @@ import javax.faces.context.FacesContext;
 @ManagedBean(name = "incidenciaControlador")
 @ViewScoped
 public class IncidenciaControlador implements Serializable {
+    private static final long serialVersionUID = 8940073451346992532L;
 
     private HibernatePaginador<Incidencia> incidenciaPaginador;
     private Incidencia incidencia;
-    private List<TipoIncidencia> tipoIncidencia;
-    private List<ServicioDetalle> serviciodetalles;
     private IncidenciaServicio incidenciaServicio;
-    private List<Sede> sedes;
     @ManagedProperty(value = "#{sesionControlador}")
     private SesionControlador sesionControlador;
-
+    private Integer idEstadoIncidencia;
 
     public IncidenciaControlador() {
     }
 
     public void initLista() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
-        	incidenciaServicio = new IncidenciaServicio();
+            incidenciaServicio = new IncidenciaServicio();
             incidenciaPaginador = new IncidenciaPaginador();
             incidenciaPaginador.initPaginador(sesionControlador.getUsuarioSesion().getSede().getId());
-            tipoIncidencia = incidenciaServicio.obtenerTipoIncidencias();
-
-        }
-    }
-
-    public void initCreate() {
-        if (!FacesContext.getCurrentInstance().isPostback()) {
-        	incidenciaServicio = new IncidenciaServicio();
-            incidencia = new Incidencia();
-            tipoIncidencia = incidenciaServicio.obtenerTipoIncidencias();
-            serviciodetalles = incidenciaServicio.obtenerServiciosDetalle();
-            incidencia.setSede(new Sede());
-            setSedes(incidenciaServicio.obtenerSedes());
         }
     }
 
     public void initUpdate() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
             Object value = Utilitario.getFlash("idIncidencia");
-            if(value == null){
-                Utilitario.redireccionarJSF(FacesContext.getCurrentInstance(), "/vistas/tarifa/list.xhtml");
+            if (value == null) {
+                Utilitario.redireccionarJSF(FacesContext.getCurrentInstance(), "/vistas/incidencia/list.xhtml");
                 return;
             }
             Integer id = Integer.valueOf(value.toString());
             incidenciaServicio = new IncidenciaServicio();
             incidencia = incidenciaServicio.obtenerIncidencia(id);
-            tipoIncidencia = incidenciaServicio.obtenerTipoIncidencias();
-            serviciodetalles = incidenciaServicio.obtenerServiciosDetalle();
-            sedes = incidenciaServicio.obtenerSedes();
-
+            idEstadoIncidencia = incidencia.getEstadoIncidencia().ordinal();
         }
     }
 
-    public void registrarIncidencia() {
-        if (!esVistaValida()) {
-            return;
-        }
-        incidencia.setSede(sesionControlador.getUsuarioSesion().getSede());
-        incidenciaServicio.registrarIncidencia(incidencia);
-    }
-    
-    public void actualizarIncidencia(){
-        if (!esVistaValida()) {
-            return;
-        }
+    public void actualizarIncidencia() {
+        incidencia.setEstadoIncidencia(EstadoIncidencia.values()[idEstadoIncidencia]);
         incidenciaServicio.actualizarIncidencia(incidencia);
     }
-    
-    public void eliminarIncidencia(){
-    	incidenciaServicio.eliminarIncidencia(incidencia);
-    }
-    
-    public String irActualizar(Integer id){
-        Utilitario.putFlash("idIncidencia",id);
+
+    public String irActualizar(Integer id) {
+        Utilitario.putFlash("idIncidencia", id);
         return "update.xhtml?faces-redirect=true;";
     }
-
-    private void limpiar() {
-    	incidencia = new Incidencia();
-    }
-
-    private boolean esVistaValida() {
-        boolean resultado = true;
-        if (!esDescripcionValida()) {
-            resultado = false;
-        } else if (!esServicioDetalleValido()) {
-            Utilitario.enviarMensajeGlobalError("Debe seleccionar un Tipo Servicio");
-            resultado = false;
-        } else if (!esTipoVehiculoValido()) {
-            Utilitario.enviarMensajeGlobalError("Debe seleccionar un Tipo Vehiculo");
-            resultado = false;
-        }
-        return resultado;
-    }
-
-    private boolean esDescripcionValida() {
-        boolean resultado = true;
-        
-        if (Utilitario.esNulo(incidencia.getDescripcion())) {
-            Utilitario.enviarMensajeGlobalError("Debe ingresar descripción");
-            resultado = false;
-        }
-          else if (!Utilitario.esRangoValido(incidencia.getDescripcion(), 10)) {
-            Utilitario.enviarMensajeGlobalError("El rango maximo de la descripcion es de 10 caracteres");
-            resultado = false;
-        }
-		return resultado;
-    }
-
-    private boolean esServicioDetalleValido() {
-        return incidencia.getServicioDetalle().getId().intValue() != 0;
-    }
-
-    private boolean esTipoVehiculoValido() {
-        return incidencia.getTipoincidencia().getId().intValue() != 0;
-    }
-
 
     /* GETTERS AND SETTERS */
     public HibernatePaginador<Incidencia> getIncidenciaPaginador() {
@@ -158,32 +80,18 @@ public class IncidenciaControlador implements Serializable {
         this.incidencia = incidencia;
     }
 
-    public List<TipoIncidencia> getTipoIncidencias() {
-        return tipoIncidencia;
-    }
-
-    public void setTipoIncidencia(List<TipoIncidencia> tipoIncidencia) {
-        this.tipoIncidencia = tipoIncidencia;
-    }
-
-    public List<ServicioDetalle> getServicioDetalles() {
-        return serviciodetalles;
-    }
-
-    public void setServicioDetalles(List<ServicioDetalle> serviciodetalles) {
-        this.serviciodetalles = serviciodetalles;
-    }
-    
     public void setSesionControlador(SesionControlador sesionControlador) {
         this.sesionControlador = sesionControlador;
     }
 
-	public List<Sede> getSedes() {
-		return sedes;
-	}
+    public Integer getIdEstadoIncidencia() {
+        return idEstadoIncidencia;
+    }
 
-	public void setSedes(List<Sede> sedes) {
-		this.sedes = sedes;
-	}
+    public void setIdEstadoIncidencia(Integer idEstadoIncidencia) {
+        this.idEstadoIncidencia = idEstadoIncidencia;
+    }
+    
+    
+
 }
-

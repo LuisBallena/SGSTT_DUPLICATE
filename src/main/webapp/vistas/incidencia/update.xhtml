@@ -24,32 +24,54 @@
                             <div class="row" id="modificarComercio">
                                 <div class="col-lg-12">
                                     <h:form id="frmRegistrarCliente" styleClass="form-horizontal" >
-                                        <f:event type="preRenderView" listener="#{fileControlador.initUpdate}" />
+                                        <f:event type="preRenderView" listener="#{incidenciaControlador.initUpdate}" />
                                         <h:messages id="msg" globalOnly="true" styleClass="list-group" infoClass="list-group-item list-group-item-success"
                                                     errorClass="list-group-item list-group-item-danger" />
                                         <div class="form-group has-feedback">
-                                            <label for="nombre" class="col-sm-3 control-label" >Cliente :</label>
-                                            <div  style="padding-right: 0px;"  class="col-xs-11 col-sm-4" >
-                                                <h:panelGroup id="cliente">
-                                                    <p:inputText  style="width: 100%;background-color: #f5f5f5;border: 1px solid #ccc;border-radius: 4px;  height: 34px;padding-top: 5px;" value="#{fileControlador.clienteSeleccionado.nombre}"  readonly="true"    >
-                                                    </p:inputText>
-                                                </h:panelGroup>
-                                            </div>
-                                            <div class="col-xs-1 col-sm-1" style="padding-left: 0px;" >
-                                                <div onclick="PF('dialogSelectable').show();" class="btn btn-primary clickable" style="width: 43px;height: 32.8px;" >
-                                                    <img src="#{request.contextPath}/resources/images/add.png" />
-                                                </div>
+                                            <label for="nombre" class="col-sm-3 control-label" >Tipo de Incidencia :</label>
+                                            <div    class="col-sm-6" >
+                                                <p class="form-control">#{incidenciaControlador.incidencia.tipoincidencia.descripcion}  
+                                                </p>
                                             </div>
                                         </div>
                                         <div class="form-group has-feedback">
-                                            <label for="nombre" class="col-sm-3 control-label" >PAX :</label>
+                                            <label for="nombre" class="col-sm-3 control-label" >Descripción :</label>
                                             <div    class="col-sm-6" >
-                                                <p:inputText  value="#{fileControlador.file.pax}"     >
-                                                </p:inputText>
+                                                <h:inputTextarea disabled="true"  styleClass="form-control" value="#{incidenciaControlador.incidencia.descripcion}" style="width: 100%;"     >
+                                                </h:inputTextarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group has-feedback">
+                                            <label for="nombre" class="col-sm-3 control-label" >Servicio :</label>
+                                            <div    class="col-sm-6" >
+                                                <p class="form-control" >
+                                                    #{incidenciaControlador.incidencia.servicioDetalle.descripcion}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group has-feedback">
+                                            <label for="nombre" class="col-sm-3 control-label" >Fecha de Registro :</label>
+                                            <div    class="col-sm-6" >
+                                                <h:outputText styleClass="form-control"  value="#{incidenciaControlador.incidencia.fechaRegistro}">
+                                                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="GMT-5" />
+                                                </h:outputText>
+                                                
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group has-feedback">
+                                            <label for="nombre" class="col-sm-3 control-label" >Estado Incidencia :</label>
+                                            <div    class="col-sm-6" >
+                                                <h:selectOneMenu styleClass="form-control" value="#{incidenciaControlador.idEstadoIncidencia}">
+                                                    <f:selectItem itemLabel="PENDIENTE" itemValue="0" />
+                                                    <f:selectItem itemLabel="ATENDIDA" itemValue="1" />
+                                                </h:selectOneMenu>
+                                                
                                             </div>
                                         </div>
                                         <div class="col-sm-3 control-label">
-                                            <p:commandButton value="Actualizar" actionListener="#{fileControlador.actualizarFile}" update="@form" styleClass="btn btn-primary"/>
+                                            <p:commandButton value="Actualizar" actionListener="#{incidenciaControlador.actualizarIncidencia}" update="@form" styleClass="btn btn-primary"/>
                                         </div>
                                     </h:form>  
                                 </div>
@@ -60,32 +82,6 @@
             </div>
             <!-- /.col-lg-12 -->
         </div>
-        <p:dialog modal="true" width="500"  height="300" header="Lista de Clientes" position="center top" id="DialogSelectable" widgetVar="dialogSelectable">
-            <h:form id="frmDialogSelectable">
-                <p:dataTable  value="#{fileControlador.clientes}" var="list" 
-                              paginator="true" rows="10"  rowIndexVar="rowIndex"
-                              paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
-
-                    <p:column style="text-align: center;width: 10%;">
-                        <f:facet name="header">
-                            #
-                        </f:facet>
-                        <h:outputText value="#{rowIndex+1}" />
-                    </p:column>
-                    <p:column style="text-align: center;">
-                        <f:facet name="header">
-                            Cliente
-                        </f:facet>
-                        <h:outputText value="#{list.nombre}" >
-                        </h:outputText>
-                    </p:column>
-                    <p:column style="text-align: center;width: 12%;">
-                        <p:commandButton icon="icon-choice" update=":frmRegistrarCliente:cliente" actionListener="#{fileControlador.capturarClient(list)}"  oncomplete="PF('dialogSelectable').hide();" >
-                        </p:commandButton>
-                    </p:column>
-                </p:dataTable>
-            </h:form>
-        </p:dialog>
     </ui:define>
 
 </ui:composition>
