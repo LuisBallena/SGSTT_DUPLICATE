@@ -1,4 +1,3 @@
-
 package com.sgstt.controlador;
 
 import com.sgstt.entidad.Chofer;
@@ -20,7 +19,8 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean(name = "choferControlador")
 @ViewScoped
-public class ChoferControlador implements Serializable{
+public class ChoferControlador implements Serializable {
+
     private static final long serialVersionUID = -6292160037555231616L;
     private HibernatePaginador<Chofer> choferPaginador;
     private ChoferServicio choferServicio;
@@ -28,34 +28,32 @@ public class ChoferControlador implements Serializable{
     private List<Empresa> empresas;
     @ManagedProperty(value = "#{sesionControlador}")
     private SesionControlador sesionControlador;
-    
-    
+
     /**
      * Creates a ew instance of ChoferControlador
      */
     public ChoferControlador() {
     }
-    
-    public void initLista(){
+
+    public void initLista() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
             choferPaginador = new ChoferPaginador();
             choferPaginador.initPaginador(sesionControlador.getUsuarioSesion().getSede().getId());
         }
     }
-    
-    public void initCreate(){
+
+    public void initCreate() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
             choferServicio = new ChoferServicio();
-            chofer = new Chofer();
-            chofer.setEmpresa(new Empresa());
+            limpiar();
             empresas = choferServicio.obtenerEmpresas();
         }
     }
-    
-    public void initUpdate(){
+
+    public void initUpdate() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
             Object value = Utilitario.getFlash("idChofer");
-            if(value == null){
+            if (value == null) {
                 Utilitario.redireccionarJSF(FacesContext.getCurrentInstance(), "/vistas/chofer/list.xhtml");
                 return;
             }
@@ -64,74 +62,72 @@ public class ChoferControlador implements Serializable{
             empresas = choferServicio.obtenerEmpresas();
         }
     }
-    
-    public void guardarChofer(){
-        /*validaciones*/
-    
+
+    public void guardarChofer() {
         if (esVistaValida()) {
-        	chofer.setSede(sesionControlador.getUsuarioSesion().getSede());
-            choferServicio.guardarChofer(chofer);      
+            chofer.setSede(sesionControlador.getUsuarioSesion().getSede());
+            choferServicio.guardarChofer(chofer);
+            limpiar();
         }
-        chofer = new Chofer();
     }
-    
-    public void actualizarChofer(){
+
+    public void actualizarChofer() {
         choferServicio.actualizarChofer(chofer);
     }
-    
-    public void eliminarChofer(){
+
+    public void eliminarChofer() {
         choferServicio = new ChoferServicio();
         choferServicio.eliminarChofer(chofer);
     }
-    
-    public String irActualizar(Integer id){
+
+    public String irActualizar(Integer id) {
         Utilitario.putFlash("idChofer", id);
         return "update.xhtml?faces-redirect=true;";
     }
     
+    private void limpiar(){
+        chofer = new Chofer();
+        chofer.setEmpresa(new Empresa());
+    }
+
     private boolean esVistaValida() {
         boolean resultado = true;
-        if(Utilitario.esNulo(chofer.getNombre())){
+        if (Utilitario.esNulo(chofer.getNombre())) {
             Utilitario.enviarMensajeGlobalError("Debe ingresar el Nombre del Chofer");
             resultado = false;
-        }else if(!Utilitario.esRangoValido(chofer.getNombre(), 45)){
+        } else if (!Utilitario.esRangoValido(chofer.getNombre(), 45)) {
             Utilitario.enviarMensajeGlobalError("El rango máximo de la Nombre es de 45 caracteres");
             resultado = false;
-        }else if(Utilitario.esNulo(chofer.getApellido())){
+        } else if (Utilitario.esNulo(chofer.getApellido())) {
             Utilitario.enviarMensajeGlobalError("Debe ingresar el Apellido del Chofer");
             resultado = false;
-        }else if(!Utilitario.esRangoValido(chofer.getApellido(), 45)){
+        } else if (!Utilitario.esRangoValido(chofer.getApellido(), 45)) {
             Utilitario.enviarMensajeGlobalError("El rango máximo de la Apellido es de 45 caracteres");
             resultado = false;
-        }
-        else if(Utilitario.esNulo(chofer.getDni())){
+        } else if (Utilitario.esNulo(chofer.getDni())) {
             Utilitario.enviarMensajeGlobalError("Debe ingresar el Dni del Chofer");
             resultado = false;
-        }else if(!Utilitario.esRangoValido(chofer.getDni(), 8)){
+        } else if (!Utilitario.esRangoValido(chofer.getDni(), 8)) {
             Utilitario.enviarMensajeGlobalError("El rango máximo del Dni es de 8 caracteres");
             resultado = false;
-        }
-        else if(Utilitario.esNulo(chofer.getBrevete())){
+        } else if (Utilitario.esNulo(chofer.getBrevete())) {
             Utilitario.enviarMensajeGlobalError("Debe ingresar el Brevete del Chofer");
             resultado = false;
-        }else if(!Utilitario.esRangoValido(chofer.getBrevete(), 12)){
+        } else if (!Utilitario.esRangoValido(chofer.getBrevete(), 12)) {
             Utilitario.enviarMensajeGlobalError("El rango máximo del Brevete es de 12 caracteres");
             resultado = false;
-        }
-        else if(!Utilitario.esNulo(chofer.getCelular()) && !Utilitario.esRangoValido(chofer.getCelular(), 11)){
+        } else if (!Utilitario.esNulo(chofer.getCelular()) && !Utilitario.esRangoValido(chofer.getCelular(), 11)) {
             Utilitario.enviarMensajeGlobalError("El rango máximo del Celular es de 11 caracteres");
             resultado = false;
-        }
-        else if(!Utilitario.esNulo(chofer.getCategoria()) && !Utilitario.esRangoValido(chofer.getCategoria(), 4)){
+        } else if (!Utilitario.esNulo(chofer.getCategoria()) && !Utilitario.esRangoValido(chofer.getCategoria(), 4)) {
             Utilitario.enviarMensajeGlobalError("El rango máximo del Categoria es de 4 caracteres");
             resultado = false;
         }
-        
+
         return resultado;
     }
-    
-    /* GETTERS AND SETTERS */
 
+    /* GETTERS AND SETTERS */
     public HibernatePaginador<Chofer> getChoferPaginador() {
         return choferPaginador;
     }
