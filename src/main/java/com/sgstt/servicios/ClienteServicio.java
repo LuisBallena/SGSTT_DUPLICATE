@@ -8,7 +8,6 @@ import com.sgstt.dao.impl.ClienteImpl;
 import com.sgstt.dao.impl.SedeImpl;
 import com.sgstt.dao.impl.TipoClienteImpl;
 import com.sgstt.entidad.Cliente;
-import com.sgstt.entidad.Empresa;
 import com.sgstt.entidad.Estado;
 import com.sgstt.entidad.Sede;
 import com.sgstt.entidad.TipoCliente;

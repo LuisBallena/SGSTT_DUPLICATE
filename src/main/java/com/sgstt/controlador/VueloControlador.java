@@ -1,7 +1,6 @@
 package com.sgstt.controlador;
 
 import com.sgstt.entidad.Aerolinea;
-import com.sgstt.entidad.Sede;
 import com.sgstt.entidad.Vuelo;
 import com.sgstt.hibernate.HibernatePaginador;
 import com.sgstt.paginacion.VueloPaginador;

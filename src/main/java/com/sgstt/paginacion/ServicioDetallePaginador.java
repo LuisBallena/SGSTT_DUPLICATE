@@ -1,7 +1,6 @@
 package com.sgstt.paginacion;
 
 import com.sgstt.entidad.ServicioDetalle;
-import com.sgstt.excepciones.FilterException;
 import com.sgstt.filters.ServicioDetalleFilter;
 import com.sgstt.hibernate.HibernateStringPaginador;
 

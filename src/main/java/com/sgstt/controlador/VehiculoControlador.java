@@ -60,10 +60,10 @@ public class VehiculoControlador {
     private boolean esVistaValida(){
         boolean resultado = true;
         if(!esDescripcionValida()){
-            Utilitario.enviarMensajeGlobalError("Debe ingresar una descripcion");
+            Utilitario.enviarMensajeGlobalError("Debe ingresar un Centro de Costo");
             resultado = false;
         }else if(!esPlacaValida()){
-            Utilitario.enviarMensajeGlobalError("Debe ingresar una placa");
+            Utilitario.enviarMensajeGlobalError("Debe ingresar una Placa");
             resultado = false;
         }else if(!esTipoVehiculoValido()){
             Utilitario.enviarMensajeGlobalError("Debe seleccionar un Tipo de Vehiculo");
@@ -72,16 +72,7 @@ public class VehiculoControlador {
             Utilitario.enviarMensajeGlobalError("Debe seleccionar una Marca");
             resultado = false;
         }else if(!esAFabricacionValido()){
-            Utilitario.enviarMensajeGlobalError("Debe ingresar un año de fabricacion");
-            resultado = false;
-        }else if(!esCapMaximaValida()){
-            Utilitario.enviarMensajeGlobalError("Debe ingresar una capacidad Maxima");
-            resultado = false;
-        }else if(!esCapRecomendadaValida()){
-            Utilitario.enviarMensajeGlobalError("Debe ingresar una capacidad recomendada");
-            resultado = false;
-        }else if(!esColorValido()){
-            Utilitario.enviarMensajeGlobalError("Debe seleccionar un color");
+            Utilitario.enviarMensajeGlobalError("Debe ingresar un Año de Fabricacion");
             resultado = false;
         }
         return resultado;
@@ -94,10 +85,6 @@ public class VehiculoControlador {
     private boolean esMarcaValida(){
         return vehiculo.getMarca().getId().intValue() != 0;
     }
-    
-    private boolean esColorValido(){
-        return vehiculo.getColor() != "";
-    }
     private boolean esDescripcionValida(){
         return vehiculo.getDescripcion() != "";
     }
@@ -105,14 +92,7 @@ public class VehiculoControlador {
     private boolean esPlacaValida(){
         return vehiculo.getPlaca() != "";
     }            
-    
-    private boolean esCapMaximaValida(){
-        return vehiculo.getCapacidad_max() != "";
-    }
-    
-    private boolean esCapRecomendadaValida(){
-        return vehiculo.getCapacidad_recomendada() != "";
-    }
+
     
     private boolean esAFabricacionValido(){
         String año = vehiculo.getAño_fabricacion();

@@ -173,13 +173,13 @@ public class ClienteControlador implements Serializable {
         } else if (cliente.getTipoDocumento() == TipoDocumento.DNI && !Utilitario.esRangoValido(cliente.getNumeroDocumento(), 8, 8)) {
             Utilitario.enviarMensajeGlobalError("El dni son 8 caracteres");
             resultado = false;
-        } else if (cliente.getTipoDocumento() == TipoDocumento.RUC && !Utilitario.esRangoValido(cliente.getNumeroDocumento(), 11, 11)) {
-            Utilitario.enviarMensajeGlobalError("El ruc son 11 caracteres");
-            resultado = false;
         } else if (cliente.getTipoDocumento() == TipoDocumento.CARNET_EXTRANJERIA && !Utilitario.esRangoValido(cliente.getNumeroDocumento(), 12, 12)) {
             Utilitario.enviarMensajeGlobalError("El CARNET_EXTRANJERIA son 12 caracteres");
             resultado = false;
-        }  else if (!esDireccionValida()) {
+        } else if (cliente.getTipoDocumento() == TipoDocumento.RUC && !Utilitario.esRangoValido(cliente.getNumeroDocumento(), 11, 11)) {
+            Utilitario.enviarMensajeGlobalError("El ruc son 11 caracteres");
+            resultado = false;
+        } else if (!esDireccionValida()) {
             resultado = false;
         } else if (!esCorreoValido()) {
             resultado = false;
@@ -192,7 +192,7 @@ public class ClienteControlador implements Serializable {
         if (Utilitario.esNulo(cliente.getRazonSocial())) {
             Utilitario.enviarMensajeGlobalError("Debe ingresar la razon social");
             resultado = false;
-        } else if (!Utilitario.esRangoValido(cliente.getRazonSocial(), 45)) {
+        } else if (!Utilitario.esRangoValido(cliente.getRazonSocial(), 11)) {
             Utilitario.enviarMensajeGlobalError("El rango máximo de la razon social es de 11 caracteres");
             resultado = false;
         }

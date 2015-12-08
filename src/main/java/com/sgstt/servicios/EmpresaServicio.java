@@ -9,7 +9,6 @@ import com.sgstt.dao.EmpresaDao;
 import com.sgstt.dao.SedeDao;
 import com.sgstt.dao.impl.EmpresaImpl;
 import com.sgstt.dao.impl.SedeImpl;
-import com.sgstt.entidad.Chofer;
 import com.sgstt.entidad.Empresa;
 import com.sgstt.entidad.Estado;
 import com.sgstt.entidad.Sede;

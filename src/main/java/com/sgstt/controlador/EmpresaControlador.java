@@ -2,11 +2,9 @@ package com.sgstt.controlador;
 
 import com.sgstt.entidad.Empresa;
 import com.sgstt.entidad.Sede;
-import com.sgstt.entidad.Vehiculo;
 import com.sgstt.hibernate.HibernatePaginador;
 import com.sgstt.paginacion.EmpresaPaginador;
 import com.sgstt.servicios.EmpresaServicio;
-import com.sgstt.servicios.TransporteServicio;
 import com.sgstt.util.Utilitario;
 
 import java.io.Serializable;
