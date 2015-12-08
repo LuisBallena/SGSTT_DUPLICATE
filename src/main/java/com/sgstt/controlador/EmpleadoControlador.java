@@ -86,13 +86,48 @@ public class EmpleadoControlador implements Serializable {
 
     private boolean esVistaValida() {
         boolean resultado = true;
-        if(Utilitario.esNulo(empleado.getDatosCompletos())){
-            Utilitario.enviarMensajeGlobalError("Debe ingresar la Razon social");
+        if(Utilitario.esNulo(empleado.getNombre())){
+            Utilitario.enviarMensajeGlobalError("Debe ingresar el Nombre del Chofer");
             resultado = false;
-        }else if(!Utilitario.esRangoValido(empleado.getDatosCompletos(), 45)){
-            Utilitario.enviarMensajeGlobalError("El rango máximo de la descripción es de 45 caracteres");
+        }else if(!Utilitario.esRangoValido(empleado.getNombre(), 45)){
+            Utilitario.enviarMensajeGlobalError("El rango máximo de la Nombre es de 45 caracteres");
+            resultado = false;
+        }if(Utilitario.esNulo(empleado.getApellidos())){
+            Utilitario.enviarMensajeGlobalError("Debe ingresar el Apellido del Chofer");
+            resultado = false;
+        }else if(!Utilitario.esRangoValido(empleado.getApellidos(), 45)){
+            Utilitario.enviarMensajeGlobalError("El rango máximo de la Apellido es de 45 caracteres");
             resultado = false;
         }
+        if(Utilitario.esNulo(empleado.getDni())){
+            Utilitario.enviarMensajeGlobalError("Debe ingresar el Nombre del Chofer");
+            resultado = false;
+        }else if(!Utilitario.esRangoValido(empleado.getDni(), 8)){
+            Utilitario.enviarMensajeGlobalError("El rango máximo del Dni es de 8 caracteres");
+            resultado = false;
+        }
+        if(Utilitario.esNulo(empleado.getCorreo())){
+            Utilitario.enviarMensajeGlobalError("Debe ingresar el Correo del Chofer");
+            resultado = false;
+        }else if(!Utilitario.esRangoValido(empleado.getCorreo(), 45)){
+            Utilitario.enviarMensajeGlobalError("El rango máximo del Correo es de 45 caracteres");
+            resultado = false;
+        }
+        if(Utilitario.esNulo(empleado.getCelular())){
+            Utilitario.enviarMensajeGlobalError("Debe ingresar el Celular del Chofer");
+            resultado = false;
+        }else if(!Utilitario.esRangoValido(empleado.getCelular(), 11)){
+            Utilitario.enviarMensajeGlobalError("El rango máximo del Celular es de 11 caracteres");
+            resultado = false;
+        }
+        if(Utilitario.esNulo(empleado.getTelefono())){
+            Utilitario.enviarMensajeGlobalError("Debe ingresar el Telefono del Chofer");
+            resultado = false;
+        }else if(!Utilitario.esRangoValido(empleado.getTelefono(), 11)){
+            Utilitario.enviarMensajeGlobalError("El rango máximo del Telefono es de 11 caracteres");
+            resultado = false;
+        }
+        
         return resultado;
     }
 

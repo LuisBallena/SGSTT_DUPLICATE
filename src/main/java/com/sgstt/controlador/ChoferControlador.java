@@ -67,9 +67,11 @@ public class ChoferControlador implements Serializable{
     
     public void guardarChofer(){
         /*validaciones*/
-        chofer.setSede(sesionControlador.getUsuarioSesion().getSede());
-        choferServicio.guardarChofer(chofer);
-        
+    
+        if (esVistaValida()) {
+        	chofer.setSede(sesionControlador.getUsuarioSesion().getSede());
+            choferServicio.guardarChofer(chofer);      
+        }
         chofer = new Chofer();
     }
     
@@ -87,6 +89,46 @@ public class ChoferControlador implements Serializable{
         return "update.xhtml?faces-redirect=true;";
     }
     
+    private boolean esVistaValida() {
+        boolean resultado = true;
+        if(Utilitario.esNulo(chofer.getNombre())){
+            Utilitario.enviarMensajeGlobalError("Debe ingresar el Nombre del Chofer");
+            resultado = false;
+        }else if(!Utilitario.esRangoValido(chofer.getNombre(), 45)){
+            Utilitario.enviarMensajeGlobalError("El rango máximo de la Nombre es de 45 caracteres");
+            resultado = false;
+        }else if(Utilitario.esNulo(chofer.getApellido())){
+            Utilitario.enviarMensajeGlobalError("Debe ingresar el Apellido del Chofer");
+            resultado = false;
+        }else if(!Utilitario.esRangoValido(chofer.getApellido(), 45)){
+            Utilitario.enviarMensajeGlobalError("El rango máximo de la Apellido es de 45 caracteres");
+            resultado = false;
+        }
+        else if(Utilitario.esNulo(chofer.getDni())){
+            Utilitario.enviarMensajeGlobalError("Debe ingresar el Dni del Chofer");
+            resultado = false;
+        }else if(!Utilitario.esRangoValido(chofer.getDni(), 8)){
+            Utilitario.enviarMensajeGlobalError("El rango máximo del Dni es de 8 caracteres");
+            resultado = false;
+        }
+        else if(Utilitario.esNulo(chofer.getBrevete())){
+            Utilitario.enviarMensajeGlobalError("Debe ingresar el Brevete del Chofer");
+            resultado = false;
+        }else if(!Utilitario.esRangoValido(chofer.getBrevete(), 12)){
+            Utilitario.enviarMensajeGlobalError("El rango máximo del Brevete es de 12 caracteres");
+            resultado = false;
+        }
+        else if(!Utilitario.esNulo(chofer.getCelular()) && !Utilitario.esRangoValido(chofer.getCelular(), 11)){
+            Utilitario.enviarMensajeGlobalError("El rango máximo del Celular es de 11 caracteres");
+            resultado = false;
+        }
+        else if(!Utilitario.esNulo(chofer.getCategoria()) && !Utilitario.esRangoValido(chofer.getCategoria(), 4)){
+            Utilitario.enviarMensajeGlobalError("El rango máximo del Categoria es de 4 caracteres");
+            resultado = false;
+        }
+        
+        return resultado;
+    }
     
     /* GETTERS AND SETTERS */
 

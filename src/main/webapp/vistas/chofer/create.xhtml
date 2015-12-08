@@ -44,7 +44,14 @@
                                         <div class="form-group has-feedback">
                                             <label for="nombre" class="col-sm-3 control-label" >DNI :</label>
                                             <div    class="col-sm-6" >
-                                                <p:inputMask styleClass="form-control" mask="9?9999999" placeHolder=""  value="#{choferControlador.chofer.dni}"     >
+                                                <p:inputMask styleClass="form-control" mask="9?9999999" slotChar=""  value="#{choferControlador.chofer.dni}"     >
+                                                </p:inputMask>
+                                            </div>
+                                        </div>
+                                        <div class="form-group has-feedback">
+                                            <label for="nombre" class="col-sm-3 control-label" >Brevete :</label>
+                                            <div    class="col-sm-6" >
+                                                <p:inputMask styleClass="form-control" mask="9?99999999999" slotChar="" value="#{choferControlador.chofer.brevete}"     >
                                                 </p:inputMask>
                                             </div>
                                         </div>
@@ -61,13 +68,7 @@
                                                 </p:inputText>
                                             </div>
                                         </div>
-                                        <div class="form-group has-feedback">
-                                            <label for="nombre" class="col-sm-3 control-label" >Brevete :</label>
-                                            <div    class="col-sm-6" >
-                                                <p:inputText styleClass="form-control"  value="#{choferControlador.chofer.brevete}"     >
-                                                </p:inputText>
-                                            </div>
-                                        </div>
+                                       
                                         <div class="form-group has-feedback">
                                             <label for="nombre" class="col-sm-3 control-label" >Categoría :</label>
                                             <div    class="col-sm-6" >

@@ -8,7 +8,6 @@ package com.sgstt.dao.impl;
 
 import com.sgstt.dao.EmpleadoDao;
 import com.sgstt.entidad.Empleado;
-import com.sgstt.entidad.Empresa;
 import com.sgstt.hibernate.HibernateConexion;
 import com.sgstt.hibernate.HibernateImpl;
 

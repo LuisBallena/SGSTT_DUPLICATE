@@ -5,7 +5,6 @@ import org.hibernate.Session;
 import org.junit.Test;
 import com.sgstt.hibernate.HibernateUtil;
 import org.hibernate.internal.SessionImpl;
-import org.junit.Ignore;
 
 /**
  *

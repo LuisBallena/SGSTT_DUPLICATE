@@ -2,7 +2,6 @@
 package com.sgstt.dao;
 
 import com.sgstt.entidad.Empleado;
-import com.sgstt.entidad.Empresa;
 
 import java.util.List;
 

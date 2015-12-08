@@ -1,7 +1,6 @@
 
 package com.sgstt.filters;
 
-import com.sgstt.entidad.EstadoServicio;
 
 /**
  *

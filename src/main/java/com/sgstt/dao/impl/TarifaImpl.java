@@ -8,7 +8,6 @@ import com.sgstt.hibernate.HibernateImpl;
 import java.io.Serializable;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
-import org.hibernate.Session;
 
 /**
  *

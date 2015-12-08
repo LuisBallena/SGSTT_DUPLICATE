@@ -36,37 +36,37 @@
                                         <f:facet name="header">
                                             Nombre
                                         </f:facet>
-                                        <h:outputText value="#{list.nombre eq null ? 'No Disponible' :  list.nombre}" />
+                                        <h:outputText value="#{list.nombre eq ' ' ? 'No Disponible' :  list.nombre}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Apellido
                                         </f:facet>
-                                        <h:outputText value="#{list.apellido eq null ? 'No Disponible' :  list.apellido}" />
+                                        <h:outputText value="#{list.apellido eq ' ' ? 'No Disponible' :  list.apellido}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             DNI
                                         </f:facet>
-                                        <h:outputText value="#{list.dni eq null ? 'No Disponible' :  list.dni}" />
+                                        <h:outputText value="#{list.dni eq ' ' ? 'No Disponible' :  list.dni}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Celular
                                         </f:facet>
-                                        <h:outputText value="#{list.celular eq null ? 'No Disponible' :  list.celular}" />
+                                        <h:outputText value="#{list.celular eq ' ' ? 'No Disponible' :  list.celular}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Brevete
                                         </f:facet>
-                                        <h:outputText value="#{list.brevete eq null ? 'No Disponible' :  list.brevete}" />
+                                        <h:outputText value="#{list.brevete eq ' ' ? 'No Disponible' :  list.brevete}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Fecha Nac.
                                         </f:facet>
-                                        <h:outputText value="#{list.fecha eq null ? 'No Disponible' :  list.fecha}">
+                                        <h:outputText value="#{list.fecha eq ' ' ? 'No Disponible' :  list.fecha}">
                                         <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
                                          </h:outputText>	
                                     </p:column>
@@ -74,7 +74,7 @@
                                         <f:facet name="header">
                                             Categoría
                                         </f:facet>
-                                        <h:outputText value="#{list.categoria eq null ? 'No Disponible' :  list.categoria}" />
+                                        <h:outputText value="#{list.categoria eq ' ' ? 'No Disponible' :  list.categoria}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">

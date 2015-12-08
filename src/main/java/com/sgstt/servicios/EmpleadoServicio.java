@@ -9,7 +9,6 @@ import com.sgstt.dao.impl.PerfilImpl;
 import com.sgstt.dao.impl.SedeImpl;
 import com.sgstt.dao.impl.UsuarioImpl;
 import com.sgstt.entidad.Empleado;
-import com.sgstt.entidad.Empresa;
 import com.sgstt.entidad.Estado;
 import com.sgstt.entidad.Perfil;
 import com.sgstt.entidad.Sede;
