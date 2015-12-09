@@ -1,4 +1,3 @@
-
 package com.sgstt.controlador;
 
 import com.sgstt.entidad.Cliente;
@@ -8,7 +7,6 @@ import com.sgstt.hibernate.HibernatePaginador;
 import com.sgstt.paginacion.FilePaginador;
 import com.sgstt.servicios.FileServicio;
 import com.sgstt.util.Utilitario;
-import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
@@ -18,11 +16,14 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.export.JRXlsExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+import net.sf.jasperreports.export.SimpleXlsReportConfiguration;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.internal.SessionImpl;
@@ -33,7 +34,8 @@ import org.hibernate.internal.SessionImpl;
  */
 @ManagedBean(name = "fileControlador")
 @ViewScoped
-public class FileControlador implements Serializable{
+public class FileControlador implements Serializable {
+
     private static final long serialVersionUID = 1483823329219355862L;
     private static final Logger log = Logger.getLogger(FileControlador.class.getPackage().getName());
     private HibernatePaginador<File> filePaginador;
@@ -43,10 +45,10 @@ public class FileControlador implements Serializable{
     private File file;
     @ManagedProperty("#{sesionControlador}")
     SesionControlador sesionControlador;
-    
+
     public FileControlador() {
     }
-    
+
     public void initLista() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
             file = new File();
@@ -55,8 +57,8 @@ public class FileControlador implements Serializable{
             filePaginador.initPaginador();
         }
     }
-    
-    public void initCreate(){
+
+    public void initCreate() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
             fileServicio = new FileServicio();
             file = new File();
@@ -64,11 +66,11 @@ public class FileControlador implements Serializable{
             clienteSeleccionado = new Cliente();
         }
     }
-    
-    public void initUpdate(){
+
+    public void initUpdate() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
             Object value = Utilitario.getFlash("idFile");
-            if(value == null){
+            if (value == null) {
                 Utilitario.redireccionarJSF(FacesContext.getCurrentInstance(), "/vistas/file/list.xhtml");
                 return;
             }
@@ -79,9 +81,9 @@ public class FileControlador implements Serializable{
             clientes = fileServicio.obtenerClientes();
         }
     }
-    
-    public void registrarFile(){
-        if(!esVistaValida()){
+
+    public void registrarFile() {
+        if (!esVistaValida()) {
             return;
         }
         file.setCliente(clienteSeleccionado);
@@ -89,41 +91,63 @@ public class FileControlador implements Serializable{
         fileServicio.registrarFile(file);
         limpiar();
     }
-    
-    public void exportarFactura(Integer id){
+
+    public void exportarFacturaGravada() {
+        if (file != null) {
+            exportarFactura(file.getIdFile(), 1, sesionControlador.getUsuarioSesion().getSede().getDescripcion(),"factura_gravada");
+        }
+    }
+
+    public void exportarFacturaNoGravada() {
+        if (file != null) {
+            exportarFactura(file.getIdFile(), 0, sesionControlador.getUsuarioSesion().getSede().getDescripcion(),"factura_no_gravada");
+        }
+    }
+
+    private void exportarFactura(Integer idFile, Integer idGravada, String sede,String nombreArchivo) {
         /* tu lo modificias como quieras para que sea un codigo mas limpio :D */
         String realPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
-        String rutaJasper = String.format("%sresources//reports//factura.jasper",realPath);
-        log.info("La ruta final es : "+rutaJasper);
+        String rutaJasper = String.format("%sresources//reports//factura.jasper", realPath);
+        log.info("La ruta final es : " + rutaJasper);
         Map map = new HashMap();
-        map.put("IDFILE",id);
+        map.put("IDFILE", idFile);
+        map.put("GRAVADA", idGravada);
+        map.put("SEDE", sede);
         JasperReport reporte;
         try {
             reporte = (JasperReport) JRLoader.loadObjectFromFile(rutaJasper);
             HibernateConexion conexion = new HibernateConexion();
             conexion.beginConexion();
-            JasperPrint jprint = JasperFillManager.fillReport(reporte, map, ((SessionImpl)(conexion.getSession())).connection());
+            JasperPrint jprint = JasperFillManager.fillReport(reporte, map, ((SessionImpl) (conexion.getSession())).connection());
             conexion.closeConexion();
+            JRXlsExporter xlsExporter = new JRXlsExporter();
+            xlsExporter.setExporterInput(new SimpleExporterInput(jprint));
             FacesContext context = FacesContext.getCurrentInstance();
             ExternalContext externalContext = context.getExternalContext();
-            externalContext = getResponseContentPdf(externalContext, "factura");
-            OutputStream outputStream = externalContext.getResponseOutputStream();
-            JasperExportManager.exportReportToPdfStream(jprint, outputStream);
+            externalContext = getResponseContentExcel(externalContext, nombreArchivo);
+            xlsExporter.setExporterOutput(new SimpleOutputStreamExporterOutput(externalContext.getResponseOutputStream()));
+            SimpleXlsReportConfiguration xlsReportConfiguration = new SimpleXlsReportConfiguration();
+            xlsReportConfiguration.setOnePagePerSheet(false);
+            xlsReportConfiguration.setRemoveEmptySpaceBetweenColumns(true);
+            xlsReportConfiguration.setRemoveEmptySpaceBetweenRows(true);
+            xlsReportConfiguration.setDetectCellType(true);
+            xlsReportConfiguration.setWhitePageBackground(true);
+            xlsExporter.setConfiguration(xlsReportConfiguration);
+            xlsExporter.exportReport();
             externalContext.setResponseStatus(200);
             externalContext.responseFlushBuffer();
             context.responseComplete();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        
     }
-    
-    private void limpiar(){
+
+    private void limpiar() {
         file = new File();
         clienteSeleccionado = new Cliente();
     }
-    
-    private ExternalContext getResponseContentPdf(ExternalContext externalContext, String nombreArchivo){
+
+    private ExternalContext getResponseContentPdf(ExternalContext externalContext, String nombreArchivo) {
         externalContext.setResponseContentType("application/pdf");
         externalContext.setResponseHeader("Expires", "0");
         externalContext.setResponseHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
@@ -131,62 +155,70 @@ public class FileControlador implements Serializable{
         externalContext.setResponseHeader("Content-Disposition", "attachment; filename=" + nombreArchivo + ".pdf");
         return externalContext;
     }
-    
-    public void actualizarFile(){
-        if(!esVistaValida()){
+
+    private ExternalContext getResponseContentExcel(ExternalContext externalContext, String nombreArchivo) {
+        externalContext.setResponseContentType("application/vnd.ms-excel");
+        externalContext.setResponseHeader("Expires", "0");
+        externalContext.setResponseHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+        externalContext.setResponseHeader("Pragma", "public");
+        externalContext.setResponseHeader("Content-Disposition", "attachment; filename=" + nombreArchivo + ".xls");
+        return externalContext;
+    }
+
+    public void actualizarFile() {
+        if (!esVistaValida()) {
             return;
         }
         file.setCliente(clienteSeleccionado);
         file.setEmpleado(sesionControlador.getUsuarioSesion().getEmpleado());
         fileServicio.actualizarFile(file);
     }
-    
-    public void eliminarFile(){
+
+    public void eliminarFile() {
         fileServicio.eliminarFile(file);
     }
-    
+
     public String irActualizar(Integer id) {
         Utilitario.putFlash("idFile", id);
         return "update.xhtml?faces-redirect=true;";
     }
-    
-    public void capturarClient(Cliente cliente){
+
+    public void capturarClient(Cliente cliente) {
         clienteSeleccionado = SerializationUtils.clone(cliente);
     }
-    
-    public void capturarFile(File fileSeleccionado){
+
+    public void capturarFile(File fileSeleccionado) {
         file = fileSeleccionado;
     }
-    
-    private boolean esVistaValida(){
+
+    private boolean esVistaValida() {
         boolean resultado = true;
-        if(!esClienteValido()){
+        if (!esClienteValido()) {
             Utilitario.enviarMensajeGlobalError("Debe seleccionar un cliente");
             resultado = false;
-        }else if(!esPaxValido()){
-             resultado = false;
+        } else if (!esPaxValido()) {
+            resultado = false;
         }
         return resultado;
     }
-    
-    private boolean esClienteValido(){
+
+    private boolean esClienteValido() {
         return clienteSeleccionado.getIdCliente() != 0;
     }
-    
-    private boolean esPaxValido(){
+
+    private boolean esPaxValido() {
         boolean resultado = true;
-        if(Utilitario.esNulo(file.getPax())){
+        if (Utilitario.esNulo(file.getPax())) {
             Utilitario.enviarMensajeGlobalError("Debe ingresar el PAX");
             resultado = false;
-        }else if(!Utilitario.esRangoValido(file.getPax(),80)){
+        } else if (!Utilitario.esRangoValido(file.getPax(), 80)) {
             Utilitario.enviarMensajeGlobalError("El rango maximo del PAX es de 80 caracteres");
             resultado = false;
         }
         return resultado;
     }
-    
+
     /*  GETTERS AND SETTERS */
-    
     public HibernatePaginador<File> getFilePaginador() {
         return filePaginador;
     }

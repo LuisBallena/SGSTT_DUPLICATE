@@ -38,10 +38,10 @@ public class ServicioDetallePaginador extends HibernateStringPaginador implement
             StringBuilder builder = new StringBuilder();
             builder.append(filter.esValidoId(filter.getIdTipoServicio()) ? String.format("and serviciodetalle.servicio.tipoServicio.id = %d ", filter.getIdTipoServicio()) : "");
             builder.append(filter.esValidoId(filter.getIdServicio()) ? String.format("and serviciodetalle.servicio.id = %d ",filter.getIdServicio()) : "");
-            builder.append(filter.esValidoId(filter.getIdServicio()) ? String.format("and serviciodetalle.vehiculo.id = %d ",filter.getIdVehiculo()) : "");
-            builder.append(filter.esValidoId(filter.getIdServicio()) ? String.format("and serviciodetalle.chofer.id = %d ",filter.getIdChofer()) : "");
+            builder.append(filter.esValidoId(filter.getIdVehiculo()) ? String.format("and serviciodetalle.vehiculo.id = %d ",filter.getIdVehiculo()) : "");
+            builder.append(filter.esValidoId(filter.getIdChofer()) ? String.format("and serviciodetalle.chofer.id = %d ",filter.getIdChofer()) : "");
             builder.append(String.format("and serviciodetalle.externalizado = '%s'",filter.isServicioExterno() ? "SI" : "NO"));
-            builder.append(String.format("and serviciodetalle.estadoServicio = '%s'",filter.getEstadoServicio()));
+            builder.append(filter.getEstadoServicio() != null && !filter.getEstadoServicio().trim().isEmpty() ? String.format("and serviciodetalle.estadoServicio = '%s'",filter.getEstadoServicio()) : "");
             if (filter.getFechaDesde() != null && filter.getFechaHasta() != null) {
                 builder.append(String.format("and serviciodetalle.fecha between '%s' and  '%s'",
                         Utilitario.convertirFormatoFecha(filter.getFechaDesde(), Utilitario.FORMATO_SQL_DATE_TIME),

@@ -63,3 +63,10 @@
     float: left;
     margin-right: 5px;
 }
+
+.btnExportarExcel { 
+    display:block;
+    float: right;
+    padding-top: 5px;
+    padding-right: 5px;
+}

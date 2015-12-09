@@ -24,47 +24,48 @@ import javax.persistence.Transient;
  */
 @Entity
 @Table(name = "chofer", catalog = "sgstt")
-public class Chofer implements Serializable{
+public class Chofer implements Serializable {
+
     private static final long serialVersionUID = 8461028162424381534L;
     @Id
     @GeneratedValue
     @Column(name = "IDCHOFER")
     private Integer id;
-    
+
     @Column
     private String nombre;
-    
+
     @Column
     private String apellido;
-    
+
     @Column
     private String dni;
-    
+
     @Column
     private String celular;
 
-	@Column
+    @Column
     private String brevete;
-    
-	@Column
+
+    @Column
     private String categoria;
-    
-	@Column
+
+    @Column
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date fecha;	
-	
+    private Date fecha;
+
     @Enumerated(EnumType.ORDINAL)
-    @Column(nullable = false,insertable = false)
+    @Column(nullable = false, insertable = false)
     private Estado estado;
-   
+
     @Transient
     private String datosCompletos;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idSede")
     private Sede sede;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idempresa")
     private Empresa empresa;
 
@@ -110,7 +111,7 @@ public class Chofer implements Serializable{
     public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
-    
+
     public Date getFecha() {
         return fecha;
     }
@@ -118,7 +119,7 @@ public class Chofer implements Serializable{
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
-    
+
     public Estado getEstado() {
         return estado;
     }
@@ -144,24 +145,23 @@ public class Chofer implements Serializable{
     }
 
     public String getCelular() {
-		return celular;
-	}
+        return celular;
+    }
 
-	public void setCelular(String celular) {
-		this.celular = celular;
-	}
-	
+    public void setCelular(String celular) {
+        this.celular = celular;
+    }
 
     public String getBrevete() {
-		return brevete;
-	}
-
-	public void setBrevete(String brevete) {
-		this.brevete = brevete;
-	}
-	
-    public String getDatosCompletos() {
-        return String.format("%s %s",Utilitario.esNulo(getNombre()) ? "" : getNombre(),Utilitario.esNulo(getApellido()) ? "" : getApellido());
+        return brevete;
     }
-    
+
+    public void setBrevete(String brevete) {
+        this.brevete = brevete;
+    }
+
+    public String getDatosCompletos() {
+        return String.format("%s %s", Utilitario.esNulo(getNombre()) ? "" : getNombre(), Utilitario.esNulo(getApellido()) ? "" : getApellido());
+    }
+
 }

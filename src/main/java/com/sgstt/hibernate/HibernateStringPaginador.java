@@ -69,7 +69,12 @@ public class HibernateStringPaginador<T> extends HibernatePaginador<T> {
         List<T> lista = null;
         try {
             conexion.beginConexion();
-            lista = conexion.getSession().createQuery(queryCriteria).list();
+            if(queryDynamicCriteria != null && !queryDynamicCriteria.isEmpty()){
+                String queryTransformer = String.format("%s %s",queryCriteria,queryDynamicCriteria);
+                lista = conexion.getSession().createQuery(queryTransformer).list();
+            }else{
+                lista = conexion.getSession().createQuery(queryCriteria).list();
+            }
         } catch (HibernateException e) {
             log.error("[HibernatePaginador/obtenerListaCompleta] Error al obtener todos los elementos de la paginación", e);
         } finally {

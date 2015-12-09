@@ -8,7 +8,10 @@ import com.sgstt.hibernate.HibernatePaginador;
 import com.sgstt.paginacion.ServicioDetallePaginador;
 import com.sgstt.servicios.CotizacionServicio;
 import com.sgstt.servicios.TransporteServicio;
+import com.sgstt.util.ExcelExporter;
 import com.sgstt.util.Utilitario;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,6 +19,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
 
@@ -311,6 +315,25 @@ public class OrdenServicioControlador implements Serializable {
             resultado = false;
         }
         return resultado;
+    }
+    
+    public void exportarData(){
+        List<ServicioDetalle> data = servicioDetallePaginador.obtenerListaCompleta();
+        ExcelExporter exporter = new ExcelExporter(ServicioDetalle.class,data);
+        exporter.agregarHeader("Desarrollador");
+        exporter.crearDocumento();
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = facesContext.getExternalContext();
+        externalContext = ExcelExporter.getResponseContent(externalContext,"lista_ordenes_servicios");
+        try {
+            OutputStream outputStream = externalContext.getResponseOutputStream();
+            exporter.exportarDocumento(outputStream);
+            externalContext.setResponseStatus(200);
+            externalContext.responseFlushBuffer();
+            facesContext.responseComplete();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /* GETTERS AND SETTERS */

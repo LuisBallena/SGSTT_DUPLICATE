@@ -1,5 +1,6 @@
 package com.sgstt.entidad;
 
+import com.sgstt.util.Exporter;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -26,7 +27,7 @@ import org.hibernate.annotations.FetchMode;
  */
 @Entity
 @Table(name = "servicio_detalle")
-public class ServicioDetalle implements Serializable {
+public class ServicioDetalle implements Serializable, Exporter {
 
     private static final long serialVersionUID = 165099556331434992L;
 
@@ -66,7 +67,7 @@ public class ServicioDetalle implements Serializable {
     @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "IDCHOFER", nullable = true)
     private Chofer chofer;
-    
+
     @ManyToOne(fetch = FetchType.EAGER)
     @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "IDVENTA")
@@ -115,19 +116,56 @@ public class ServicioDetalle implements Serializable {
 
     @Column(insertable = false)
     private boolean gravada;
-    
+
     @Column
     private String pax;
-    
+
     @Column
     private String cuenta;
-    
+
     @Column
     private String comentario;
 
     public ServicioDetalle() {
         vuelo = new Vuelo();
     }
+    
+    private Double generarPrecioTotalSinIGV(){
+        return (precioServicio*(diasViaje== 0 ? 1.0 : diasViaje.doubleValue()))+adicional-descuento; 
+    }
+    
+    @Override
+    public String[] getDatos() {
+        String[] datos = new String[15];
+        datos[0] = "" + this.id;
+        datos[1] = "" + this.fecha;
+        datos[2] = this.servicio.getDescripcion();
+        datos[3] = this.servicio.getTipoServicio().getDescripcion();
+        datos[4] = this.getFileAuxiliar();
+        datos[5] = this.file == null ? this.pax : this.file.getPax();
+        datos[6] = this.file == null ? this.cuenta : this.file.getCuenta();
+        datos[7] = "" + this.getNroPersonas();
+        datos[8] = this.trasladista == null ? "No Asignado" : this.trasladista.getDatosCompletos();
+        datos[9] = this.vuelo == null ? "No aplica" : this.vuelo.getDescripcion();
+        datos[10] = this.estadoServicio.toString();
+        datos[11] = this.externalizado;
+        datos[12] = this.vehiculo == null ? "No Asignado" : this.vehiculo.getDescripcion();
+        datos[13] = this.chofer == null ? "No Asignado" : this.chofer.getDatosCompletos();
+        if(estadoServicio != EstadoServicio.SIN_ASIGNAR){
+            datos[14] = ""+generarPrecioTotalSinIGV();
+        }else{
+            datos[14] = "";
+        }
+        return datos;
+    }
+
+    @Override
+    public String[] getTitulos() {
+        return new String[]{"id","Fecha","Servicio","Tipo de Servicio","File/VTA","PAX","Cuenta"
+                ,"Nro. Personas","Trasladista","Vuelo","Estado Servicio","Tercerizado","Vehiculo","Chofer","Precio Sin IGV"};
+    }
+    
+    /* GETTERS AND SETTERS */
 
     public Integer getId() {
         return id;
@@ -294,10 +332,10 @@ public class ServicioDetalle implements Serializable {
     }
 
     public String getFileAuxiliar() {
-        if(getFile() != null){
-             fileAuxiliar = "" + getFile().getNroCorrelativo();
-        }else if(getVenta() != null){
-            fileAuxiliar = String.format("%s-%d",getVenta().getSerie(),getVenta().getId());
+        if (getFile() != null) {
+            fileAuxiliar = "" + getFile().getNroCorrelativo();
+        } else if (getVenta() != null) {
+            fileAuxiliar = String.format("%s-%d", getVenta().getSerie(), getVenta().getId());
         }
         return fileAuxiliar;
     }
@@ -317,7 +355,7 @@ public class ServicioDetalle implements Serializable {
     public void setPax(String pax) {
         this.pax = pax;
     }
-    
+
     public String getCuenta() {
         return cuenta;
     }
@@ -325,7 +363,7 @@ public class ServicioDetalle implements Serializable {
     public void setCuenta(String cuenta) {
         this.cuenta = cuenta;
     }
-    
+
     public String getComentario() {
         return comentario;
     }
@@ -333,4 +371,6 @@ public class ServicioDetalle implements Serializable {
     public void setComentario(String comentario) {
         this.comentario = comentario;
     }
+
+    
 }

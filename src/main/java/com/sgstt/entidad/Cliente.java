@@ -33,7 +33,7 @@ public class Cliente implements java.io.Serializable {
     @Column
     private String numeroDocumento;
     @Column
-    private String direccion;
+    private String direccion = null;
     
     private String razonSocial;
     
@@ -45,7 +45,7 @@ public class Cliente implements java.io.Serializable {
     @Column(name = "TIPO_DOCUMENTO")
     private TipoDocumento tipoDocumento;
     @Column
-    private String correo;
+    private String correo = null;
     @Transient
     private String nombreAuxiliar;
     

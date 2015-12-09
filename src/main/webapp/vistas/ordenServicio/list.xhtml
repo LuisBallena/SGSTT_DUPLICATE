@@ -171,7 +171,12 @@
                                 <p:dataTable value="#{ordenServicioControlador.servicioDetallePaginador}" var="list"
                                              emptyMessage="No existen ordenes de servicios"
                                              paginator="true" rows="10" lazy="true" rowIndexVar="rowIndex"
-                                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}">
+                                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {Exporters}">
+                                    <f:facet name="{Exporters}">
+                                        <h:commandLink styleClass="btnExportarExcel"  actionListener="#{ordenServicioControlador.exportarData}">
+                                            <h:graphicImage url="#{facesContext.externalContext.contextName}/resources/images/xls.gif" />
+                                        </h:commandLink>
+                                    </f:facet>
                                     <p:column style="text-align: center;font-size: 13px;">
                                         <f:facet name="header">
                                             Fecha del Servico
