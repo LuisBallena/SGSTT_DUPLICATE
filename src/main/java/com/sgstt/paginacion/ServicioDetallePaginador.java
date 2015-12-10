@@ -25,7 +25,7 @@ public class ServicioDetallePaginador extends HibernateStringPaginador implement
 
     @Override
     protected String createFilter(Object... values) {
-        orderBy("serviciodetalle.fecha desc");
+        orderBy("serviciodetalle.fecha ASC");
         return String.format("%s left join fetch serviciodetalle.vehiculo.tipoVehiculo where serviciodetalle.estado = 1 and serviciodetalle.servicio.sede.id = %d", super.createFilter()
                 , ((ServicioDetalleFilter) values[0]).getIdSede());
     }

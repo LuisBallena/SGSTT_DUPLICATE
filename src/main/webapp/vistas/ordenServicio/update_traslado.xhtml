@@ -43,13 +43,10 @@
                                             </div>
                                         </div>
                                         <div class="form-group has-feedback">
-                                            <label class="col-md-2 control-label" >Guia :</label>
-                                            <div class="col-md-3">
-                                                <h:selectOneMenu styleClass="form-control" value="#{ordenServicioControlador.trasladistaSeleccionado.id}">
-                                                    <f:selectItem itemLabel="Seleccionar" itemValue="0" />
-                                                    <f:selectItems value="#{ordenServicioControlador.guias}" var="guias" itemLabel="#{guias.nombre} #{guias.apellido}" itemValue="#{guias.id}" />
-                                                </h:selectOneMenu>
-                                            </div>
+                                                <label class="col-md-2 control-label" >Descripcion :</label>
+                                                <div class="col-md-3">
+                                                    <p:inputText styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.descripcion}" />
+                                                </div>
                                             <label  class="col-md-2 control-label" >Nro Pasajeros :</label>
                                             <div class="col-md-3">
                                                 <p:inputMask mask="9?9" slotChar="" styleClass="form-control"  value="#{ordenServicioControlador.servicioDetalle.nroPersonas}" />
@@ -128,7 +125,7 @@
                                                         <img src="#{request.contextPath}/resources/images/add.png" />
                                                     </div>
                                                 </div>
-                                                <label  class="col-md-1 control-label" >Tipo Vehiculo:</label>
+                                                <label  class="col-md-1 control-label" >Tipo V. :</label>
                                                 <div class="col-md-3">
                                                     <p class="form-control" style="background-color: #f5f5f5;border: 1px solid #ccc;">
                                                         #{ordenServicioControlador.servicioDetalle.vehiculo.tipoVehiculo.nombre}
@@ -137,10 +134,14 @@
                                             </h:panelGroup>
                                         </div>
                                         <div class="form-group has-feedback">
-                                            <label class="col-md-2 control-label" >Horas/Dias :</label>
+                                         <label class="col-md-2 control-label" >Guia :</label>
                                             <div class="col-md-3">
-                                                <p:inputMask mask="9?9" placeHolder="" value="#{ordenServicioControlador.servicioDetalle.diasViaje}" />
+                                                <h:selectOneMenu styleClass="form-control" value="#{ordenServicioControlador.trasladistaSeleccionado.id}">
+                                                    <f:selectItem itemLabel="Seleccionar" itemValue="0" />
+                                                    <f:selectItems value="#{ordenServicioControlador.guias}" var="guias" itemLabel="#{guias.nombre} #{guias.apellido}" itemValue="#{guias.id}" />
+                                                </h:selectOneMenu>
                                             </div>
+                                            
                                             <h:panelGroup rendered="#{ordenServicioControlador.servicioDetalle.venta != null}">
                                                 <label class="col-md-2 control-label" >PAX :</label>
                                                 <div class="col-md-3">
@@ -150,18 +151,20 @@
 
                                         </div>
                                         <div class="form-group has-feedback">
-                                            <h:panelGroup rendered="#{ordenServicioControlador.servicioDetalle.cuenta != null}">
                                                 <label class="col-md-2 control-label" >Cuenta :</label>
                                                 <div class="col-md-3">
-                                                    <p:inputMask mask="9?9" placeHolder="" value="#{ordenServicioControlador.servicioDetalle.cuenta}" />
+                                                    <p:inputText styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.cuenta}" />
                                                 </div>
-                                            </h:panelGroup>
                                             <label class="col-md-2 control-label" >Comentario :</label>
                                             <div class="col-md-3">
                                                 <p:inputText styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.comentario}"  />
                                             </div>                                           
                                         </div>
                                         <div class="form-group has-feedback">
+                                        	<label class="col-md-2 control-label" >Horas/Dias :</label>
+                                            <div class="col-md-3">
+                                                <p:inputMask mask="9?9" placeHolder="" value="#{ordenServicioControlador.servicioDetalle.diasViaje}" />
+                                            </div>
                                             <label class="col-md-2 control-label" >Oper. Gravada :</label>
                                             <div class="col-md-3">
                                                 <label class="control-label">

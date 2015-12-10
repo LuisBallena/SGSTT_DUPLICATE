@@ -44,16 +44,13 @@
                                             </div>
                                         </div>
                                         <div class="form-group has-feedback">
-                                            <label class="col-md-2 control-label" >Guia :</label>
-                                            <div class=" col-md-3">
-                                                <h:selectOneMenu styleClass="form-control" value="#{ordenServicioControlador.trasladistaSeleccionado.id}">
-                                                    <f:selectItem itemLabel="Seleccionar" itemValue="0" />
-                                                    <f:selectItems value="#{ordenServicioControlador.guias}" var="guias" itemLabel="#{guias.nombre} #{guias.apellido}" itemValue="#{guias.id}" />
-                                                </h:selectOneMenu>
+                                            <label  class="col-md-2 control-label" >Descripcion :</label>
+                                            <div class="col-md-3">
+                                                <p:inputText  styleClass="form-control"  value="#{ordenServicioControlador.servicioDetalle.descripcion}" />
                                             </div>
                                             <label  class="col-md-2 control-label" >Nro Pasajeros :</label>
                                             <div class="col-md-3">
-                                                <p:inputMask mask="9?9" slotChar="" styleClass="form-control"  value="#{ordenServicioControlador.servicioDetalle.nroPersonas}" />
+                                                <p:inputMask mask="9?99" slotChar="" styleClass="form-control"  value="#{ordenServicioControlador.servicioDetalle.nroPersonas}" />
                                             </div>
                                         </div>
                                         <div class="form-group has-feedback">
@@ -95,6 +92,13 @@
                                             </div> 
                                         </div>
                                         <div class="form-group has-feedback">
+                                        	<label class="col-md-2 control-label" >Guia :</label>
+                                            <div class=" col-md-3">
+                                                <h:selectOneMenu styleClass="form-control" value="#{ordenServicioControlador.trasladistaSeleccionado.id}">
+                                                    <f:selectItem itemLabel="Seleccionar" itemValue="0" />
+                                                    <f:selectItems value="#{ordenServicioControlador.guias}" var="guias" itemLabel="#{guias.nombre} #{guias.apellido}" itemValue="#{guias.id}" />
+                                                </h:selectOneMenu>
+                                            </div>
                                         	<label class="col-md-2 control-label" >Comentario :</label>
                                             <div class="col-md-3">
                                                 <p:inputText  styleClass="form-control"  value="#{ordenServicioControlador.servicioDetalle.comentario}" />

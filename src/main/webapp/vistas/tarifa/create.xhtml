@@ -31,8 +31,8 @@
                                         <div class="form-group has-feedback">
                                             <label for="operador" class="col-sm-3 control-label" >Horas :</label>
                                             <div class="col-sm-5" >
-                                                <p:inputText styleClass="form-control" id="horas" value="#{tarifaControlador.tarifa.horas}">
-                                                </p:inputText>
+                                                <p:inputMask mask="9?99" slotChar="" styleClass="form-control"  id="horas" value="#{tarifaControlador.tarifa.horas}">
+                                                </p:inputMask>
                                             </div>	
                                         </div>
                                         <div class="form-group has-feedback">

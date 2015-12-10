@@ -126,6 +126,9 @@ public class ServicioDetalle implements Serializable, Exporter {
     @Column
     private String comentario;
 
+    @Column
+    private String descripcion;
+    
     public ServicioDetalle() {
         vuelo = new Vuelo();
     }
@@ -372,5 +375,11 @@ public class ServicioDetalle implements Serializable, Exporter {
         this.comentario = comentario;
     }
 
-    
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
 }

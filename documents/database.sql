@@ -462,6 +462,7 @@ DROP TABLE IF EXISTS `sgstt`.`servicio_detalle` ;
 CREATE  TABLE IF NOT EXISTS `sgstt`.`servicio_detalle` (
   `idservicio_detalle` INT NOT NULL AUTO_INCREMENT ,
   `idservicio` INT NOT NULL ,
+  `descripcion` VARCHAR(80) NULL ,
   `num_personas` INT NOT NULL ,
   `fecha` DATETIME NOT NULL ,
   `externalizado` VARCHAR(2) NOT NULL DEFAULT 'NO' ,
@@ -480,13 +481,11 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`servicio_detalle` (
   `idvuelo` INT NULL ,
   `idchofer` INT NULL ,
   `idtrasladista` INT NULL ,
-  `idcobro` INT NULL ,
   `idvehiculo` INT NULL ,
   `idfile` INT NULL ,
   `idventa` INT NULL ,
   PRIMARY KEY (`idservicio_detalle`, `idservicio`) ,
   INDEX `fk_servicio_detalle_trasladista1_idx` (`idtrasladista` ASC) ,
-  INDEX `fk_servicio_detalle_cobro1_idx` (`idcobro` ASC) ,
   INDEX `fk_servicio_detalle_servicio1_idx` (`idservicio` ASC) ,
   INDEX `fk_servicio_detalle_vuelo1_idx` (`idvuelo` ASC) ,
   INDEX `fk_servicio_detalle_chofer1_idx` (`idchofer` ASC) ,
@@ -496,11 +495,6 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`servicio_detalle` (
   CONSTRAINT `fk_servicio_detalle_trasladista1`
     FOREIGN KEY (`idtrasladista` )
     REFERENCES `sgstt`.`trasladista` (`idtrasladista` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_servicio_detalle_cobro1`
-    FOREIGN KEY (`idcobro` )
-    REFERENCES `sgstt`.`cobro` (`idcobro` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_servicio_detalle_servicio1`
@@ -859,13 +853,13 @@ COMMIT;
 START TRANSACTION;
 USE `sgstt`;
 INSERT INTO `sgstt`.`tipo_vehiculo` (`idtipo_vehiculo`, `nombre`, `capacidad`) VALUES (1, 'Bus', 30);
-INSERT INTO `sgstt`.`tipo_vehiculo` (`idtipo_vehiculo`, `nombre`, `capacidad`) VALUES (2, 'Bus-30 Max', 30);
-INSERT INTO `sgstt`.`tipo_vehiculo` (`idtipo_vehiculo`, `nombre`, `capacidad`) VALUES (3, 'Bus-24 Max', 30);
-INSERT INTO `sgstt`.`tipo_vehiculo` (`idtipo_vehiculo`, `nombre`, `capacidad`) VALUES (4, 'Mini Bus', 20);
-INSERT INTO `sgstt`.`tipo_vehiculo` (`idtipo_vehiculo`, `nombre`, `capacidad`) VALUES (5, 'Sprinter Larga', 40);
-INSERT INTO `sgstt`.`tipo_vehiculo` (`idtipo_vehiculo`, `nombre`, `capacidad`) VALUES (6, 'Sprinter Corta', 40);
-INSERT INTO `sgstt`.`tipo_vehiculo` (`idtipo_vehiculo`, `nombre`, `capacidad`) VALUES (7, 'Van H1', 10);
-INSERT INTO `sgstt`.`tipo_vehiculo` (`idtipo_vehiculo`, `nombre`, `capacidad`) VALUES (8, 'Van Toyota', 10);
+INSERT INTO `sgstt`.`tipo_vehiculo` (`idtipo_vehiculo`, `nombre`, `capacidad`) VALUES (2, 'Mini Bus', 20);
+INSERT INTO `sgstt`.`tipo_vehiculo` (`idtipo_vehiculo`, `nombre`, `capacidad`) VALUES (3, 'Sprinter Larga', 40);
+INSERT INTO `sgstt`.`tipo_vehiculo` (`idtipo_vehiculo`, `nombre`, `capacidad`) VALUES (4, 'Sprinter Corta', 40);
+INSERT INTO `sgstt`.`tipo_vehiculo` (`idtipo_vehiculo`, `nombre`, `capacidad`) VALUES (5, 'Van H1', 10);
+INSERT INTO `sgstt`.`tipo_vehiculo` (`idtipo_vehiculo`, `nombre`, `capacidad`) VALUES (6, 'Van Toyota', 10);
+INSERT INTO `sgstt`.`tipo_vehiculo` (`idtipo_vehiculo`, `nombre`, `capacidad`) VALUES (7, 'Bus-30 Max', 30);
+INSERT INTO `sgstt`.`tipo_vehiculo` (`idtipo_vehiculo`, `nombre`, `capacidad`) VALUES (8, 'Bus-24 Max', 30);
 COMMIT;
 
 -- -----------------------------------------------------
@@ -893,7 +887,7 @@ START TRANSACTION;
 USE `sgstt`;
 INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (1, 'Aero Transporte');
 INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (2, 'Aerolineas Argentinas');
-INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (3, 'AeroMï¿½xico');
+INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (3, 'AeroMexico');
 INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (4, 'AeroSur');
 INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (5, 'Air Canada');
 INSERT INTO `sgstt`.`aerolinea` (`idaerolinea`, `descripcion`) VALUES (6, 'Air Europa');
@@ -940,7 +934,7 @@ INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`,
 INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (4, 1, 'RECOJO DE TRASLADISTA', 1, 1);
 INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (5, 1, 'RECOJO Y DEJADA DE TRASLADISTA', 1, 1);
 INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (6, 1, 'APTO - HOTEL EL PUEBLO', 1, 1);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (7, 1, 'MOVIL- ORMEï¿½O-CRUZ DEL SUR S.I./HOTEL', 1, 1);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (7, 1, 'MOVIL- ORMEÑO-CRUZ DEL SUR S.I./HOTEL', 1, 1);
 INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (8, 1, 'PUERTO CALLAO/APTO', 1, 1);
 INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (9, 1, 'PUERTO CALLAO/ MIRAFLORES O SAN ISIDRO', 1, 1);
 INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (10, 1, 'ASISTENCIA', 1, 1);
@@ -1035,7 +1029,7 @@ START TRANSACTION;
 USE `sgstt`;
 INSERT INTO `sgstt`.`cliente` (`idcliente`, `idsede`, `numerodocumento`, `razonsocial`, `estado`, `tipo_documento`, `id_tipocliente`) VALUES ('1', '1', '10401371015', 'CHAU LEGUA CARLOS ALBERTO', '1', 'RUC', '2');            
 INSERT INTO `sgstt`.`cliente` (`idcliente`, `idsede`, `numerodocumento`, `razonsocial`, `estado`, `tipo_documento`, `id_tipocliente`) VALUES ('2', '1', '20100132592', 'TOYOTA DEL PERU SA', '1', 'RUC', '2');                    
-INSERT INTO `sgstt`.`cliente` (`idcliente`, `idsede`, `numerodocumento`, `razonsocial`, `estado`, `tipo_documento`, `id_tipocliente`) VALUES ('3', '1', '20100939887', 'SERVICIOS TURISTICOS GENERALES S.A.', '1', 'RUC', '2'); 
+INSERT INTO `sgstt`.`cliente` (`idcliente`, `idsede`, `numerodocumento`, `razonsocial`, `estado`, `tipo_documento`, `id_tipocliente`) VALUES ('3', '1', '20100939887', 'SETOURS S.A.', '1', 'RUC', '2'); 
 INSERT INTO `sgstt`.`cliente` (`idcliente`, `idsede`, `numerodocumento`, `razonsocial`, `estado`, `tipo_documento`, `id_tipocliente`) VALUES ('4', '1', '20102021674', 'DINERS TRAVEL PERU S.A.', '1', 'RUC', '2');               
 INSERT INTO `sgstt`.`cliente` (`idcliente`, `idsede`, `numerodocumento`, `razonsocial`, `estado`, `tipo_documento`, `id_tipocliente`) VALUES ('5', '1', '20106740004', 'VULCO PERU SA', '1', 'RUC', '2');                         
 INSERT INTO `sgstt`.`cliente` (`idcliente`, `idsede`, `numerodocumento`, `razonsocial`, `estado`, `tipo_documento`, `id_tipocliente`) VALUES ('6', '1', '20107972090', 'INST. DE INGENIEROS DE MINAS DEL PERU', '1', 'RUC', '2'); 
