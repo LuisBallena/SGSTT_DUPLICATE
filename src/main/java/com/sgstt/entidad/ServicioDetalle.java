@@ -134,7 +134,7 @@ public class ServicioDetalle implements Serializable, Exporter {
     }
     
     private Double generarPrecioTotalSinIGV(){
-        return (precioServicio*(diasViaje== 0 ? 1.0 : diasViaje.doubleValue()))+adicional-descuento; 
+        return (precioServicio*(diasViaje== null || diasViaje == 0 ? 1.0 : diasViaje.doubleValue()))+adicional-descuento; 
     }
     
     @Override
