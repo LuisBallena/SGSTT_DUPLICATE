@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="./../home.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                >
+
+    <ui:define name="content">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header">Actualizar Vehiculo</h3>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 opcion-listado" >
+                    <h:link style="font-size: 16px;font-weight: bold;" value="Lista de vehiculo" outcome="list.xhtml"></h:link>
+                </div>
+                <div class="col-lg-12">
+                    <div class="panel panel-success">
+                        <div class="panel-heading"  >Actualizar Vehiculo</div>
+                        <div class="panel-body">
+                            <div class="row" id="modificarvehiculo">
+                                <div class="col-lg-12">
+                                    <h:form id="frmRegistrarEmpresa" styleClass="form-horizontal" >
+                                        <f:event type="preRenderView" listener="#{vehiculoControlador.initUpdate}" />
+                                        <h:messages id="msg" globalOnly="true" styleClass="list-group" infoClass="list-group-item list-group-item-success"
+                                                    errorClass="list-group-item list-group-item-danger" />
+                                        <div class="form-group has-feedback">
+                                            <label for="nombre" class="col-sm-3 control-label" >Centro De Costo :</label>
+                                            <div    class="col-sm-6" >
+                                                <p:inputText styleClass="form-control"  value="#{vehiculoControlador.vehiculo.descripcion}"     >
+                                                </p:inputText>
+                                            </div>
+                                        </div>
+                                         <div class="form-group has-feedback">
+                                            <label for="nombre" class="col-sm-3 control-label" >Placa :</label>
+                                            <div    class="col-sm-6" >
+                                                <p:inputText styleClass="form-control"  value="#{vehiculoControlador.vehiculo.placa}"     >
+                                                </p:inputText>
+                                            </div>
+                                        </div>
+                                         <div class="form-group has-feedback">
+                                            <label for="nombre" class="col-sm-3 control-label" >Tipo de Vehiculo :</label>
+                                            <div    class="col-sm-6" >
+                                                <h:selectOneMenu styleClass="form-control" value="#{vehiculoControlador.vehiculo.tipoVehiculo.id}" >
+                                                    <f:selectItems value="#{vehiculoControlador.tipos}" var="listVehiculo"  itemValue="#{listVehiculo.id}" itemLabel="#{listTipoVehiculo.descripcion}" />
+                                                </h:selectOneMenu>
+                                            </div>                                            
+                                        </div>
+                                         <div class="form-group has-feedback">
+                                            <label for="nombre" class="col-sm-3 control-label" >Marca :</label>
+                                            <div    class="col-sm-6" >
+                                                <h:selectOneMenu styleClass="form-control" value="#{vehiculoControlador.vehiculo.marca.id}" >
+                                                    <f:selectItems value="#{vehiculoControlador.marcas}" var="listVehiculo"  itemValue="#{listVehiculo.id}" itemLabel="#{listMarca.descripcion}" />
+                                                </h:selectOneMenu>
+                                            </div>                                            
+                                        </div>
+                                         <div class="form-group has-feedback">
+                                            <label for="nombre" class="col-sm-3 control-label" >Año de Fabricacion :</label>
+                                            <div    class="col-sm-6" >
+                                                <p:inputText styleClass="form-control"  value="#{vehiculoControlador.vehiculo.año_fabricacion}"     >
+                                                </p:inputText>
+                                            </div>
+                                        </div>
+                                         <div class="form-group has-feedback">
+                                            <label for="nombre" class="col-sm-3 control-label" >Capacidad Maxima :</label>
+                                            <div    class="col-sm-6" >
+                                                <p:inputText styleClass="form-control"  value="#{vehiculoControlador.vehiculo.capacidad_max}"     >
+                                                </p:inputText>
+                                            </div>
+                                        </div>    
+                                        <div class="form-group has-feedback">
+                                            <label for="nombre" class="col-sm-3 control-label" >Capacidad Recomendada :</label>
+                                            <div    class="col-sm-6" >
+                                                <p:inputText styleClass="form-control"  value="#{vehiculoControlador.vehiculo.capacidad_recomendada}"     >
+                                                </p:inputText>
+                                            </div>
+                                        </div>                                          
+                                        <div class="col-sm-3 control-label">
+                                            <p:commandButton value="Guardar" actionListener="#{vehiculoControlador.actualizarVehiculo}" update="@form" styleClass="btn btn-primary"/>
+                                        </div>
+                                    </h:form>  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+    </ui:define>
+
+</ui:composition>
