@@ -43,6 +43,13 @@
                                     <p:column  headerText="Marca" style="text-align: center;">
                                         <h:outputText value="#{list.marca.nombreMarca}" />
                                     </p:column>
+                                     <p:column  style="text-align: center;width: 12%;">
+                                        <p:commandButton rendered="#{sesionControlador.permisoModulo.actualizar eq true}" style="font-size: 12px;"  icon="icon-update" action="#{vehiculoControlador.irActualizar(list.id)}"    >
+                                        </p:commandButton>
+                                        <p:commandButton rendered="#{sesionControlador.permisoModulo.eliminar eq true}" style="font-size: 12px;" icon="icon-delete"  oncomplete="PF('deletevehiculo').show();"   >
+                                            <f:setPropertyActionListener value="#{list}" target="#{vehiculoControlador.vehiculo}" />
+                                        </p:commandButton>
+                                    </p:column>
                                 </p:dataTable> 
                             </h:form>
 
@@ -52,6 +59,25 @@
             </div>
             <!-- /.col-lg-12 -->
         </div>
+                <p:dialog modal="true" position="center top"  widgetVar="deletevehiculo" resizable="false" showEffect="fade" >
+            <h:form >
+                <div   id="row" style="font-weight: bold;font-size: 14px;">
+                    ¿Desea Eliminar el Vehiculo ?
+                </div>
+                <div   id="row">
+                    <div class="col-lg-6">
+                        <p:commandButton  actionListener="#vehiculoControlador.eliminarVehiculo}" update=":frmTarifa" value="Si" oncomplete="PF('deletevehiculo').hide();"   >
+
+                        </p:commandButton>
+                    </div>
+                    <div class="col-lg-6">
+                        <p:commandButton    value="No" onclick="PF('deletevehiculo').hide();"   >
+
+                        </p:commandButton>
+                    </div>
+                </div>
+            </h:form>
+        </p:dialog>
     </ui:define>
 
 </ui:composition>
