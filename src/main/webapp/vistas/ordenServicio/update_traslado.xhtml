@@ -43,10 +43,10 @@
                                             </div>
                                         </div>
                                         <div class="form-group has-feedback">
-                                                <label class="col-md-2 control-label" >Descripcion :</label>
-                                                <div class="col-md-3">
-                                                    <p:inputText styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.descripcion}" />
-                                                </div>
+                                            <label class="col-md-2 control-label" >Descripcion :</label>
+                                            <div class="col-md-3">
+                                                <p:inputText styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.descripcion}" />
+                                            </div>
                                             <label  class="col-md-2 control-label" >Nro Pasajeros :</label>
                                             <div class="col-md-3">
                                                 <p:inputMask mask="9?9" slotChar="" styleClass="form-control"  value="#{ordenServicioControlador.servicioDetalle.nroPersonas}" />
@@ -134,14 +134,14 @@
                                             </h:panelGroup>
                                         </div>
                                         <div class="form-group has-feedback">
-                                         <label class="col-md-2 control-label" >Guia :</label>
+                                            <label class="col-md-2 control-label" >Guia :</label>
                                             <div class="col-md-3">
                                                 <h:selectOneMenu styleClass="form-control" value="#{ordenServicioControlador.trasladistaSeleccionado.id}">
                                                     <f:selectItem itemLabel="Seleccionar" itemValue="0" />
                                                     <f:selectItems value="#{ordenServicioControlador.guias}" var="guias" itemLabel="#{guias.nombre} #{guias.apellido}" itemValue="#{guias.id}" />
                                                 </h:selectOneMenu>
                                             </div>
-                                            
+
                                             <h:panelGroup rendered="#{ordenServicioControlador.servicioDetalle.venta != null}">
                                                 <label class="col-md-2 control-label" >PAX :</label>
                                                 <div class="col-md-3">
@@ -151,19 +151,19 @@
 
                                         </div>
                                         <div class="form-group has-feedback">
-                                                <label class="col-md-2 control-label" >Cuenta :</label>
-                                                <div class="col-md-3">
-                                                    <p:inputText styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.cuenta}" />
-                                                </div>
+                                            <label class="col-md-2 control-label" >Cuenta :</label>
+                                            <div class="col-md-3">
+                                                <p:inputText styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.cuenta}" />
+                                            </div>
                                             <label class="col-md-2 control-label" >Comentario :</label>
                                             <div class="col-md-3">
                                                 <p:inputText styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.comentario}"  />
                                             </div>                                           
                                         </div>
                                         <div class="form-group has-feedback">
-                                        	<label class="col-md-2 control-label" >Horas/Dias :</label>
+                                            <label class="col-md-2 control-label" >Horas/Dias :</label>
                                             <div class="col-md-3">
-                                                <p:inputMask mask="9?9" placeHolder="" value="#{ordenServicioControlador.servicioDetalle.diasViaje}" />
+                                                <p:inputMask mask="9?9" slotChar="" value="#{ordenServicioControlador.servicioDetalle.diasViaje}" />
                                             </div>
                                             <label class="col-md-2 control-label" >Oper. Gravada :</label>
                                             <div class="col-md-3">
@@ -172,10 +172,20 @@
                                                 </label>
                                             </div>
                                         </div>
+                                        <div class="form-group has-feedback">
+                                            <label class="col-md-2 control-label" >Precio :</label>
+                                            <div class="col-md-3">
+                                                <p class="form-control">$ #{ordenServicioControlador.servicioDetalle.precioServicio}</p>
+                                            </div>
+
+                                        </div>
                                         <div class="col-sm-3 control-label">
-                                            <h:commandButton value="Actualizar" actionListener="#{ordenServicioControlador.actualizarDetalle}"  styleClass="btn btn-primary" >
-                                                <f:ajax render="@form" execute="@form" />
-                                            </h:commandButton>
+                                            <p:commandButton value="Actualizar" actionListener="#{ordenServicioControlador.actualizarDetalle}" update="@form" styleClass="btn btn-primary" >
+                                            </p:commandButton>
+                                        </div>
+                                        <div class="col-sm-3 control-label">
+                                            <p:commandButton rendered="#{ordenServicioControlador.servicioDetalle.vehiculo != null}" value="Actualizar Precios" actionListener="#{ordenServicioControlador.initPrecio}" oncomplete="PF('dialogUpdatePrecio').show();"  update=":dialogUpdatePrecio"   styleClass="btn btn-primary" >
+                                            </p:commandButton>
                                         </div>
                                     </h:form>  
                                 </div>
@@ -244,10 +254,10 @@
                     <p:column style="text-align: center;" headerText="Empresa" filterMatchMode="exact" filterBy="#{listChofer.empresa.razonSocial}">
                         <f:facet name="filter">
                             <p:selectOneMenu onchange="PF('tableChoferes').filter()" style="width: 100%;" >
-                            <f:selectItem itemLabel="Selecciona Empresa" itemValue="#{null}" noSelectionOption="true" />
-                            <f:selectItems value="#{ordenServicioControlador.empresas}" var="listEmpresa" itemValue="#{listEmpresa.razonSocial}" itemLabel="#{listEmpresa.razonSocial}" />
-                        </p:selectOneMenu>
-                            </f:facet>
+                                <f:selectItem itemLabel="Selecciona Empresa" itemValue="#{null}" noSelectionOption="true" />
+                                <f:selectItems value="#{ordenServicioControlador.empresas}" var="listEmpresa" itemValue="#{listEmpresa.razonSocial}" itemLabel="#{listEmpresa.razonSocial}" />
+                            </p:selectOneMenu>
+                        </f:facet>
                         <h:outputText value="#{listChofer.empresa.razonSocial}" >
                         </h:outputText>
                     </p:column>
@@ -287,8 +297,36 @@
                 </p:dataTable>
             </h:form>
         </p:dialog>
+        <p:dialog modal="true" width="400"  height="200"  header="Aviso" position="center top" id="dialogUpdatePrecio" widgetVar="dialogUpdatePrecio">
+            <p>
+                Se va a modificar el precio del servicio si usted ha modificado el servicio y/o el tipo de vehiculo,
+                Si desea realizar ese cambio presione "Si", caso contrario presione "No".
+            </p>
+            <p>
+                Precio Actual : $ ${ordenServicioControlador.servicioDetalle.precioServicio}
+            </p>
+            <p>
+                Precio Nuevo : $ ${ordenServicioControlador.precioUpdate}
+            </p>
+            <h:form id="frmUpdateCotizacion" styleClass="form-horizontal" >
+                <div class="col-sm-3 control-label">
+                    <p:commandButton value="No"  oncomplete="PF('dialogUpdatePrecio').hide();" />
+                </div>
+                <div class="col-sm-3 control-label">
+                    <p:commandButton value="Si" actionListener="#{ordenServicioControlador.actualizarNuevaCotizacion}" oncomplete="PF('dialogUpdatePrecio').hide();" update=":frmRegistrarOTraslado" />
+                </div>
+                
+            </h:form>
+        </p:dialog>
         <h:outputScript name="js/calendar.js" />
-        
+        <script type="text/javascript">
+            function handleUpdatePrecio(xhr, status, args) {
+                if (args.instance) {
+                    PF('dialogUpdatePrecio').show();
+                }
+            }
+        </script>
+
     </ui:define>
 
 </ui:composition>

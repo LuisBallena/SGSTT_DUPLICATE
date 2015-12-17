@@ -22,6 +22,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -54,6 +55,7 @@ public class OrdenServicioControlador implements Serializable {
     @ManagedProperty(value = "#{sesionControlador}")
     private SesionControlador sesionControlador;
     private ServicioDetalleFilter servicioDetalleFilter;
+    private Double precioUpdate = null;
 
     public OrdenServicioControlador() {
     }
@@ -123,7 +125,6 @@ public class OrdenServicioControlador implements Serializable {
             servicioSeleccionado = servicioDetalle.getServicio();
             trasladistaSeleccionado = (servicioDetalle.getTrasladista() == null ? new Trasladista() : servicioDetalle.getTrasladista());
             initCollectionsUpdate();
-
         }
     }
 
@@ -208,6 +209,21 @@ public class OrdenServicioControlador implements Serializable {
         transporteServicio.actualizarServicioDetalle(servicioDetalle);
     }
 
+    public void initPrecio() {
+        CotizacionServicio cotizacionServicio = new CotizacionServicio();
+        Tarifa tarifa = cotizacionServicio.obtenerTarifa(servicioDetalle.getVehiculo().getTipoVehiculo().getId(), servicioDetalle.getServicio().getId());
+        if (tarifa != null) {
+            precioUpdate = tarifa.getPrecio();
+        } else {
+            Utilitario.enviarMensajeGlobalError("El servicio y/o tipo vehiculo no tiene asignado una tarifa");
+        }
+    }
+
+    public void actualizarNuevaCotizacion() {
+        servicioDetalle.setPrecioServicio(precioUpdate);
+        transporteServicio.actualizarCotizacion(servicioDetalle);
+    }
+
     public void actualizarCotizacion() {
         transporteServicio.actualizarCotizacion(servicioDetalle);
     }
@@ -216,10 +232,10 @@ public class OrdenServicioControlador implements Serializable {
         transporteServicio.eliminarServicioDetalle(servicioDetalle);
     }
 
-    public void ejecutarBusqueda(){
-        try{
+    public void ejecutarBusqueda() {
+        try {
             servicioDetallePaginador.createFilterDynamic(servicioDetalleFilter);
-        }catch (FilterException e){
+        } catch (FilterException e) {
             Utilitario.enviarMensajeGlobalError(e.getMessage());
         }
     }
@@ -253,9 +269,9 @@ public class OrdenServicioControlador implements Serializable {
         servicioDetalle = transporteServicio.obtenerServicioDetalle(id);
     }
 
-    public void onChangeTipoServicioFilter(){
-        if(servicioDetalleFilter.getIdTipoServicio() != null){
-            servicios = transporteServicio.obtenerServiciosPorTipoServicio(servicioDetalleFilter.getIdTipoServicio(),sesionControlador.getUsuarioSesion().getSede().getId());
+    public void onChangeTipoServicioFilter() {
+        if (servicioDetalleFilter.getIdTipoServicio() != null) {
+            servicios = transporteServicio.obtenerServiciosPorTipoServicio(servicioDetalleFilter.getIdTipoServicio(), sesionControlador.getUsuarioSesion().getSede().getId());
         }
     }
 
@@ -316,15 +332,15 @@ public class OrdenServicioControlador implements Serializable {
         }
         return resultado;
     }
-    
-    public void exportarData(){
+
+    public void exportarData() {
         List<ServicioDetalle> data = servicioDetallePaginador.obtenerListaCompleta();
-        ExcelExporter exporter = new ExcelExporter(ServicioDetalle.class,data);
+        ExcelExporter exporter = new ExcelExporter(ServicioDetalle.class, data);
         exporter.agregarHeader("Desarrollador");
         exporter.crearDocumento();
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ExternalContext externalContext = facesContext.getExternalContext();
-        externalContext = ExcelExporter.getResponseContent(externalContext,"lista_ordenes_servicios");
+        externalContext = ExcelExporter.getResponseContent(externalContext, "lista_ordenes_servicios");
         try {
             OutputStream outputStream = externalContext.getResponseOutputStream();
             exporter.exportarDocumento(outputStream);
@@ -484,6 +500,13 @@ public class OrdenServicioControlador implements Serializable {
     public void setEmpresas(List<Empresa> empresas) {
         this.empresas = empresas;
     }
-    
-    
+
+    public Double getPrecioUpdate() {
+        return precioUpdate;
+    }
+
+    public void setPrecioUpdate(Double precioUpdate) {
+        this.precioUpdate = precioUpdate;
+    }
+
 }

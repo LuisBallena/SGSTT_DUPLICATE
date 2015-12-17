@@ -139,7 +139,7 @@ public class ServicioDetalle implements Serializable, Exporter {
     
     @Override
     public String[] getDatos() {
-        String[] datos = new String[15];
+        String[] datos = new String[16];
         datos[0] = "" + this.id;
         datos[1] = "" + this.fecha;
         datos[2] = this.servicio.getDescripcion();
@@ -154,10 +154,11 @@ public class ServicioDetalle implements Serializable, Exporter {
         datos[11] = this.externalizado;
         datos[12] = this.vehiculo == null ? "No Asignado" : this.vehiculo.getDescripcion();
         datos[13] = this.chofer == null ? "No Asignado" : this.chofer.getDatosCompletos();
+        datos[14] = this.chofer == null ? "" : this.chofer.getEmpresa().getRazonSocial();
         if(estadoServicio != EstadoServicio.SIN_ASIGNAR){
-            datos[14] = ""+generarPrecioTotalSinIGV();
+            datos[15] = ""+generarPrecioTotalSinIGV();
         }else{
-            datos[14] = "";
+            datos[15] = "";
         }
         return datos;
     }
@@ -165,7 +166,7 @@ public class ServicioDetalle implements Serializable, Exporter {
     @Override
     public String[] getTitulos() {
         return new String[]{"id","Fecha","Servicio","Tipo de Servicio","File/VTA","PAX","Cuenta"
-                ,"Nro. Personas","Trasladista","Vuelo","Estado Servicio","Tercerizado","Vehiculo","Chofer","Precio Sin IGV"};
+                ,"Nro. Personas","Trasladista","Vuelo","Estado Servicio","Tercerizado","Vehiculo","Chofer","Transportista","Precio Sin IGV"};
     }
     
     /* GETTERS AND SETTERS */

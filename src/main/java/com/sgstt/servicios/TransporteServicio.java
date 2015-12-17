@@ -33,7 +33,6 @@ public class TransporteServicio implements Serializable {
     private final EmpresaDao empresaDao;
     private SedeDao sedeDao;
 
-    
     public TransporteServicio() {
         conexion = new HibernateConexion();
         choferDao = new ChoferImpl(conexion);
@@ -86,10 +85,10 @@ public class TransporteServicio implements Serializable {
         return aux;
     }
 
-    public List<Servicio> obtenerServiciosPorTipoServicio(Integer idTipo,Integer idSede) {
+    public List<Servicio> obtenerServiciosPorTipoServicio(Integer idTipo, Integer idSede) {
         List<Servicio> aux = null;
         conexion.beginConexion();
-        aux = servicioDao.obtenerServiciosPorTipoServicioIdPorSede(idTipo,idSede);
+        aux = servicioDao.obtenerServiciosPorTipoServicioIdPorSede(idTipo, idSede);
         conexion.closeConexion();
         return aux;
     }
@@ -117,7 +116,7 @@ public class TransporteServicio implements Serializable {
         conexion.closeConexion();
         return aux;
     }
-    
+
     public List<Cliente> obtenerClientes(Integer idSede) {
         List<Cliente> aux = null;
         conexion.beginConexion();
@@ -141,8 +140,8 @@ public class TransporteServicio implements Serializable {
         conexion.closeConexion();
         return aux;
     }
-    
-    public List<Trasladista> obtenerGuiasPorSede(Integer idSede){
+
+    public List<Trasladista> obtenerGuiasPorSede(Integer idSede) {
         List<Trasladista> aux = null;
         conexion.beginConexion();
         aux = trasladistaDao.getTrasladistaFilterBySede(idSede);
@@ -220,9 +219,11 @@ public class TransporteServicio implements Serializable {
         if (estaAsignadoChoferVehiculo(servicioDetalle)) {
             servicioDetalle.setEstadoServicio(EstadoServicio.PENDIENTE);
             asignarServicioExterno(servicioDetalle.getChofer(), servicioDetalle);
-            Tarifa tarifa = tarifaDao.getTarifaFilterByTipoVehiculoAndServicio(servicioDetalle.getVehiculo().getTipoVehiculo().getId(), servicioDetalle.getServicio().getId());
-            if (tarifa != null) {
-                servicioDetalle.setPrecioServicio(tarifa.getPrecio());
+            if (servicioDetalle.getPrecioServicio() == null) {
+                Tarifa tarifa = tarifaDao.getTarifaFilterByTipoVehiculoAndServicio(servicioDetalle.getVehiculo().getTipoVehiculo().getId(), servicioDetalle.getServicio().getId());
+                if (tarifa != null) {
+                    servicioDetalle.setPrecioServicio(tarifa.getPrecio());
+                }
             }
         }
         servicioDetalleDao.actualizar(servicioDetalle);
@@ -304,7 +305,7 @@ public class TransporteServicio implements Serializable {
         conexion.closeConexion();
         return auxiliar;
     }
-    
+
     public void guardarEmpresa(Empresa empresa) {
         conexion.beginConexion();
         empresaDao.agregar(empresa);
@@ -318,7 +319,7 @@ public class TransporteServicio implements Serializable {
         conexion.closeConexion();
         Utilitario.enviarMensajeGlobalValido("Se ha actualizado correctamente");
     }
-    
+
     public void eliminarEmpresa(Empresa empresa) {
         conexion.beginConexion();
         empresa.setEstado(Estado.ELIMINADO);
@@ -326,23 +327,23 @@ public class TransporteServicio implements Serializable {
         conexion.closeConexion();
         Utilitario.enviarMensajeGlobalValido("Se ha eliminado correctamente");
     }
-    
+
     public Empresa obtenerEmpresa(Integer id) {
-    	Empresa empresa = null;
+        Empresa empresa = null;
         conexion.beginConexion();
         empresa = empresaDao.obtenerEntidad(id);
         conexion.closeConexion();
         return empresa;
     }
-    
+
     public List<Empresa> obtenerEmpresasConChoferRegistrado(Integer idSede) {
-    	List<Empresa> auxiliar = null;
+        List<Empresa> auxiliar = null;
         conexion.beginConexion();
         auxiliar = empresaDao.getEmpresasExistChoferFilterBySede(idSede);
         conexion.closeConexion();
         return auxiliar;
     }
-    
+
     public List<Empresa> obtenerEmpresa() {
         List<Empresa> auxiliar = null;
         conexion.beginConexion();
@@ -409,14 +410,14 @@ public class TransporteServicio implements Serializable {
         return (servicioDetalle.getChofer() != null)
                 && (servicioDetalle.getVehiculo() != null);
     }
-    
-    private void asignarServicioExterno(Chofer chofer, ServicioDetalle servicioDetalle){
-        if(chofer.getEmpresa().getId() != 1){
+
+    private void asignarServicioExterno(Chofer chofer, ServicioDetalle servicioDetalle) {
+        if (chofer.getEmpresa().getId() != 1) {
             servicioDetalle.setExternalizado("SI");
         }
     }
-    
-    public  List<Sede> obtenerSedes(){
+
+    public List<Sede> obtenerSedes() {
         List<Sede> aux = null;
         conexion.beginConexion();
         aux = sedeDao.obtenerTodos();
