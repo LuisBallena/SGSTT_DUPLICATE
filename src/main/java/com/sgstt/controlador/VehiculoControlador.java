@@ -1,13 +1,17 @@
 package com.sgstt.controlador;
 
 import com.sgstt.entidad.Marca;
+import com.sgstt.entidad.Sede;
 import com.sgstt.entidad.TipoVehiculo;
 import com.sgstt.entidad.Vehiculo;
 import com.sgstt.hibernate.HibernatePaginador;
 import com.sgstt.paginacion.VehiculoPaginador;
+import com.sgstt.servicios.EmpresaServicio;
 import com.sgstt.servicios.VehiculoServicio;
 import com.sgstt.util.Utilitario;
+
 import java.util.List;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -21,6 +25,7 @@ public class VehiculoControlador {
     private VehiculoServicio vehiculoServicio;
     private List<TipoVehiculo> tipos;
     private List<Marca> marcas;
+    private List<Sede> sedes;
     private Vehiculo vehiculo;
     @ManagedProperty(value = "#{sesionControlador}")
     private SesionControlador sesionControlador;
@@ -44,6 +49,18 @@ public class VehiculoControlador {
         }
     }
     
+    public void initUpdate(){
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+            Object value = Utilitario.getFlash("idvehiculo");
+            if(value == null){
+                Utilitario.redireccionarJSF(FacesContext.getCurrentInstance(), "/vistas/vehiculo/list.xhtml");
+                return;
+            }
+            vehiculoServicio = new VehiculoServicio();
+            vehiculo = vehiculoServicio.obtenerVehiculo(Integer.parseInt(value.toString()));
+            sedes = vehiculoServicio.obtenerSedes();
+        }
+    }
     public void registrarVehiculo(){
         if(!esVistaValida()){
             return;
@@ -55,6 +72,21 @@ public class VehiculoControlador {
     
     private void limpiar(){
         vehiculo = new Vehiculo();
+    }
+    
+    public void actualizarVehiculo() {
+        if (esVistaValida()) {
+        	vehiculoServicio.actualizarVehiculo(vehiculo);
+        }
+    }
+    
+    public void eliminarVehiculo(){
+    	vehiculoServicio.eliminarVehiculo(vehiculo);
+    }
+    
+    public String irActualizar(Integer id){
+        Utilitario.putFlash("idvehiculo", id);
+        return "update.xhtml?faces-redirect=true;";
     }
     
     private boolean esVistaValida(){
@@ -139,4 +171,11 @@ public class VehiculoControlador {
         this.sesionControlador = sesionControlador;
     }
     
+	public List<Sede> getSedes() {
+		return sedes;
+	}
+
+	public void setSedes(List<Sede> sedes) {
+		this.sedes = sedes;
+	}
 }

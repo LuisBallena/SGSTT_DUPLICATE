@@ -1,11 +1,14 @@
 package com.sgstt.dao.impl;
 
 import com.sgstt.dao.VehiculoDao;
+import com.sgstt.entidad.Empresa;
 import com.sgstt.entidad.Vehiculo;
 import com.sgstt.hibernate.HibernateConexion;
 import com.sgstt.hibernate.HibernateImpl;
+
 import java.io.Serializable;
 import java.util.List;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -64,5 +67,19 @@ public class VehiculoImpl extends HibernateImpl<Vehiculo,Integer> implements Veh
         }
         return auList;
     }
-
+    
+    @Override
+    public Vehiculo getVehiculoWithSede(Integer idvehiculo) {
+    	Vehiculo auxvehiculo = null;
+        Session session = null;
+        try {
+            session = conexion.getSession();
+            Query query = session.createQuery("from Vehiculo as vehiculo join fetch vehiculo.sede where vehiculo.id = :idvehiculo");
+            query.setInteger("idvehiculo", idvehiculo);
+            auxvehiculo = (Vehiculo) query.uniqueResult();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return auxvehiculo;
+    }
 }

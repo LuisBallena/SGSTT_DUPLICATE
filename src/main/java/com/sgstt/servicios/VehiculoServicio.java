@@ -3,17 +3,21 @@
 package com.sgstt.servicios;
 
 import com.sgstt.dao.MarcaDao;
+import com.sgstt.dao.SedeDao;
 import com.sgstt.dao.TipoVehiculoDao;
 import com.sgstt.dao.VehiculoDao;
 import com.sgstt.dao.impl.MarcaImpl;
 import com.sgstt.dao.impl.TipoVehiculoImpl;
 import com.sgstt.dao.impl.VehiculoImpl;
+import com.sgstt.entidad.Empresa;
 import com.sgstt.entidad.Estado;
 import com.sgstt.entidad.Marca;
+import com.sgstt.entidad.Sede;
 import com.sgstt.entidad.TipoVehiculo;
 import com.sgstt.entidad.Vehiculo;
 import com.sgstt.hibernate.HibernateConexion;
 import com.sgstt.util.Utilitario;
+
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +31,7 @@ public class VehiculoServicio {
     private final VehiculoDao vehiculoDao;
     private final TipoVehiculoDao tipoVehiculoDao;
     private final MarcaDao marcaDao;
+    private SedeDao sedeDao;
     
     public VehiculoServicio() {
         conexion = new HibernateConexion();
@@ -59,7 +64,7 @@ public class VehiculoServicio {
         Utilitario.enviarMensajeGlobalValido("Se ha registrado correctamente");
         conexion.closeConexion();
     }
-    public void actualizarFile(Vehiculo vehiculo){
+    public void actualizarVehiculo(Vehiculo vehiculo){
         conexion.beginConexion();
         vehiculo.setFechaModificacion(new Date());
         vehiculoDao.actualizar(vehiculo);
@@ -67,7 +72,7 @@ public class VehiculoServicio {
         conexion.closeConexion();
     }
     
-    public void eliminarFile(Vehiculo vehiculo){
+    public void eliminarVehiculo(Vehiculo vehiculo){
         conexion.beginConexion();
         vehiculo.setFechaModificacion(new Date());
         vehiculo.setEstado(Estado.ELIMINADO);
@@ -75,4 +80,21 @@ public class VehiculoServicio {
         Utilitario.enviarMensajeGlobalValido("Se ha eliminado correctamente");
         conexion.closeConexion();
     }
+    
+    public  List<Sede> obtenerSedes(){
+        List<Sede> aux = null;
+        conexion.beginConexion();
+        aux = sedeDao.obtenerTodos();
+        conexion.closeConexion();
+        return aux;
+    }
+    
+    public Vehiculo obtenerVehiculo(Integer id){
+    	Vehiculo aux = null;
+        conexion.beginConexion();
+        aux = vehiculoDao.getVehiculoWithSede(id);
+        conexion.closeConexion();
+        return aux;
+    }
+    
 }

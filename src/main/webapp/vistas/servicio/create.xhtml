@@ -47,7 +47,7 @@
                                             <div    class="col-sm-3" style="padding-right: 0px;" >
                                                 <p:dataList id="datalist" styleClass="DataList_SGSTT" value="#{servicioControlador.destinosSeleccionados}" var="itemDestino" type="unordered" itemType="none"  emptyMessage="no ha seleccionado destinos">
                                                     <p:commandButton icon="icon-delete" actionListener="#{servicioControlador.deleteDestino(itemDestino)}" update="datalist" style="font-size: 11px;" />
-                                                    <h:outputText value="#{itemDestino.nombre}" />
+                                                    <h:outputText value="#{itemDestino.razoncomercial}" />
                                                 </p:dataList>
 
                                             </div>
@@ -83,7 +83,7 @@
                         <f:facet name="header">
                             Destino
                         </f:facet>
-                        <h:outputText value="#{listDestinos.nombre}" >
+                        <h:outputText value="#{listDestinos.razoncomercial}" >
                         </h:outputText>
                     </p:column>
                     <p:column style="text-align: center;width: 12%;">
