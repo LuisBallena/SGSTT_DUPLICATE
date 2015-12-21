@@ -32,7 +32,7 @@
                                         <div class="form-group has-feedback">
                                             <label  class="col-md-2 control-label" >Servicio :</label>
                                             <div class="col-md-3">
-                                                <h:selectOneMenu styleClass="form-control" value="#{ordenServicioControlador.servicioSeleccionado.id}">
+                                                <h:selectOneMenu styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.servicio.id}">
                                                     <f:selectItem itemLabel="Seleccionar" itemValue="0" />
                                                     <f:selectItems value="#{ordenServicioControlador.servicios}" var="servicios" itemLabel="#{servicios.descripcion}" itemValue="#{servicios.id}" />
                                                 </h:selectOneMenu>
@@ -136,7 +136,7 @@
                                         <div class="form-group has-feedback">
                                             <label class="col-md-2 control-label" >Guia :</label>
                                             <div class="col-md-3">
-                                                <h:selectOneMenu styleClass="form-control" value="#{ordenServicioControlador.trasladistaSeleccionado.id}">
+                                                <h:selectOneMenu styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.trasladista.id}">
                                                     <f:selectItem itemLabel="Seleccionar" itemValue="0" />
                                                     <f:selectItems value="#{ordenServicioControlador.guias}" var="guias" itemLabel="#{guias.nombre} #{guias.apellido}" itemValue="#{guias.id}" />
                                                 </h:selectOneMenu>

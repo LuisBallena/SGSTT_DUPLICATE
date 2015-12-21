@@ -482,6 +482,7 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`servicio_detalle` (
   `idchofer` INT NULL ,
   `idtrasladista` INT NULL ,
   `idvehiculo` INT NULL ,
+  `idtipo_vehiculo` INT NOT NULL,
   `idfile` INT NULL ,
   `idventa` INT NULL ,
   PRIMARY KEY (`idservicio_detalle`, `idservicio`) ,
@@ -821,14 +822,14 @@ INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`cent
 START TRANSACTION;
 USE `sgstt`;
 INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `celular`, `brevete`, `categoria`, `clave`,`fecha`, `estado`,`idempresa`)  VALUES (1, 2, 'JAIME', 'AGUILAR EGOAVIL', '23885693', ' ',' ','A1', '12345678',"2015-11-07 00:00:00", 1,1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `celular`, `brevete`, `categoria`, `clave`,`fecha`, `estado`,`idempresa`)  VALUES (2, 2, 'CESAR AMADO', 'ARELLANOS MUÑOZ', '25662462', ' ',' ', 'A2', '12345678',"2015-11-07 00:00:00", 1,1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `celular`, `brevete`, `categoria`, `clave`,`fecha`, `estado`,`idempresa`)  VALUES (2, 2, 'CESAR AMADO', 'ARELLANOS MUï¿½OZ', '25662462', ' ',' ', 'A2', '12345678',"2015-11-07 00:00:00", 1,1);
 INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `celular`, `brevete`, `categoria`, `clave`,`fecha`, `estado`,`idempresa`)  VALUES (3, 1, 'MARIO HERNAN', 'CUADROS HUAPAYA', '25577045', ' ',' ', 'A3', '12345678',"2015-11-07 00:00:00", 1,1);
 INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `celular`, `brevete`, `categoria`, `clave`,`fecha`, `estado`,`idempresa`)  VALUES (4, 1, 'PEPE', 'DAMIAN JURO', '10550499', ' ',' ', 'A1', '12345678',"2015-11-07 00:00:00", 1,1);
 INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `celular`, `brevete`, `categoria`, `clave`,`fecha`, `estado`,`idempresa`)  VALUES (5, 1, 'KATTY DORIS', 'ESCOBAR PUMACALLAO', '07884541', ' ',' ', 'A2', '12345678',"2015-11-07 00:00:00", 1,1);
 INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `celular`, `brevete`, `categoria`, `clave`,`fecha`, `estado`,`idempresa`)  VALUES (6, 1, 'CARLOS ALBERTO', 'HERRERA NAVARRO', '10630551', ' ',' ', 'A3', '12345678',"2015-11-07 00:00:00", 1,1);
 INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `celular`, `brevete`, `categoria`, `clave`,`fecha`, `estado`,`idempresa`)  VALUES (7, 1, 'JOSE EDUARDO', 'HUAPALLA BALCAZAR', '10144415', ' ',' ', 'A1', '12345678',"2015-11-07 00:00:00", 1,1);
 INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `celular`, `brevete`, `categoria`, `clave`,`fecha`, `estado`,`idempresa`)  VALUES (8, 1, 'RODOLFO CESAR', 'LAZO CALDERON', '25717877', ' ',' ', 'A2', '12345678',"2015-11-07 00:00:00", 1,1);
-INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `celular`, `brevete`, `categoria`, `clave`,`fecha`, `estado`,`idempresa`)  VALUES (9, 1, 'JOSE LUIS', 'NUÑEZ CUENCA ROJAS', '09461980', ' ',' ', 'A3', '12345678',"2015-11-07 00:00:00", 1,1);
+INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `celular`, `brevete`, `categoria`, `clave`,`fecha`, `estado`,`idempresa`)  VALUES (9, 1, 'JOSE LUIS', 'NUï¿½EZ CUENCA ROJAS', '09461980', ' ',' ', 'A3', '12345678',"2015-11-07 00:00:00", 1,1);
 INSERT INTO `sgstt`.`chofer` (`idchofer`, `idsede`, `nombre`, `apellido`, `dni`, `celular`, `brevete`, `categoria`, `clave`,`fecha`, `estado`,`idempresa`)  VALUES (10, 1, 'ADRIAN', 'TICONA APAZA', '10520991', ' ',' ', 'A1', '12345678',"2015-11-07 00:00:00", 1,1);
 COMMIT;
 
@@ -934,7 +935,7 @@ INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`,
 INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (4, 1, 'RECOJO DE TRASLADISTA', 1, 1);
 INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (5, 1, 'RECOJO Y DEJADA DE TRASLADISTA', 1, 1);
 INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (6, 1, 'APTO - HOTEL EL PUEBLO', 1, 1);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (7, 1, 'MOVIL- ORMEÑO-CRUZ DEL SUR S.I./HOTEL', 1, 1);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (7, 1, 'MOVIL- ORMEï¿½O-CRUZ DEL SUR S.I./HOTEL', 1, 1);
 INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (8, 1, 'PUERTO CALLAO/APTO', 1, 1);
 INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (9, 1, 'PUERTO CALLAO/ MIRAFLORES O SAN ISIDRO', 1, 1);
 INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (10, 1, 'ASISTENCIA', 1, 1);

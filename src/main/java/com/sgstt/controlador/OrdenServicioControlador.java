@@ -44,9 +44,7 @@ public class OrdenServicioControlador implements Serializable {
     private List<Vehiculo> vehiculos;
     private List<Cliente> clientes;
     private List<Empresa> empresas;
-    private Servicio servicioSeleccionado;
     private ServicioDetalle servicioDetalle;
-    private Trasladista trasladistaSeleccionado;
     private Date fechaActual;
     private HibernatePaginador<ServicioDetalle> servicioDetallePaginador;
     private Date fechaAuxiliar;
@@ -122,8 +120,7 @@ public class OrdenServicioControlador implements Serializable {
             servicioDetalle.setChofer(servicioDetalle.getChofer() != null ? servicioDetalle.getChofer() : null);
             servicioDetalle.setVehiculo(servicioDetalle.getVehiculo() != null ? servicioDetalle.getVehiculo() : null);
             servicioDetalle.setVuelo(servicioDetalle.getVuelo() != null ? servicioDetalle.getVuelo() : new Vuelo());
-            servicioSeleccionado = servicioDetalle.getServicio();
-            trasladistaSeleccionado = (servicioDetalle.getTrasladista() == null ? new Trasladista() : servicioDetalle.getTrasladista());
+            servicioDetalle.setTrasladista(servicioDetalle.getTrasladista() == null ? new Trasladista() : servicioDetalle.getTrasladista());
             initCollectionsUpdate();
         }
     }
@@ -163,14 +160,12 @@ public class OrdenServicioControlador implements Serializable {
     }
 
     private void initTraslado() {
-        servicioSeleccionado = new Servicio();
-        trasladistaSeleccionado = new Trasladista();
+        servicioDetalle.setServicio(new Servicio());
+        servicioDetalle.setTrasladista(new Trasladista());
     }
 
     public void agregarOrdenServicio() {
         if (esVistaValida()) {
-            servicioDetalle.setServicio((Servicio) Utilitario.obtenerElemento(servicios, servicioSeleccionado));
-            servicioDetalle.setTrasladista((Trasladista) Utilitario.obtenerElemento(guias, trasladistaSeleccionado));
             servicioDetalle.setFecha(servicioDetalle.getFecha() == null ? fechaAuxiliar : servicioDetalle.getFecha());
             servicioDetalle.setFechaRegistro(new Date());
             servicioDetalle.setFechaModificacion(new Date());
@@ -204,8 +199,7 @@ public class OrdenServicioControlador implements Serializable {
             return;
         }
         servicioDetalle.setFechaModificacion(new Date());
-        servicioDetalle.setServicio(servicioSeleccionado);
-        servicioDetalle.setTrasladista(trasladistaSeleccionado.getId().intValue() == 0 ? null : trasladistaSeleccionado);
+        servicioDetalle.setTrasladista(servicioDetalle.getTrasladista().getId().intValue() == 0 ? null : servicioDetalle.getTrasladista());
         transporteServicio.actualizarServicioDetalle(servicioDetalle);
     }
 
@@ -285,7 +279,7 @@ public class OrdenServicioControlador implements Serializable {
 
     private boolean esVistaValida() {
         boolean resultado = true;
-        if (!esServicioValido(servicioSeleccionado)) {
+        if (!esServicioValido(servicioDetalle.getServicio())) {
             Utilitario.enviarMensajeGlobalError("Debe seleccionar un Servicio");
             resultado = false;
         } else if (!esNroPersonasValida(servicioDetalle)) {
@@ -300,7 +294,7 @@ public class OrdenServicioControlador implements Serializable {
 
     public boolean esVistaUpdateValida() {
         boolean resultado = true;
-        if (!esServicioValido(servicioSeleccionado)) {
+        if (!esServicioValido(servicioDetalle.getServicio())) {
             Utilitario.enviarMensajeGlobalError("Debe seleccionar un Servicio");
             resultado = false;
         } else if (!esNroPersonasValida(servicioDetalle)) {
@@ -369,14 +363,6 @@ public class OrdenServicioControlador implements Serializable {
         this.servicios = servicios;
     }
 
-    public Servicio getServicioSeleccionado() {
-        return servicioSeleccionado;
-    }
-
-    public void setServicioSeleccionado(Servicio servicioSeleccionado) {
-        this.servicioSeleccionado = servicioSeleccionado;
-    }
-
     public ServicioDetalle getServicioDetalle() {
         return servicioDetalle;
     }
@@ -399,14 +385,6 @@ public class OrdenServicioControlador implements Serializable {
 
     public void setVuelos(List<Vuelo> vuelos) {
         this.vuelos = vuelos;
-    }
-
-    public Trasladista getTrasladistaSeleccionado() {
-        return trasladistaSeleccionado;
-    }
-
-    public void setTrasladistaSeleccionado(Trasladista trasladistaSeleccionado) {
-        this.trasladistaSeleccionado = trasladistaSeleccionado;
     }
 
     public List<File> getFiles() {

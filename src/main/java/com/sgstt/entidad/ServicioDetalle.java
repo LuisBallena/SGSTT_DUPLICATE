@@ -128,6 +128,9 @@ public class ServicioDetalle implements Serializable, Exporter {
 
     @Column
     private String descripcion;
+
+    @Column(name = "idtipo_vehiculo")
+    private Integer idTipoVehiculo;
     
     public ServicioDetalle() {
         vuelo = new Vuelo();
@@ -382,5 +385,13 @@ public class ServicioDetalle implements Serializable, Exporter {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public Integer getIdTipoVehiculo() {
+        return idTipoVehiculo;
+    }
+
+    public void setIdTipoVehiculo(Integer idTipoVehiculo) {
+        this.idTipoVehiculo = idTipoVehiculo;
     }
 }

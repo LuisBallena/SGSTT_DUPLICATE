@@ -33,7 +33,7 @@
                                         <div class="form-group has-feedback">
                                             <label  class="col-md-2 control-label" >Servicio :</label>
                                             <div class="col-md-3">
-                                                <h:selectOneMenu styleClass="form-control" value="#{ordenServicioControlador.servicioSeleccionado.id}">
+                                                <h:selectOneMenu styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.servicio.id}">
                                                     <f:selectItem itemLabel="Seleccionar" itemValue="0" />
                                                     <f:selectItems value="#{ordenServicioControlador.servicios}" var="servicios" itemLabel="#{servicios.descripcion}" itemValue="#{servicios.id}" />
                                                 </h:selectOneMenu>
@@ -44,7 +44,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group has-feedback">
-                                            <label  class="col-md-2 control-label" >Descripcion :</label>
+                                            <label  class="col-md-2 control-label" >Descripción :</label>
                                             <div class="col-md-3">
                                                 <p:inputText  styleClass="form-control"  value="#{ordenServicioControlador.servicioDetalle.descripcion}" />
                                             </div>
@@ -94,7 +94,7 @@
                                         <div class="form-group has-feedback">
                                         	<label class="col-md-2 control-label" >Guia :</label>
                                             <div class=" col-md-3">
-                                                <h:selectOneMenu styleClass="form-control" value="#{ordenServicioControlador.trasladistaSeleccionado.id}">
+                                                <h:selectOneMenu styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.trasladista.id}">
                                                     <f:selectItem itemLabel="Seleccionar" itemValue="0" />
                                                     <f:selectItems value="#{ordenServicioControlador.guias}" var="guias" itemLabel="#{guias.nombre} #{guias.apellido}" itemValue="#{guias.id}" />
                                                 </h:selectOneMenu>
@@ -103,7 +103,16 @@
                                             <div class="col-md-3">
                                                 <p:inputText  styleClass="form-control"  value="#{ordenServicioControlador.servicioDetalle.comentario}" />
                                             </div>
-                                        </div>                                        
+                                        </div>
+                                        <div class="form-group has-feedback">
+                                            <label class="col-md-2 control-label" >Tipo Vehiculo :</label>
+                                            <div class=" col-md-3">
+                                                <h:selectOneMenu styleClass="form-control" value="#{ordenServicioControlador.trasladistaSeleccionado.id}">
+                                                    <f:selectItem itemLabel="Seleccionar" itemValue="0" />
+                                                    <f:selectItems value="#{ordenServicioControlador.guias}" var="guias" itemLabel="#{guias.nombre} #{guias.apellido}" itemValue="#{guias.id}" />
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </div>
                                         <div class="col-sm-3 control-label">
                                             <p:commandButton value="Agregar" actionListener="#{ordenServicioControlador.agregarOrdenServicio}"  styleClass="btn btn-primary" update="@form :frmTablaOrdenes"  >
 
