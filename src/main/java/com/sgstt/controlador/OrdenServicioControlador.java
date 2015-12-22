@@ -8,6 +8,7 @@ import com.sgstt.hibernate.HibernatePaginador;
 import com.sgstt.paginacion.ServicioDetallePaginador;
 import com.sgstt.servicios.CotizacionServicio;
 import com.sgstt.servicios.TransporteServicio;
+import com.sgstt.servicios.VehiculoServicio;
 import com.sgstt.util.ExcelExporter;
 import com.sgstt.util.Utilitario;
 import java.io.IOException;
@@ -21,6 +22,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+
+import org.apache.commons.lang3.SerializationUtils;
 import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
 
@@ -40,6 +43,7 @@ public class OrdenServicioControlador implements Serializable {
     private List<Trasladista> guias;
     private List<Vuelo> vuelos;
     private List<File> files;
+    private List<TipoVehiculo> tipoVehiculos;
     private List<Chofer> choferes;
     private List<Vehiculo> vehiculos;
     private List<Cliente> clientes;
@@ -82,7 +86,6 @@ public class OrdenServicioControlador implements Serializable {
             fechaAuxiliar = new Date();
             servicioDetalle.setFecha(fechaAuxiliar);
             servicioDetalle.setFile(new File());
-            initTraslado();
         }
     }
 
@@ -101,7 +104,6 @@ public class OrdenServicioControlador implements Serializable {
             servicioDetalle = new ServicioDetalle();
             fechaAuxiliar = new Date();
             servicioDetalle.setFecha(fechaAuxiliar);
-            initTraslado();
         }
     }
 
@@ -118,7 +120,9 @@ public class OrdenServicioControlador implements Serializable {
             servicios = transporteServicio.obtenerServicios();
             servicioDetalle = transporteServicio.obtenerServicioDetalleConTipoVehiculo(id);
             servicioDetalle.setChofer(servicioDetalle.getChofer() != null ? servicioDetalle.getChofer() : null);
-            servicioDetalle.setVehiculo(servicioDetalle.getVehiculo() != null ? servicioDetalle.getVehiculo() : null);
+            servicioDetalle.setVehiculo(servicioDetalle.getVehiculo() != null ? servicioDetalle.getVehiculo() : new Vehiculo());
+            servicioDetalle.getVehiculo().setTipoVehiculo(servicioDetalle.getVehiculo().getTipoVehiculo().getId() == null
+                    ? new VehiculoServicio().obtenerTipoVehiculo(servicioDetalle.getIdTipoVehiculo()) : servicioDetalle.getVehiculo().getTipoVehiculo());
             servicioDetalle.setVuelo(servicioDetalle.getVuelo() != null ? servicioDetalle.getVuelo() : new Vuelo());
             servicioDetalle.setTrasladista(servicioDetalle.getTrasladista() == null ? new Trasladista() : servicioDetalle.getTrasladista());
             initCollectionsUpdate();
@@ -143,6 +147,7 @@ public class OrdenServicioControlador implements Serializable {
         vuelos = transporteServicio.obtenerVuelos(sesionControlador.getUsuarioSesion().getSede().getId());
         guias = transporteServicio.obtenerGuiasPorSede(sesionControlador.getUsuarioSesion().getSede().getId());
         files = transporteServicio.obtenerFilesActivos();
+        tipoVehiculos = new VehiculoServicio().obtenerTipoVehiculo();
     }
 
     private void initCollectionsVTA() {
@@ -150,6 +155,7 @@ public class OrdenServicioControlador implements Serializable {
         servicios = transporteServicio.obtenerServiciosPorSede(sesionControlador.getUsuarioSesion().getSede().getId());
         vuelos = transporteServicio.obtenerVuelos(sesionControlador.getUsuarioSesion().getSede().getId());
         guias = transporteServicio.obtenerGuiasPorSede(sesionControlador.getUsuarioSesion().getSede().getId());
+        tipoVehiculos = new VehiculoServicio().obtenerTipoVehiculo();
     }
 
     private void initCollectionsUpdate() {
@@ -159,17 +165,12 @@ public class OrdenServicioControlador implements Serializable {
         empresas = transporteServicio.obtenerEmpresasConChoferRegistrado(sesionControlador.getUsuarioSesion().getSede().getId());
     }
 
-    private void initTraslado() {
-        servicioDetalle.setServicio(new Servicio());
-        servicioDetalle.setTrasladista(new Trasladista());
-    }
-
     public void agregarOrdenServicio() {
         if (esVistaValida()) {
             servicioDetalle.setFecha(servicioDetalle.getFecha() == null ? fechaAuxiliar : servicioDetalle.getFecha());
             servicioDetalle.setFechaRegistro(new Date());
             servicioDetalle.setFechaModificacion(new Date());
-            ordenesServicios.add(servicioDetalle);
+            ordenesServicios.add(SerializationUtils.clone(servicioDetalle));
             limpiarTraslado();
         }
     }
@@ -270,7 +271,6 @@ public class OrdenServicioControlador implements Serializable {
     }
 
     private void limpiarTraslado() {
-        initTraslado();
         fechaActual = new Date();
         servicioDetalle = new ServicioDetalle();
         servicioDetalle.setFecha(new Date());
@@ -308,7 +308,7 @@ public class OrdenServicioControlador implements Serializable {
     }
 
     public boolean esServicioValido(Servicio servicio) {
-        return servicio.getId() != 0;
+        return servicio != null;
     }
 
     public boolean esNroPersonasValida(ServicioDetalle servicioDetalle) {
@@ -487,4 +487,11 @@ public class OrdenServicioControlador implements Serializable {
         this.precioUpdate = precioUpdate;
     }
 
+    public List<TipoVehiculo> getTipoVehiculos() {
+        return tipoVehiculos;
+    }
+
+    public void setTipoVehiculos(List<TipoVehiculo> tipoVehiculos) {
+        this.tipoVehiculos = tipoVehiculos;
+    }
 }

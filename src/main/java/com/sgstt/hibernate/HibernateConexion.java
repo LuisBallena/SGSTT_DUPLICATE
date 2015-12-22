@@ -25,6 +25,13 @@ public class HibernateConexion implements Serializable{
             session.close();
         }
     }
+
+    public void rollBack(){
+        if(esConexionValida()){
+            session.getTransaction().rollback();
+            session.close();
+        }
+    }
     
     public Session getSession(){
         return session;

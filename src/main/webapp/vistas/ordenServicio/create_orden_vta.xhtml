@@ -6,8 +6,6 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-
                 xmlns:jsf="http://xmlns.jcp.org/jsf">
 
     <ui:define name="content">
@@ -33,9 +31,9 @@
                                         <div class="form-group has-feedback">
                                             <label  class="col-md-2 control-label" >Servicio :</label>
                                             <div class="col-md-3">
-                                                <h:selectOneMenu styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.servicio.id}">
-                                                    <f:selectItem itemLabel="Seleccionar" itemValue="0" />
-                                                    <f:selectItems value="#{ordenServicioControlador.servicios}" var="servicios" itemLabel="#{servicios.descripcion}" itemValue="#{servicios.id}" />
+                                                <h:selectOneMenu styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.servicio}" converter="omnifaces.SelectItemsConverter">
+                                                    <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
+                                                    <f:selectItems value="#{ordenServicioControlador.servicios}" var="servicios" itemLabel="#{servicios.descripcion}" itemValue="#{servicios}" />
                                                 </h:selectOneMenu>
                                             </div>
                                             <label  class="col-md-2 control-label" >Fecha :</label>
@@ -50,9 +48,9 @@
                                             </div>
                                             <label class="col-md-2 control-label" >Guia :</label>
                                             <div class=" col-md-3">
-                                                <h:selectOneMenu styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.trasladista.id}">
-                                                    <f:selectItem itemLabel="Seleccionar" itemValue="0" />
-                                                    <f:selectItems value="#{ordenServicioControlador.guias}" var="guias" itemLabel="#{guias.nombre} #{guias.apellido}" itemValue="#{guias.id}" />
+                                                <h:selectOneMenu styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.trasladista}" converter="omnifaces.SelectItemsConverter" >
+                                                    <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
+                                                    <f:selectItems value="#{ordenServicioControlador.guias}" var="guias" itemLabel="#{guias.nombre} #{guias.apellido}" itemValue="#{guias}" />
                                                 </h:selectOneMenu>
                                             </div>
                                         </div>
@@ -94,6 +92,15 @@
                                                 <p:inputText styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.cuenta}" maxlength="30" />
                                             </div>                                             
                                         </div>
+                                        <div class="form-group has-feedback">
+                                            <label class="col-md-2 control-label" >Tipo Vehiculo :</label>
+                                            <div class="col-md-3">
+                                                <h:selectOneMenu styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.idTipoVehiculo}"  >
+                                                    <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
+                                                    <f:selectItems value="#{ordenServicioControlador.tipoVehiculos}" var="tipoVehi" itemLabel="#{tipoVehi.nombre}" itemValue="#{tipoVehi.id}" />
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </div>
                                         <div class="col-sm-3 control-label">
                                             <p:commandButton value="Agregar" actionListener="#{ordenServicioControlador.agregarOrdenServicio}"  styleClass="btn btn-primary" update="@form :frmTablaOrdenes"  >
 
@@ -115,6 +122,12 @@
                                         <p:dataTable    value="#{ordenServicioControlador.ordenesServicios}"  var="listOrden" emptyMessage="No existen registros de servicios" 
                                                         paginator="true" rows="10" lazy="true" rowIndexVar="rowIndex"
                                                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
+                                            <p:column    style="text-align: center;font-size: 13px;width: 30px;">
+                                                <f:facet name="header">
+                                                    #
+                                                </f:facet>
+                                                #{rowIndex+1}
+                                            </p:column>
                                             <p:column    style="text-align: center;font-size: 13px;">
                                                 <f:facet name="header">
                                                     Fecha

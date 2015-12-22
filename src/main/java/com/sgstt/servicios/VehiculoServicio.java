@@ -96,5 +96,13 @@ public class VehiculoServicio {
         conexion.closeConexion();
         return aux;
     }
+
+    public TipoVehiculo obtenerTipoVehiculo(Integer id){
+        TipoVehiculo tipoVehiculo = null;
+        conexion.beginConexion();
+        tipoVehiculo = tipoVehiculoDao.obtenerEntidad(id);
+        conexion.closeConexion();
+        return tipoVehiculo;
+    }
     
 }

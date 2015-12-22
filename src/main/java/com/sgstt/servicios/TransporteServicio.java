@@ -6,11 +6,11 @@ import com.sgstt.entidad.*;
 import com.sgstt.excepciones.TransporteException;
 import com.sgstt.hibernate.HibernateConexion;
 import com.sgstt.util.Utilitario;
+
 import java.io.Serializable;
 import java.util.List;
 
 /**
- *
  * @author Luis Alonso Ballena Garcia
  */
 public class TransporteServicio implements Serializable {
@@ -173,28 +173,17 @@ public class TransporteServicio implements Serializable {
         return aux;
     }
 
-    public void registrarServicioTercializado(ServicioDetalle servicioDetalle) {
-        conexion.beginConexion();
-        servicioDetalle.setExternalizado("SI");
-        servicioDetalleDao.agregar(servicioDetalle);
-        Utilitario.enviarMensajeGlobalValido("Se ha registrado correctamente");
-        conexion.closeConexion();
-    }
-    /*Se debe refactorizar debido a que no hace relacion a su funcion*/
-
-    public void registrarServicio(ServicioDetalle servicioDetalle) throws TransporteException {
-        servicioDetalle.setFile(null);
-        conexion.beginConexion();
-        servicioDetalle.setEstadoServicio(EstadoServicio.SIN_ASIGNAR);
-        servicioDetalleDao.agregar(servicioDetalle);
-        Utilitario.enviarMensajeGlobalValido("Se ha registrado correctamente");
-        conexion.closeConexion();
-    }
-
     public void registrarServicios(List<ServicioDetalle> servicioDetalles) throws TransporteException {
         conexion.beginConexion();
-        for (ServicioDetalle detalle : servicioDetalles) {
+        for (int i = 0; i < servicioDetalles.size(); i++) {
+            ServicioDetalle detalle = servicioDetalles.get(i);
             detalle.setEstadoServicio(EstadoServicio.SIN_ASIGNAR);
+            Tarifa tarifa = getTarifa(detalle.getIdTipoVehiculo(), detalle.getServicio());
+            if (tarifa == null) {
+                conexion.rollBack();
+                throw new TransporteException(String.format("La orden #%d no tiene una tarifa registrada.", (i + 1)));
+            }
+            detalle.setPrecioServicio(tarifa.getPrecio());
             servicioDetalleDao.agregar(detalle);
         }
         Utilitario.enviarMensajeGlobalValido("Se ha registrado correctamente");
@@ -204,10 +193,17 @@ public class TransporteServicio implements Serializable {
     public void registrarServiciosVTA(List<ServicioDetalle> servicioDetalles, Venta venta) throws TransporteException {
         conexion.beginConexion();
         ventaDao.agregar(venta);
-        for (ServicioDetalle detalle : servicioDetalles) {
+        for (int i = 0; i < servicioDetalles.size(); i++) {
+            ServicioDetalle detalle = servicioDetalles.get(i);
             detalle.setFile(null);
             detalle.setVenta(venta);
             detalle.setEstadoServicio(EstadoServicio.SIN_ASIGNAR);
+            Tarifa tarifa = getTarifa(detalle.getIdTipoVehiculo(), detalle.getServicio());
+            if (tarifa == null) {
+                conexion.rollBack();
+                throw new TransporteException(String.format("La orden #%d no tiene una tarifa registrada.", (i + 1)));
+            }
+            detalle.setPrecioServicio(tarifa.getPrecio());
             servicioDetalleDao.agregar(detalle);
         }
         Utilitario.enviarMensajeGlobalValido("Se ha registrado correctamente");
@@ -219,12 +215,6 @@ public class TransporteServicio implements Serializable {
         if (estaAsignadoChoferVehiculo(servicioDetalle)) {
             servicioDetalle.setEstadoServicio(EstadoServicio.PENDIENTE);
             asignarServicioExterno(servicioDetalle.getChofer(), servicioDetalle);
-            if (servicioDetalle.getPrecioServicio() == null) {
-                Tarifa tarifa = tarifaDao.getTarifaFilterByTipoVehiculoAndServicio(servicioDetalle.getVehiculo().getTipoVehiculo().getId(), servicioDetalle.getServicio().getId());
-                if (tarifa != null) {
-                    servicioDetalle.setPrecioServicio(tarifa.getPrecio());
-                }
-            }
         }
         servicioDetalleDao.actualizar(servicioDetalle);
         Utilitario.enviarMensajeGlobalValido("Se ha actualizado correctamente");
@@ -415,6 +405,10 @@ public class TransporteServicio implements Serializable {
         if (chofer.getEmpresa().getId() != 1) {
             servicioDetalle.setExternalizado("SI");
         }
+    }
+
+    private Tarifa getTarifa(Integer idTipoVehiculo, Servicio servicio) {
+        return tarifaDao.getTarifaFilterByTipoVehiculoAndServicio(idTipoVehiculo, servicio.getId());
     }
 
     public List<Sede> obtenerSedes() {
