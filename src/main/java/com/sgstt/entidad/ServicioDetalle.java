@@ -158,11 +158,7 @@ public class ServicioDetalle implements Serializable, Exporter {
         datos[12] = this.vehiculo == null ? "No Asignado" : this.vehiculo.getDescripcion();
         datos[13] = this.chofer == null ? "No Asignado" : this.chofer.getDatosCompletos();
         datos[14] = this.chofer == null ? "" : this.chofer.getEmpresa().getRazonSocial();
-        if(estadoServicio != EstadoServicio.SIN_ASIGNAR){
-            datos[15] = ""+generarPrecioTotalSinIGV();
-        }else{
-            datos[15] = "";
-        }
+        datos[15] = ""+generarPrecioTotalSinIGV();
         return datos;
     }
 
