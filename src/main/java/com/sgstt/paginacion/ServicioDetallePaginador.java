@@ -45,7 +45,7 @@ public class ServicioDetallePaginador extends HibernateStringPaginador implement
             if (filter.getFechaDesde() != null && filter.getFechaHasta() != null) {
                 builder.append(String.format("and serviciodetalle.fecha between '%s' and  '%s'",
                         Utilitario.convertirFormatoFecha(filter.getFechaDesde(), Utilitario.FORMATO_SQL_DATE_TIME),
-                        Utilitario.convertirFormatoFecha(filter.getFechaHasta(), Utilitario.FORMATO_SQL_DATE_TIME)));
+                        Utilitario.convertirFormatoFecha(filter.getFechaHasta(), Utilitario.FORMATO_SQL_DATE)+" 23:59:59"));
             }
             queryDynamicCriteria = builder.toString().trim();
         }
