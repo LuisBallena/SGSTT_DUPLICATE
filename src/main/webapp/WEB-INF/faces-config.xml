@@ -94,5 +94,10 @@
             <to-view-id>/vistas/vuelo/list.xhtml</to-view-id>
             <redirect />
         </navigation-case>
+        <navigation-case>
+            <from-outcome>venta</from-outcome>
+            <to-view-id>/vistas/venta/list.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
     </navigation-rule>
 </faces-config>

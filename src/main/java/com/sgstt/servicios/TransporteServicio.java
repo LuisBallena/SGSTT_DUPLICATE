@@ -8,6 +8,7 @@ import com.sgstt.hibernate.HibernateConexion;
 import com.sgstt.util.Utilitario;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -192,6 +193,7 @@ public class TransporteServicio implements Serializable {
 
     public void registrarServiciosVTA(List<ServicioDetalle> servicioDetalles, Venta venta) throws TransporteException {
         conexion.beginConexion();
+        venta.setFechaCreacion(new Date());
         ventaDao.agregar(venta);
         for (int i = 0; i < servicioDetalles.size(); i++) {
             ServicioDetalle detalle = servicioDetalles.get(i);

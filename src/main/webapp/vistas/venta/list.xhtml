@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="./../home.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                >
+
+    <ui:define name="content">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header">Administrar Venta Directas</h3>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body" id="tabla">
+                            <br/>
+                            <h:form id="formfile">
+                                <f:event type="preRenderView" listener="#{ventaControlador.initLista}" />
+                                <h:messages id="msg" globalOnly="true" styleClass="list-group" infoClass="list-group-item list-group-item-success"
+                                                    errorClass="list-group-item list-group-item-danger" />
+                                <p:dataTable    value="#{ventaControlador.ventaPaginador}"    var="listVenta" emptyMessage="No existen registros de ventas Directas"
+                                                paginator="true" rows="10" lazy="true"
+                                                paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
+
+                                    
+                                    <p:column    style="text-align: center;font-size: 15px;">
+                                        <f:facet name="header">
+                                            VTA
+                                        </f:facet>
+                                        <h:outputText value="#{listVenta.serie}" />
+                                    </p:column>
+                                    <p:column    style="text-align: center;font-size: 15px;">
+                                        <f:facet name="header">
+                                            Cliente
+                                        </f:facet>
+                                        <h:outputText value="#{listVenta.cliente.nombreAuxiliar}" />
+                                    </p:column>
+                                    <p:column    style="text-align: center;font-size: 15px;">
+                                        <f:facet name="header">
+                                            Fecha Creación
+                                        </f:facet>
+                                        <h:outputText value="#{listVenta.fechaCreacion}" >
+                                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm"  />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column  style="text-align: center;width: 12%;">
+                                        <p:commandButton  style="font-size: 12px;" icon="icon-money" oncomplete="PF('exportVenta').show();"  >
+                                            <f:setPropertyActionListener value="#{listVenta}" target="#{ventaControlador.venta}" />
+                                        </p:commandButton>
+                                    </p:column>
+                                </p:dataTable> 
+                            </h:form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <p:dialog modal="true" position="center top" header="Tipo de Venta" width="350" widgetVar="exportVenta" resizable="false" showEffect="fade" >
+            <h:form >
+                <div   id="row">
+                    <div class="col-lg-6">
+                        <p:commandButton  ajax="false" value="Gravada" onclick="PF('exportVenta').hide();"   >
+                        </p:commandButton>
+                    </div>
+                    <div class="col-lg-6">
+                        <p:commandButton ajax="false" value="No Gravada" onclick="PF('exportVenta').hide();"   >
+                        </p:commandButton>
+                    </div>
+                </div>
+            </h:form>
+        </p:dialog>
+    </ui:define>
+
+</ui:composition>

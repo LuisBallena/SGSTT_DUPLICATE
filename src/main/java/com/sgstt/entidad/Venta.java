@@ -3,6 +3,7 @@
 package com.sgstt.entidad;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.*;
 
 /**
@@ -24,6 +25,10 @@ public class Venta implements Serializable{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idCliente")
     private Cliente cliente;
+
+    @Column(name = "fecha_creacion")
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date fechaCreacion;
 
     public Venta() {
     }
@@ -50,5 +55,13 @@ public class Venta implements Serializable{
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 }
