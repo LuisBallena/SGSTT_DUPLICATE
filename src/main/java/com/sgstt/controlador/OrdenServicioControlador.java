@@ -5,8 +5,10 @@ import com.sgstt.excepciones.FilterException;
 import com.sgstt.excepciones.TransporteException;
 import com.sgstt.filters.ServicioDetalleFilter;
 import com.sgstt.hibernate.HibernatePaginador;
+import com.sgstt.paginacion.FilePaginador;
 import com.sgstt.paginacion.ServicioDetallePaginador;
 import com.sgstt.servicios.CotizacionServicio;
+import com.sgstt.servicios.FileServicio;
 import com.sgstt.servicios.TransporteServicio;
 import com.sgstt.servicios.VehiculoServicio;
 import com.sgstt.util.ExcelExporter;
@@ -50,6 +52,7 @@ public class OrdenServicioControlador implements Serializable {
     private ServicioDetalle servicioDetalle;
     private Date fechaActual;
     private HibernatePaginador<ServicioDetalle> servicioDetallePaginador;
+    private HibernatePaginador<File> filePaginador;
     private Date fechaAuxiliar;
     private Cliente cliente;
     private List<ServicioDetalle> ordenesServicios;
@@ -72,19 +75,26 @@ public class OrdenServicioControlador implements Serializable {
             vehiculos = transporteServicio.obtenerVehiculos(sesionControlador.getUsuarioSesion().getSede().getId());
             servicioDetallePaginador = new ServicioDetallePaginador();
             servicioDetallePaginador.initPaginador(servicioDetalleFilter);
+            filePaginador = new FilePaginador();
+            filePaginador.initPaginador();
         }
     }
 
     public void initCreateOrdenFile() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
+            Object value = Utilitario.getFlash("idFile");
+            if (value == null) {
+                Utilitario.redireccionarJSF(FacesContext.getCurrentInstance(), "/vistas/ordenServicio/list.xhtml");
+                return;
+            }
             ordenesServicios = new ArrayList<>();
             fechaActual = new Date();
             transporteServicio = new TransporteServicio();
             initCollections();
             servicioDetalle = new ServicioDetalle();
+            servicioDetalle.setFile(new FileServicio().obtenerFilePorId(Integer.parseInt(value.toString())));
             fechaAuxiliar = new Date();
             servicioDetalle.setFecha(fechaAuxiliar);
-            servicioDetalle.setFile(new File());
         }
     }
 
@@ -120,7 +130,7 @@ public class OrdenServicioControlador implements Serializable {
             servicioDetalle = transporteServicio.obtenerServicioDetalleConTipoVehiculo(id);
             servicioDetalle.setChofer(servicioDetalle.getChofer() != null ? servicioDetalle.getChofer() : null);
             servicioDetalle.setVehiculo(servicioDetalle.getVehiculo() != null ? servicioDetalle.getVehiculo() : null);
-            ensamblarTipoVehiculo(servicioDetalle.getVehiculo(),servicioDetalle.getIdTipoVehiculo());
+            ensamblarTipoVehiculo(servicioDetalle.getVehiculo(), servicioDetalle.getIdTipoVehiculo());
             servicioDetalle.setVuelo(servicioDetalle.getVuelo() != null ? servicioDetalle.getVuelo() : new Vuelo());
             servicioDetalle.setTrasladista(servicioDetalle.getTrasladista() == null ? new Trasladista() : servicioDetalle.getTrasladista());
             initCollectionsUpdate();
@@ -144,7 +154,6 @@ public class OrdenServicioControlador implements Serializable {
         servicios = transporteServicio.obtenerServiciosPorSede(sesionControlador.getUsuarioSesion().getSede().getId());
         vuelos = transporteServicio.obtenerVuelos(sesionControlador.getUsuarioSesion().getSede().getId());
         guias = transporteServicio.obtenerGuiasPorSede(sesionControlador.getUsuarioSesion().getSede().getId());
-        files = transporteServicio.obtenerFilesActivos();
         tipoVehiculos = new VehiculoServicio().obtenerTipoVehiculo();
     }
 
@@ -233,6 +242,11 @@ public class OrdenServicioControlador implements Serializable {
         }
     }
 
+    public String irCrearOrdenFile(Integer id) {
+        Utilitario.putFlash("idFile", id);
+        return "create_orden_file.xhtml?faces-redirect=true;";
+    }
+
     public String irActualizar(Integer id) {
         Utilitario.putFlash("idServicioDetalle", id);
         return "update_traslado.xhtml?faces-redirect=true;";
@@ -270,9 +284,10 @@ public class OrdenServicioControlador implements Serializable {
 
     private void limpiarTraslado() {
         fechaActual = new Date();
+        File fileAux = servicioDetalle.getFile();
         servicioDetalle = new ServicioDetalle();
         servicioDetalle.setFecha(new Date());
-        servicioDetalle.setFile(new File());
+        servicioDetalle.setFile(fileAux);
     }
 
     private boolean esVistaValida() {
@@ -343,8 +358,8 @@ public class OrdenServicioControlador implements Serializable {
             e.printStackTrace();
         }
     }
-    
-    public void limpiarClienteFilter(){
+
+    public void limpiarClienteFilter() {
         servicioDetalleFilter.setCliente(null);
     }
 
@@ -503,4 +518,13 @@ public class OrdenServicioControlador implements Serializable {
     public void setTipoVehiculos(List<TipoVehiculo> tipoVehiculos) {
         this.tipoVehiculos = tipoVehiculos;
     }
+
+    public HibernatePaginador<File> getFilePaginador() {
+        return filePaginador;
+    }
+
+    public void setFilePaginador(HibernatePaginador<File> filePaginador) {
+        this.filePaginador = filePaginador;
+    }
+
 }

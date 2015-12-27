@@ -55,16 +55,11 @@
                                         <div class="form-group has-feedback">
                                             <h:panelGroup id="cliente" rendered="#{ordenServicioControlador.servicioDetalle.venta == null}">
                                                 <label class="col-md-2 control-label" >File :</label>
-                                                <div  style="padding-right: 0px;"  class="col-xs-11 col-md-2" >
+                                                <div  style="padding-right: 0px;"  class=" col-md-2" >
 
-                                                    <p:inputText  style="width: 100%;background-color: #f5f5f5;border: 1px solid #ccc;border-radius: 4px;  height: 34px;padding-top: 5px;" value="#{ordenServicioControlador.servicioDetalle.file.nroCorrelativo}"      >
-                                                    </p:inputText>
+                                                    <p  style="width: 100%;background-color: #f5f5f5;border: 1px solid #ccc;border-radius: 4px;  height: 34px;padding-top: 5px;"    >#{ordenServicioControlador.servicioDetalle.file.nroCorrelativo}
+                                                    </p>
 
-                                                </div>
-                                                <div class="col-xs-1 col-md-1" style="padding-left: 0px;" >
-                                                    <div onclick="PF('dialogSelectable').show();" class="btn btn-primary clickable" style="width: 43px;height: 32.8px;" >
-                                                        <img src="#{request.contextPath}/resources/images/add.png" />
-                                                    </div>
                                                 </div>
                                                 <label  class="col-md-2 control-label" >PAX :</label>
                                                 <div class="col-md-3">
@@ -196,41 +191,6 @@
             </div>
             <!-- /.col-lg-12 -->
         </div>
-        <p:dialog modal="true" width="500"  height="300" header="Lista de Files" position="center top" id="DialogSelectable" widgetVar="dialogSelectable">
-            <h:form id="frmDialogSelectable">
-                <p:dataTable  value="#{ordenServicioControlador.files}" var="listFile" 
-                              paginator="true" rows="10"  rowIndexVar="rowIndex"
-                              paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
-
-                    <p:column style="text-align: center;">
-                        <f:facet name="header">
-                            Nro File
-                        </f:facet>
-                        <h:outputText value="#{listFile.nroCorrelativo}" >
-                        </h:outputText>
-                    </p:column>
-                    <p:column style="text-align: center;">
-                        <f:facet name="header">
-                            Cliente
-                        </f:facet>
-                        <h:outputText value="#{listFile.cliente.nombreAuxiliar}" >
-                        </h:outputText>
-                    </p:column>
-                    <p:column style="text-align: center;">
-                        <f:facet name="header">
-                            PAX
-                        </f:facet>
-                        <h:outputText value="#{listFile.pax}" >
-                        </h:outputText>
-                    </p:column>
-                    <p:column style="text-align: center;width: 12%;">
-                        <p:commandButton icon="icon-choice" update=":frmRegistrarOTraslado:cliente"  oncomplete="PF('dialogSelectable').hide();" >
-                            <f:setPropertyActionListener value="#{listFile}" target="#{ordenServicioControlador.servicioDetalle.file}" />
-                        </p:commandButton>
-                    </p:column>
-                </p:dataTable>
-            </h:form>
-        </p:dialog>
         <p:dialog modal="true" width="700"  height="400" resizable="true" header="Lista de Choferes" position="center top" id="dialogChoferes" widgetVar="dialogChoferes">
             <h:form id="frmDialogChoferes">
                 <p:dataTable  styleClass="DataTable_Modal" value="#{ordenServicioControlador.choferes}" widgetVar="tableChoferes" style="font-size: 12px;" var="listChofer" 
