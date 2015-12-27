@@ -44,7 +44,7 @@
                                             Fecha Creación
                                         </f:facet>
                                         <h:outputText value="#{listVenta.fechaCreacion}" >
-                                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm"  />
+                                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-5" />
                                         </h:outputText>
                                     </p:column>
                                     <p:column  style="text-align: center;width: 12%;">

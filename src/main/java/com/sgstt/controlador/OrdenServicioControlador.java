@@ -73,6 +73,7 @@ public class OrdenServicioControlador implements Serializable {
             tipoServicios = transporteServicio.obtenerTiposServicios();
             choferes = transporteServicio.obtenerChoferesPorSede(sesionControlador.getUsuarioSesion().getSede().getId());
             vehiculos = transporteServicio.obtenerVehiculos(sesionControlador.getUsuarioSesion().getSede().getId());
+            empresas = transporteServicio.obtenerEmpresasExternas(sesionControlador.getUsuarioSesion().getSede().getId());
             servicioDetallePaginador = new ServicioDetallePaginador();
             servicioDetallePaginador.initPaginador(servicioDetalleFilter);
             filePaginador = new FilePaginador();

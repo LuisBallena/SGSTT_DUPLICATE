@@ -39,12 +39,13 @@ public class ServicioDetallePaginador extends HibernateStringPaginador implement
             builder.append(filter.esValidoId(filter.getIdServicio()) ? String.format("and serviciodetalle.servicio.id = %d ", filter.getIdServicio()) : "");
             builder.append(filter.esValidoId(filter.getIdVehiculo()) ? String.format("and serviciodetalle.vehiculo.id = %d ", filter.getIdVehiculo()) : "");
             builder.append(filter.esValidoId(filter.getIdChofer()) ? String.format("and serviciodetalle.chofer.id = %d ", filter.getIdChofer()) : "");
+            builder.append(filter.esValidoId(filter.getIdEmpresa()) && filter.getServicioExterno() == 1 ? String.format("and serviciodetalle.chofer.empresa.id = %d ", filter.getIdEmpresa()) : "");
             builder.append(filter.getCliente() != null ? String.format("and serviciodetalle.idcliente = %d",filter.getCliente().getIdCliente()):"");
             if (!filter.getTipoOrden().equals("none")) {
                 builder.append(ensamblarQueryTipoOrden(filter));
             }
-            if (filter.getServicioExterno() != null) {
-                builder.append(String.format("and serviciodetalle.externalizado = '%s'", filter.getServicioExterno() ? "SI" : "NO"));
+            if (filter.getServicioExterno() != -1) {
+                builder.append(String.format("and serviciodetalle.externalizado = '%s'", filter.getServicioExterno() == 1 ? "SI" : "NO"));
             }
             builder.append(filter.getEstadoServicio() != null && !filter.getEstadoServicio().trim().isEmpty() ? String.format("and serviciodetalle.estadoServicio = '%s'", filter.getEstadoServicio()) : "");
             if (filter.getFechaDesde() != null && filter.getFechaHasta() != null) {

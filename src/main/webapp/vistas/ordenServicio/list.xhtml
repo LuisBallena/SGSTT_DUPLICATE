@@ -27,7 +27,7 @@
                                 <div class="col-sm-2">
                                     <h:panelGroup rendered="#{sesionControlador.permisoModulo.crear eq true}">
                                         <p:commandButton value="Nueva Orden File" styleClass="btn btn-primary" 
-                                                  oncomplete="PF('dialogFile').show();" />
+                                                         oncomplete="PF('dialogFile').show();" />
                                     </h:panelGroup>
 
                                 </div>
@@ -58,7 +58,7 @@
                                                                      value="#{ordenServicioControlador.servicioDetalleFilter.idTipoServicio}">
                                                         <f:ajax execute="@this" render="comboServicios"
                                                                 listener="#{ordenServicioControlador.onChangeTipoServicioFilter}"/>
-                                                        <f:selectItem itemLabel="Todos" noSelectionOption="true"
+                                                        <f:selectItem itemLabel="Todos" 
                                                                       itemValue="#{null}"/>
                                                         <f:selectItems value="#{ordenServicioControlador.tipoServicios}"
                                                                        var="tiposServicios"
@@ -71,7 +71,7 @@
                                                 <div class="col-sm-4 col-md-3">
                                                     <h:selectOneMenu id="comboServicios" styleClass="form-control"
                                                                      value="#{ordenServicioControlador.servicioDetalleFilter.idServicio}">
-                                                        <f:selectItem itemLabel="Todos" noSelectionOption="true"
+                                                        <f:selectItem itemLabel="Todos" 
                                                                       itemValue="#{null}"/>
                                                         <f:selectItems value="#{ordenServicioControlador.servicios}"
                                                                        var="servicios"
@@ -86,7 +86,7 @@
                                                 <div class="col-md-3">
                                                     <h:selectOneMenu styleClass="form-control"
                                                                      value="#{ordenServicioControlador.servicioDetalleFilter.idVehiculo}">
-                                                        <f:selectItem itemLabel="Todos" noSelectionOption="true"
+                                                        <f:selectItem itemLabel="Todos" 
                                                                       itemValue="#{null}"/>
                                                         <f:selectItems value="#{ordenServicioControlador.vehiculos}"
                                                                        var="vehiculos"
@@ -99,7 +99,7 @@
                                                 <div class="col-sm-4 col-md-3">
                                                     <h:selectOneMenu id="comboChoferes" styleClass="form-control"
                                                                      value="#{ordenServicioControlador.servicioDetalleFilter.idChofer}">
-                                                        <f:selectItem itemLabel="Todos" noSelectionOption="true"
+                                                        <f:selectItem itemLabel="Todos" 
                                                                       itemValue="#{null}"/>
                                                         <f:selectItems value="#{ordenServicioControlador.choferes}"
                                                                        var="choferes"
@@ -114,31 +114,31 @@
                                                 <div class="col-md-3">
                                                     <h:selectOneMenu id="comboServExterno" styleClass="form-control"
                                                                      value="#{ordenServicioControlador.servicioDetalleFilter.servicioExterno}">
-                                                        <f:selectItem itemLabel="Todos" noSelectionOption="true"
-                                                                      itemValue="#{null}"/>
+                                                        <f:selectItem itemLabel="Todos" 
+                                                                      itemValue="-1"/>
                                                         <f:selectItem itemLabel="No externo"
-                                                                      itemValue="#{false}"/>
-                                                        <f:selectItem itemLabel="Externo" noSelectionOption="true"
-                                                                      itemValue="#{true}"/>
+                                                                      itemValue="0"/>
+                                                        <f:selectItem itemLabel="Externo" 
+                                                                      itemValue="1"/>
+                                                        <f:ajax render="panelTranspor" event="change" />
                                                     </h:selectOneMenu>
 
                                                 </div>
-                                                <label class="col-md-2 control-label">Estado Serv. :</label>
+                                                <label class="col-md-2 control-label">Transportista :</label>
 
-                                                <div class="col-sm-4 col-md-3">
-                                                    <h:selectOneMenu id="comboEstadoServicio" styleClass="form-control"
-                                                                     value="#{ordenServicioControlador.servicioDetalleFilter.estadoServicio}">
-                                                        <f:selectItem itemLabel="Todos" noSelectionOption="true"
+                                                <div class="col-md-3">
+                                                    <h:panelGroup id="panelTranspor">
+                                                        <h:panelGroup rendered="#{ordenServicioControlador.servicioDetalleFilter.servicioExterno == 1}">
+                                                            <h:selectOneMenu id="comboTransportista" styleClass="form-control"
+                                                                             value="#{ordenServicioControlador.servicioDetalleFilter.idEmpresa}">
+                                                                <f:selectItem itemLabel="Todos" 
                                                                       itemValue="#{null}"/>
-                                                        <f:selectItem itemLabel="Sin Asignar"
-                                                                      itemValue="SIN_ASIGNAR"/>
-                                                        <f:selectItem itemLabel="Pendiente"
-                                                                      itemValue="PENDIENTE"/>
-                                                        <f:selectItem itemLabel="Realizado"
-                                                                      itemValue="REALIZADO"/>
-
-                                                    </h:selectOneMenu>
+                                                                <f:selectItems value="#{ordenServicioControlador.empresas}" var="listEmpresas" itemLabel="#{listEmpresas.razonSocial}" itemValue="#{listEmpresas.id}" />
+                                                            </h:selectOneMenu>
+                                                        </h:panelGroup>
+                                                    </h:panelGroup>
                                                 </div>
+
                                             </div>
                                             <div class="form-group has-feedback">
                                                 <label class="col-md-2 control-label">Orden File/Venta :</label>
@@ -180,6 +180,22 @@
                                                     <div onclick="PF('dialogClientFilter').show();" class="btn btn-primary clickable" style="width: 43px;height: 32.8px;" >
                                                         <img src="#{request.contextPath}/resources/images/add.png" />
                                                     </div>
+                                                </div>
+                                                <label class="col-md-2 control-label">Estado Serv. :</label>
+
+                                                <div class="col-sm-4 col-md-3">
+                                                    <h:selectOneMenu id="comboEstadoServicio" styleClass="form-control"
+                                                                     value="#{ordenServicioControlador.servicioDetalleFilter.estadoServicio}">
+                                                        <f:selectItem itemLabel="Todos" 
+                                                                      itemValue="#{null}"/>
+                                                        <f:selectItem itemLabel="Sin Asignar"
+                                                                      itemValue="SIN_ASIGNAR"/>
+                                                        <f:selectItem itemLabel="Pendiente"
+                                                                      itemValue="PENDIENTE"/>
+                                                        <f:selectItem itemLabel="Realizado"
+                                                                      itemValue="REALIZADO"/>
+
+                                                    </h:selectOneMenu>
                                                 </div>
                                             </div>
                                             <div class="form-group has-feedback">
@@ -443,7 +459,7 @@
                             Fecha Registro
                         </f:facet>
                         <h:outputText value="#{listFile.fechaRegistro}" >
-                            <f:convertDateTime pattern="dd/MM/yyyy H:mm a" />
+                            <f:convertDateTime pattern="dd/MM/yyyy H:mm a" timeZone="GMT-5" />
                         </h:outputText>
                     </p:column>
                     <p:column style="text-align: center;width: 8%;">

@@ -53,4 +53,19 @@ public class EmpresaImpl extends HibernateImpl<Empresa, Integer> implements Empr
         return auxEmpresa;
     }
 
+    @Override
+    public List<Empresa> getEmpresasExternasFilterBySede(Integer idSede) {
+        List<Empresa> auxEmpresa = null;
+        Session session = null;
+        try {
+            session = conexion.getSession();
+            Query query = session.createQuery("from Empresa as empresa where empresa.id != 1 and empresa.sede.id = :idSede");
+            query.setInteger("idSede", idSede);
+            auxEmpresa = query.list();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return auxEmpresa;
+    }
+
 }

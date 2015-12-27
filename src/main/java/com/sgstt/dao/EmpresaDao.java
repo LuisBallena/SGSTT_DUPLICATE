@@ -11,5 +11,7 @@ public interface EmpresaDao extends GenericDao<Empresa, Integer> {
 
     public Empresa getEmpresaWithSede(Integer idempresa);
     
+    public List<Empresa> getEmpresasExternasFilterBySede(Integer idSede);
+    
     public List<Empresa> getEmpresasExistChoferFilterBySede(Integer idSede);
 }

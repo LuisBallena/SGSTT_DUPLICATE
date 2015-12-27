@@ -18,13 +18,15 @@ public class ServicioDetalleFilter extends BaseFilter{
 
     private Integer idChofer;
 
-    private Boolean servicioExterno;
+    private Integer servicioExterno;
 
     private String estadoServicio;
     
     private String tipoOrden;
     
     private String serie;
+    
+    private Integer idEmpresa;
     
     private Cliente cliente;
 
@@ -64,11 +66,11 @@ public class ServicioDetalleFilter extends BaseFilter{
         this.idChofer = idChofer;
     }
 
-    public Boolean getServicioExterno() {
+    public Integer getServicioExterno() {
         return servicioExterno;
     }
 
-    public void setServicioExterno(Boolean servicioExterno) {
+    public void setServicioExterno(Integer servicioExterno) {
         this.servicioExterno = servicioExterno;
     }
 
@@ -103,5 +105,15 @@ public class ServicioDetalleFilter extends BaseFilter{
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+
+    public Integer getIdEmpresa() {
+        return idEmpresa;
+    }
+
+    public void setIdEmpresa(Integer idEmpresa) {
+        this.idEmpresa = idEmpresa;
+    }
+    
+    
     
 }
