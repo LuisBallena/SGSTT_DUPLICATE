@@ -1,13 +1,14 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns="http://www.w3.org/1999/xhtml"
                 template="./../home.xhtml"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-        >
+                    
+                xmlns:jsf="http://xmlns.jcp.org/jsf">
 
     <ui:define name="content">
         <div class="row">
@@ -34,7 +35,7 @@
                                     <h:panelGroup rendered="#{sesionControlador.permisoModulo.crear eq true}">
                                         <h:commandButton value="Nueva Orden VTA" styleClass="btn btn-primary"
                                                          onclick="PF('dialogClient').show();"
-                                                />
+                                                         />
                                     </h:panelGroup>
 
                                 </div>
@@ -111,12 +112,16 @@
                                                 <label class="col-md-2 control-label">Serv. Externo :</label>
 
                                                 <div class="col-md-3">
-                                                    <label class="control-label">
-                                                        <h:selectBooleanCheckbox
-                                                                value="#{ordenServicioControlador.servicioDetalleFilter.servicioExterno}">
+                                                    <h:selectOneMenu id="comboServExterno" styleClass="form-control"
+                                                                     value="#{ordenServicioControlador.servicioDetalleFilter.servicioExterno}">
+                                                        <f:selectItem itemLabel="Todos" noSelectionOption="true"
+                                                                      itemValue="#{null}"/>
+                                                        <f:selectItem itemLabel="No externo"
+                                                                      itemValue="#{false}"/>
+                                                        <f:selectItem itemLabel="Externo" noSelectionOption="true"
+                                                                      itemValue="#{true}"/>
+                                                    </h:selectOneMenu>
 
-                                                        </h:selectBooleanCheckbox>
-                                                    </label>
                                                 </div>
                                                 <label class="col-md-2 control-label">Estado Serv. :</label>
 
@@ -133,6 +138,48 @@
                                                                       itemValue="REALIZADO"/>
 
                                                     </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                            <div class="form-group has-feedback">
+                                                <label class="col-md-2 control-label">Orden File/Venta :</label>
+                                                <div class="col-md-3">
+                                                    <h:selectOneMenu id="comboOrden" styleClass="form-control"
+                                                                     value="#{ordenServicioControlador.servicioDetalleFilter.tipoOrden}">
+                                                        <f:ajax render="inputSerie" event="change" />
+                                                        <f:selectItem itemLabel="Todos" noSelectionOption="true"
+                                                                      itemValue="none"/>
+                                                        <f:selectItem itemLabel="File"
+                                                                      itemValue="F"/>
+                                                        <f:selectItem itemLabel="Venta" noSelectionOption="true"
+                                                                      itemValue="V"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                                <label class="col-md-2 control-label">Serie :</label>
+
+                                                <div class="col-sm-4 col-md-3">
+                                                    <h:panelGroup id="inputSerie">
+                                                        <h:panelGroup rendered="#{ordenServicioControlador.servicioDetalleFilter.tipoOrden != 'none'}">
+                                                            <p:inputText  styleClass="form-control"  value="#{ordenServicioControlador.servicioDetalleFilter.serie}" />
+                                                        </h:panelGroup>
+                                                    </h:panelGroup>
+                                                </div>
+                                            </div>
+                                            <div class="form-group has-feedback">
+                                                <label class="col-md-2 control-label">Cliente :</label>
+                                                <div class="col-md-3">
+                                                    <div jsf:id="clienteFilter" class="form-control" style="background-color: #f5f5f5;border: 1px solid #ccc;">
+                                                        <span jsf:id="cleanCliente"  style="cursor: pointer;display: none;">
+                                                            <i class="fa fa-times"></i>
+                                                            <f:ajax render="clienteFilter" listener="#{ordenServicioControlador.limpiarClienteFilter}" onevent="changeCleanCliente('none')" />
+                                                        </span>
+                                                        #{ordenServicioControlador.servicioDetalleFilter.cliente.nombreAuxiliar}
+                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="buton_selectable" style="margin-left:-15px;" >
+                                                    <div onclick="PF('dialogClientFilter').show();" class="btn btn-primary clickable" style="width: 43px;height: 32.8px;" >
+                                                        <img src="#{request.contextPath}/resources/images/add.png" />
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="form-group has-feedback">
@@ -167,121 +214,140 @@
                             </div>
                             <!-- FIN DE FILTRO -->
                             <br/>
-                            <h:form id="formperfil">
-                                <f:event type="preRenderView" listener="#{ordenServicioControlador.initLista}"/>
+                            <div class="col-lg-12" style="overflow: scroll">
+                                <h:form id="formperfil">
+                                    <f:event type="preRenderView" listener="#{ordenServicioControlador.initLista}"/>
 
-                                <p:dataTable value="#{ordenServicioControlador.servicioDetallePaginador}" var="list"
-                                             emptyMessage="No existen ordenes de servicios"
-                                             paginator="true" rows="10" lazy="true" rowIndexVar="rowIndex"
-                                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {Exporters}">
-                                    <f:facet name="{Exporters}">
-                                        <h:commandLink styleClass="btnExportarExcel"  actionListener="#{ordenServicioControlador.exportarData}">
-                                            <h:graphicImage url="#{facesContext.externalContext.contextName}/resources/images/xls.gif" />
-                                        </h:commandLink>
-                                    </f:facet>
-                                    <p:column style="text-align: center;font-size: 13px;">
-                                        <f:facet name="header">
-                                            Fecha del Servico
+                                    <p:dataTable value="#{ordenServicioControlador.servicioDetallePaginador}" var="list"
+                                                 emptyMessage="No existen ordenes de servicios" style="width: 1500px;" 
+                                                 paginator="true" rows="10" lazy="true" rowIndexVar="rowIndex"
+                                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {Exporters}">
+                                        <f:facet name="{Exporters}">
+                                            <h:commandLink styleClass="btnExportarExcel" id="exporterright"  actionListener="#{ordenServicioControlador.exportarData}">
+                                                <h:graphicImage url="#{facesContext.externalContext.contextName}/resources/images/xls.gif" />
+                                            </h:commandLink>
+                                            <h:commandLink styleClass="btnExportarExcelLeft" id="exporterleft"  actionListener="#{ordenServicioControlador.exportarData}">
+                                                <h:graphicImage url="#{facesContext.externalContext.contextName}/resources/images/xls.gif" />
+                                            </h:commandLink>
                                         </f:facet>
-                                        <h:outputText value="#{list.fecha}">
-                                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-5"/>
-                                        </h:outputText>
-                                    </p:column>
-                                    <p:column style="text-align: center;font-size: 13px;">
-                                        <f:facet name="header">
-                                            Servicio
-                                        </f:facet>
-                                        <h:outputText value="#{list.servicio.descripcion}"/>
-                                    </p:column>
-                                    <p:column style="text-align: center;font-size: 13px;">
-                                        <f:facet name="header">
-                                            Tipo Servicio
-                                        </f:facet>
-                                        <h:outputText value="#{list.servicio.tipoServicio.descripcion}"/>
-                                    </p:column>
-                                    <p:column style="text-align: center;font-size: 13px;">
-                                        <f:facet name="header">
-                                            File/VTA
-                                        </f:facet>
-                                        <h:outputText value="#{list.fileAuxiliar}"/>
-                                    </p:column>
-                                    <p:column style="text-align: center;font-size: 13px;">
-                                        <f:facet name="header">
-                                            PAX
-                                        </f:facet>
-                                        <h:outputText value="#{list.file.pax}#{list.pax}"/>
-                                    </p:column>
-                                    <p:column style="text-align: center;font-size: 13px;">
-                                        <f:facet name="header">
-                                            Cuenta
-                                        </f:facet>
-                                        <h:outputText value="#{list.file.cuenta}#{list.cuenta}"/>
-                                    </p:column>
-                                    <p:column style="text-align: center;font-size: 13px;">
-                                        <f:facet name="header">
-                                            Nro Pasajeros
-                                        </f:facet>
-                                        <h:outputText value="#{list.nroPersonas}"/>
-                                    </p:column>
-                                    <p:column style="text-align: center;font-size: 13px;">
-                                        <f:facet name="header">
-                                            Trasladista
-                                        </f:facet>
-                                        <h:outputText
+                                        <p:column style="text-align: center;font-size: 13px;">
+                                            <f:facet name="header">
+                                                Fecha del Servico
+                                            </f:facet>
+                                            <h:outputText value="#{list.fecha}">
+                                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-5"/>
+                                            </h:outputText>
+                                        </p:column>
+                                        <p:column style="text-align: center;font-size: 13px;">
+                                            <f:facet name="header">
+                                                Servicio
+                                            </f:facet>
+                                            <h:outputText value="#{list.servicio.descripcion}"/>
+                                        </p:column>
+                                        <p:column style="text-align: center;font-size: 13px;">
+                                            <f:facet name="header">
+                                                Tipo Servicio
+                                            </f:facet>
+                                            <h:outputText value="#{list.servicio.tipoServicio.descripcion}"/>
+                                        </p:column>
+                                        <p:column style="text-align: center;font-size: 13px;">
+                                            <f:facet name="header">
+                                                File/VTA
+                                            </f:facet>
+                                            <h:outputText value="#{list.fileAuxiliar}"/>
+                                        </p:column>
+                                        <p:column style="text-align: center;font-size: 13px;">
+                                            <f:facet name="header">
+                                                PAX
+                                            </f:facet>
+                                            <h:outputText value="#{list.file.pax}#{list.pax}"/>
+                                        </p:column>
+                                        <p:column style="text-align: center;font-size: 13px;">
+                                            <f:facet name="header">
+                                                Cliente
+                                            </f:facet>
+                                            <h:outputText value="#{list.cliente.nombreAuxiliar}"/>
+                                        </p:column>
+                                        <p:column style="text-align: center;font-size: 13px;">
+                                            <f:facet name="header">
+                                                Cuenta
+                                            </f:facet>
+                                            <h:outputText value="#{list.file.cuenta}#{list.cuenta}"/>
+                                        </p:column>
+                                        <p:column style="text-align: center;font-size: 13px;">
+                                            <f:facet name="header">
+                                                Nro Pasajeros
+                                            </f:facet>
+                                            <h:outputText value="#{list.nroPersonas}"/>
+                                        </p:column>
+                                        <p:column style="text-align: center;font-size: 13px;">
+                                            <f:facet name="header">
+                                                Trasladista
+                                            </f:facet>
+                                            <h:outputText
                                                 value="#{list.trasladista eq null ? 'No Asignado' :  list.trasladista.datosCompletos}"/>
-                                    </p:column>
-                                    <p:column style="text-align: center;font-size: 13px;">
-                                        <f:facet name="header">
-                                            Vuelo
-                                        </f:facet>
-                                        <h:outputText
+                                        </p:column>
+                                        <p:column style="text-align: center;font-size: 13px;">
+                                            <f:facet name="header">
+                                                Vuelo
+                                            </f:facet>
+                                            <h:outputText
                                                 value="#{list.vuelo eq null ? 'No Aplica' : list.vuelo.descripcion}"/>
-                                    </p:column>
-                                    <p:column style="text-align: center;font-size: 13px;">
-                                        <f:facet name="header">
-                                            Estado Servicio
-                                        </f:facet>
-                                        <h:outputText value="#{list.estadoServicio == 'SIN_ASIGNAR' ? 'Sin Asignar' : list.estadoServicio}"/>
-                                    </p:column>
-                                    <p:column style="text-align: center;font-size: 13px;">
-                                        <f:facet name="header">
-                                            Tercerizado
-                                        </f:facet>
-                                        <h:outputText value="#{list.externalizado}"/>
-                                    </p:column>
-                                    <p:column style="text-align: center;font-size: 13px;">
-                                        <f:facet name="header">
-                                            Vehiculo
-                                        </f:facet>
-                                        <h:outputText
+                                        </p:column>
+                                        <p:column style="text-align: center;font-size: 13px;">
+                                            <f:facet name="header">
+                                                Estado Servicio
+                                            </f:facet>
+                                            <h:outputText value="#{list.estadoServicio == 'SIN_ASIGNAR' ? 'Sin Asignar' : list.estadoServicio}"/>
+                                        </p:column>
+                                        <p:column style="text-align: center;font-size: 13px;">
+                                            <f:facet name="header">
+                                                Tercerizado
+                                            </f:facet>
+                                            <h:outputText value="#{list.externalizado}"/>
+                                        </p:column>
+                                        <p:column style="text-align: center;font-size: 13px;">
+                                            <f:facet name="header">
+                                                Vehiculo
+                                            </f:facet>
+                                            <h:outputText
                                                 value="#{list.vehiculo eq null ? 'No Asignado' : list.vehiculo.descripcion}"/>
-                                    </p:column>
-                                    <p:column style="text-align: center;font-size: 13px;">
-                                        <f:facet name="header">
-                                            Chofer
-                                        </f:facet>
-                                        <h:outputText
+                                        </p:column>
+                                        <p:column style="text-align: center;font-size: 13px;">
+                                            <f:facet name="header">
+                                                Chofer
+                                            </f:facet>
+                                            <h:outputText
                                                 value="#{list.chofer eq null ? 'No Asignado' : list.chofer.datosCompletos}"/>
-                                    </p:column>
+                                        </p:column>
+                                        <p:column style="text-align: center;font-size: 13px;">
+                                            <f:facet name="header">
+                                                Transportista
+                                            </f:facet>
+                                            <h:outputText
+                                                value="#{list.chofer eq null ? 'No Asignado' : list.chofer.empresa.razonSocial}"/>
+                                        </p:column>
 
-                                    <p:column style="text-align: center;width: 8%;">
-                                        <p:commandButton style="font-size: 12px;" icon="icon-update"
-                                                         action="#{ordenServicioControlador.irActualizar(list.id)}">
-                                        </p:commandButton>
-                                        <p:commandButton title="Cotizacion por Item" style="font-size: 12px;"
-                                                         rendered="#{list.estadoServicio == 'PENDIENTE'}"
-                                                         icon="icon-money"
-                                                         action="#{ordenServicioControlador.irCotizar}" update=":msg">
-                                            <f:setPropertyActionListener value="#{list}"
-                                                                         target="#{ordenServicioControlador.servicioDetalle}"/>
-                                        </p:commandButton>
-                                        <p:commandButton style="font-size: 12px;" icon="icon-delete"
-                                                         actionListener="#{ordenServicioControlador.capturarServicioDetalle(list.id)}"
-                                                         oncomplete="PF('deleteperfil').show();">
-                                        </p:commandButton>
-                                    </p:column>
-                                </p:dataTable>
-                            </h:form>
+                                        <p:column style="text-align: center;width: 8%;">
+                                            <p:commandButton style="font-size: 12px;" icon="icon-update"
+                                                             action="#{ordenServicioControlador.irActualizar(list.id)}">
+                                            </p:commandButton>
+                                            <p:commandButton title="Cotizacion por Item" style="font-size: 12px;"
+                                                             rendered="#{list.estadoServicio == 'PENDIENTE'}"
+                                                             icon="icon-money"
+                                                             action="#{ordenServicioControlador.irCotizar}" update=":msg">
+                                                <f:setPropertyActionListener value="#{list}"
+                                                                             target="#{ordenServicioControlador.servicioDetalle}"/>
+                                            </p:commandButton>
+                                            <p:commandButton style="font-size: 12px;" icon="icon-delete"
+                                                             actionListener="#{ordenServicioControlador.capturarServicioDetalle(list.id)}"
+                                                             oncomplete="PF('deleteperfil').show();">
+                                            </p:commandButton>
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:form>
+                            </div>
+
 
                         </div>
                     </div>
@@ -340,7 +406,44 @@
                 </p:dataTable>
             </h:form>
         </p:dialog>
+        <!-- FORMULARIO PARA ESCOGER EL CLIENTE PARA LOS FILTROS -->
+        <p:dialog modal="true" position="center top" header="Lista de Clientes" id="dialogClientFilter"
+                  widgetVar="dialogClientFilter" resizable="false" width="600"
+                  showEffect="fade">
+            <h:form>
+                <p:dataTable value="#{ordenServicioControlador.clientes}" var="listClienteFilter"
+                             emptyMessage="No existen registros de clientes"
+                             paginator="true" rows="10"
+                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}">
+                    <p:column style="text-align: center;font-size: 13px;">
+                        <f:facet name="header">
+                            Cliente
+                        </f:facet>
+                        <h:outputText value="#{listClienteFilter.nombreAuxiliar}">
+
+                        </h:outputText>
+                    </p:column>
+                    <p:column style="text-align: center;font-size: 13px;">
+                        <f:facet name="header">
+                            Tipo Cliente
+                        </f:facet>
+                        <h:outputText value="#{listClienteFilter.tipoCliente.tipoCliente}"/>
+                    </p:column>
+                    <p:column style="text-align: center;width: 8%;">
+                        <p:commandButton style="font-size: 12px;" icon="icon-choice" oncomplete="PF('dialogClientFilter').hide();changeCleanCliente('grid');" update=":frmFiltroOrden" >
+                            <f:setPropertyActionListener value="#{listClienteFilter}" target="#{ordenServicioControlador.servicioDetalleFilter.cliente}" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:dialog>
         <h:outputScript name="js/collapse_panel.js" />
+        <script>
+            function changeCleanCliente(state){
+                $('#frmFiltroOrden\\:cleanCliente').css({'display':state});
+            }
+            
+        </script>
     </ui:define>
 
 </ui:composition>

@@ -1,6 +1,8 @@
 
 package com.sgstt.filters;
 
+import com.sgstt.entidad.Cliente;
+
 
 /**
  *
@@ -16,9 +18,19 @@ public class ServicioDetalleFilter extends BaseFilter{
 
     private Integer idChofer;
 
-    private boolean servicioExterno = false;
+    private Boolean servicioExterno;
 
     private String estadoServicio;
+    
+    private String tipoOrden;
+    
+    private String serie;
+    
+    private Cliente cliente;
+
+    public ServicioDetalleFilter() {
+        tipoOrden = "none";
+    }
 
     public Integer getIdTipoServicio() {
         return idTipoServicio;
@@ -52,11 +64,11 @@ public class ServicioDetalleFilter extends BaseFilter{
         this.idChofer = idChofer;
     }
 
-    public boolean isServicioExterno() {
+    public Boolean getServicioExterno() {
         return servicioExterno;
     }
 
-    public void setServicioExterno(boolean servicioExterno) {
+    public void setServicioExterno(Boolean servicioExterno) {
         this.servicioExterno = servicioExterno;
     }
 
@@ -67,4 +79,29 @@ public class ServicioDetalleFilter extends BaseFilter{
     public void setEstadoServicio(String estadoServicio) {
         this.estadoServicio = estadoServicio;
     }
+
+    public String getTipoOrden() {
+        return tipoOrden;
+    }
+
+    public void setTipoOrden(String tipoOrden) {
+        this.tipoOrden = tipoOrden;
+    }
+
+    public String getSerie() {
+        return serie;
+    }
+
+    public void setSerie(String serie) {
+        this.serie = serie;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+    
 }

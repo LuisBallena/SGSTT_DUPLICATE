@@ -15,6 +15,7 @@ import java.io.Serializable;
 @ManagedBean(name = "ventaControlador")
 @ViewScoped
 public class VentaControlador implements Serializable {
+    private static final long serialVersionUID = 993752746833435072L;
 
     private HibernatePaginador<Venta> ventaPaginador;
     private Venta venta;

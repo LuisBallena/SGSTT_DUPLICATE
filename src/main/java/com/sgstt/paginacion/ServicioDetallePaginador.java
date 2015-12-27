@@ -26,8 +26,7 @@ public class ServicioDetallePaginador extends HibernateStringPaginador implement
     @Override
     protected String createFilter(Object... values) {
         orderBy("serviciodetalle.fecha ASC");
-        return String.format("%s left join fetch serviciodetalle.vehiculo.tipoVehiculo where serviciodetalle.estado = 1 and serviciodetalle.servicio.sede.id = %d", super.createFilter()
-                , ((ServicioDetalleFilter) values[0]).getIdSede());
+        return String.format("%s left join fetch serviciodetalle.vehiculo.tipoVehiculo left join fetch serviciodetalle.venta.cliente where serviciodetalle.estado = 1 and serviciodetalle.servicio.sede.id = %d", super.createFilter(), ((ServicioDetalleFilter) values[0]).getIdSede());
     }
 
     @Override
@@ -37,19 +36,49 @@ public class ServicioDetallePaginador extends HibernateStringPaginador implement
             filter.validarFiltroFecha();
             StringBuilder builder = new StringBuilder();
             builder.append(filter.esValidoId(filter.getIdTipoServicio()) ? String.format("and serviciodetalle.servicio.tipoServicio.id = %d ", filter.getIdTipoServicio()) : "");
-            builder.append(filter.esValidoId(filter.getIdServicio()) ? String.format("and serviciodetalle.servicio.id = %d ",filter.getIdServicio()) : "");
-            builder.append(filter.esValidoId(filter.getIdVehiculo()) ? String.format("and serviciodetalle.vehiculo.id = %d ",filter.getIdVehiculo()) : "");
-            builder.append(filter.esValidoId(filter.getIdChofer()) ? String.format("and serviciodetalle.chofer.id = %d ",filter.getIdChofer()) : "");
-            builder.append(String.format("and serviciodetalle.externalizado = '%s'",filter.isServicioExterno() ? "SI" : "NO"));
-            builder.append(filter.getEstadoServicio() != null && !filter.getEstadoServicio().trim().isEmpty() ? String.format("and serviciodetalle.estadoServicio = '%s'",filter.getEstadoServicio()) : "");
+            builder.append(filter.esValidoId(filter.getIdServicio()) ? String.format("and serviciodetalle.servicio.id = %d ", filter.getIdServicio()) : "");
+            builder.append(filter.esValidoId(filter.getIdVehiculo()) ? String.format("and serviciodetalle.vehiculo.id = %d ", filter.getIdVehiculo()) : "");
+            builder.append(filter.esValidoId(filter.getIdChofer()) ? String.format("and serviciodetalle.chofer.id = %d ", filter.getIdChofer()) : "");
+            builder.append(filter.getCliente() != null ? String.format("and serviciodetalle.idcliente = %d",filter.getCliente().getIdCliente()):"");
+            if (!filter.getTipoOrden().equals("none")) {
+                builder.append(ensamblarQueryTipoOrden(filter));
+            }
+            if (filter.getServicioExterno() != null) {
+                builder.append(String.format("and serviciodetalle.externalizado = '%s'", filter.getServicioExterno() ? "SI" : "NO"));
+            }
+            builder.append(filter.getEstadoServicio() != null && !filter.getEstadoServicio().trim().isEmpty() ? String.format("and serviciodetalle.estadoServicio = '%s'", filter.getEstadoServicio()) : "");
             if (filter.getFechaDesde() != null && filter.getFechaHasta() != null) {
                 builder.append(String.format("and serviciodetalle.fecha between '%s' and  '%s'",
                         Utilitario.convertirFormatoFecha(filter.getFechaDesde(), Utilitario.FORMATO_SQL_DATE_TIME),
-                        Utilitario.convertirFormatoFecha(filter.getFechaHasta(), Utilitario.FORMATO_SQL_DATE)+" 23:59:59"));
+                        Utilitario.convertirFormatoFecha(filter.getFechaHasta(), Utilitario.FORMATO_SQL_DATE) + " 23:59:59"));
             }
             queryDynamicCriteria = builder.toString().trim();
         }
     }
 
+    private String ensamblarQueryTipoOrden(ServicioDetalleFilter servicioDetalleFilter) {
+        String subQuery = "";
+        if (Utilitario.esNulo(servicioDetalleFilter.getSerie())) {
+            switch (servicioDetalleFilter.getTipoOrden()) {
+                case "F":
+                    subQuery = "and serviciodetalle.venta is null ";
+                    break;
+                case "V":
+                    subQuery = "and serviciodetalle.file is null ";
+                    break;
+            }
+        } else {
+            switch (servicioDetalleFilter.getTipoOrden()) {
+                case "F":
+                    subQuery = String.format("and serviciodetalle.file.nroCorrelativo = %s ", servicioDetalleFilter.getSerie());
+                    break;
+                case "V":
+                    servicioDetalleFilter.validarFiltroInteger(servicioDetalleFilter.getSerie());
+                    subQuery = String.format("and serviciodetalle.venta.id = %d ",Integer.parseInt(servicioDetalleFilter.getSerie()));
+                    break;
+            }
+        }
+        return subQuery;
+    }
 
 }

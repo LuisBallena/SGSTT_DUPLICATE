@@ -34,6 +34,13 @@ public class BaseFilter {
             }
         }
     }
+    
+    public void validarFiltroInteger(String texto)throws FilterException{
+        if(!Utilitario.esSoloNumero(texto)){
+            throw new FilterException("La serie debe ser solamente números");
+        }
+    }
+    
 
 
     public boolean esValidoId(Integer id) {

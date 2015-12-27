@@ -484,6 +484,7 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`servicio_detalle` (
   `idtrasladista` INT NULL ,
   `idvehiculo` INT NULL ,
   `idtipo_vehiculo` INT NOT NULL,
+  `idcliente` INT NOT NULL,
   `idfile` INT NULL ,
   `idventa` INT NULL ,
   PRIMARY KEY (`idservicio_detalle`, `idservicio`) ,

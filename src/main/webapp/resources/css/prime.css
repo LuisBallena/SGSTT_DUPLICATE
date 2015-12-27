@@ -70,3 +70,19 @@
     padding-top: 5px;
     padding-right: 5px;
 }
+
+.btnExportarExcelLeft { 
+    display:block;
+    float: left;
+    padding-top: 5px;
+    padding-right: 5px;
+}
+
+.buton_selectable{
+    float: left;
+    width: 44px;
+}
+
+.DataTable_Modal.ui-datatable .ui-datatable-data{
+    font-size: 12px;
+}

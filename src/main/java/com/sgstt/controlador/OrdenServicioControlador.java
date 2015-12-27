@@ -25,7 +25,6 @@ import javax.faces.context.FacesContext;
 
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.log4j.Logger;
-import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -120,9 +119,8 @@ public class OrdenServicioControlador implements Serializable {
             servicios = transporteServicio.obtenerServicios();
             servicioDetalle = transporteServicio.obtenerServicioDetalleConTipoVehiculo(id);
             servicioDetalle.setChofer(servicioDetalle.getChofer() != null ? servicioDetalle.getChofer() : null);
-            servicioDetalle.setVehiculo(servicioDetalle.getVehiculo() != null ? servicioDetalle.getVehiculo() : new Vehiculo());
-            servicioDetalle.getVehiculo().setTipoVehiculo(servicioDetalle.getVehiculo().getTipoVehiculo().getId() == null
-                    ? new VehiculoServicio().obtenerTipoVehiculo(servicioDetalle.getIdTipoVehiculo()) : servicioDetalle.getVehiculo().getTipoVehiculo());
+            servicioDetalle.setVehiculo(servicioDetalle.getVehiculo() != null ? servicioDetalle.getVehiculo() : null);
+            ensamblarTipoVehiculo(servicioDetalle.getVehiculo(),servicioDetalle.getIdTipoVehiculo());
             servicioDetalle.setVuelo(servicioDetalle.getVuelo() != null ? servicioDetalle.getVuelo() : new Vuelo());
             servicioDetalle.setTrasladista(servicioDetalle.getTrasladista() == null ? new Trasladista() : servicioDetalle.getTrasladista());
             initCollectionsUpdate();
@@ -343,6 +341,17 @@ public class OrdenServicioControlador implements Serializable {
             facesContext.responseComplete();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    
+    public void limpiarClienteFilter(){
+        servicioDetalleFilter.setCliente(null);
+    }
+
+    private void ensamblarTipoVehiculo(Vehiculo vehiculo, Integer idTipoVehiculo) {
+        if (vehiculo == null) {
+            servicioDetalle.setVehiculo(new Vehiculo());
+            servicioDetalle.getVehiculo().setTipoVehiculo(new VehiculoServicio().obtenerTipoVehiculo(idTipoVehiculo));
         }
     }
 

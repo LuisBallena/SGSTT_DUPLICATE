@@ -116,6 +116,12 @@ public class ServicioDetalle implements Serializable, Exporter {
 
     @Column(insertable = false)
     private boolean gravada;
+    
+    @Column
+    private Integer idcliente;
+    
+    @Transient
+    private Cliente cliente;
 
     @Column
     private String pax;
@@ -390,4 +396,22 @@ public class ServicioDetalle implements Serializable, Exporter {
     public void setIdTipoVehiculo(Integer idTipoVehiculo) {
         this.idTipoVehiculo = idTipoVehiculo;
     }
+
+    public Cliente getCliente() {
+        if(file != null){
+            cliente = file.getCliente();
+        }else if(venta != null){
+            cliente = venta.getCliente();
+        }
+        return cliente;
+    }
+
+    public Integer getIdcliente() {
+        return idcliente;
+    }
+
+    public void setIdcliente(Integer idcliente) {
+        this.idcliente = idcliente;
+    }
+    
 }
