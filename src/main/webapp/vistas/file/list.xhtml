@@ -63,7 +63,7 @@
                                             Fecha Registro
                                         </f:facet>
                                         <h:outputText value="#{list.fechaRegistro}" >
-                                            <f:convertDateTime pattern="dd/MM/yyyy H:mm a" />
+                                            <f:convertDateTime pattern="dd/MM/yyyy H:mm a"  timeZone="GMT-5"/>
                                         </h:outputText>
                                     </p:column>
                                     <p:column  style="text-align: center;width: 12%;">
