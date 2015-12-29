@@ -114,7 +114,7 @@ public class ServicioDetalle implements Serializable, Exporter {
     @Transient
     private String fileAuxiliar;
 
-    @Column(insertable = false)
+    @Column
     private boolean gravada;
     
     @Column
@@ -140,6 +140,7 @@ public class ServicioDetalle implements Serializable, Exporter {
     
     public ServicioDetalle() {
         vuelo = new Vuelo();
+        gravada = true;
     }
     
     private Double generarPrecioTotalSinIGV(){
@@ -148,7 +149,7 @@ public class ServicioDetalle implements Serializable, Exporter {
     
     @Override
     public String[] getDatos() {
-        String[] datos = new String[17];
+        String[] datos = new String[19];
         datos[0] = "" + this.id;
         datos[1] = "" + this.fecha;
         datos[2] = this.servicio.getDescripcion();
@@ -165,14 +166,18 @@ public class ServicioDetalle implements Serializable, Exporter {
         datos[13] = this.vehiculo == null ? "No Asignado" : this.vehiculo.getDescripcion();
         datos[14] = this.chofer == null ? "No Asignado" : this.chofer.getDatosCompletos();
         datos[15] = this.chofer == null ? "" : this.chofer.getEmpresa().getRazonSocial();
-        datos[16] = ""+generarPrecioTotalSinIGV();
+        Double precioSinIgv = generarPrecioTotalSinIGV();
+        Double igv = precioSinIgv * 0.18; //numero mágico hasta cuando se defina un lugar del igv
+        datos[16] = ""+precioSinIgv;
+        datos[17] = ""+igv;
+        datos[18] = ""+(precioSinIgv+igv);
         return datos;
     }
 
     @Override
     public String[] getTitulos() {
         return new String[]{"id","Fecha","Servicio","Tipo de Servicio","Horas de Servicio","File/VTA","PAX","Cuenta"
-                ,"Nro. Personas","Trasladista","Vuelo","Estado Servicio","Tercerizado","Vehiculo","Chofer","Transportista","Precio Sin IGV"};
+                ,"Nro. Personas","Trasladista","Vuelo","Estado Servicio","Tercerizado","Vehiculo","Chofer","Transportista","Precio Sin IGV","IGV 18%","Precio Total"};
     }
     
     /* GETTERS AND SETTERS */

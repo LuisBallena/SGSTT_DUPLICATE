@@ -76,13 +76,13 @@
                                                     <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
                                                     <f:selectItems value="#{ordenServicioControlador.vuelos}" var="vuelos" itemLabel="#{vuelos.descripcion}" itemValue="#{vuelos}" />
                                                 </h:selectOneMenu>
-                                            </div> 
+                                            </div>
                                             <label class="col-md-2 control-label" >Aerolinea :</label>
                                             <div class="col-md-3">
                                                 <p jsf:id="aerolinea" class="form-control" style="background-color: #f5f5f5;border: 1px solid #ccc;">
                                                     #{ordenServicioControlador.servicioDetalle.vuelo.aerolinea.descripcion}
                                                 </p>
-                                            </div> 
+                                            </div>
                                         </div>
                                         <div class="form-group has-feedback">
                                         	<label class="col-md-2 control-label" >Guia :</label>
@@ -105,13 +105,26 @@
                                                     <f:selectItems value="#{ordenServicioControlador.tipoVehiculos}" var="tipoVehi" itemLabel="#{tipoVehi.nombre}" itemValue="#{tipoVehi.id}" />
                                                 </h:selectOneMenu>
                                             </div>
+                                            <label class="col-md-2 control-label" >Horas/Dias :</label>
+                                            <div class="col-md-3">
+                                                <p:inputMask mask="9?9" slotChar="" value="#{ordenServicioControlador.servicioDetalle.diasViaje}" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group has-feedback">
+                                            <label class="col-md-2 control-label" >Oper. Gravada :</label>
+                                            <div class="col-md-3">
+                                                <h:selectOneMenu styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.gravada}">
+                                                    <f:selectItem itemLabel="GRAVADA" itemValue="true" />
+                                                    <f:selectItem itemLabel="NO GRAVADA" itemValue="false" />
+                                                </h:selectOneMenu>
+                                            </div>
                                         </div>
                                         <div class="col-sm-3 control-label">
                                             <p:commandButton value="Agregar" actionListener="#{ordenServicioControlador.agregarOrdenServicio}"  styleClass="btn btn-primary" update="@form :frmTablaOrdenes"  >
 
                                             </p:commandButton>
                                         </div>
-                                    </h:form>  
+                                    </h:form>
                                 </div>
                             </div>
                         </div>
@@ -124,7 +137,7 @@
                             <div class="row" id="modificarComercio">
                                 <div class="col-lg-12">
                                     <h:form id="frmTablaOrdenes" styleClass="form-horizontal" >
-                                        <p:dataTable    value="#{ordenServicioControlador.ordenesServicios}"  var="listOrden" emptyMessage="No existen registros de servicios" 
+                                        <p:dataTable    value="#{ordenServicioControlador.ordenesServicios}"  var="listOrden" emptyMessage="No existen registros de servicios"
                                                         paginator="true" rows="10" lazy="true" rowIndexVar="rowIndex"
                                                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
                                             <p:column style="text-align: center;font-size: 13px;width: 30px;">
@@ -186,11 +199,11 @@
                                                 </f:facet>
                                                 <h:outputText value="#{listOrden.externalizado eq null ? 'No' : listOrden.externalizado}"/>
                                             </p:column>
-                                        </p:dataTable> 
+                                        </p:dataTable>
                                         <p:commandButton value="Registrar Ordenes" actionListener="#{ordenServicioControlador.registrarDetalle}"  styleClass="btn btn-primary" update="@form :frmRegistrarOTraslado:msg"  >
 
                                         </p:commandButton>
-                                    </h:form>  
+                                    </h:form>
                                 </div>
                             </div>
                         </div>

@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns="http://www.w3.org/1999/xhtml"
                 template="./../home.xhtml"
@@ -26,8 +26,8 @@
                             <div class="row">
                                 <div class="col-sm-2">
                                     <h:panelGroup rendered="#{sesionControlador.permisoModulo.crear eq true}">
-                                        <p:commandButton value="Nueva Orden File" styleClass="btn btn-primary" 
-                                                         oncomplete="PF('dialogFile').show();" />
+                                        <p:commandButton value="Nueva Orden File" styleClass="btn btn-primary"
+                                                         oncomplete="PF('dialogFile').show();"/>
                                     </h:panelGroup>
 
                                 </div>
@@ -35,7 +35,7 @@
                                     <h:panelGroup rendered="#{sesionControlador.permisoModulo.crear eq true}">
                                         <p:commandButton value="Nueva Orden VTA" styleClass="btn btn-primary"
                                                          onclick="PF('dialogClient').show();"
-                                                         />
+                                                />
                                     </h:panelGroup>
 
                                 </div>
@@ -46,7 +46,8 @@
                                 <div class="panel panel-default panel-busqueda">
                                     <div class="panel-heading">
                                         Filtros
-                                        <span style="margin-top: 5px;" class="pull-right clickable"><i class="fa fa-minus"></i></span>
+                                        <span style="margin-top: 5px;" class="pull-right clickable"><i
+                                                class="fa fa-minus"></i></span>
                                     </div>
                                     <div class="panel-body">
                                         <h:form id="frmFiltroOrden" styleClass="form-horizontal">
@@ -58,7 +59,7 @@
                                                                      value="#{ordenServicioControlador.servicioDetalleFilter.idTipoServicio}">
                                                         <f:ajax execute="@this" render="comboServicios"
                                                                 listener="#{ordenServicioControlador.onChangeTipoServicioFilter}"/>
-                                                        <f:selectItem itemLabel="Todos" 
+                                                        <f:selectItem itemLabel="Todos"
                                                                       itemValue="#{null}"/>
                                                         <f:selectItems value="#{ordenServicioControlador.tipoServicios}"
                                                                        var="tiposServicios"
@@ -71,7 +72,7 @@
                                                 <div class="col-sm-4 col-md-3">
                                                     <h:selectOneMenu id="comboServicios" styleClass="form-control"
                                                                      value="#{ordenServicioControlador.servicioDetalleFilter.idServicio}">
-                                                        <f:selectItem itemLabel="Todos" 
+                                                        <f:selectItem itemLabel="Todos"
                                                                       itemValue="#{null}"/>
                                                         <f:selectItems value="#{ordenServicioControlador.servicios}"
                                                                        var="servicios"
@@ -86,7 +87,7 @@
                                                 <div class="col-md-3">
                                                     <h:selectOneMenu styleClass="form-control"
                                                                      value="#{ordenServicioControlador.servicioDetalleFilter.idVehiculo}">
-                                                        <f:selectItem itemLabel="Todos" 
+                                                        <f:selectItem itemLabel="Todos"
                                                                       itemValue="#{null}"/>
                                                         <f:selectItems value="#{ordenServicioControlador.vehiculos}"
                                                                        var="vehiculos"
@@ -99,7 +100,7 @@
                                                 <div class="col-sm-4 col-md-3">
                                                     <h:selectOneMenu id="comboChoferes" styleClass="form-control"
                                                                      value="#{ordenServicioControlador.servicioDetalleFilter.idChofer}">
-                                                        <f:selectItem itemLabel="Todos" 
+                                                        <f:selectItem itemLabel="Todos"
                                                                       itemValue="#{null}"/>
                                                         <f:selectItems value="#{ordenServicioControlador.choferes}"
                                                                        var="choferes"
@@ -114,13 +115,13 @@
                                                 <div class="col-md-3">
                                                     <h:selectOneMenu id="comboServExterno" styleClass="form-control"
                                                                      value="#{ordenServicioControlador.servicioDetalleFilter.servicioExterno}">
-                                                        <f:selectItem itemLabel="Todos" 
+                                                        <f:selectItem itemLabel="Todos"
                                                                       itemValue="-1"/>
                                                         <f:selectItem itemLabel="No externo"
                                                                       itemValue="0"/>
-                                                        <f:selectItem itemLabel="Externo" 
+                                                        <f:selectItem itemLabel="Externo"
                                                                       itemValue="1"/>
-                                                        <f:ajax render="panelTranspor" event="change" />
+                                                        <f:ajax render="panelTranspor" event="change"/>
                                                     </h:selectOneMenu>
 
                                                 </div>
@@ -128,12 +129,18 @@
 
                                                 <div class="col-md-3">
                                                     <h:panelGroup id="panelTranspor">
-                                                        <h:panelGroup rendered="#{ordenServicioControlador.servicioDetalleFilter.servicioExterno == 1}">
-                                                            <h:selectOneMenu id="comboTransportista" styleClass="form-control"
+                                                        <h:panelGroup
+                                                                rendered="#{ordenServicioControlador.servicioDetalleFilter.servicioExterno == 1}">
+                                                            <h:selectOneMenu id="comboTransportista"
+                                                                             styleClass="form-control"
                                                                              value="#{ordenServicioControlador.servicioDetalleFilter.idEmpresa}">
-                                                                <f:selectItem itemLabel="Todos" 
-                                                                      itemValue="#{null}"/>
-                                                                <f:selectItems value="#{ordenServicioControlador.empresas}" var="listEmpresas" itemLabel="#{listEmpresas.razonSocial}" itemValue="#{listEmpresas.id}" />
+                                                                <f:selectItem itemLabel="Todos"
+                                                                              itemValue="#{null}"/>
+                                                                <f:selectItems
+                                                                        value="#{ordenServicioControlador.empresas}"
+                                                                        var="listEmpresas"
+                                                                        itemLabel="#{listEmpresas.razonSocial}"
+                                                                        itemValue="#{listEmpresas.id}"/>
                                                             </h:selectOneMenu>
                                                         </h:panelGroup>
                                                     </h:panelGroup>
@@ -142,10 +149,11 @@
                                             </div>
                                             <div class="form-group has-feedback">
                                                 <label class="col-md-2 control-label">Orden File/Venta :</label>
+
                                                 <div class="col-md-3">
                                                     <h:selectOneMenu id="comboOrden" styleClass="form-control"
                                                                      value="#{ordenServicioControlador.servicioDetalleFilter.tipoOrden}">
-                                                        <f:ajax render="inputSerie" event="change" />
+                                                        <f:ajax render="inputSerie" event="change"/>
                                                         <f:selectItem itemLabel="Todos" noSelectionOption="true"
                                                                       itemValue="none"/>
                                                         <f:selectItem itemLabel="File"
@@ -158,27 +166,36 @@
 
                                                 <div class="col-sm-4 col-md-3">
                                                     <h:panelGroup id="inputSerie">
-                                                        <h:panelGroup rendered="#{ordenServicioControlador.servicioDetalleFilter.tipoOrden != 'none'}">
-                                                            <p:inputText  styleClass="form-control"  value="#{ordenServicioControlador.servicioDetalleFilter.serie}" />
+                                                        <h:panelGroup
+                                                                rendered="#{ordenServicioControlador.servicioDetalleFilter.tipoOrden != 'none'}">
+                                                            <p:inputText styleClass="form-control"
+                                                                         value="#{ordenServicioControlador.servicioDetalleFilter.serie}"/>
                                                         </h:panelGroup>
                                                     </h:panelGroup>
                                                 </div>
                                             </div>
                                             <div class="form-group has-feedback">
                                                 <label class="col-md-2 control-label">Cliente :</label>
+
                                                 <div class="col-md-3">
-                                                    <div jsf:id="clienteFilter" class="form-control" style="background-color: #f5f5f5;border: 1px solid #ccc;">
-                                                        <span jsf:id="cleanCliente"  style="cursor: pointer;display: none;">
+                                                    <div jsf:id="clienteFilter" class="form-control"
+                                                         style="background-color: #f5f5f5;border: 1px solid #ccc;">
+                                                        <span jsf:id="cleanCliente"
+                                                              style="cursor: pointer;display: none;">
                                                             <i class="fa fa-times"></i>
-                                                            <f:ajax render="clienteFilter" listener="#{ordenServicioControlador.limpiarClienteFilter}" onevent="changeCleanCliente('none')" />
+                                                            <f:ajax render="clienteFilter"
+                                                                    listener="#{ordenServicioControlador.limpiarClienteFilter}"
+                                                                    onevent="changeCleanCliente('none')"/>
                                                         </span>
                                                         #{ordenServicioControlador.servicioDetalleFilter.cliente.nombreAuxiliar}
 
                                                     </div>
                                                 </div>
-                                                <div class="buton_selectable" style="margin-left:-15px;" >
-                                                    <div onclick="PF('dialogClientFilter').show();" class="btn btn-primary clickable" style="width: 43px;height: 32.8px;" >
-                                                        <img src="#{request.contextPath}/resources/images/add.png" />
+                                                <div class="buton_selectable" style="margin-left:-15px;">
+                                                    <div onclick="PF('dialogClientFilter').show();"
+                                                         class="btn btn-primary clickable"
+                                                         style="width: 43px;height: 32.8px;">
+                                                        <img src="#{request.contextPath}/resources/images/add.png"/>
                                                     </div>
                                                 </div>
                                                 <label class="col-md-2 control-label">Estado Serv. :</label>
@@ -186,7 +203,7 @@
                                                 <div class="col-sm-4 col-md-3">
                                                     <h:selectOneMenu id="comboEstadoServicio" styleClass="form-control"
                                                                      value="#{ordenServicioControlador.servicioDetalleFilter.estadoServicio}">
-                                                        <f:selectItem itemLabel="Todos" 
+                                                        <f:selectItem itemLabel="Todos"
                                                                       itemValue="#{null}"/>
                                                         <f:selectItem itemLabel="Sin Asignar"
                                                                       itemValue="SIN_ASIGNAR"/>
@@ -230,20 +247,25 @@
                             </div>
                             <!-- FIN DE FILTRO -->
                             <br/>
+
                             <div class="col-lg-12" style="overflow: scroll">
                                 <h:form id="formperfil">
                                     <f:event type="preRenderView" listener="#{ordenServicioControlador.initLista}"/>
 
                                     <p:dataTable value="#{ordenServicioControlador.servicioDetallePaginador}" var="list"
-                                                 emptyMessage="No existen ordenes de servicios" style="width: 1500px;" 
+                                                 emptyMessage="No existen ordenes de servicios" style="width: 1500px;"
                                                  paginator="true" rows="10" lazy="true" rowIndexVar="rowIndex"
                                                  paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {Exporters}">
                                         <f:facet name="{Exporters}">
-                                            <h:commandLink styleClass="btnExportarExcel" id="exporterright"  actionListener="#{ordenServicioControlador.exportarData}">
-                                                <h:graphicImage url="#{facesContext.externalContext.contextName}/resources/images/xls.gif" />
+                                            <h:commandLink styleClass="btnExportarExcel" id="exporterright"
+                                                           actionListener="#{ordenServicioControlador.exportarData}">
+                                                <h:graphicImage
+                                                        url="#{facesContext.externalContext.contextName}/resources/images/xls.gif"/>
                                             </h:commandLink>
-                                            <h:commandLink styleClass="btnExportarExcelLeft" id="exporterleft"  actionListener="#{ordenServicioControlador.exportarData}">
-                                                <h:graphicImage url="#{facesContext.externalContext.contextName}/resources/images/xls.gif" />
+                                            <h:commandLink styleClass="btnExportarExcelLeft" id="exporterleft"
+                                                           actionListener="#{ordenServicioControlador.exportarData}">
+                                                <h:graphicImage
+                                                        url="#{facesContext.externalContext.contextName}/resources/images/xls.gif"/>
                                             </h:commandLink>
                                         </f:facet>
                                         <p:column style="text-align: center;font-size: 13px;">
@@ -254,7 +276,7 @@
                                                 <f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-5"/>
                                             </h:outputText>
                                         </p:column>
-                                          <p:column style="text-align: center;font-size: 13px;">
+                                        <p:column style="text-align: center;font-size: 13px;">
                                             <f:facet name="header">
                                                 Descripcion
                                             </f:facet>
@@ -265,7 +287,7 @@
                                                 Tipo Servicio
                                             </f:facet>
                                             <h:outputText value="#{list.servicio.tipoServicio.descripcion}"/>
-                                        </p:column>                                    
+                                        </p:column>
                                         <p:column style="text-align: center;font-size: 13px;">
                                             <f:facet name="header">
                                                 File/VTA
@@ -301,20 +323,21 @@
                                                 Guia / Trasladista
                                             </f:facet>
                                             <h:outputText
-                                                value="#{list.trasladista eq null ? 'No Asignado' :  list.trasladista.datosCompletos}"/>
+                                                    value="#{list.trasladista eq null ? 'No Asignado' :  list.trasladista.datosCompletos}"/>
                                         </p:column>
                                         <p:column style="text-align: center;font-size: 13px;">
                                             <f:facet name="header">
                                                 Vuelo
                                             </f:facet>
                                             <h:outputText
-                                                value="#{list.vuelo eq null ? 'No Aplica' : list.vuelo.descripcion}"/>
+                                                    value="#{list.vuelo eq null ? 'No Aplica' : list.vuelo.descripcion}"/>
                                         </p:column>
                                         <p:column style="text-align: center;font-size: 13px;">
                                             <f:facet name="header">
                                                 Estado Servicio
                                             </f:facet>
-                                            <h:outputText value="#{list.estadoServicio == 'SIN_ASIGNAR' ? 'Sin Asignar' : list.estadoServicio}"/>
+                                            <h:outputText
+                                                    value="#{list.estadoServicio == 'SIN_ASIGNAR' ? 'Sin Asignar' : list.estadoServicio}"/>
                                         </p:column>
                                         <p:column style="text-align: center;font-size: 13px;">
                                             <f:facet name="header">
@@ -327,42 +350,42 @@
                                                 Vehiculo
                                             </f:facet>
                                             <h:outputText
-                                                value="#{list.vehiculo eq null ? 'No Asignado' : list.vehiculo.descripcion}"/>
+                                                    value="#{list.vehiculo eq null ? 'No Asignado' : list.vehiculo.descripcion}"/>
                                         </p:column>
                                         <p:column style="text-align: center;font-size: 12px;">
                                             <f:facet name="header">
                                                 Chofer
                                             </f:facet>
                                             <h:outputText
-                                                value="#{list.chofer eq null ? 'No Asignado' : list.chofer.datosCompletos}"/>
+                                                    value="#{list.chofer eq null ? 'No Asignado' : list.chofer.datosCompletos}"/>
                                         </p:column>
                                         <p:column style="text-align: center;font-size: 12px;">
                                             <f:facet name="header">
                                                 Transportista
                                             </f:facet>
                                             <h:outputText
-                                                value="#{list.chofer eq null ? 'No Asignado' : list.chofer.empresa.razonSocial}"/>
+                                                    value="#{list.chofer eq null ? 'No Asignado' : list.chofer.empresa.razonSocial}"/>
                                         </p:column>
-										 <p:column style="text-align: center;font-size: 13px;">
+                                        <p:column style="text-align: center;font-size: 13px;">
                                             <f:facet name="header">
                                                 Costo Servicio
                                             </f:facet>
                                             <h:outputText
-                                                value="$#{list.precioServicio eq null ? 'No Asignado' : list.precioServicio}"/>
+                                                    value="$#{list.precioServicio eq null ? 'No Asignado' : list.precioServicio}"/>
                                         </p:column>
                                         <p:column style="text-align: center;font-size: 13px;">
                                             <f:facet name="header">
                                                 Adicional
                                             </f:facet>
                                             <h:outputText
-                                                value="$#{list.adicional eq null ? 'No Asignado' : list.adicional}"/>
+                                                    value="$#{list.adicional eq null ? 'No Asignado' : list.adicional}"/>
                                         </p:column>
                                         <p:column style="text-align: center;font-size: 13px;">
                                             <f:facet name="header">
                                                 Descuento
                                             </f:facet>
                                             <h:outputText
-                                                value="$#{list.descuento eq null ? 'No Asignado' : list.descuento}"/>
+                                                    value="$#{list.descuento eq null ? 'No Asignado' : list.descuento}"/>
                                         </p:column>
                                         <p:column style="text-align: center;width: 8%;">
                                             <p:commandButton style="font-size: 12px;" icon="icon-update"
@@ -371,7 +394,8 @@
                                             <p:commandButton title="Cotizacion por Item" style="font-size: 12px;"
                                                              rendered="#{list.estadoServicio == 'PENDIENTE'}"
                                                              icon="icon-money"
-                                                             action="#{ordenServicioControlador.irCotizar}" update=":msg">
+                                                             action="#{ordenServicioControlador.irCotizar}"
+                                                             update=":msg">
                                                 <f:setPropertyActionListener value="#{list}"
                                                                              target="#{ordenServicioControlador.servicioDetalle}"/>
                                             </p:commandButton>
@@ -445,41 +469,57 @@
         <!-- FORMULARIO PARA ESCOGER EL FILE EN UNA ORDEN DE SERVICIO -->
         <p:dialog modal="true" position="center top" header="Lista de Files" id="dialogFile"
                   widgetVar="dialogFile" resizable="false" width="600"
-                  >
-            <h:form>
-                <p:dataTable    value="#{ordenServicioControlador.filePaginador}" var="listFile" emptyMessage="No existen registros de files" 
-                                paginator="true" rows="10" lazy="true" styleClass="DataTable_Modal"
-                                paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
-                    <p:column    style="text-align: center;">
+                >
+            <h:form id="filterFiles" styleClass="form-horizontal">
+                <div class="form-group has-feedback">
+                    <label class="control-label" style="font-size:18px;float:left;margin-left:15px">File :</label>
+                    <div class="col-xs-4 col-md-2">
+                        <h:inputText styleClass="form-control"
+                                     value="#{ordenServicioControlador.fileFilter.nroCorrelativo}">
+                        </h:inputText>
+                    </div>
+                    <div style="float: left;" >
+                        <h:commandButton value="Buscar" styleClass="btn btn-primary" actionListener="#{ordenServicioControlador.ejecutarBusquedaFile}" >
+                            <f:ajax render="frmTableFile" execute="@form" />
+                        </h:commandButton>
+                    </div>
+                </div>
+            </h:form>
+            <h:form  id="frmTableFile">
+                <p:dataTable value="#{ordenServicioControlador.filePaginador}" var="listFile"
+                             emptyMessage="No existen registros de files"
+                             paginator="true" rows="10" lazy="true" styleClass="DataTable_Modal"
+                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}">
+                    <p:column style="text-align: center;">
                         <f:facet name="header">
                             File
                         </f:facet>
-                        <h:outputText value="#{listFile.nroCorrelativo}" />
+                        <h:outputText value="#{listFile.nroCorrelativo}"/>
                     </p:column>
-                    <p:column    style="text-align: center;">
+                    <p:column style="text-align: center;">
                         <f:facet name="header">
                             Cliente
                         </f:facet>
-                        <h:outputText value="#{listFile.cliente.nombreAuxiliar}" />
+                        <h:outputText value="#{listFile.cliente.nombreAuxiliar}"/>
                     </p:column>
-                    <p:column    style="text-align: center;">
+                    <p:column style="text-align: center;">
                         <f:facet name="header">
                             PAX
                         </f:facet>
-                        <h:outputText value="#{listFile.pax}" />
+                        <h:outputText value="#{listFile.pax}"/>
                     </p:column>
-                    <p:column    style="text-align: center;">
+                    <p:column style="text-align: center;">
                         <f:facet name="header">
                             Cuenta
                         </f:facet>
-                        <h:outputText value="#{listFile.cuenta}" />
+                        <h:outputText value="#{listFile.cuenta}"/>
                     </p:column>
-                    <p:column    style="text-align: center;">
+                    <p:column style="text-align: center;">
                         <f:facet name="header">
                             Fecha Registro
                         </f:facet>
-                        <h:outputText value="#{listFile.fechaRegistro}" >
-                            <f:convertDateTime pattern="dd/MM/yyyy H:mm a" timeZone="GMT-5" />
+                        <h:outputText value="#{listFile.fechaRegistro}">
+                            <f:convertDateTime pattern="dd/MM/yyyy H:mm a" timeZone="GMT-5"/>
                         </h:outputText>
                     </p:column>
                     <p:column style="text-align: center;width: 8%;">
@@ -487,7 +527,7 @@
                                          action="#{ordenServicioControlador.irCrearOrdenFile(listFile.idFile)}">
                         </p:commandButton>
                     </p:column>
-                </p:dataTable> 
+                </p:dataTable>
 
             </h:form>
         </p:dialog>
@@ -515,14 +555,17 @@
                         <h:outputText value="#{listClienteFilter.tipoCliente.tipoCliente}"/>
                     </p:column>
                     <p:column style="text-align: center;width: 8%;">
-                        <p:commandButton style="font-size: 12px;" icon="icon-choice" oncomplete="PF('dialogClientFilter').hide();changeCleanCliente('grid');" update=":frmFiltroOrden" >
-                            <f:setPropertyActionListener value="#{listClienteFilter}" target="#{ordenServicioControlador.servicioDetalleFilter.cliente}" />
+                        <p:commandButton style="font-size: 12px;" icon="icon-choice"
+                                         oncomplete="PF('dialogClientFilter').hide();changeCleanCliente('grid');"
+                                         update=":frmFiltroOrden">
+                            <f:setPropertyActionListener value="#{listClienteFilter}"
+                                                         target="#{ordenServicioControlador.servicioDetalleFilter.cliente}"/>
                         </p:commandButton>
                     </p:column>
                 </p:dataTable>
             </h:form>
         </p:dialog>
-        <h:outputScript name="js/collapse_panel.js" />
+        <h:outputScript name="js/collapse_panel.js"/>
         <script>
             function changeCleanCliente(state) {
                 $('#frmFiltroOrden\\:cleanCliente').css({'display': state});

@@ -162,9 +162,10 @@
                                             </div>
                                             <label class="col-md-2 control-label" >Oper. Gravada :</label>
                                             <div class="col-md-3">
-                                                <label class="control-label">
-                                                    <h:selectBooleanCheckbox  value="#{ordenServicioControlador.servicioDetalle.gravada}" />
-                                                </label>
+                                                <h:selectOneMenu styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.gravada}">
+                                                    <f:selectItem itemLabel="GRAVADA" itemValue="true" />
+                                                    <f:selectItem itemLabel="NO GRAVADA" itemValue="false" />
+                                                </h:selectOneMenu>
                                             </div>
                                         </div>
                                         <div class="form-group has-feedback">

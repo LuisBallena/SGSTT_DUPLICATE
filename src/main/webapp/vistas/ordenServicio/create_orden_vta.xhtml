@@ -100,6 +100,19 @@
                                                     <f:selectItems value="#{ordenServicioControlador.tipoVehiculos}" var="tipoVehi" itemLabel="#{tipoVehi.nombre}" itemValue="#{tipoVehi.id}" />
                                                 </h:selectOneMenu>
                                             </div>
+                                            <label class="col-md-2 control-label" >Horas/Dias :</label>
+                                            <div class="col-md-3">
+                                                <p:inputMask mask="9?9" slotChar="" value="#{ordenServicioControlador.servicioDetalle.diasViaje}" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group has-feedback">
+                                            <label class="col-md-2 control-label" >Oper. Gravada :</label>
+                                            <div class="col-md-3">
+                                                <h:selectOneMenu styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.gravada}">
+                                                    <f:selectItem itemLabel="GRAVADA" itemValue="true" />
+                                                    <f:selectItem itemLabel="NO GRAVADA" itemValue="false" />
+                                                </h:selectOneMenu>
+                                            </div>
                                         </div>
                                         <div class="col-sm-3 control-label">
                                             <p:commandButton value="Agregar" actionListener="#{ordenServicioControlador.agregarOrdenServicio}"  styleClass="btn btn-primary" update="@form :frmTablaOrdenes"  >
