@@ -248,24 +248,24 @@
                                         </f:facet>
                                         <p:column style="text-align: center;font-size: 13px;">
                                             <f:facet name="header">
-                                                Fecha del Servico
+                                                Fecha
                                             </f:facet>
                                             <h:outputText value="#{list.fecha}">
                                                 <f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-5"/>
                                             </h:outputText>
                                         </p:column>
-                                        <p:column style="text-align: center;font-size: 13px;">
+                                          <p:column style="text-align: center;font-size: 13px;">
                                             <f:facet name="header">
-                                                Servicio
+                                                Descripcion
                                             </f:facet>
-                                            <h:outputText value="#{list.servicio.descripcion}"/>
+                                            <h:outputText value="#{list.descripcion}"/>
                                         </p:column>
                                         <p:column style="text-align: center;font-size: 13px;">
                                             <f:facet name="header">
                                                 Tipo Servicio
                                             </f:facet>
                                             <h:outputText value="#{list.servicio.tipoServicio.descripcion}"/>
-                                        </p:column>
+                                        </p:column>                                    
                                         <p:column style="text-align: center;font-size: 13px;">
                                             <f:facet name="header">
                                                 File/VTA
@@ -298,7 +298,7 @@
                                         </p:column>
                                         <p:column style="text-align: center;font-size: 13px;">
                                             <f:facet name="header">
-                                                Trasladista
+                                                Guia / Trasladista
                                             </f:facet>
                                             <h:outputText
                                                 value="#{list.trasladista eq null ? 'No Asignado' :  list.trasladista.datosCompletos}"/>
@@ -329,21 +329,41 @@
                                             <h:outputText
                                                 value="#{list.vehiculo eq null ? 'No Asignado' : list.vehiculo.descripcion}"/>
                                         </p:column>
-                                        <p:column style="text-align: center;font-size: 13px;">
+                                        <p:column style="text-align: center;font-size: 12px;">
                                             <f:facet name="header">
                                                 Chofer
                                             </f:facet>
                                             <h:outputText
                                                 value="#{list.chofer eq null ? 'No Asignado' : list.chofer.datosCompletos}"/>
                                         </p:column>
-                                        <p:column style="text-align: center;font-size: 13px;">
+                                        <p:column style="text-align: center;font-size: 12px;">
                                             <f:facet name="header">
                                                 Transportista
                                             </f:facet>
                                             <h:outputText
                                                 value="#{list.chofer eq null ? 'No Asignado' : list.chofer.empresa.razonSocial}"/>
                                         </p:column>
-
+										 <p:column style="text-align: center;font-size: 13px;">
+                                            <f:facet name="header">
+                                                Costo Servicio
+                                            </f:facet>
+                                            <h:outputText
+                                                value="$#{list.precioServicio eq null ? 'No Asignado' : list.precioServicio}"/>
+                                        </p:column>
+                                        <p:column style="text-align: center;font-size: 13px;">
+                                            <f:facet name="header">
+                                                Adicional
+                                            </f:facet>
+                                            <h:outputText
+                                                value="$#{list.adicional eq null ? 'No Asignado' : list.adicional}"/>
+                                        </p:column>
+                                        <p:column style="text-align: center;font-size: 13px;">
+                                            <f:facet name="header">
+                                                Descuento
+                                            </f:facet>
+                                            <h:outputText
+                                                value="$#{list.descuento eq null ? 'No Asignado' : list.descuento}"/>
+                                        </p:column>
                                         <p:column style="text-align: center;width: 8%;">
                                             <p:commandButton style="font-size: 12px;" icon="icon-update"
                                                              action="#{ordenServicioControlador.irActualizar(list.id)}">

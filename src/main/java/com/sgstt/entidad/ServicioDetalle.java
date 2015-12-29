@@ -148,29 +148,30 @@ public class ServicioDetalle implements Serializable, Exporter {
     
     @Override
     public String[] getDatos() {
-        String[] datos = new String[16];
+        String[] datos = new String[17];
         datos[0] = "" + this.id;
         datos[1] = "" + this.fecha;
         datos[2] = this.servicio.getDescripcion();
         datos[3] = this.servicio.getTipoServicio().getDescripcion();
-        datos[4] = this.getFileAuxiliar();
-        datos[5] = this.file == null ? this.pax : this.file.getPax();
-        datos[6] = this.file == null ? this.cuenta : this.file.getCuenta();
-        datos[7] = "" + this.getNroPersonas();
-        datos[8] = this.trasladista == null ? "No Asignado" : this.trasladista.getDatosCompletos();
-        datos[9] = this.vuelo == null ? "No aplica" : this.vuelo.getDescripcion();
-        datos[10] = this.estadoServicio.toString();
-        datos[11] = this.externalizado;
-        datos[12] = this.vehiculo == null ? "No Asignado" : this.vehiculo.getDescripcion();
-        datos[13] = this.chofer == null ? "No Asignado" : this.chofer.getDatosCompletos();
-        datos[14] = this.chofer == null ? "" : this.chofer.getEmpresa().getRazonSocial();
-        datos[15] = ""+generarPrecioTotalSinIGV();
+        datos[4] = this.servicio.getHoras();
+        datos[5] = this.getFileAuxiliar();
+        datos[6] = this.file == null ? this.pax : this.file.getPax();
+        datos[7] = this.file == null ? this.cuenta : this.file.getCuenta();
+        datos[8] = "" + this.getNroPersonas();
+        datos[9] = this.trasladista == null ? "No Asignado" : this.trasladista.getDatosCompletos();
+        datos[10] = this.vuelo == null ? "No aplica" : this.vuelo.getDescripcion();
+        datos[11] = this.estadoServicio.toString();
+        datos[12] = this.externalizado;
+        datos[13] = this.vehiculo == null ? "No Asignado" : this.vehiculo.getDescripcion();
+        datos[14] = this.chofer == null ? "No Asignado" : this.chofer.getDatosCompletos();
+        datos[15] = this.chofer == null ? "" : this.chofer.getEmpresa().getRazonSocial();
+        datos[16] = ""+generarPrecioTotalSinIGV();
         return datos;
     }
 
     @Override
     public String[] getTitulos() {
-        return new String[]{"id","Fecha","Servicio","Tipo de Servicio","File/VTA","PAX","Cuenta"
+        return new String[]{"id","Fecha","Servicio","Tipo de Servicio","Horas de Servicio","File/VTA","PAX","Cuenta"
                 ,"Nro. Personas","Trasladista","Vuelo","Estado Servicio","Tercerizado","Vehiculo","Chofer","Transportista","Precio Sin IGV"};
     }
     
