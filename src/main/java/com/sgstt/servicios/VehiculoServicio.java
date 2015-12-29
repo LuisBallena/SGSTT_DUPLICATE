@@ -31,7 +31,6 @@ public class VehiculoServicio {
     private final VehiculoDao vehiculoDao;
     private final TipoVehiculoDao tipoVehiculoDao;
     private final MarcaDao marcaDao;
-    private SedeDao sedeDao;
     
     public VehiculoServicio() {
         conexion = new HibernateConexion();
@@ -80,19 +79,12 @@ public class VehiculoServicio {
         Utilitario.enviarMensajeGlobalValido("Se ha eliminado correctamente");
         conexion.closeConexion();
     }
+
     
-    public  List<Sede> obtenerSedes(){
-        List<Sede> aux = null;
-        conexion.beginConexion();
-        aux = sedeDao.obtenerTodos();
-        conexion.closeConexion();
-        return aux;
-    }
-    
-    public Vehiculo obtenerVehiculo(Integer id){
+    public Vehiculo obtenerVehiculo(Integer idVehiculo){
     	Vehiculo aux = null;
         conexion.beginConexion();
-        aux = vehiculoDao.getVehiculoWithSede(id);
+        aux = vehiculoDao.getVehiculoWithTipoVehiculoWithMarca(idVehiculo);
         conexion.closeConexion();
         return aux;
     }

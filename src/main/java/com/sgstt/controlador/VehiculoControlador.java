@@ -10,6 +10,7 @@ import com.sgstt.servicios.EmpresaServicio;
 import com.sgstt.servicios.VehiculoServicio;
 import com.sgstt.util.Utilitario;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -19,13 +20,12 @@ import javax.faces.context.FacesContext;
 
 @ManagedBean(name = "vehiculoControlador")
 @ViewScoped
-public class VehiculoControlador {
+public class VehiculoControlador implements Serializable{
 
     private HibernatePaginador<Vehiculo> vehiculoPaginador;
     private VehiculoServicio vehiculoServicio;
     private List<TipoVehiculo> tipos;
     private List<Marca> marcas;
-    private List<Sede> sedes;
     private Vehiculo vehiculo;
     @ManagedProperty(value = "#{sesionControlador}")
     private SesionControlador sesionControlador;
@@ -35,6 +35,7 @@ public class VehiculoControlador {
 
     public void initLista() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
+            vehiculoServicio = new VehiculoServicio();
             vehiculoPaginador = new VehiculoPaginador();
             vehiculoPaginador.initPaginador(sesionControlador.getUsuarioSesion().getSede().getId());
         }
@@ -58,7 +59,8 @@ public class VehiculoControlador {
             }
             vehiculoServicio = new VehiculoServicio();
             vehiculo = vehiculoServicio.obtenerVehiculo(Integer.parseInt(value.toString()));
-            sedes = vehiculoServicio.obtenerSedes();
+            tipos = vehiculoServicio.obtenerTipoVehiculo();
+            marcas = vehiculoServicio.obtenerMarcas();
         }
     }
     public void registrarVehiculo(){
@@ -170,12 +172,5 @@ public class VehiculoControlador {
     public void setSesionControlador(SesionControlador sesionControlador) {
         this.sesionControlador = sesionControlador;
     }
-    
-	public List<Sede> getSedes() {
-		return sedes;
-	}
 
-	public void setSedes(List<Sede> sedes) {
-		this.sedes = sedes;
-	}
 }
