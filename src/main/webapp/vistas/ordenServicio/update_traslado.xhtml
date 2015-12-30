@@ -136,24 +136,26 @@
                                                     <f:selectItems value="#{ordenServicioControlador.guias}" var="guias" itemLabel="#{guias.nombre} #{guias.apellido}" itemValue="#{guias.id}" />
                                                 </h:selectOneMenu>
                                             </div>
+											<label class="col-md-2 control-label" >Comentario :</label>
+                                            <div class="col-md-3">
+                                                <p:inputText styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.comentario}"  />
+                                            </div>    
+                                            
 
+                                        </div>
+                                        <div class="form-group has-feedback">
+                                         <h:panelGroup rendered="#{ordenServicioControlador.servicioDetalle.venta != null}">
+                                            <label class="col-md-2 control-label" >Cuenta :</label>
+                                            <div class="col-md-3">
+                                                <p:inputText styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.cuenta}" />
+                                            </div>
+                                             </h:panelGroup>
                                             <h:panelGroup rendered="#{ordenServicioControlador.servicioDetalle.venta != null}">
                                                 <label class="col-md-2 control-label" >PAX :</label>
                                                 <div class="col-md-3">
                                                     <p:inputText styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.pax}" maxlength="12" />
                                                 </div> 
-                                            </h:panelGroup>
-
-                                        </div>
-                                        <div class="form-group has-feedback">
-                                            <label class="col-md-2 control-label" >Cuenta :</label>
-                                            <div class="col-md-3">
-                                                <p:inputText styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.cuenta}" />
-                                            </div>
-                                            <label class="col-md-2 control-label" >Comentario :</label>
-                                            <div class="col-md-3">
-                                                <p:inputText styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.comentario}"  />
-                                            </div>                                           
+                                            </h:panelGroup>                                       
                                         </div>
                                         <div class="form-group has-feedback">
                                             <label class="col-md-2 control-label" >Horas/Dias :</label>

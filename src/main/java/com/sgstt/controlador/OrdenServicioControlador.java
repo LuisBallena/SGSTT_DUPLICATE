@@ -297,9 +297,13 @@ public class OrdenServicioControlador implements Serializable {
     private void limpiarTraslado() {
         fechaActual = new Date();
         int nroPasajeros = servicioDetalle.getNroPersonas();
+        String pax = servicioDetalle.getPax();
+        String cuenta = servicioDetalle.getCuenta();
         File fileAux = servicioDetalle.getFile();
         servicioDetalle = new ServicioDetalle();
         servicioDetalle.setNroPersonas(nroPasajeros);
+        servicioDetalle.setPax(pax);
+        servicioDetalle.setCuenta(cuenta);
         servicioDetalle.setFecha(new Date());
         servicioDetalle.setFile(fileAux);
     }
