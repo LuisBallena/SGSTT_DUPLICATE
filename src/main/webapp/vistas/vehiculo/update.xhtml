@@ -35,51 +35,51 @@
                                             </div>
                                         </div>
                                          <div class="form-group has-feedback">
-                                            <label for="nombre" class="col-sm-3 control-label" >Placa :</label>
+                                            <label for="placa" class="col-sm-3 control-label" >Placa :</label>
                                             <div    class="col-sm-6" >
                                                 <p:inputText styleClass="form-control"  value="#{vehiculoControlador.vehiculo.placa}"     >
                                                 </p:inputText>
                                             </div>
                                         </div>
                                          <div class="form-group has-feedback">
-                                            <label for="nombre" class="col-sm-3 control-label" >Tipo de Vehiculo :</label>
+                                            <label for="tipoVehiculo" class="col-sm-3 control-label" >Tipo de Vehiculo :</label>
                                             <div    class="col-sm-6" >
                                                 <h:selectOneMenu styleClass="form-control" value="#{vehiculoControlador.vehiculo.tipoVehiculo.id}" >
-                                                    <f:selectItems value="#{vehiculoControlador.tipos}" var="listVehiculo"  itemValue="#{listVehiculo.id}" itemLabel="#{listTipoVehiculo.descripcion}" />
+                                                    <f:selectItems value="#{vehiculoControlador.tipos}" var="listTipoVehiculo"  itemValue="#{listTipoVehiculo.id}" itemLabel="#{listTipoVehiculo.nombre}" />
                                                 </h:selectOneMenu>
                                             </div>                                            
                                         </div>
                                          <div class="form-group has-feedback">
-                                            <label for="nombre" class="col-sm-3 control-label" >Marca :</label>
+                                            <label for="marca" class="col-sm-3 control-label" >Marca :</label>
                                             <div    class="col-sm-6" >
                                                 <h:selectOneMenu styleClass="form-control" value="#{vehiculoControlador.vehiculo.marca.id}" >
-                                                    <f:selectItems value="#{vehiculoControlador.marcas}" var="listVehiculo"  itemValue="#{listVehiculo.id}" itemLabel="#{listMarca.descripcion}" />
+                                                    <f:selectItems value="#{vehiculoControlador.marcas}" var="listMarca"  itemValue="#{listMarca.id}" itemLabel="#{listMarca.nombreMarca}" />
                                                 </h:selectOneMenu>
                                             </div>                                            
                                         </div>
                                          <div class="form-group has-feedback">
-                                            <label for="nombre" class="col-sm-3 control-label" >Año de Fabricacion :</label>
+                                            <label for="yearFabricacion" class="col-sm-3 control-label" >Año de Fabricacion :</label>
                                             <div    class="col-sm-6" >
                                                 <p:inputText styleClass="form-control"  value="#{vehiculoControlador.vehiculo.año_fabricacion}"     >
                                                 </p:inputText>
                                             </div>
                                         </div>
                                          <div class="form-group has-feedback">
-                                            <label for="nombre" class="col-sm-3 control-label" >Capacidad Maxima :</label>
+                                            <label for="capmax" class="col-sm-3 control-label" >Capacidad Maxima :</label>
                                             <div    class="col-sm-6" >
                                                 <p:inputText styleClass="form-control"  value="#{vehiculoControlador.vehiculo.capacidad_max}"     >
                                                 </p:inputText>
                                             </div>
                                         </div>    
                                         <div class="form-group has-feedback">
-                                            <label for="nombre" class="col-sm-3 control-label" >Capacidad Recomendada :</label>
+                                            <label for="capr" class="col-sm-3 control-label" >Capacidad Recomendada :</label>
                                             <div    class="col-sm-6" >
                                                 <p:inputText styleClass="form-control"  value="#{vehiculoControlador.vehiculo.capacidad_recomendada}"     >
                                                 </p:inputText>
                                             </div>
                                         </div>                                          
                                         <div class="col-sm-3 control-label">
-                                            <p:commandButton value="Guardar" actionListener="#{vehiculoControlador.actualizarVehiculo}" update="@form" styleClass="btn btn-primary"/>
+                                            <p:commandButton value="Actualizar" actionListener="#{vehiculoControlador.actualizarVehiculo}" update="@form" styleClass="btn btn-primary"/>
                                         </div>
                                     </h:form>  
                                 </div>

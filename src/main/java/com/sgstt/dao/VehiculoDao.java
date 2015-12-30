@@ -18,5 +18,5 @@ public interface VehiculoDao extends GenericDao<Vehiculo,Integer>{
         
     public Vehiculo getVehiculoWithSede(Integer idSede);
 
-    
+    public Vehiculo getVehiculoWithTipoVehiculoWithMarca(Integer idVehiculo);
 }

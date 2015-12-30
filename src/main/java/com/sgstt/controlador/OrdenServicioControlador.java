@@ -3,6 +3,7 @@ package com.sgstt.controlador;
 import com.sgstt.entidad.*;
 import com.sgstt.excepciones.FilterException;
 import com.sgstt.excepciones.TransporteException;
+import com.sgstt.filters.FileFilter;
 import com.sgstt.filters.ServicioDetalleFilter;
 import com.sgstt.hibernate.HibernatePaginador;
 import com.sgstt.paginacion.FilePaginador;
@@ -13,6 +14,7 @@ import com.sgstt.servicios.TransporteServicio;
 import com.sgstt.servicios.VehiculoServicio;
 import com.sgstt.util.ExcelExporter;
 import com.sgstt.util.Utilitario;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
@@ -29,7 +31,6 @@ import org.apache.commons.lang3.SerializationUtils;
 import org.apache.log4j.Logger;
 
 /**
- *
  * @author Luis Alonso Ballena Garcia
  */
 @ManagedBean(name = "ordenServicioControlador")
@@ -60,6 +61,7 @@ public class OrdenServicioControlador implements Serializable {
     private SesionControlador sesionControlador;
     private ServicioDetalleFilter servicioDetalleFilter;
     private Double precioUpdate = null;
+    private FileFilter fileFilter = null;
 
     public OrdenServicioControlador() {
     }
@@ -68,6 +70,7 @@ public class OrdenServicioControlador implements Serializable {
         if (!FacesContext.getCurrentInstance().isPostback()) {
             transporteServicio = new TransporteServicio();
             servicioDetalleFilter = new ServicioDetalleFilter();
+            fileFilter = new FileFilter();
             servicioDetalleFilter.setIdSede(sesionControlador.getUsuarioSesion().getSede().getId());
             clientes = transporteServicio.obtenerClientes(sesionControlador.getUsuarioSesion().getSede().getId());
             tipoServicios = transporteServicio.obtenerTiposServicios();
@@ -185,8 +188,10 @@ public class OrdenServicioControlador implements Serializable {
 
     public void registrarDetalle() {
         try {
-            transporteServicio.registrarServicios(ordenesServicios);
-            ordenesServicios.clear();
+            if (!ordenesServicios.isEmpty()) {
+                transporteServicio.registrarServicios(ordenesServicios);
+                ordenesServicios.clear();
+            }
         } catch (TransporteException ex) {
             Utilitario.enviarMensajeGlobalError(ex.getMessage());
         }
@@ -194,10 +199,12 @@ public class OrdenServicioControlador implements Serializable {
 
     public void registrarDetalleVTA() {
         try {
-            Venta venta = new Venta();
-            venta.setCliente(cliente);
-            transporteServicio.registrarServiciosVTA(ordenesServicios, venta);
-            ordenesServicios.clear();
+            if (!ordenesServicios.isEmpty()) {
+                Venta venta = new Venta();
+                venta.setCliente(cliente);
+                transporteServicio.registrarServiciosVTA(ordenesServicios, venta);
+                ordenesServicios.clear();
+            }
         } catch (TransporteException ex) {
             Utilitario.enviarMensajeGlobalError(ex.getMessage());
         }
@@ -243,6 +250,10 @@ public class OrdenServicioControlador implements Serializable {
         }
     }
 
+    public void ejecutarBusquedaFile() {
+        filePaginador.createFilterDynamic(fileFilter);
+    }
+
     public String irCrearOrdenFile(Integer id) {
         Utilitario.putFlash("idFile", id);
         return "create_orden_file.xhtml?faces-redirect=true;";
@@ -285,8 +296,10 @@ public class OrdenServicioControlador implements Serializable {
 
     private void limpiarTraslado() {
         fechaActual = new Date();
+        int nroPasajeros = servicioDetalle.getNroPersonas();
         File fileAux = servicioDetalle.getFile();
         servicioDetalle = new ServicioDetalle();
+        servicioDetalle.setNroPersonas(nroPasajeros);
         servicioDetalle.setFecha(new Date());
         servicioDetalle.setFile(fileAux);
     }
@@ -327,10 +340,6 @@ public class OrdenServicioControlador implements Serializable {
 
     public boolean esNroPersonasValida(ServicioDetalle servicioDetalle) {
         return servicioDetalle.getNroPersonas() != null && servicioDetalle.getNroPersonas() != 0;
-    }
-
-    public boolean esLineaValida(Vuelo vuelo) {
-        return vuelo.getId() != 0;
     }
 
     public boolean esFileValido(File file) {
@@ -526,6 +535,14 @@ public class OrdenServicioControlador implements Serializable {
 
     public void setFilePaginador(HibernatePaginador<File> filePaginador) {
         this.filePaginador = filePaginador;
+    }
+
+    public FileFilter getFileFilter() {
+        return fileFilter;
+    }
+
+    public void setFileFilter(FileFilter fileFilter) {
+        this.fileFilter = fileFilter;
     }
 
 }

@@ -82,4 +82,19 @@ public class VehiculoImpl extends HibernateImpl<Vehiculo,Integer> implements Veh
         }
         return auxvehiculo;
     }
+
+    @Override
+    public Vehiculo getVehiculoWithTipoVehiculoWithMarca(Integer idVehiculo) {
+        Vehiculo auxVehiculo = null;
+        Session session = null;
+        try{
+            session = conexion.getSession();
+            Query query = session.createQuery("from Vehiculo as vehiculo join fetch vehiculo.tipoVehiculo join fetch vehiculo.marca where vehiculo.estado = 1 and vehiculo.id = :dato");
+            query.setInteger("dato",idVehiculo);
+            auxVehiculo = (Vehiculo)query.uniqueResult();
+        }catch(HibernateException e){
+            e.printStackTrace();
+        }
+        return auxVehiculo;
+    }
 }
