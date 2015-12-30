@@ -9,6 +9,7 @@ import com.sgstt.entidad.Estado;
 import com.sgstt.entidad.File;
 import com.sgstt.hibernate.HibernateConexion;
 import com.sgstt.util.Utilitario;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,8 @@ import java.util.List;
  *
  * @author Luis Alonso Ballena Garcia
  */
-public class FileServicio {
+public class FileServicio implements Serializable{
+    private static final long serialVersionUID = 1088159658720573534L;
     
     private final HibernateConexion conexion;
     private final ClienteDao clienteDao;
