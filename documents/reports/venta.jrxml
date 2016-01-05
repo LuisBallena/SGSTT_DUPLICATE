@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="factura" pageWidth="620" pageHeight="700" columnWidth="600" leftMargin="0" rightMargin="20" topMargin="42" bottomMargin="20" uuid="61ec99cb-d6c8-4700-a209-1e1918af79fc">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="174"/>
-	<property name="ireport.y" value="547"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="19"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -57,6 +57,7 @@
 		<queryString>
 			<![CDATA[select
     detalle.fecha as fecha,
+    detalle.pax as pax,
     detalle.fecha as hora,
     detalle.descripcion,
     detalle.num_personas,
@@ -75,12 +76,15 @@ from
         inner join
     tipo_vehiculo as tipo_vehi on vehi.idtipo_vehiculo = tipo_vehi.idtipo_vehiculo
 where
-    detalle.idfile = $P{IDFILE}
+    detalle.idventa = $P{IDFILE}
 and detalle.gravada = $P{GRAVADA}
 and detalle.estado = 1
 order by detalle.fecha]]>
 		</queryString>
 		<field name="fecha" class="java.sql.Timestamp">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="pax" class="java.lang.String">
 			<fieldDescription><![CDATA[]]></fieldDescription>
 		</field>
 		<field name="hora" class="java.sql.Timestamp"/>
@@ -133,7 +137,7 @@ from
         inner join
     tipo_vehiculo as tipo_vehi on vehi.idtipo_vehiculo = tipo_vehi.idtipo_vehiculo
 where
-    detalle.idfile = $P{IDFILE}
+    detalle.idventa = $P{IDFILE}
 and
     detalle.estado = 1
 and detalle.gravada = $P{IDGRAVADO}]]>
@@ -154,15 +158,12 @@ and detalle.gravada = $P{IDGRAVADO}]]>
 	</parameter>
 	<parameter name="SEDE" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select f.nro_correlativo,f.pax,cliente.nombre,cliente.razonsocial,
+		<![CDATA[select CONCAT(v.serie,'-',v.idventa) as nro_correlativo,cliente.nombre,cliente.razonsocial,
 cliente.direccion,
 cliente.numerodocumento
- from file as f inner join cliente as cliente on f.idcliente = cliente.idcliente where f.idfile = $P{IDFILE}]]>
+ from venta_directa as v inner join cliente as cliente on v.idcliente = cliente.idcliente where v.idventa = $P{IDFILE}]]>
 	</queryString>
 	<field name="nro_correlativo" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="pax" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="nombre" class="java.lang.String">
@@ -245,7 +246,7 @@ cliente.numerodocumento
 			<componentElement>
 				<reportElement key="table 2" x="1" y="0" width="579" height="238" uuid="fadae37d-887a-42a4-9b0b-84b65c99dcc0"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="DataSet" uuid="dc369b45-fa54-44c7-aa75-c08d51b33bb9">
+					<datasetRun subDataset="DataSet" uuid="0def15bb-f4a2-460b-baf8-fde082b221c9">
 						<datasetParameter name="IDFILE">
 							<datasetParameterExpression><![CDATA[$P{IDFILE}]]></datasetParameterExpression>
 						</datasetParameter>
@@ -254,9 +255,6 @@ cliente.numerodocumento
 						</datasetParameter>
 						<datasetParameter name="FILE">
 							<datasetParameterExpression><![CDATA[$F{nro_correlativo}]]></datasetParameterExpression>
-						</datasetParameter>
-						<datasetParameter name="PAX">
-							<datasetParameterExpression><![CDATA[$F{pax}]]></datasetParameterExpression>
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
@@ -312,11 +310,11 @@ cliente.numerodocumento
 						</jr:columnHeader>
 						<jr:detailCell height="13" rowSpan="1">
 							<textField>
-								<reportElement x="0" y="0" width="90" height="13" uuid="52a2a90c-2924-4061-98ef-554a5c41f221"/>
+								<reportElement x="0" y="0" width="90" height="13" uuid="4aa08401-2c4d-453e-92ce-055383dc4545"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Arial" size="9"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$V{mypax}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{pax}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>

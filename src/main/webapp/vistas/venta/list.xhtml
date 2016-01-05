@@ -31,7 +31,7 @@
                                         <f:facet name="header">
                                             VTA
                                         </f:facet>
-                                        <h:outputText value="#{listVenta.serie}" />
+                                        <h:outputText value="#{listVenta.serie}-#{listVenta.id}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
@@ -65,11 +65,11 @@
             <h:form >
                 <div   id="row">
                     <div class="col-lg-6">
-                        <p:commandButton  ajax="false" value="Gravada" onclick="PF('exportVenta').hide();"   >
+                        <p:commandButton  ajax="false" value="Gravada" actionListener="#{ventaControlador.exportarVentaGravada}" onclick="PF('exportVenta').hide();"   >
                         </p:commandButton>
                     </div>
                     <div class="col-lg-6">
-                        <p:commandButton ajax="false" value="No Gravada" onclick="PF('exportVenta').hide();"   >
+                        <p:commandButton ajax="false" value="No Gravada" actionListener="#{ventaControlador.exportarVentaNoGravada}" onclick="PF('exportVenta').hide();"   >
                         </p:commandButton>
                     </div>
                 </div>
