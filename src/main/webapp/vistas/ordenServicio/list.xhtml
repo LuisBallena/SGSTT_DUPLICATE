@@ -388,7 +388,7 @@
                                                     value="$#{list.descuento eq null ? 'No Asignado' : list.descuento}"/>
                                         </p:column>
                                         <p:column style="text-align: center;width: 8%;">
-                                            <p:commandButton style="font-size: 12px;" icon="icon-update"
+                                            <p:commandButton style="font-size: 12px;" icon="icon-update" rendered="#{sesionControlador.permisoModulo.actualizar eq true}"
                                                              action="#{ordenServicioControlador.irActualizar(list.id)}">
                                             </p:commandButton>
                                             <p:commandButton title="Cotizacion por Item" style="font-size: 12px;"
@@ -399,7 +399,7 @@
                                                 <f:setPropertyActionListener value="#{list}"
                                                                              target="#{ordenServicioControlador.servicioDetalle}"/>
                                             </p:commandButton>
-                                            <p:commandButton style="font-size: 12px;" icon="icon-delete"
+                                            <p:commandButton style="font-size: 12px;" icon="icon-delete" rendered="#{sesionControlador.permisoModulo.eliminar eq true}"
                                                              actionListener="#{ordenServicioControlador.capturarServicioDetalle(list.id)}"
                                                              oncomplete="PF('deleteperfil').show();">
                                             </p:commandButton>
