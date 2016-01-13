@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="factura" pageWidth="620" pageHeight="700" columnWidth="600" leftMargin="0" rightMargin="20" topMargin="42" bottomMargin="20" uuid="61ec99cb-d6c8-4700-a209-1e1918af79fc">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="19"/>
+	<property name="ireport.y" value="540"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -242,7 +242,7 @@ cliente.numerodocumento
 		</band>
 	</title>
 	<detail>
-		<band height="269" splitType="Prevent">
+		<band height="258" splitType="Prevent">
 			<componentElement>
 				<reportElement key="table 2" x="1" y="0" width="579" height="238" uuid="fadae37d-887a-42a4-9b0b-84b65c99dcc0"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
@@ -405,7 +405,7 @@ cliente.numerodocumento
 								<textElement textAlignment="Center" verticalAlignment="Bottom">
 									<font fontName="Verdana" size="10" isUnderline="true"/>
 								</textElement>
-								<text><![CDATA[Precio]]></text>
+								<text><![CDATA[US$]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell height="13" rowSpan="1">
@@ -437,9 +437,9 @@ cliente.numerodocumento
 		</band>
 	</detail>
 	<summary>
-		<band height="86" splitType="Stretch">
+		<band height="104" splitType="Stretch">
 			<componentElement>
-				<reportElement x="174" y="0" width="426" height="85" uuid="73323879-59a7-4b52-a911-995fcc74cdae"/>
+				<reportElement x="1" y="0" width="599" height="104" uuid="73323879-59a7-4b52-a911-995fcc74cdae"/>
 				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
 					<datasetRun subDataset="DataCount" uuid="54f3ee71-3dae-4529-86e5-f2bb2ef49511">
 						<datasetParameter name="IDFILE">
@@ -450,35 +450,42 @@ cliente.numerodocumento
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:listContents height="85" width="426">
+					<jr:listContents height="104" width="599">
 						<textField pattern="###0.00">
-							<reportElement x="313" y="0" width="113" height="20" uuid="eadd9f5d-fee7-4e98-93b1-b4a9b8c636de"/>
+							<reportElement x="486" y="20" width="113" height="20" uuid="eadd9f5d-fee7-4e98-93b1-b4a9b8c636de"/>
 							<textElement textAlignment="Right" verticalAlignment="Bottom">
 								<font fontName="Verdana" isBold="false"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{preci_sin_igv}]]></textFieldExpression>
 						</textField>
 						<textField pattern="###0.00">
-							<reportElement x="338" y="20" width="88" height="20" uuid="10e1f746-0a87-49d0-94a9-85620445dfdb"/>
+							<reportElement x="511" y="40" width="88" height="20" uuid="10e1f746-0a87-49d0-94a9-85620445dfdb"/>
 							<textElement textAlignment="Right" verticalAlignment="Bottom">
 								<font fontName="Verdana" isBold="false"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$V{igv}]]></textFieldExpression>
 						</textField>
 						<textField pattern="###0.00">
-							<reportElement x="313" y="40" width="113" height="20" uuid="c4b1670a-ae2b-484f-9720-e85d1cfea17c"/>
+							<reportElement x="486" y="60" width="113" height="20" uuid="c4b1670a-ae2b-484f-9720-e85d1cfea17c"/>
 							<textElement textAlignment="Right" verticalAlignment="Bottom">
 								<font fontName="Verdana" isBold="false"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$V{total_igv}]]></textFieldExpression>
 						</textField>
 						<staticText>
-							<reportElement x="277" y="20" width="61" height="20" uuid="6a20eb0f-614f-4d47-82f3-8e50062cc519"/>
+							<reportElement x="450" y="40" width="61" height="20" uuid="6a20eb0f-614f-4d47-82f3-8e50062cc519"/>
 							<textElement textAlignment="Center" verticalAlignment="Bottom">
 								<font fontName="Verdana"/>
 							</textElement>
-							<text><![CDATA[IGV 18%]]></text>
+							<text><![CDATA[         18%]]></text>
 						</staticText>
+						<textField>
+							<reportElement x="0" y="0" width="486" height="20" uuid="5877d89e-e19a-4039-a66b-1c0f168fbc29"/>
+							<textElement verticalAlignment="Middle">
+								<font fontName="Verdana"/>
+							</textElement>
+							<textFieldExpression><![CDATA[com.sgstt.util.JavaNumber.convertDecimalToWord($V{total_igv})]]></textFieldExpression>
+						</textField>
 					</jr:listContents>
 				</jr:list>
 			</componentElement>
