@@ -110,17 +110,8 @@ public class ChoferControlador implements Serializable {
         } else if (!Utilitario.esRangoValido(chofer.getDni(), 8)) {
             Utilitario.enviarMensajeGlobalError("El rango máximo del Dni es de 8 caracteres");
             resultado = false;
-        } else if (Utilitario.esNulo(chofer.getBrevete())) {
-            Utilitario.enviarMensajeGlobalError("Debe ingresar el Brevete del Chofer");
-            resultado = false;
-        } else if (!Utilitario.esRangoValido(chofer.getBrevete(), 12)) {
-            Utilitario.enviarMensajeGlobalError("El rango máximo del Brevete es de 12 caracteres");
-            resultado = false;
         } else if (!Utilitario.esNulo(chofer.getCelular()) && !Utilitario.esRangoValido(chofer.getCelular(), 11)) {
             Utilitario.enviarMensajeGlobalError("El rango máximo del Celular es de 11 caracteres");
-            resultado = false;
-        } else if (!Utilitario.esNulo(chofer.getCategoria()) && !Utilitario.esRangoValido(chofer.getCategoria(), 4)) {
-            Utilitario.enviarMensajeGlobalError("El rango máximo del Categoria es de 4 caracteres");
             resultado = false;
         }
 

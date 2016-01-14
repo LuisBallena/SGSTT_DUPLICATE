@@ -192,8 +192,8 @@ public class ClienteControlador implements Serializable {
         if (Utilitario.esNulo(cliente.getRazonSocial())) {
             Utilitario.enviarMensajeGlobalError("Debe ingresar la razon social");
             resultado = false;
-        } else if (!Utilitario.esRangoValido(cliente.getRazonSocial(), 11)) {
-            Utilitario.enviarMensajeGlobalError("El rango máximo de la razon social es de 11 caracteres");
+        } else if (!Utilitario.esRangoValido(cliente.getRazonSocial(), 80)) {
+            Utilitario.enviarMensajeGlobalError("El rango máximo de la razon social es de 80 caracteres");
             resultado = false;
         }
         return resultado;

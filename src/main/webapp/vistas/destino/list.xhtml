@@ -78,13 +78,13 @@
                                         <f:facet name="header">
                                             Latitud
                                         </f:facet>
-                                        <h:outputText value="#{list.latitud}" />
+                                        <h:outputText value="#{list.latitud eq null or list.latitud eq '' ? 'No Disponible' :  list.latitud}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Longitud
                                         </f:facet>
-                                        <h:outputText value="#{list.longitud}" />
+                                        <h:outputText value="#{list.longitud eq null or list.longitud eq '' ? 'No Disponible' :  list.longitud}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
