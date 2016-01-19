@@ -6,6 +6,7 @@ import com.sgstt.hibernate.HibernateConexion;
 import com.sgstt.hibernate.HibernatePaginador;
 import com.sgstt.paginacion.FilePaginador;
 import com.sgstt.servicios.FileServicio;
+import com.sgstt.servicios.TransporteServicio;
 import com.sgstt.util.Utilitario;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -181,7 +182,7 @@ public class FileControlador implements Serializable {
     }
 
     public void eliminarFile() {
-        fileServicio.eliminarFile(file);
+        fileServicio.eliminarFileConServicioDetalle(file);
     }
 
     public String irActualizar(Integer id) {

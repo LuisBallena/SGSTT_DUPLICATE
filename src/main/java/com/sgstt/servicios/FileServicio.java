@@ -2,8 +2,10 @@ package com.sgstt.servicios;
 
 import com.sgstt.dao.ClienteDao;
 import com.sgstt.dao.FileDao;
+import com.sgstt.dao.ServicioDetalleDao;
 import com.sgstt.dao.impl.ClienteImpl;
 import com.sgstt.dao.impl.FileImpl;
+import com.sgstt.dao.impl.ServicioDetalleImpl;
 import com.sgstt.entidad.Cliente;
 import com.sgstt.entidad.Estado;
 import com.sgstt.entidad.File;
@@ -23,11 +25,13 @@ public class FileServicio implements Serializable{
     private final HibernateConexion conexion;
     private final ClienteDao clienteDao;
     private final FileDao fileDao;
+    private final ServicioDetalleDao servicioDetalleDao;
 
     public FileServicio() {
         conexion = new HibernateConexion();
         clienteDao = new ClienteImpl(conexion);
         fileDao = new FileImpl(conexion);
+        servicioDetalleDao = new ServicioDetalleImpl(conexion);
     }
     
     public List<Cliente> obtenerClientes(){
@@ -60,6 +64,16 @@ public class FileServicio implements Serializable{
         file.setFechaModificacion(new Date());
         file.setEstado(Estado.ELIMINADO);
         fileDao.actualizar(file);
+        Utilitario.enviarMensajeGlobalValido("Se ha eliminado correctamente");
+        conexion.closeConexion();
+    }
+    
+    public void eliminarFileConServicioDetalle(File file){
+        conexion.beginConexion();
+        file.setFechaModificacion(new Date());
+        file.setEstado(Estado.ELIMINADO);
+        fileDao.actualizar(file);
+        servicioDetalleDao.deleteServiciosDetallesByFile(file.getIdFile());
         Utilitario.enviarMensajeGlobalValido("Se ha eliminado correctamente");
         conexion.closeConexion();
     }

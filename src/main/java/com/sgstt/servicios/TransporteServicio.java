@@ -187,6 +187,9 @@ public class TransporteServicio implements Serializable {
                 throw new TransporteException(String.format("La orden #%d no tiene una tarifa registrada.", (i + 1)));
             }
             detalle.setPrecioServicio(tarifa.getPrecio());
+            Double precioSinIGV = detalle.generarPrecioTotalSinIGV();
+            detalle.setPrecioServicioIgv(precioSinIGV * 0.18);
+            detalle.setPrecioServicioTotal(precioSinIGV + detalle.getPrecioServicioIgv());
             servicioDetalleDao.agregar(detalle);
         }
         Utilitario.enviarMensajeGlobalValido("Se ha registrado correctamente");
@@ -210,6 +213,9 @@ public class TransporteServicio implements Serializable {
                 throw new TransporteException(String.format("La orden #%d no tiene una tarifa registrada.", (i + 1)));
             }
             detalle.setPrecioServicio(tarifa.getPrecio());
+            Double precioSinIGV = detalle.generarPrecioTotalSinIGV();
+            detalle.setPrecioServicioIgv(precioSinIGV * 0.18);
+            detalle.setPrecioServicioTotal(precioSinIGV + detalle.getPrecioServicioIgv());
             servicioDetalleDao.agregar(detalle);
         }
         Utilitario.enviarMensajeGlobalValido("Se ha registrado correctamente");
@@ -224,6 +230,9 @@ public class TransporteServicio implements Serializable {
             servicioDetalle.setEstadoServicio(EstadoServicio.PENDIENTE);
             asignarServicioExterno(servicioDetalle.getChofer(), servicioDetalle);
         }
+        Double precioSinIGV = servicioDetalle.generarPrecioTotalSinIGV();
+        servicioDetalle.setPrecioServicioIgv(precioSinIGV * 0.18);
+        servicioDetalle.setPrecioServicioTotal(precioSinIGV + servicioDetalle.getPrecioServicioIgv());
         servicioDetalleDao.actualizar(servicioDetalle);
         Utilitario.enviarMensajeGlobalValido("Se ha actualizado correctamente");
         conexion.closeConexion();
@@ -231,6 +240,9 @@ public class TransporteServicio implements Serializable {
 
     public void actualizarCotizacion(ServicioDetalle servicioDetalle) {
         conexion.beginConexion();
+        Double precioSinIGV = servicioDetalle.generarPrecioTotalSinIGV();
+        servicioDetalle.setPrecioServicioIgv(precioSinIGV * 0.18);
+        servicioDetalle.setPrecioServicioTotal(precioSinIGV + servicioDetalle.getPrecioServicioIgv());
         servicioDetalleDao.actualizar(servicioDetalle);
         Utilitario.enviarMensajeGlobalValido("Se ha actualizado correctamente");
         conexion.closeConexion();

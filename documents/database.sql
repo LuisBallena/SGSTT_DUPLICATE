@@ -9,7 +9,7 @@ USE `sgstt` ;
 -- -----------------------------------------------------
 -- Table `sgstt`.`tipo_servicio`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sgstt`.`tipo_servicio` ;
+DROP TABLE IF EXISTS `sgstt`.`tipo_servicio` ; 
 
 CREATE  TABLE IF NOT EXISTS `sgstt`.`tipo_servicio` (
   `idtipo_servicio` INT NOT NULL AUTO_INCREMENT ,
@@ -126,7 +126,7 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`vehiculo` (
   `descripcion` VARCHAR(45) NULL ,
   `placa` VARCHAR(7) NULL ,
   `estado` TINYINT(1) NOT NULL DEFAULT 1 ,
-  `año_fabricacion` VARCHAR(4) NULL ,
+  `aÃ±o_fabricacion` VARCHAR(4) NULL ,
   `capacidad_max` VARCHAR(3) NULL ,
   `capacidad_recomendada` VARCHAR(3) NULL ,
   `color` VARCHAR(25) NULL ,
@@ -469,6 +469,8 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`servicio_detalle` (
   `fecha` DATETIME NOT NULL ,
   `externalizado` VARCHAR(2) NOT NULL DEFAULT 'NO' ,
   `precio_servicio` DECIMAL(12,2) NULL ,
+  `precio_servicio_igv` DECIMAL(12,2) NULL ,
+  `precio_total_servicio` DECIMAL(12,2) NULL ,
   `descuento` DECIMAL(12,2) NOT NULL DEFAULT 0.00 ,
   `adicional` DECIMAL(12,2) NOT NULL DEFAULT 0.00 ,
   `gravada` TINYINT(1) NOT NULL DEFAULT 1 ,

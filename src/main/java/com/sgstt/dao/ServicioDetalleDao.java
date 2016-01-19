@@ -14,5 +14,7 @@ public interface ServicioDetalleDao extends GenericDao<ServicioDetalle,Integer>{
     public boolean esChoferLibre(Integer idChofer, int cantidadHoraPlazo, Date fecha);
     
     public ServicioDetalle getServicioDetalleWithTipoVehiculo(Integer id);
+    
+    public void deleteServiciosDetallesByFile(Integer idFile);
 
 }

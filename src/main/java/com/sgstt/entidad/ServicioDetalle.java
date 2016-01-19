@@ -102,10 +102,16 @@ public class ServicioDetalle implements Serializable, Exporter {
     @Column(name = "PRECIO_SERVICIO")
     private Double precioServicio;
 
-    @Column(insertable = false)
+    @Column(name = "PRECIO_TOTAL_SERVICIO")
+    private Double precioServicioTotal;
+
+    @Column(name = "PRECIO_SERVICIO_IGV")
+    private Double precioServicioIgv;
+
+    @Column
     private Double descuento;
 
-    @Column(insertable = false)
+    @Column
     private Double adicional;
 
     @Column(name = "DIAS_VIAJE")
@@ -116,10 +122,10 @@ public class ServicioDetalle implements Serializable, Exporter {
 
     @Column
     private boolean gravada;
-    
+
     @Column
     private Integer idcliente;
-    
+
     @Transient
     private Cliente cliente;
 
@@ -137,16 +143,18 @@ public class ServicioDetalle implements Serializable, Exporter {
 
     @Column(name = "idtipo_vehiculo")
     private Integer idTipoVehiculo;
-    
+
     public ServicioDetalle() {
         vuelo = new Vuelo();
         gravada = true;
     }
-    
-    private Double generarPrecioTotalSinIGV(){
-        return (precioServicio*(diasViaje== null || diasViaje == 0 ? 1.0 : diasViaje.doubleValue()))+adicional-descuento; 
+
+    public Double generarPrecioTotalSinIGV() {
+        adicional = (adicional == null ? new Double(0.0) : adicional);
+        descuento = (descuento == null ? new Double(0.0) : descuento);
+        return (precioServicio * (diasViaje == null || diasViaje == 0 ? 1.0 : diasViaje.doubleValue())) + adicional - descuento;
     }
-    
+
     @Override
     public String[] getDatos() {
         String[] datos = new String[19];
@@ -167,21 +175,18 @@ public class ServicioDetalle implements Serializable, Exporter {
         datos[14] = this.chofer == null ? "No Asignado" : this.chofer.getDatosCompletos();
         datos[15] = this.chofer == null ? "" : this.chofer.getEmpresa().getRazonSocial();
         Double precioSinIgv = generarPrecioTotalSinIGV();
-        Double igv = precioSinIgv * 0.18; //numero mágico hasta cuando se defina un lugar del igv
-        datos[16] = ""+precioSinIgv;
-        datos[17] = ""+igv;
-        datos[18] = ""+(precioSinIgv+igv);
+        datos[16] = "" + precioSinIgv;
+        datos[17] = "" + this.precioServicioIgv;
+        datos[18] = "" + this.precioServicioTotal;
         return datos;
     }
 
     @Override
     public String[] getTitulos() {
-        return new String[]{"id","Fecha","Servicio","Tipo de Servicio","Horas de Servicio","File/VTA","PAX","Cuenta"
-                ,"Nro. Personas","Trasladista","Vuelo","Estado Servicio","Tercerizado","Vehiculo","Chofer","Transportista","Precio Sin IGV","IGV 18%","Precio Total"};
+        return new String[]{"id", "Fecha", "Servicio", "Tipo de Servicio", "Horas de Servicio", "File/VTA", "PAX", "Cuenta", "Nro. Personas", "Trasladista", "Vuelo", "Estado Servicio", "Tercerizado", "Vehiculo", "Chofer", "Transportista", "Precio Sin IGV", "IGV 18%", "Precio Total"};
     }
-    
-    /* GETTERS AND SETTERS */
 
+    /* GETTERS AND SETTERS */
     public Integer getId() {
         return id;
     }
@@ -404,9 +409,9 @@ public class ServicioDetalle implements Serializable, Exporter {
     }
 
     public Cliente getCliente() {
-        if(file != null){
+        if (file != null) {
             cliente = file.getCliente();
-        }else if(venta != null){
+        } else if (venta != null) {
             cliente = venta.getCliente();
         }
         return cliente;
@@ -419,5 +424,21 @@ public class ServicioDetalle implements Serializable, Exporter {
     public void setIdcliente(Integer idcliente) {
         this.idcliente = idcliente;
     }
-    
+
+    public Double getPrecioServicioTotal() {
+        return precioServicioTotal;
+    }
+
+    public void setPrecioServicioTotal(Double precioServicioTotal) {
+        this.precioServicioTotal = precioServicioTotal;
+    }
+
+    public Double getPrecioServicioIgv() {
+        return precioServicioIgv;
+    }
+
+    public void setPrecioServicioIgv(Double precioServicioIgv) {
+        this.precioServicioIgv = precioServicioIgv;
+    }
+
 }

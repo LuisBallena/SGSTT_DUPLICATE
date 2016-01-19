@@ -28,18 +28,18 @@ public class ServicioDetalleImpl extends HibernateImpl<ServicioDetalle, Integer>
     }
 
     @Override
-    public boolean esVehiculoLibre(Integer idVehiculo, int cantidadHoraPlazo,Date fecha) {
+    public boolean esVehiculoLibre(Integer idVehiculo, int cantidadHoraPlazo, Date fecha) {
         boolean resultado = true;
         try {
             Session session = conexion.getSession();
-            SQLQuery query = session.createSQLQuery("select DATE_ADD(service.fecha,INTERVAL :cantidad HOUR) from servicio_detalle_has_vehiculo_has_chofer as service_vehiculo_chofer " +
-                "inner join vehiculo_has_chofer as vehiculo_chofer on service_vehiculo_chofer.id_vehiculo_has_chofer = vehiculo_chofer.id_vehiculo_has_chofer " +
-                "inner join servicio_detalle as service on  service_vehiculo_chofer.idservicio_detalle = service.idservicio_detalle " +
-                "where vehiculo_chofer.idvehiculo = :id order by service.FECHA_REGISTRO desc limit 1");
+            SQLQuery query = session.createSQLQuery("select DATE_ADD(service.fecha,INTERVAL :cantidad HOUR) from servicio_detalle_has_vehiculo_has_chofer as service_vehiculo_chofer "
+                    + "inner join vehiculo_has_chofer as vehiculo_chofer on service_vehiculo_chofer.id_vehiculo_has_chofer = vehiculo_chofer.id_vehiculo_has_chofer "
+                    + "inner join servicio_detalle as service on  service_vehiculo_chofer.idservicio_detalle = service.idservicio_detalle "
+                    + "where vehiculo_chofer.idvehiculo = :id order by service.FECHA_REGISTRO desc limit 1");
             query.setInteger("id", idVehiculo);
             query.setInteger("cantidad", cantidadHoraPlazo);
-            Timestamp fechaSQL = (Timestamp)query.uniqueResult();
-            if(fechaSQL != null && Utilitario.esFechaMayor(fechaSQL, fecha)){
+            Timestamp fechaSQL = (Timestamp) query.uniqueResult();
+            if (fechaSQL != null && Utilitario.esFechaMayor(fechaSQL, fecha)) {
                 resultado = false;
             }
         } catch (HibernateException e) {
@@ -47,20 +47,20 @@ public class ServicioDetalleImpl extends HibernateImpl<ServicioDetalle, Integer>
         }
         return resultado;
     }
-    
+
     @Override
-    public boolean esChoferLibre(Integer idChofer, int cantidadHoraPlazo,Date fecha) {
+    public boolean esChoferLibre(Integer idChofer, int cantidadHoraPlazo, Date fecha) {
         boolean resultado = true;
         try {
             Session session = conexion.getSession();
-            SQLQuery query = session.createSQLQuery("select DATE_ADD(service.fecha,INTERVAL :cantidad HOUR) from servicio_detalle_has_vehiculo_has_chofer as service_vehiculo_chofer " +
-                "inner join vehiculo_has_chofer as vehiculo_chofer on service_vehiculo_chofer.id_vehiculo_has_chofer = vehiculo_chofer.id_vehiculo_has_chofer " +
-                "inner join servicio_detalle as service on  service_vehiculo_chofer.idservicio_detalle = service.idservicio_detalle " +
-                "where vehiculo_chofer.idchofer = :id order by service.FECHA_REGISTRO desc limit 1");
+            SQLQuery query = session.createSQLQuery("select DATE_ADD(service.fecha,INTERVAL :cantidad HOUR) from servicio_detalle_has_vehiculo_has_chofer as service_vehiculo_chofer "
+                    + "inner join vehiculo_has_chofer as vehiculo_chofer on service_vehiculo_chofer.id_vehiculo_has_chofer = vehiculo_chofer.id_vehiculo_has_chofer "
+                    + "inner join servicio_detalle as service on  service_vehiculo_chofer.idservicio_detalle = service.idservicio_detalle "
+                    + "where vehiculo_chofer.idchofer = :id order by service.FECHA_REGISTRO desc limit 1");
             query.setInteger("id", idChofer);
             query.setInteger("cantidad", cantidadHoraPlazo);
-            Timestamp fechaSQL = (Timestamp)query.uniqueResult();
-            if(fechaSQL != null && Utilitario.esFechaMayor(fechaSQL, fecha)){
+            Timestamp fechaSQL = (Timestamp) query.uniqueResult();
+            if (fechaSQL != null && Utilitario.esFechaMayor(fechaSQL, fecha)) {
                 resultado = false;
             }
         } catch (HibernateException e) {
@@ -72,15 +72,27 @@ public class ServicioDetalleImpl extends HibernateImpl<ServicioDetalle, Integer>
     @Override
     public ServicioDetalle getServicioDetalleWithTipoVehiculo(Integer id) {
         ServicioDetalle servicioDetalle = null;
-        try{
-            Criteria criteria = conexion.getSession().createCriteria(ServicioDetalle.class,"service");
-            criteria.createCriteria("service.vehiculo.tipoVehiculo",JoinType.LEFT_OUTER_JOIN);
+        try {
+            Criteria criteria = conexion.getSession().createCriteria(ServicioDetalle.class, "service");
+            criteria.createCriteria("service.vehiculo.tipoVehiculo", JoinType.LEFT_OUTER_JOIN);
             criteria.add(Restrictions.eq("service.id", id));
             servicioDetalle = (ServicioDetalle) criteria.uniqueResult();
-        }catch(HibernateException e){
+        } catch (HibernateException e) {
             e.printStackTrace();
         }
         return servicioDetalle;
+    }
+
+    @Override
+    public void deleteServiciosDetallesByFile(Integer idFile) {
+        try {
+            SQLQuery query = conexion.getSession().createSQLQuery("update servicio_detalle set estado = 0 where idfile = :dato");
+            query.setParameter("dato", idFile);
+            query.executeUpdate();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }
