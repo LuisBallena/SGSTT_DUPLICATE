@@ -2,6 +2,7 @@ package com.sgstt.entidad;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -75,6 +76,31 @@ public class Vehiculo implements Serializable {
     public Vehiculo() {
         tipoVehiculo = new TipoVehiculo();
         marca = new Marca();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vehiculo vehiculo = (Vehiculo) o;
+        return Objects.equals(id, vehiculo.id) &&
+                Objects.equals(descripcion, vehiculo.descripcion) &&
+                Objects.equals(placa, vehiculo.placa) &&
+                Objects.equals(color, vehiculo.color) &&
+                Objects.equals(año_fabricacion, vehiculo.año_fabricacion) &&
+                Objects.equals(capacidad_max, vehiculo.capacidad_max) &&
+                Objects.equals(capacidad_recomendada, vehiculo.capacidad_recomendada) &&
+                Objects.equals(tipoVehiculo, vehiculo.tipoVehiculo) &&
+                Objects.equals(marca, vehiculo.marca) &&
+                Objects.equals(fechaRegistro, vehiculo.fechaRegistro) &&
+                Objects.equals(fechaModificacion, vehiculo.fechaModificacion) &&
+                Objects.equals(estado, vehiculo.estado) &&
+                Objects.equals(sede, vehiculo.sede);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, descripcion, placa, color, año_fabricacion, capacidad_max, capacidad_recomendada, tipoVehiculo, marca, fechaRegistro, fechaModificacion, estado, sede);
     }
 
     public Integer getId() {

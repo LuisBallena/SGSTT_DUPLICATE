@@ -46,7 +46,7 @@ public class OrdenServicioControlador implements Serializable {
     private List<Vuelo> vuelos;
     private List<File> files;
     private List<TipoVehiculo> tipoVehiculos;
-    private List<Chofer> choferes;
+    private List<Chofer> choferes;//variable que se reutilizara para filtrar y asignar chofer y vehiculo; debido a que no se modificara esta lista
     private List<Vehiculo> vehiculos;
     private List<Cliente> clientes;
     private List<Empresa> empresas;
@@ -75,7 +75,7 @@ public class OrdenServicioControlador implements Serializable {
             clientes = transporteServicio.obtenerClientes(sesionControlador.getUsuarioSesion().getSede().getId());
             tipoServicios = transporteServicio.obtenerTiposServicios();
             choferes = transporteServicio.obtenerChoferesPorSede(sesionControlador.getUsuarioSesion().getSede().getId());
-            vehiculos = transporteServicio.obtenerVehiculos(sesionControlador.getUsuarioSesion().getSede().getId());
+            vehiculos = transporteServicio.obtenerVehiculosConTipoVehiculosPorSede(sesionControlador.getUsuarioSesion().getSede().getId());
             empresas = transporteServicio.obtenerEmpresasExternas(sesionControlador.getUsuarioSesion().getSede().getId());
             servicioDetallePaginador = new ServicioDetallePaginador();
             servicioDetallePaginador.initPaginador(servicioDetalleFilter);

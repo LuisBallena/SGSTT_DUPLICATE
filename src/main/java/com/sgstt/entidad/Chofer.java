@@ -4,6 +4,7 @@ import com.sgstt.util.Utilitario;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -70,6 +71,30 @@ public class Chofer implements Serializable {
     private Empresa empresa;
 
     public Chofer() {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Chofer chofer = (Chofer) o;
+        return Objects.equals(id, chofer.id) &&
+                Objects.equals(nombre, chofer.nombre) &&
+                Objects.equals(apellido, chofer.apellido) &&
+                Objects.equals(dni, chofer.dni) &&
+                Objects.equals(celular, chofer.celular) &&
+                Objects.equals(brevete, chofer.brevete) &&
+                Objects.equals(categoria, chofer.categoria) &&
+                Objects.equals(fecha, chofer.fecha) &&
+                Objects.equals(estado, chofer.estado) &&
+                Objects.equals(datosCompletos, chofer.datosCompletos) &&
+                Objects.equals(sede, chofer.sede) &&
+                Objects.equals(empresa, chofer.empresa);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nombre, apellido, dni, celular, brevete, categoria, fecha, estado, datosCompletos, sede, empresa);
     }
 
     public Integer getId() {
