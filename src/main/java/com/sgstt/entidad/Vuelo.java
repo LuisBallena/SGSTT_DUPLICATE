@@ -38,9 +38,6 @@ public class Vuelo implements Serializable{
     private String descripcion;
     
     @Column
-    private String destino;
-    
-    @Column
     private String horario;
     
     @ManyToOne(fetch = FetchType.LAZY)
@@ -74,14 +71,6 @@ public class Vuelo implements Serializable{
 
     public void setOrigen(String origen) {
         this.origen = origen;
-    }
-
-    public String getDestino() {
-        return destino;
-    }
-
-    public void setDestino(String destino) {
-        this.destino = destino;
     }
 
     public String getHorario() {
@@ -130,7 +119,6 @@ public class Vuelo implements Serializable{
         hash = 31 * hash + Objects.hashCode(this.id);
         hash = 31 * hash + Objects.hashCode(this.origen);
         hash = 31 * hash + Objects.hashCode(this.descripcion);
-        hash = 31 * hash + Objects.hashCode(this.destino);
         hash = 31 * hash + Objects.hashCode(this.horario);
         return hash;
     }
@@ -151,9 +139,6 @@ public class Vuelo implements Serializable{
             return false;
         }
         if (!Objects.equals(this.descripcion, other.descripcion)) {
-            return false;
-        }
-        if (!Objects.equals(this.destino, other.destino)) {
             return false;
         }
         if (!Objects.equals(this.horario, other.horario)) {
