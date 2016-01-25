@@ -1,7 +1,7 @@
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
- 
+
 DROP SCHEMA IF EXISTS `sgstt` ; 
 CREATE SCHEMA IF NOT EXISTS `sgstt` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
 USE `sgstt` ;
@@ -69,7 +69,7 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`chofer` (
   `dni` VARCHAR(45) NULL ,
   `celular` VARCHAR(45) NULL ,
   `brevete` VARCHAR(45) NULL ,
-  `fecha` DATETIME NOT NULL ,
+  `fecha` DATETIME  NOT NULL,
   `categoria` VARCHAR(45) NULL ,
   `clave` VARCHAR(45) NOT NULL DEFAULT '12345678'  ,
   `estado` TINYINT(1) NOT NULL DEFAULT 1 ,
@@ -126,7 +126,7 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`vehiculo` (
   `descripcion` VARCHAR(45) NULL ,
   `placa` VARCHAR(7) NULL ,
   `estado` TINYINT(1) NOT NULL DEFAULT 1 ,
-  `aÃ±o_fabricacion` VARCHAR(4) NULL ,
+  `año_fabricacion` VARCHAR(4) NULL ,
   `capacidad_max` VARCHAR(3) NULL ,
   `capacidad_recomendada` VARCHAR(3) NULL ,
   `color` VARCHAR(25) NULL ,
@@ -176,7 +176,6 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`vuelo` (
   `idsede` INT NOT NULL ,
   `descripcion` VARCHAR(45) NOT NULL ,
   `origen` VARCHAR(45) NULL ,
-  `destino` VARCHAR(45) NULL ,
   `horario` VARCHAR(45) NULL ,
   `estado` TINYINT(1) NOT NULL DEFAULT 1 ,
   `idaerolinea` INT NOT NULL ,
@@ -227,7 +226,7 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`servicio` (
   `idservicio` INT NOT NULL AUTO_INCREMENT ,
   `idsede` INT NOT NULL ,
   `descripcion` VARCHAR(300) NOT NULL ,
-  `horas` VARCHAR(10) NOT NULL ,
+  `horas` double(10,2) NOT NULL ,
   `estado` TINYINT(1) NOT NULL DEFAULT 1 ,
   `idtipo_servicio` INT NOT NULL ,
   PRIMARY KEY (`idservicio`, `idsede`) ,
@@ -360,7 +359,7 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`cliente` (
   `nombre` VARCHAR(45) NULL ,
   `numerodocumento` VARCHAR(12) NULL ,
   `razonsocial` VARCHAR(80) NULL ,
-  `direccion` VARCHAR(45) NULL ,
+  `direccion` VARCHAR(200) NULL ,
   `estado` TINYINT(1) NOT NULL DEFAULT 1 ,
   `tipo_documento` VARCHAR(50) NULL ,
   `correo` VARCHAR(45) NULL ,

@@ -48,7 +48,7 @@
                                         <f:facet name="header">
                                             Horario
                                         </f:facet>
-                                        <h:outputText value="#{list.horario}" />
+                                        <h:outputText value="#{list.horario eq ' ' ? 'No Disponible' : list.horario}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
