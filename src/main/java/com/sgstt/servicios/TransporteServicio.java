@@ -180,7 +180,7 @@ public class TransporteServicio implements Serializable {
             ServicioDetalle detalle = servicioDetalles.get(i);
             detalle.setDiasViaje(detalle.getDiasViaje() == null || detalle.getDiasViaje() == 0 ? 1 : detalle.getDiasViaje());
             detalle.setIdcliente(detalle.getFile().getCliente().getIdCliente());
-            detalle.setEstadoServicio(EstadoServicio.SIN_ASIGNAR);
+            detalle.setEstadoServicio(EstadoServicio.Sin_Asignar);
             Tarifa tarifa = getTarifa(detalle.getIdTipoVehiculo(), detalle.getServicio());
             if (tarifa == null) {
                 conexion.rollBack();
@@ -206,7 +206,7 @@ public class TransporteServicio implements Serializable {
             detalle.setFile(null);
             detalle.setVenta(venta);
             detalle.setIdcliente(venta.getCliente().getIdCliente());
-            detalle.setEstadoServicio(EstadoServicio.SIN_ASIGNAR);
+            detalle.setEstadoServicio(EstadoServicio.Sin_Asignar);
             Tarifa tarifa = getTarifa(detalle.getIdTipoVehiculo(), detalle.getServicio());
             if (tarifa == null) {
                 conexion.rollBack();
@@ -227,7 +227,7 @@ public class TransporteServicio implements Serializable {
         servicioDetalle.setDiasViaje(servicioDetalle.getDiasViaje() == null || servicioDetalle.getDiasViaje() == 0 ? 1 : servicioDetalle.getDiasViaje());
         servicioDetalle.setVehiculo(servicioDetalle.getVehiculo().getId() == null ? null : servicioDetalle.getVehiculo());
         if (estaAsignadoChoferVehiculo(servicioDetalle)) {
-            servicioDetalle.setEstadoServicio(EstadoServicio.PENDIENTE);
+            servicioDetalle.setEstadoServicio(EstadoServicio.Por_Realizar);
             asignarServicioExterno(servicioDetalle.getChofer(), servicioDetalle);
         }
         Double precioSinIGV = servicioDetalle.generarPrecioTotalSinIGV();
