@@ -90,17 +90,14 @@ public class Vehiculo implements Serializable {
                 Objects.equals(año_fabricacion, vehiculo.año_fabricacion) &&
                 Objects.equals(capacidad_max, vehiculo.capacidad_max) &&
                 Objects.equals(capacidad_recomendada, vehiculo.capacidad_recomendada) &&
-                Objects.equals(tipoVehiculo, vehiculo.tipoVehiculo) &&
-                Objects.equals(marca, vehiculo.marca) &&
                 Objects.equals(fechaRegistro, vehiculo.fechaRegistro) &&
                 Objects.equals(fechaModificacion, vehiculo.fechaModificacion) &&
-                Objects.equals(estado, vehiculo.estado) &&
-                Objects.equals(sede, vehiculo.sede);
+                Objects.equals(estado, vehiculo.estado);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, descripcion, placa, color, año_fabricacion, capacidad_max, capacidad_recomendada, tipoVehiculo, marca, fechaRegistro, fechaModificacion, estado, sede);
+        return Objects.hash(id, descripcion, placa, color, año_fabricacion, capacidad_max, capacidad_recomendada, fechaRegistro, fechaModificacion, estado);
     }
 
     public Integer getId() {

@@ -86,15 +86,12 @@ public class Chofer implements Serializable {
                 Objects.equals(brevete, chofer.brevete) &&
                 Objects.equals(categoria, chofer.categoria) &&
                 Objects.equals(fecha, chofer.fecha) &&
-                Objects.equals(estado, chofer.estado) &&
-                Objects.equals(datosCompletos, chofer.datosCompletos) &&
-                Objects.equals(sede, chofer.sede) &&
-                Objects.equals(empresa, chofer.empresa);
+                Objects.equals(estado, chofer.estado);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nombre, apellido, dni, celular, brevete, categoria, fecha, estado, datosCompletos, sede, empresa);
+        return Objects.hash(id, nombre, apellido, dni, celular, brevete, categoria, fecha, estado);
     }
 
     public Integer getId() {

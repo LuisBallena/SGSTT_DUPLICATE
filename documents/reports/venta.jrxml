@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="factura" pageWidth="620" pageHeight="700" columnWidth="600" leftMargin="0" rightMargin="20" topMargin="42" bottomMargin="20" uuid="61ec99cb-d6c8-4700-a209-1e1918af79fc">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="540"/>
+	<property name="ireport.y" value="204"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -184,7 +184,9 @@ cliente.numerodocumento
 	<title>
 		<band height="163" splitType="Stretch">
 			<staticText>
-				<reportElement x="79" y="146" width="301" height="17" uuid="34c5e434-4367-4858-9344-542fdf854840"/>
+				<reportElement x="79" y="146" width="301" height="17" uuid="34c5e434-4367-4858-9344-542fdf854840">
+					<printWhenExpression><![CDATA[$P{GRAVADA} == 1]]></printWhenExpression>
+				</reportElement>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Verdana" size="10" isBold="true" isUnderline="false"/>
 				</textElement>
@@ -239,6 +241,15 @@ cliente.numerodocumento
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="79" y="146" width="397" height="17" uuid="3a68a114-e2a5-47de-a16d-96085f0ae240">
+					<printWhenExpression><![CDATA[$P{GRAVADA} == 0]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Verdana" size="10" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[SERVICIO DE TRANSPORTE TURISTICO (NUM.9 ART.33 D.LEG 1125)]]></text>
+			</staticText>
 		</band>
 	</title>
 	<detail>
