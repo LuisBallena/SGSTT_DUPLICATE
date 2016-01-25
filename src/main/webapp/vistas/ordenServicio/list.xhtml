@@ -206,9 +206,9 @@
                                                         <f:selectItem itemLabel="Todos"
                                                                       itemValue="#{null}"/>
                                                         <f:selectItem itemLabel="Sin Asignar"
-                                                                      itemValue="SIN_ASIGNAR"/>
-                                                        <f:selectItem itemLabel="Pendiente"
-                                                                      itemValue="PENDIENTE"/>
+                                                                      itemValue="Sin Asignar"/>
+                                                        <f:selectItem itemLabel="Por Realizar"
+                                                                      itemValue="Por_Realizar"/>
                                                         <f:selectItem itemLabel="Realizado"
                                                                       itemValue="REALIZADO"/>
 
@@ -345,7 +345,7 @@
                                                 Estado Servicio
                                             </f:facet>
                                             <h:outputText
-                                                value="#{list.estadoServicio == 'SIN_ASIGNAR' ? 'Sin Asignar' : list.estadoServicio}"/>
+                                                value="#{list.estadoServicio eq 'Por_Realizar' ? 'Por realizar' : list.estadoServicio}"/>
                                         </p:column>
                                         <p:column style="text-align: center;font-size: 13px;">
                                             <f:facet name="header">
@@ -360,14 +360,14 @@
                                             <h:outputText
                                                 value="#{list.vehiculo eq null ? 'No Asignado' : list.vehiculo.descripcion}"/>
                                         </p:column>
-                                        <p:column style="text-align: center;font-size: 12px;">
+                                        <p:column style="text-align: center;font-size: 11px;">
                                             <f:facet name="header">
                                                 Chofer
                                             </f:facet>
                                             <h:outputText
                                                 value="#{list.chofer eq null ? 'No Asignado' : list.chofer.datosCompletos}"/>
                                         </p:column>
-                                        <p:column style="text-align: center;font-size: 12px;">
+                                        <p:column style="text-align: center;font-size: 11px;">
                                             <f:facet name="header">
                                                 Transportista
                                             </f:facet>
@@ -415,7 +415,7 @@
                                                              action="#{ordenServicioControlador.irActualizar(list.id)}">
                                             </p:commandButton>
                                             <p:commandButton title="Cotizacion por Item" style="font-size: 12px;"
-                                                             rendered="#{list.estadoServicio == 'PENDIENTE'}"
+                                                             rendered="#{list.estadoServicio == 'Por_Realizar'}"
                                                              icon="icon-money"
                                                              action="#{ordenServicioControlador.irCotizar}"
                                                              update=":msg">
