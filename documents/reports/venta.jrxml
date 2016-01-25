@@ -420,7 +420,7 @@ cliente.numerodocumento
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell height="13" rowSpan="1">
-							<textField>
+							<textField pattern="###0.00">
 								<reportElement x="0" y="0" width="49" height="13" uuid="d9afaa41-7eca-400a-b982-0dfe54495b6b"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Arial" size="9"/>
