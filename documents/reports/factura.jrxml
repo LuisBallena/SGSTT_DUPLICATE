@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="factura" pageWidth="620" pageHeight="700" columnWidth="600" leftMargin="0" rightMargin="20" topMargin="42" bottomMargin="20" uuid="61ec99cb-d6c8-4700-a209-1e1918af79fc">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="221"/>
+	<property name="ireport.x" value="174"/>
+	<property name="ireport.y" value="125"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -241,7 +241,7 @@ cliente.numerodocumento
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="79" y="146" width="397" height="17" uuid="5bc93a55-2402-4b79-9df8-1192fd408bec">
+				<reportElement x="79" y="146" width="468" height="17" uuid="5bc93a55-2402-4b79-9df8-1192fd408bec">
 					<printWhenExpression><![CDATA[$P{GRAVADA} == 0]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
