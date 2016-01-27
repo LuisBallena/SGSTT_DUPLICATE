@@ -102,12 +102,6 @@ public class VehiculoControlador implements Serializable{
         }else if(!esTipoVehiculoValido()){
             Utilitario.enviarMensajeGlobalError("Debe seleccionar un Tipo de Vehiculo");
             resultado = false;
-        }else if(!esMarcaValida()){
-            Utilitario.enviarMensajeGlobalError("Debe seleccionar una Marca");
-            resultado = false;
-        }else if(!esAFabricacionValido()){
-            Utilitario.enviarMensajeGlobalError("Debe ingresar un Año de Fabricacion");
-            resultado = false;
         }
         return resultado;
     }
@@ -115,26 +109,14 @@ public class VehiculoControlador implements Serializable{
     private boolean esTipoVehiculoValido(){
         return vehiculo.getTipoVehiculo().getId().intValue() != 0;
     }
-    
-    private boolean esMarcaValida(){
-        return vehiculo.getMarca().getId().intValue() != 0;
-    }
+
     private boolean esDescripcionValida(){
         return vehiculo.getDescripcion() != "";
     }
-    
     private boolean esPlacaValida(){
         return vehiculo.getPlaca() != "";
     }            
-
     
-    private boolean esAFabricacionValido(){
-        String año = vehiculo.getAño_fabricacion();
-        boolean aux = true;
-        if(año.equals("")) { aux = false; }
-        else if(Short.parseShort(año) > 2015) { aux = false; }
-        return aux;
-    }
     /* GETTERS AND SETTERS */
     
     public HibernatePaginador<Vehiculo> getVehiculoPaginador() {

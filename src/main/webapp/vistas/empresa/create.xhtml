@@ -37,8 +37,8 @@
                                         <div class="form-group has-feedback">
                                             <label for="nombre" class="col-sm-3 control-label" >RUC :</label>
                                             <div    class="col-sm-6" >
-                                                <p:inputText styleClass="form-control"  value="#{empresaControlador.empresa.ruc}"     >
-                                                </p:inputText>
+                                                <p:inputMask styleClass="form-control" mask="9?9999999999" slotChar="" value="#{empresaControlador.empresa.ruc}"     >
+                                                </p:inputMask>
                                             </div>
                                         </div>
                                         <div class="form-group has-feedback">

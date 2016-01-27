@@ -45,7 +45,6 @@ public class TrasladistaControlador implements Serializable {
         	trasladistaServicio = new TrasladistaServicio();
         	trasladista = new Trasladista();
             trasladista.setSede(new Sede());
-            setSedes(trasladistaServicio.obtenerSedes());
         }
     }
     
@@ -58,12 +57,12 @@ public class TrasladistaControlador implements Serializable {
             }
             trasladistaServicio = new TrasladistaServicio();
             trasladista = trasladistaServicio.obtenerTrasladista(Integer.parseInt(value.toString()));
-            sedes = trasladistaServicio.obtenerSedes();
         }
     }
 
     public void guardarTrasladista() {
         if (esVistaValida()) {
+            trasladista.setSede(sesionControlador.getUsuarioSesion().getSede());
         	trasladistaServicio.guardarTrasladista(trasladista);
         }
     }
@@ -88,7 +87,7 @@ public class TrasladistaControlador implements Serializable {
         if(Utilitario.esNulo(trasladista.getDatosCompletos())){
             Utilitario.enviarMensajeGlobalError("Debe ingresar la Datos Completos");
             resultado = false;
-        }else if(!Utilitario.esRangoValido(trasladista	.getDatosCompletos(), 45)){
+        }else if(!Utilitario.esRangoValido(trasladista.getDatosCompletos(), 45)){
             Utilitario.enviarMensajeGlobalError("El rango máximo de la descripción es de 45 caracteres");
             resultado = false;
         }

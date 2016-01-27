@@ -29,20 +29,20 @@
                                 <h:messages id="msg" globalOnly="true" styleClass="list-group" infoClass="list-group-item list-group-item-success"
                                                     errorClass="list-group-item list-group-item-danger" />
                                 <p:dataTable    value="#{choferControlador.choferPaginador}"    var="list" emptyMessage="No existen registros de choferes" 
-                                                paginator="true" rows="10" lazy="true" rowIndexVar="rowIndex"
+                                                paginator="true" rows="12" lazy="true" rowIndexVar="rowIndex"
                                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
 
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Nombre
                                         </f:facet>
-                                        <h:outputText value="#{list.nombre eq ' ' ? 'No Disponible' :  list.nombre}" />
+                                        <h:outputText value="#{list.nombre eq '' ? 'No Disponible' :  list.nombre}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Apellido
                                         </f:facet>
-                                        <h:outputText value="#{list.apellido eq ' ' ? 'No Disponible' :  list.apellido}" />
+                                        <h:outputText value="#{list.apellido eq '' ? 'No Disponible' :  list.apellido}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
@@ -54,13 +54,13 @@
                                         <f:facet name="header">
                                             Celular
                                         </f:facet>
-                                        <h:outputText value="#{list.celular eq ' ' ? 'No Disponible' :  list.celular}" />
+                                        <h:outputText value="#{list.celular eq '' ? 'No Disponible' :  list.celular}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Brevete
                                         </f:facet>
-                                        <h:outputText value="#{list.brevete eq ' ' ? 'No Disponible' :  list.brevete}" />
+                                        <h:outputText value="#{list.brevete eq '' ? 'No Disponible' :  list.brevete}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
@@ -74,7 +74,7 @@
                                         <f:facet name="header">
                                             Categoría
                                         </f:facet>
-                                        <h:outputText value="#{list.categoria eq ' ' ? 'No Disponible' :  list.categoria}" />
+                                        <h:outputText value="#{list.categoria eq '' ? 'No Disponible' :  list.categoria}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">

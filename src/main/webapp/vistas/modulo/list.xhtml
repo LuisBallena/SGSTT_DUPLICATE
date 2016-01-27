@@ -20,7 +20,7 @@
                             <h:form>
                                 <f:event type="preRenderView" listener="#{moduloControlador.initLista}" />
                                 <p:dataTable  value="#{moduloControlador.moduloPaginador}"    var="list" emptyMessage="No existen registros de cuentas" 
-                                              paginator="true" rows="10" lazy="true" rowIndexVar="rowIndex"
+                                              paginator="true" rows="12" lazy="true" rowIndexVar="rowIndex"
                                               paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
 
                                     <p:column  headerText="Nombre" style="text-align: center;">

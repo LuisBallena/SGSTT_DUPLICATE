@@ -21,7 +21,7 @@
                             <h:form id="frmIncidencia">
                                 <f:event type="preRenderView" listener="#{incidenciaControlador.initLista}" />
                                 <p:dataTable  value="#{incidenciaControlador.incidenciaPaginador}"    var="list" emptyMessage="No existen registros de tarifa" 
-                                              paginator="true" rows="10" lazy="true" rowIndexVar="rowIndex" 
+                                              paginator="true" rows="12" lazy="true" rowIndexVar="rowIndex" 
                                               paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
 
                                    <p:column  headerText="Servicio" style="text-align: center;">

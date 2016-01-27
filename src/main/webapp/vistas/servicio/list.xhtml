@@ -29,7 +29,7 @@
                                 <h:messages id="msg" globalOnly="true" styleClass="list-group" infoClass="list-group-item list-group-item-success"
                                                     errorClass="list-group-item list-group-item-danger" />
                                 <p:dataTable    value="#{servicioControlador.servicioPaginador}"    var="list" emptyMessage="No existen registros de servicios" 
-                                                paginator="true" rows="10" lazy="true" rowIndexVar="rowIndex"
+                                                paginator="true" rows="12" lazy="true" rowIndexVar="rowIndex"
                                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
 
                                     <p:column    style="text-align: center;font-size: 15px;">
@@ -49,7 +49,7 @@
                                     <f:facet name="header">
                                             Horas Servicio
                                         </f:facet>
-                                        <h:outputText value="#{list.horas}" />
+                                        <h:outputText value="#{list.horas} horas" />
                                    </p:column>
                                     <p:column  style="text-align: center;width: 12%;">
                                         <p:commandButton rendered="#{sesionControlador.permisoModulo.actualizar eq true}" style="font-size: 12px;"  icon="icon-update" action="#{servicioControlador.irActualizar(list.id)}"    >

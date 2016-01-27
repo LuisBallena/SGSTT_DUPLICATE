@@ -29,7 +29,7 @@
                                 <h:messages id="msg" globalOnly="true" styleClass="list-group" infoClass="list-group-item list-group-item-success"
                                                     errorClass="list-group-item list-group-item-danger" />
                                 <p:dataTable    value="#{trasladistaControlador.trasladistaPaginador}"    var="list" emptyMessage="No existen registros de trasladista" 
-                                                paginator="true" rows="10" lazy="true" rowIndexVar="rowIndex"
+                                                paginator="true" rows="12" lazy="true" rowIndexVar="rowIndex"
                                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
 
                                     <p:column    style="text-align: center;font-size: 15px;">
@@ -42,31 +42,31 @@
                                         <f:facet name="header">
                                             DNI
                                         </f:facet>
-                                        <h:outputText value="#{list.dni eq ' ' ? 'No Disponible' :  list.dni}" />
+                                        <h:outputText value="#{list.dni eq '' ? 'No Disponible' :  list.dni}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Dirección
                                         </f:facet>
-                                        <h:outputText value="#{list.direccion eq ' ' ? 'No Disponible' :  list.direccion}" />
+                                        <h:outputText value="#{list.direccion eq '' ? 'No Disponible' :  list.direccion}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Telefono
                                         </f:facet>
-                                        <h:outputText value="#{list.telefono eq ' ' ? 'No Disponible' :  list.telefono}" />
+                                        <h:outputText value="#{list.telefono eq '' ? 'No Disponible' :  list.telefono}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Celular
                                         </f:facet>
-                                        <h:outputText value="#{list.celular eq ' ' ? 'No Disponible' :  list.celular}" />
+                                        <h:outputText value="#{list.celular eq '' ? 'No Disponible' :  list.celular}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Correo
                                         </f:facet>
-                                        <h:outputText value="#{list.correo eq ' ' ? 'No Disponible' :  list.correo}" />
+                                        <h:outputText value="#{list.correo eq '' ? 'No Disponible' :  list.correo}" />
                                     </p:column>
                                     <p:column  style="text-align: center;width: 12%;">
                                         <p:commandButton rendered="#{sesionControlador.permisoModulo.actualizar eq true}" style="font-size: 12px;"  icon="icon-update" action="#{trasladistaControlador.irActualizar(list.id)}"    >

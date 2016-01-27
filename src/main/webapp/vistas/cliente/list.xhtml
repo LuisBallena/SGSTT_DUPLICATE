@@ -42,31 +42,31 @@
                                         <f:facet name="header">
                                             Tipo Cliente
                                         </f:facet>
-                                        <h:outputText value="#{list.tipoCliente.tipoCliente eq ' ' ? 'No Disponible' :  list.tipoCliente.tipoCliente}" />
+                                        <h:outputText value="#{list.tipoCliente.tipoCliente eq '' ? 'No Disponible' :  list.tipoCliente.tipoCliente}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Tipo Doc.
                                         </f:facet>
-                                        <h:outputText value="#{list.tipoDocumento eq ' ' ? 'No Disponible' :  list.tipoDocumento}" />
+                                        <h:outputText value="#{list.tipoDocumento}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Nro.Documento
                                         </f:facet>
-                                        <h:outputText value="#{list.numeroDocumento eq ' ' ? 'No Disponible' :  list.numeroDocumento}" />
+                                        <h:outputText value="#{list.numeroDocumento eq '' ? 'No Disponible' :  list.numeroDocumento}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Correo
                                         </f:facet>
-                                        <h:outputText value="#{list.correo eq ' ' or list.correo eq '' ? 'No Disponible' :  list.correo}" />
+                                        <h:outputText value="#{list.correo eq '' ? 'No Disponible' :  list.correo}" />
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Direccion
                                         </f:facet>
-                                        <h:outputText value="#{list.direccion eq ' ' or list.direccion eq '' ? 'No Disponible' :  list.direccion}" />
+                                        <h:outputText value="#{list.direccion eq '' ? 'No Disponible' :  list.direccion}" />
                                     </p:column>
                                     <p:column  style="text-align: center;width: 12%;">
                                         <p:commandButton rendered="#{sesionControlador.permisoModulo.actualizar eq true}" style="font-size: 12px;"  icon="icon-update" action="#{clienteControlador.irActualizar(list.idCliente)}"    >

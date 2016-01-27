@@ -39,9 +39,9 @@ DROP TABLE IF EXISTS `sgstt`.`trasladista` ;
 CREATE  TABLE IF NOT EXISTS `sgstt`.`trasladista` (
   `idtrasladista` INT NOT NULL AUTO_INCREMENT ,
   `idsede` INT NOT NULL ,
-  `nombre` VARCHAR(60) NULL DEFAULT NULL ,
-  `apellido` VARCHAR(80) NULL DEFAULT NULL ,
-  `dni` VARCHAR(8) NULL DEFAULT NULL ,
+  `nombre` VARCHAR(60) NULL ,
+  `apellido` VARCHAR(80) NULL ,
+  `dni` VARCHAR(8) NULL,
   `direccion` VARCHAR(200) NULL  ,
   `correo` VARCHAR(100) NULL ,
   `telefono` VARCHAR(9) NULL  ,
