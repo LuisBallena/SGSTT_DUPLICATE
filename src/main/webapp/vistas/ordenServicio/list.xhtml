@@ -91,7 +91,7 @@
                                                                       itemValue="#{null}"/>
                                                         <f:selectItems value="#{ordenServicioControlador.vehiculos}"
                                                                        var="vehiculos"
-                                                                       itemLabel="#{vehiculos.descripcion}"
+                                                                       itemLabel="#{vehiculos.descripcion2}"
                                                                        itemValue="#{vehiculos.id}"/>
                                                     </h:selectOneMenu>
                                                 </div>
@@ -361,7 +361,7 @@
                                                 Vehiculo
                                             </f:facet>
                                             <h:outputText
-                                                value="#{list.vehiculo eq null ? 'No Asignado' : list.vehiculo.descripcion}"/>
+                                                value="#{list.vehiculo eq null ? 'No Asignado' : list.vehiculo.descripcion2}"/>
                                         </p:column>
                                         <p:column style="text-align: center;font-size: 11px;">
                                             <f:facet name="header">
@@ -620,9 +620,9 @@
                 </div>
 
                 <div class="form-group has-feedback">
-                    <label class="col-md-3 control-label">Chofer :</label>
+                    <label class="col-md-4 control-label">Chofer :</label>
 
-                    <div class="col-md-9">
+                    <div class="col-md-15">
                         <h:selectOneMenu id="comboChoferesAsignar" styleClass="form-control"
                                          converter="omnifaces.SelectItemsConverter"
                                          value="#{ordenServicioControlador.servicioDetalle.chofer}">
@@ -647,7 +647,7 @@
                                           itemValue="#{null}"/>
                             <f:selectItems value="#{ordenServicioControlador.vehiculos}"
                                            var="vehiculoAsignar"
-                                           itemLabel="#{vehiculoAsignar.descripcion} | #{vehiculoAsignar.tipoVehiculo.nombre}"
+                                           itemLabel="#{vehiculoAsignar.descripcion2} | #{vehiculoAsignar.tipoVehiculo.nombre}"
                                            itemValue="#{vehiculoAsignar}"/>
                         </h:selectOneMenu>
                     </div>

@@ -33,6 +33,9 @@ public class Vehiculo implements Serializable {
 
     @Column
     private String descripcion;
+    
+    @Column
+    private String descripcion2;
 
     @Column
     private String placa;
@@ -85,6 +88,7 @@ public class Vehiculo implements Serializable {
         Vehiculo vehiculo = (Vehiculo) o;
         return Objects.equals(id, vehiculo.id) &&
                 Objects.equals(descripcion, vehiculo.descripcion) &&
+                Objects.equals(descripcion2, vehiculo.descripcion2) &&
                 Objects.equals(placa, vehiculo.placa) &&
                 Objects.equals(color, vehiculo.color) &&
                 Objects.equals(año_fabricacion, vehiculo.año_fabricacion) &&
@@ -97,7 +101,7 @@ public class Vehiculo implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, descripcion, placa, color, año_fabricacion, capacidad_max, capacidad_recomendada, fechaRegistro, fechaModificacion, estado);
+        return Objects.hash(id, descripcion, descripcion2, placa, color, año_fabricacion, capacidad_max, capacidad_recomendada, fechaRegistro, fechaModificacion, estado);
     }
 
     public Integer getId() {
@@ -114,6 +118,13 @@ public class Vehiculo implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+    public String getDescripcion2() {
+        return descripcion2;
+    }
+
+    public void setDescripcion2(String descripcion2) {
+        this.descripcion = descripcion2;
     }
 
     public String getPlaca() {
