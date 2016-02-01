@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.junit.Test;
 import com.sgstt.hibernate.HibernateUtil;
 import org.hibernate.internal.SessionImpl;
+import org.junit.Ignore;
 
 /**
  *
@@ -13,6 +14,7 @@ import org.hibernate.internal.SessionImpl;
 public class HibernateTest {
     
     @Test
+    @Ignore
     public void validarConexion(){
         Throwable exception = null;
         try {
