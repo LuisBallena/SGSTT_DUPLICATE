@@ -124,6 +124,7 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`vehiculo` (
   `idvehiculo` INT NOT NULL AUTO_INCREMENT ,
   `idsede` INT NOT NULL ,
   `descripcion` VARCHAR(45) NULL ,
+  `descripcion2` VARCHAR(45) NULL ,
   `placa` VARCHAR(7) NULL ,
   `estado` TINYINT(1) NOT NULL DEFAULT 1 ,
   `año_fabricacion` VARCHAR(4) NULL ,

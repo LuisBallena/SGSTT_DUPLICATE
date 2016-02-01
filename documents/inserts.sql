@@ -175,17 +175,17 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sgstt`;
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (1, 1, 'V-01', 'B6F-962', 1, '2006', '12', '10', 'negro', 2, 4, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (2, 2, 'V-04', 'B3Z-954', 1, '2009', '40', '36', 'plata', 8, 2, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (3, 1, 'V-05', 'B6H-966', 1, '2009', '50', '45', 'plata', 8, 5, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (4, 1, 'V-06', 'A3H-968', 1, '2010', '12', '10', 'negro', 8, 2, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (5, 2, 'V-08', 'B8P-788', 1, '2012', '40', '36', 'plata', 8, 4, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (6, 1, 'V-09', 'B0F-958', 1, '2012', '50', '45', 'plata', 5, 3, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (7, 1, 'V-10', 'C3H-964', 1, '2012', '12', '10', 'negro', 5, 1, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (8, 1, 'V-11', 'C3E-953', 1, '2013', '40', '36', 'plata', 6, 3, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (9, 1, 'V-12', 'C5J-959', 1, '2013', '50', '45', 'plata', 8, 2, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (10, 1, 'V-13', 'C6Q-967', 1, '2014', '12', '10', 'negro', 5, 1, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (11, 1, 'V-14', 'C6T-963', 1, '2014', '40', '36', 'plata', 2, 4, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `descripcion2`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (1, 1, 'V-01', 'SCANIA1', 'B6F-962', 1, '2006', '12', '10', 'negro', 2, 4, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `descripcion2`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (2, 2, 'V-04', 'H1-1', 'B3Z-954', 1, '2009', '40', '36', 'plata', 8, 2, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `descripcion2`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (3, 1, 'V-05', 'TOYOTA', 'B6H-966', 1, '2009', '50', '45', 'plata', 8, 5, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `descripcion2`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (4, 1, 'V-06', 'H1-2', 'A3H-968', 1, '2010', '12', '10', 'negro', 8, 2, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `descripcion2`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (5, 2, 'V-08', 'H1-3', 'B8P-788', 1, '2012', '40', '36', 'plata', 8, 4, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `descripcion2`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (6, 1, 'V-09', 'MERCEDES2', 'B0F-958', 1, '2012', '50', '45', 'plata', 5, 3, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `descripcion2`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (7, 1, 'V-10', 'HINO1', 'C3H-964', 1, '2012', '12', '10', 'negro', 5, 1, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `descripcion2`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (8, 1, 'V-11', 'SPRINTER', 'C3E-953', 1, '2013', '40', '36', 'plata', 6, 3, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `descripcion2`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (9, 1, 'V-12', 'H1-4', 'C5J-959', 1, '2013', '50', '45', 'plata', 8, 2, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `descripcion2`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (10, 1, 'V-13', 'HINO2', 'C6Q-967', 1, '2014', '12', '10', 'negro', 5, 1, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `descripcion2`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (11, 1, 'V-14', 'SCANIA2', 'C6T-963', 1, '2014', '40', '36', 'plata', 2, 4, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
 COMMIT;
 
 -- -----------------------------------------------------
@@ -650,8 +650,12 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sgstt`;
-INSERT INTO `sgstt`.`empleado` (`idempleado`,`idsede`, `nombre`, `apellidos`, `dni`, `telefono`, `celular`, `correo`, `estado`) VALUES (1, 1, 'Sistema', 'Administrador Lima', '11111111', '11111111', '11111111', '11111111', 1);
-INSERT INTO `sgstt`.`empleado` (`idempleado`,`idsede`, `nombre`, `apellidos`, `dni`, `telefono`, `celular`, `correo`, `estado`) VALUES (2, 2, 'Sistema', 'Administrador Cusco', '11111111', '11111111', '11111111', '11111111', 1);
+INSERT INTO `empleado` VALUES (1,1,'Sistema','Administrador Lima','11111111','11111111','11111111','11111111',1);
+INSERT INTO `empleado` VALUES (2,2,'Sistema','Administrador Cusco','11111111','11111111','11111111','11111111',1);
+INSERT INTO `empleado` VALUES (3,1,'Jose','Huapalla','12345678','123456789','123456789','123456789',1);
+INSERT INTO `empleado` VALUES (4,1,'Willy','Rojas','12345678','123456789','123456789','123456789',1);
+INSERT INTO `empleado` VALUES (5,2,'Jose','Huapalla','12345678','12345678','12345678','12345678',1);
+INSERT INTO `empleado` VALUES (6,2,'Willy','Rojas','12345678','12345678','12345678','12345678',1);
 
 COMMIT;
 
@@ -671,8 +675,12 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sgstt`;
-INSERT INTO `sgstt`.`usuario` (`idusuario`, `idperfil`, `idempleado`, `idsede`, `nick`, `clave`, `estado`) VALUES (1, 1, 1, 1, 'admin-lima', 'admin1234', 1);
-INSERT INTO `sgstt`.`usuario` (`idusuario`, `idperfil`, `idempleado`, `idsede`, `nick`, `clave`, `estado`) VALUES (2, 1, 2, 2, 'admin-cusco', 'admin1234', 1);
+INSERT INTO `usuario` VALUES (1,1,1,1,'admin-lima','admin1234',1);
+INSERT INTO `usuario` VALUES (2,1,2,2,'admin-cusco','admin1234',1);
+INSERT INTO `usuario` VALUES (3,2,3,1,'jose-lima','123456',1);
+INSERT INTO `usuario` VALUES (4,2,4,1,'willy-lima','123456',1);
+INSERT INTO `usuario` VALUES (5,2,5,2,'jose-cusco','123456',1);
+INSERT INTO `usuario` VALUES (6,2,6,2,'willy-cusco','123456',1);
 
 
 COMMIT;
