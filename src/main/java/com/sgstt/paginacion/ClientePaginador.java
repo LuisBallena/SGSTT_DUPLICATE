@@ -20,6 +20,6 @@ public class ClientePaginador extends HibernateStringPaginador implements Serial
     
     @Override
     protected String createFilter(Object...values) {
-        return String.format("%s where cliente.estado = 1 and cliente.sede.id = %d",super.createFilter(),(Integer)values[0]);
+        return String.format("%s where cliente.estado = 1 ",super.createFilter(),(Integer)values[0]);
     }
 }

@@ -10,7 +10,7 @@
     <ui:define name="content">
         <div class="row">
             <div class="col-lg-12">
-                <h3 class="page-header">Administrar Vuelos</h3>
+                <h3 class="page-header">Administrar Lineas</h3>
             </div>
             <div class="row">
                 <div class="col-lg-12">
@@ -19,7 +19,7 @@
                             <div class="row">
                                 <div class="col-sm-2">
                                     <h:panelGroup rendered="#{sesionControlador.permisoModulo.crear eq true}">
-                                        <h:button value="Nuevo Vuelo" styleClass="btn btn-primary" outcome="create.xhtml" />
+                                        <h:button value="Nueva Linea" styleClass="btn btn-primary" outcome="create.xhtml" />
                                     </h:panelGroup>
                                 </div>
                             </div>      
@@ -28,13 +28,13 @@
                                 <f:event type="preRenderView" listener="#{vueloControlador.initLista}" />
                                 <h:messages id="msg" globalOnly="true" styleClass="list-group" infoClass="list-group-item list-group-item-success"
                                                     errorClass="list-group-item list-group-item-danger" />
-                                <p:dataTable    value="#{vueloControlador.vueloPaginador}"    var="list" emptyMessage="No existen registros de empresas externas" 
-                                                paginator="true" rows="12" lazy="true" rowIndexVar="rowIndex"
+                                <p:dataTable    value="#{vueloControlador.vueloPaginador}"    var="list" emptyMessage="No existen registros de lineas" 
+                                                paginator="true" rows="20" lazy="true" rowIndexVar="rowIndex"
                                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
 
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
-                                            Código Vuelo
+                                            Código de Linea
                                         </f:facet>
                                         <h:outputText value="#{list.descripcion}" />
                                     </p:column>
@@ -52,7 +52,7 @@
                                     </p:column>
                                     <p:column    style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
-                                            Arolinea
+                                            Proveedor
                                         </f:facet>
                                         <h:outputText value="#{list.aerolinea.descripcion}" />
                                     </p:column>

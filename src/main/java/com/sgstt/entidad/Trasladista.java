@@ -42,6 +42,9 @@ public class Trasladista implements Serializable{
     String direccion;
     
     @Column
+    String distrito;
+    
+    @Column
     String correo;
     
     @Column
@@ -125,7 +128,15 @@ public class Trasladista implements Serializable{
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
+    
+    public String getDistrito() {
+        return distrito;
+    }
 
+    public void setDistrito(String distrito) {
+        this.distrito = distrito;
+    }
+    
     public String getCorreo() {
         return correo;
     }

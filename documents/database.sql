@@ -43,6 +43,7 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`trasladista` (
   `apellido` VARCHAR(80) NULL ,
   `dni` VARCHAR(8) NULL,
   `direccion` VARCHAR(200) NULL  ,
+  `distrito` VARCHAR(80) NULL  ,
   `correo` VARCHAR(100) NULL ,
   `telefono` VARCHAR(9) NULL  ,
   `celular` VARCHAR(11) NULL  ,

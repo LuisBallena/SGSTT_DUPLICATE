@@ -254,7 +254,7 @@
 
                                     <p:dataTable value="#{ordenServicioControlador.servicioDetallePaginador}" var="list"
                                                  emptyMessage="No existen ordenes de servicios" style="width: 1700px;"
-                                                 paginator="true" rows="12" lazy="true" rowIndexVar="rowIndex"
+                                                 paginator="true" rows="15" lazy="true" rowIndexVar="rowIndex"
                                                  paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {Exporters}">
                                         <f:facet name="{Exporters}">
                                             <h:commandLink styleClass="btnExportarExcel" id="exporterright"
@@ -338,7 +338,7 @@
                                         </p:column>
                                         <p:column style="text-align: center;font-size: 13px;">
                                             <f:facet name="header">
-                                                Vuelo
+                                                Linea
                                             </f:facet>
                                             <h:outputText
                                                 value="#{list.vuelo eq null ? 'No Aplica' : list.vuelo.descripcion}"/>
