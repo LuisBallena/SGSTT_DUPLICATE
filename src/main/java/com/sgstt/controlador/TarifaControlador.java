@@ -113,9 +113,9 @@ public class TarifaControlador implements Serializable {
         } else if (!esTipoVehiculoValido()) {
             Utilitario.enviarMensajeGlobalError("Debe seleccionar un Tipo Vehiculo");
             resultado = false;
-        } else if (!esPrecioValido()) {
-            Utilitario.enviarMensajeGlobalError("Debe ingresar el precio");
-            resultado = false;
+       // } else if (!esPrecioValido()) {
+        //    Utilitario.enviarMensajeGlobalError("Debe ingresar el precio");
+         //   resultado = false;
         }
         return resultado;
     }
@@ -147,9 +147,9 @@ public class TarifaControlador implements Serializable {
         return tarifa.getTipoVehiculo().getId().intValue() != 0;
     }
 
-    private boolean esPrecioValido() {
-        return tarifa.getPrecio().doubleValue() != 0.0;
-    }
+ //   private boolean esPrecioValido() {
+//      return tarifa.getPrecio().doubleValue() != 0.0;
+//    }
 
     /* GETTERS AND SETTERS */
     public HibernatePaginador<Tarifa> getTarifaPaginador() {
