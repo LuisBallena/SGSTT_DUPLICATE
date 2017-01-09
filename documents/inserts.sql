@@ -29,22 +29,22 @@ USE `sgstt`;
 
 INSERT INTO trasladista VALUES (1,1,'Margarita Stuard','','','Domeyer 128 Dpto 502 ','Barranco','','',992096541,1);
 INSERT INTO trasladista VALUES (2,1,'Victor Aranda','','','Av. El laurel rosa 411, Dpto 502 Los sauces ','Surquillo','','',998704588,1);
-INSERT INTO trasladista VALUES (3,1,'Silvia de Vettor','','','Ramón Castilla 418 Urb. Aurora ','Miraflores','','',998584090,1);
+INSERT INTO trasladista VALUES (3,1,'Silvia de Vettor','','','Ramï¿½n Castilla 418 Urb. Aurora ','Miraflores','','',998584090,1);
 INSERT INTO trasladista VALUES (4,1,'Ursula Collas','','','Calle. Alfredo silva 142, Casa 115 ','Barranco','','',987483384,1);
 INSERT INTO trasladista VALUES (5,1,'Nelida Manrique','','','Calle. Manco Capac 421-Dpto 102 ','Miraflores','','',999606328,1);
-INSERT INTO trasladista VALUES (6,1,'Franz Alarcon','','','Av. Grau 341 – Dpto 602 ','Miraflores','','',997918429,1);
+INSERT INTO trasladista VALUES (6,1,'Franz Alarcon','','','Av. Grau 341 ï¿½ Dpto 602 ','Miraflores','','',997918429,1);
 INSERT INTO trasladista VALUES (7,1,'Nieves echegaray','','','Parque echenique 741 Dpto. 501','Pueblo Libre','','',989204566,1);
-INSERT INTO trasladista VALUES (8,1,'Oscar Von Bishopsahussen','','','Av. Castilla con Av. Ayacucho G in 17 - Urbanización La Capullana ','Suco','','',941998805,1);
+INSERT INTO trasladista VALUES (8,1,'Oscar Von Bishopsahussen','','','Av. Castilla con Av. Ayacucho G in 17 - Urbanizaciï¿½n La Capullana ','Suco','','',941998805,1);
 INSERT INTO trasladista VALUES (9,1,'Ernesto Riedner','','','Jr. Fernando castrat #320  ','Surco','','',999094224,1);
-INSERT INTO trasladista VALUES (10,1,'Guillermo Torres','','','Enrique Barrón Nº 845 – Dpto. 202 – Santa Beatriz','Lima','','',999734773,1);
-INSERT INTO trasladista VALUES (11,1,'Mariana Garcia','','','Calle La Península Mz C1 Lt 21 Urb. La Ensenada ','La Molina','',989767036,951316074,1);
+INSERT INTO trasladista VALUES (10,1,'Guillermo Torres','','','Enrique Barrï¿½n Nï¿½ 845 ï¿½ Dpto. 202 ï¿½ Santa Beatriz','Lima','','',999734773,1);
+INSERT INTO trasladista VALUES (11,1,'Mariana Garcia','','','Calle La Penï¿½nsula Mz C1 Lt 21 Urb. La Ensenada ','La Molina','',989767036,951316074,1);
 INSERT INTO trasladista VALUES (12,1,'Karina Bartens','','','Jr. El escorial F-3 urb comopus','Surco','',992708308,951421407,1);
 INSERT INTO trasladista VALUES (13,1,'Ena cabrera','','','Jr. Bolognesi 647- B - Miraflores','Miraflores','','',998448799,1);
 INSERT INTO trasladista VALUES (14,1,'sandra casas','','','Calle buenaventura Aguirre 348 Dpto 402 ','Barranco','','',991722833,1);
 INSERT INTO trasladista VALUES (15,1,'Kika Caballero','','','Alameda monte Umbroso 285 Alt. Cdra 2 de precursores ','Surco','','',999709039,1);
 INSERT INTO trasladista VALUES (16,1,'Alberto Gomez','','','Av. Santa cruz 753 ','Jesus Maria','',514247963,999981716,1);
-INSERT INTO trasladista VALUES (17,1,'Miguel Castañeda','','','Bruselas 201 los sauces ','Surquillo','','',995035770,1);
-INSERT INTO trasladista VALUES (18,1,'Elisa Paredes','','','Jr. General Borgoña 120 Int. 1003 ','Pueblo Libre','','',992770563,1);
+INSERT INTO trasladista VALUES (17,1,'Miguel Castaï¿½eda','','','Bruselas 201 los sauces ','Surquillo','','',995035770,1);
+INSERT INTO trasladista VALUES (18,1,'Elisa Paredes','','','Jr. General Borgoï¿½a 120 Int. 1003 ','Pueblo Libre','','',992770563,1);
 INSERT INTO trasladista VALUES (19,1,'Mirtha Cabanillas','','','Av. Newton # 7263 Urb. Sol de oro ','Los Olivos','','',995885002,1);
 INSERT INTO trasladista VALUES (20,1,'sheyla carpio','','','Los Zorzales 224 - santa cecilia - Bellavista','Callao','','',986642977,1);
 INSERT INTO trasladista VALUES (21,1,'Mariela castro','','','Jr. Chacas Urb. Mercurio 891','Los Olivos','','',940276733,1);
@@ -59,7 +59,7 @@ INSERT INTO trasladista VALUES (29,1,'Michael Sauerteig ','','','Calle Tiepolo 1
 INSERT INTO trasladista VALUES (30,1,'Francisco Bringas','','','Puerta del Sol 380 - La Castellana','Surco','',940495752,997893524,1);
 INSERT INTO trasladista VALUES (31,1,'Jean Pierre Neciosup ','','','Av Sebastian Lorente 1045 Cercado de Lima','Lima','',997017486,991197472,1);
 INSERT INTO trasladista VALUES (32,1,'Daniel Poppe ','','','c/ Sinchi Roca 2532, dep 802','Lince','','',971115001,1);
-INSERT INTO trasladista VALUES (33,1,'Ronald Morales','','','Calle Los Conquistadores  MZ D Lt 3. Urbanización Sanchez Cerro.','Surco','','',986470544,1);
+INSERT INTO trasladista VALUES (33,1,'Ronald Morales','','','Calle Los Conquistadores  MZ D Lt 3. Urbanizaciï¿½n Sanchez Cerro.','Surco','','',986470544,1);
 INSERT INTO trasladista VALUES (34,1,'Klaus Hippauf','','','Calle Isla de Gallo 197 - Dpto. 303','San Miguel','',987716929,993028794,1);
 INSERT INTO trasladista VALUES (35,1,'Carlo Barberis','','','Berlin 828 Dpto 301 ','Miraflores','','',994458720,1);
 INSERT INTO trasladista VALUES (36,1,'Carlos Ayala','','','Calle Las dalias E 19 - Urb. Filadelphia 4ta Etapa ','San Martin','',993506427,976719287,1);
@@ -130,14 +130,14 @@ INSERT INTO `sgstt`.`empresa` (`idempresa`,`idsede`, `razon_social`, `ruc`,`cent
 START TRANSACTION;
 USE `sgstt`;
 INSERT INTO `chofer` VALUES (1,2,'JAIME','AGUILAR EGOAVIL','23885693','','','2015-11-07 00:00:00','A1','12345678',1,1),
-(2,2,'CESAR AMADO','ARELLANOS MUÑOZ','25662462','','','2015-11-07 00:00:00','A2','12345678',1,1),
+(2,2,'CESAR AMADO','ARELLANOS MUï¿½OZ','25662462','','','2015-11-07 00:00:00','A2','12345678',1,1),
 (3,1,'MARIO HERNAN','CUADROS HUAPAYA','25577045','987-511-873','Q25577045','1970-07-13 00:00:00','A-3C','12345678',1,1),
 (4,1,'PEPE','DAMIAN JURO','10550499','987-511-874','Q10550499','1974-04-29 00:00:00','A-3C','12345678',1,1),
 (5,1,'KATTY DORIS','ESCOBAR PUMACALLAO','07884541','989-214-673','Q07884541','1974-03-15 00:00:00','A- 2B','12345678',1,1),
 (6,1,'CARLOS ALBERTO','HERRERA NAVARRO','10630551','987-545-125','Q10630551','1977-03-15 00:00:00','A-3C','12345678',1,1),
 (7,1,'JOSE EDUARDO','HUAPALLA BALCAZAR','10144415','997-517-962','Q10144415','2015-11-07 00:00:00','A-2B','12345678',1,1),
 (8,1,'RODOLFO CESAR','LAZO CALDERON','25717877','989-214-674','Q25717877','1972-08-18 00:00:00','A-3C','12345678',1,1),
-(9,1,'JOSE LUIS','NUÑEZ CUENCA ROJAS','09461980','984-126-764','Q0946980','1971-04-25 00:00:00','A-3A','12345678',1,1),
+(9,1,'JOSE LUIS','NUï¿½EZ CUENCA ROJAS','09461980','984-126-764','Q0946980','1971-04-25 00:00:00','A-3A','12345678',1,1),
 (10,1,'ADRIAN','TICONA APAZA','10520991','987-511-872','K10520991','1968-01-17 00:00:00','A-3C','12345678',1,1),
 (11,1,'RAUL ANIBAL','TORRES GARAY','08667068','987-596-639','Q08667068','1967-04-07 00:00:00','A-3C','12345678',1,1);
 COMMIT;
@@ -178,17 +178,17 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sgstt`;
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `descripcion2`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (1, 1, 'V-01', 'SCANIA1', 'B6F-962', 1, '2006', '12', '10', 'negro', 2, 4, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `descripcion2`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (2, 2, 'V-04', 'H1-1', 'B3Z-954', 1, '2009', '40', '36', 'plata', 8, 2, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `descripcion2`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (3, 1, 'V-05', 'TOYOTA', 'B6H-966', 1, '2009', '50', '45', 'plata', 8, 5, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `descripcion2`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (4, 1, 'V-06', 'H1-2', 'A3H-968', 1, '2010', '12', '10', 'negro', 8, 2, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `descripcion2`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (5, 2, 'V-08', 'H1-3', 'B8P-788', 1, '2012', '40', '36', 'plata', 8, 4, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `descripcion2`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (6, 1, 'V-09', 'MERCEDES2', 'B0F-958', 1, '2012', '50', '45', 'plata', 5, 3, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `descripcion2`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (7, 1, 'V-10', 'HINO1', 'C3H-964', 1, '2012', '12', '10', 'negro', 5, 1, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `descripcion2`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (8, 1, 'V-11', 'SPRINTER', 'C3E-953', 1, '2013', '40', '36', 'plata', 6, 3, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `descripcion2`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (9, 1, 'V-12', 'H1-4', 'C5J-959', 1, '2013', '50', '45', 'plata', 8, 2, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `descripcion2`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (10, 1, 'V-13', 'HINO2', 'C6Q-967', 1, '2014', '12', '10', 'negro', 5, 1, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
-INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `descripcion2`, `placa`, `estado`, `año_fabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (11, 1, 'V-14', 'SCANIA2', 'C6T-963', 1, '2014', '40', '36', 'plata', 2, 4, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `descripcion2`, `placa`, `estado`, `yearfabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (1, 1, 'V-01', 'SCANIA1', 'B6F-962', 1, '2006', '12', '10', 'negro', 2, 4, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `descripcion2`, `placa`, `estado`, `yearfabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (2, 2, 'V-04', 'H1-1', 'B3Z-954', 1, '2009', '40', '36', 'plata', 8, 2, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `descripcion2`, `placa`, `estado`, `yearfabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (3, 1, 'V-05', 'TOYOTA', 'B6H-966', 1, '2009', '50', '45', 'plata', 8, 5, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `descripcion2`, `placa`, `estado`, `yearfabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (4, 1, 'V-06', 'H1-2', 'A3H-968', 1, '2010', '12', '10', 'negro', 8, 2, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `descripcion2`, `placa`, `estado`, `yearfabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (5, 2, 'V-08', 'H1-3', 'B8P-788', 1, '2012', '40', '36', 'plata', 8, 4, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `descripcion2`, `placa`, `estado`, `yearfabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (6, 1, 'V-09', 'MERCEDES2', 'B0F-958', 1, '2012', '50', '45', 'plata', 5, 3, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `descripcion2`, `placa`, `estado`, `yearfabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (7, 1, 'V-10', 'HINO1', 'C3H-964', 1, '2012', '12', '10', 'negro', 5, 1, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `descripcion2`, `placa`, `estado`, `yearfabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (8, 1, 'V-11', 'SPRINTER', 'C3E-953', 1, '2013', '40', '36', 'plata', 6, 3, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `descripcion2`, `placa`, `estado`, `yearfabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (9, 1, 'V-12', 'H1-4', 'C5J-959', 1, '2013', '50', '45', 'plata', 8, 2, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `descripcion2`, `placa`, `estado`, `yearfabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (10, 1, 'V-13', 'HINO2', 'C6Q-967', 1, '2014', '12', '10', 'negro', 5, 1, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
+INSERT INTO `sgstt`.`vehiculo` (`idvehiculo`, `idsede`, `descripcion`, `descripcion2`, `placa`, `estado`, `yearfabricacion`, `capacidad_max`, `capacidad_recomendada`, `color`, `idtipo_vehiculo`, `marca_idmarca`, `fecha_registro`, `fecha_modificacion`) VALUES (11, 1, 'V-14', 'SCANIA2', 'C6T-963', 1, '2014', '40', '36', 'plata', 2, 4, '2015-05-27 19:56:47', '2015-05-27 19:56:47');
 COMMIT;
 
 -- -----------------------------------------------------
@@ -536,7 +536,7 @@ INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `horas`, `descripcion`, 
 INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `horas`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (79, 1, 4, 'RESTAURANT ( LIMA - SAN ISIDRO O MIRAFLORES) C.COUCHING', 1, 1);
 INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `horas`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (80, 1, 4, 'CITY TOUR (COLONIAL Y MODERNO) CUSCO COUCHING', 1, 2);
 INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `horas`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (81, 1, 4, 'UN MUSEO O COMPRAS CUSCO COUCHING', 1, 2);
-INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `horas`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (82, 1, 12, 'LIMA - PARACAS O ICA  x DÍA (Mínimo 2 días). CUSCO COUCHING', 1, 3);
+INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `horas`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (82, 1, 12, 'LIMA - PARACAS O ICAï¿½ x Dï¿½A (Mï¿½nimo 2 dï¿½as). CUSCO COUCHING', 1, 3);
 INSERT INTO `sgstt`.`servicio` (`idservicio`, `idsede`, `horas`, `descripcion`, `estado`, `idtipo_servicio`) VALUES (83, 1, 12, 'FULL DAY PARACAS O ICA CUSCO COUCHING', 1, 3);
 
 
@@ -623,7 +623,7 @@ INSERT INTO cliente VALUES (19,1,'','20509318892','TRANSPERU TRANSPORTE TURISTIC
 INSERT INTO cliente VALUES (20,1,'','20537884089','SANDY PERUVIAN TRAVEL SAC','Calle Antequera 155 Of.B San Isidro',1,'RUC','',2);
 INSERT INTO cliente VALUES (21,1,'','20100140692','CONDOR TRAVEL S.A.','Calle Mayor Armando Blondet Nro.249 San Borja',1,'RUC','',2);
 INSERT INTO cliente VALUES (22,1,'','20111429660','APOTUR','CALLE SAN FERNANDO 287',1,'RUC','',2);
-INSERT INTO cliente VALUES (23,1,'','20100110513','COMPAÑÍA MINERA MILPO S.A.A.','Av.San Borja Norte 523 San Borja Lima Peru',1,'RUC','',2);
+INSERT INTO cliente VALUES (23,1,'','20100110513','COMPAï¿½ï¿½A MINERA MILPO S.A.A.','Av.San Borja Norte 523 San Borja Lima Peru',1,'RUC','',2);
 INSERT INTO cliente VALUES (24,1,'','20307167442','PROMPERU','Republica de Panama 3647 San Isidro',1,'RUC','',2);
 INSERT INTO cliente VALUES (25,1,'','20527405921','JOURNEY TRAVEL COMPANY SAC','Calle Union 259 Barranco Lima Lima',1,'RUC','',2);
 INSERT INTO cliente VALUES (26,1,'','20267326038','TRANSMARTIN''S TOURS EIRL','Jr La Calesa de La Perricholi Mz N1 La Molina Lima Lima',1,'RUC','',2);
@@ -635,7 +635,7 @@ INSERT INTO cliente VALUES (31,1,'','10401371015','CARLOS ALBERTO CHAU LEGUA','L
 INSERT INTO cliente VALUES (32,1,'','20514782157','MIRAFLORES TRAVEL Y TURISMO S.A.C.','Av.Jose Pardo 138 DPTO. 706 LIMA LIMA MIRAFLORES',1,'RUC','',2);
 INSERT INTO cliente VALUES (33,1,'','20553668370','TRANS PACIFIC INVERSIONES S.A.C.','Jr. Castilla 991 Magdalena',1,'RUC','',2);
 INSERT INTO cliente VALUES (34,1,'','20519249678','SERVICO DE TRANSPORTE TURISTICO TANG S.A.C.','Jr. Capac Yupanqui 107 Independencia Lima Lima',1,'RUC','',2);
-INSERT INTO cliente VALUES (35,1,'','20547556781','LIMA TODAY SAC','Av. Prolongación Matellini Mz M Lote 5 Urb. Santa Leonor, Chorrillos.',1,'RUC','',2);
+INSERT INTO cliente VALUES (35,1,'','20547556781','LIMA TODAY SAC','Av. Prolongaciï¿½n Matellini Mz M Lote 5 Urb. Santa Leonor, Chorrillos.',1,'RUC','',2);
 INSERT INTO cliente VALUES (36,1,'','20490431048','LATNINA TRAVEL S.A.C.','Jr. Lima B-7 Of.509 Barrio Profesional Cusco-Cusco',1,'RUC','',2);
 INSERT INTO cliente VALUES (37,1,'','20513215887','SOCIEDAD DE DESARROLLO DEHOTELES PERUANOS S.A.','Av.Victor Andres Belaunde 198 San Isidro',1,'RUC','',2);
 INSERT INTO cliente VALUES (38,1,'','20490607189','ARCHAEOLOGY AND BIRDING CUSCO SAC','MZ A DPTO 201 U.V.ZARUMILLA CUSCO',1,'RUC','',2);

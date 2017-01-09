@@ -11,46 +11,59 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 /**
- *
  * @author Luis Alonso Ballena Garcia
  */
 @Entity
 @Table(name = "modulo")
-public class Modulo implements Serializable,Comparable<Modulo>{
-    
+public class Modulo implements Serializable, Comparable<Modulo> {
+
     private static final long serialVersionUID = 8295057005100088900L;
-    
+
+    public static int[] IDS_MODULOS_SEGURIDAD = new int[]{3, 9, 11};
+
+    public static int[] IDS_MODULOS_ADMINISTRACION = new int[]{4, 8, 12, 13, 16, 18, 19};
+
+    public static int[] IDS_MODULOS_VENTAS = new int[]{6, 7, 10};
+
+    public static int[] IDS_MODULOS_RECURSOS_HUMANOS = new int[]{2, 5, 14, 15};
+
+    public static int[] IDS_MODULOS_BIENES = new int[]{17};
+
+    public static int[] IDS_MODULOS_CLIENTES = new int[]{1};
+
     @Id
     @GeneratedValue
     @Column(name = "IDMODULO")
     private Integer id;
-    
+
     @Column(nullable = false)
     private String nombre;
-    
-    @Column( nullable = false)
+
+    @Column(nullable = false)
     private boolean eliminar;
-    
-    @Column( nullable = false)
+
+    @Column(nullable = false)
     private boolean actualizar;
-    
-    @Column( nullable = false)
+
+    @Column(nullable = false)
     private boolean crear;
-    
-    @Column( nullable = false)
+
+    @Column(nullable = false)
     private boolean listar;
-    
-    @Column( nullable = false)
+
+    @Column(nullable = false)
     private String url;
-    
+
     @Enumerated(EnumType.ORDINAL)
-    @Column(nullable = false,insertable = false)
+    @Column(nullable = false, insertable = false)
     Estado estado;
-    
-    /** Esta variable solamente nos sirve para capturar los permisos que tiene sobre el modulo de la clase **/
+
+    /**
+     * Esta variable solamente nos sirve para capturar los permisos que tiene sobre el modulo de la clase *
+     */
     @Transient
     private Permiso permiso;
-    
+
     public Modulo() {
     }
 
@@ -58,14 +71,12 @@ public class Modulo implements Serializable,Comparable<Modulo>{
         this.id = id;
         this.nombre = nombre;
     }
-    
+
     @Override
     public int compareTo(Modulo o) {
-        if(getId().intValue() > o.getId().intValue())
-        {
+        if (getId().intValue() > o.getId().intValue()) {
             return 1;
-        }else if(getId().intValue() < o.getId().intValue())
-        {
+        } else if (getId().intValue() < o.getId().intValue()) {
             return -1;
         }
         return 0;
@@ -85,15 +96,17 @@ public class Modulo implements Serializable,Comparable<Modulo>{
         if (getClass() != obj.getClass()) {
             return false;
         }
-        return this.getId().intValue() == ((Modulo)obj).getId().intValue();
+        return this.getId().intValue() == ((Modulo) obj).getId().intValue();
     }
 
     @Override
     public String toString() {
         return "Modulo{" + "id=" + id + ", nombre=" + nombre + ", eliminar=" + eliminar + ", actualizar=" + actualizar + ", crear=" + crear + ", listar=" + listar + ", url=" + url + ", estado=" + estado + '}';
     }
-    
-    /** GETTERS AND SETTERS **/
+
+    /**
+     * GETTERS AND SETTERS *
+     */
     public Integer getId() {
         return id;
     }
@@ -166,5 +179,5 @@ public class Modulo implements Serializable,Comparable<Modulo>{
     public void setPermiso(Permiso permiso) {
         this.permiso = permiso;
     }
-    
+
 }

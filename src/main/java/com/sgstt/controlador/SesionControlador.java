@@ -4,14 +4,13 @@ import com.sgstt.entidad.Modulo;
 import com.sgstt.entidad.Permiso;
 import com.sgstt.entidad.Usuario;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.log4j.Logger;
 
@@ -20,16 +19,22 @@ import org.apache.log4j.Logger;
  * @author Luis Alonso Ballena Garcia
  */
 @ManagedBean(name = "sesionControlador")
-@ViewScoped
+@SessionScoped
 public class SesionControlador implements Serializable {
 
     private static final long serialVersionUID = 4034829534792715905L;
     private static final Logger log = Logger.getLogger(SesionControlador.class.getPackage().getName());
 
-    Usuario usuarioSesion;
-    List<Permiso> menuSistema;
-    Permiso permisoModulo;
-    NavegadorControlador navegadorControlador;
+    private Usuario usuarioSesion;
+    private List<Permiso> menuSistema;
+    private List<Permiso> seguridad;
+    private List<Permiso> administracion;
+    private List<Permiso> recursosHumanos;
+    private List<Permiso> ventas;
+    private List<Permiso> bienes;
+    private List<Permiso> clientes;
+    private Permiso permisoModulo;
+    private NavegadorControlador navegadorControlador;
 
     public SesionControlador() {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -39,6 +44,32 @@ public class SesionControlador implements Serializable {
     }
 
     public void ensamblarMenu() {
+        for(Permiso permiso : usuarioSesion.getPerfil().getPermisos()){
+            if(ArrayUtils.contains(Modulo.IDS_MODULOS_SEGURIDAD,permiso.getModulo().getId())){
+                seguridad = (seguridad == null ? new ArrayList<Permiso>() : seguridad);
+                seguridad.add(permiso);
+            }
+            if(ArrayUtils.contains(Modulo.IDS_MODULOS_ADMINISTRACION,permiso.getModulo().getId())){
+                administracion = (administracion == null ? new ArrayList<Permiso>() : administracion);
+                administracion.add(permiso);
+            }
+            if(ArrayUtils.contains(Modulo.IDS_MODULOS_VENTAS,permiso.getModulo().getId())){
+                ventas = (ventas == null ? new ArrayList<Permiso>() : ventas);
+                ventas.add(permiso);
+            }
+            if(ArrayUtils.contains(Modulo.IDS_MODULOS_RECURSOS_HUMANOS,permiso.getModulo().getId())){
+                recursosHumanos = (recursosHumanos == null ? new ArrayList<Permiso>() : recursosHumanos);
+                recursosHumanos.add(permiso);
+            }
+            if(ArrayUtils.contains(Modulo.IDS_MODULOS_BIENES,permiso.getModulo().getId())){
+                bienes = (bienes == null ? new ArrayList<Permiso>() : bienes);
+                bienes.add(permiso);
+            }
+            if(ArrayUtils.contains(Modulo.IDS_MODULOS_CLIENTES,permiso.getModulo().getId())){
+                clientes = (clientes == null ? new ArrayList<Permiso>() : clientes);
+                clientes.add(permiso);
+            }
+        }
         ensamblarMenuAuxiliar(usuarioSesion.getPerfil().getPermisos());
     }
 
@@ -108,5 +139,52 @@ public class SesionControlador implements Serializable {
     public void setPermisoModulo(Permiso permisoModulo) {
         this.permisoModulo = permisoModulo;
     }
-    
+
+    public List<Permiso> getRecursosHumanos() {
+        return recursosHumanos;
+    }
+
+    public void setRecursosHumanos(List<Permiso> recursosHumanos) {
+        this.recursosHumanos = recursosHumanos;
+    }
+
+    public List<Permiso> getSeguridad() {
+        return seguridad;
+    }
+
+    public void setSeguridad(List<Permiso> seguridad) {
+        this.seguridad = seguridad;
+    }
+
+    public List<Permiso> getAdministracion() {
+        return administracion;
+    }
+
+    public void setAdministracion(List<Permiso> administracion) {
+        this.administracion = administracion;
+    }
+
+    public List<Permiso> getVentas() {
+        return ventas;
+    }
+
+    public void setVentas(List<Permiso> ventas) {
+        this.ventas = ventas;
+    }
+
+    public List<Permiso> getBienes() {
+        return bienes;
+    }
+
+    public void setBienes(List<Permiso> bienes) {
+        this.bienes = bienes;
+    }
+
+    public List<Permiso> getClientes() {
+        return clientes;
+    }
+
+    public void setClientes(List<Permiso> clientes) {
+        this.clientes = clientes;
+    }
 }
