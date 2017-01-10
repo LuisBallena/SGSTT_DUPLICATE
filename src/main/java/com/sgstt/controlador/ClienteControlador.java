@@ -4,10 +4,13 @@ import com.sgstt.entidad.Cliente;
 import com.sgstt.entidad.Sede;
 import com.sgstt.entidad.TipoCliente;
 import com.sgstt.entidad.TipoDocumento;
+import com.sgstt.excepciones.FilterException;
+import com.sgstt.filters.ClienteFilter;
 import com.sgstt.hibernate.HibernatePaginador;
 import com.sgstt.paginacion.ClientePaginador;
 import com.sgstt.servicios.ClienteServicio;
 import com.sgstt.util.Utilitario;
+
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -16,7 +19,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 /**
- *
  * @author Luis Alonso Ballena Garcia
  */
 @ManagedBean(name = "clienteControlador")
@@ -30,6 +32,7 @@ public class ClienteControlador implements Serializable {
     private ClienteServicio clienteServicio;
     private Integer auxTipoDocumento;
     private List<Sede> sedes;
+    private ClienteFilter clienteFilter;
     @ManagedProperty(value = "#{sesionControlador}")
     private SesionControlador sesionControlador;
 
@@ -42,6 +45,7 @@ public class ClienteControlador implements Serializable {
             clienteServicio = new ClienteServicio();
             clientePaginador = new ClientePaginador();
             clientePaginador.initPaginador(sesionControlador.getUsuarioSesion().getSede().getId());
+            clienteFilter = new ClienteFilter();
         }
     }
 
@@ -54,7 +58,7 @@ public class ClienteControlador implements Serializable {
             cliente.getTipoCliente().setIdTipoCliente(TipoCliente.NATURAL);
             cliente.setSede(new Sede());
             setSedes(clienteServicio.obtenerSedes());
-            
+
         }
     }
 
@@ -75,9 +79,9 @@ public class ClienteControlador implements Serializable {
 
     public void guardarCliente() {
         cliente.setTipoDocumento(convertTipoDocumento(auxTipoDocumento));
-        
+
         if (esVistaValida()) {
-        	cliente.setSede(sesionControlador.getUsuarioSesion().getSede());
+            cliente.setSede(sesionControlador.getUsuarioSesion().getSede());
             clienteServicio.registrarCliente(cliente);
         }
     }
@@ -98,18 +102,24 @@ public class ClienteControlador implements Serializable {
             auxTipoDocumento = TipoDocumento.DNI.ordinal();
         } else if (cliente.getTipoCliente().getIdTipoCliente() == TipoCliente.JURIDICO) {
             auxTipoDocumento = TipoDocumento.RUC.ordinal();
-        }else if (cliente.getTipoCliente().getIdTipoCliente() == TipoCliente.NATURAL) {
+        } else if (cliente.getTipoCliente().getIdTipoCliente() == TipoCliente.NATURAL) {
             auxTipoDocumento = TipoDocumento.CARNET_EXTRANJERIA.ordinal();
         }
     }
 
+    public void ejecutarBusqueda() {
+        clienteFilter.setCliente(clienteFilter.getCliente() != null ? clienteFilter.getCliente().trim() : null);
+        clienteFilter.setNumeroDocumento(clienteFilter.getNumeroDocumento() != null ? clienteFilter.getNumeroDocumento().trim() : null);
+        clientePaginador.createFilterDynamic(clienteFilter);
+    }
+
     private TipoDocumento convertTipoDocumento(Integer id) {
         if (id == 0)
-			return TipoDocumento.DNI;
+            return TipoDocumento.DNI;
         if (id == 1)
-			return TipoDocumento.RUC;
-		else			
-			return TipoDocumento.CARNET_EXTRANJERIA;
+            return TipoDocumento.RUC;
+        else
+            return TipoDocumento.CARNET_EXTRANJERIA;
     }
 
     public String irActualizar(Integer id) {
@@ -129,7 +139,7 @@ public class ClienteControlador implements Serializable {
                 case TipoCliente.NATURAL:
                     resultado = esClienteNaturalValido();
                     break;
-                    
+
             }
         }
         return resultado;
@@ -155,7 +165,7 @@ public class ClienteControlador implements Serializable {
         } else if (cliente.getTipoDocumento() == TipoDocumento.CARNET_EXTRANJERIA) {
             Utilitario.enviarMensajeGlobalError("No puede escoger el documento CARNET_EXTRANJERIA, escoja RUC");
             resultado = false;
-        }else if (!Utilitario.esRangoValido(cliente.getNumeroDocumento(), 11, 11)) {
+        } else if (!Utilitario.esRangoValido(cliente.getNumeroDocumento(), 11, 11)) {
             Utilitario.enviarMensajeGlobalError("El ruc son 11 caracteres");
             resultado = false;
         } else if (!esDireccionValida()) {
@@ -267,17 +277,24 @@ public class ClienteControlador implements Serializable {
     public void setAuxTipoDocumento(Integer auxTipoDocumento) {
         this.auxTipoDocumento = auxTipoDocumento;
     }
-    
+
     public void setSesionControlador(SesionControlador sesionControlador) {
         this.sesionControlador = sesionControlador;
     }
-    
+
     public List<Sede> getSedes() {
-		return sedes;
-	}
+        return sedes;
+    }
 
-	public void setSedes(List<Sede> sedes) {
-		this.sedes = sedes;
-	}
+    public void setSedes(List<Sede> sedes) {
+        this.sedes = sedes;
+    }
 
+    public ClienteFilter getClienteFilter() {
+        return clienteFilter;
+    }
+
+    public void setClienteFilter(ClienteFilter clienteFilter) {
+        this.clienteFilter = clienteFilter;
+    }
 }

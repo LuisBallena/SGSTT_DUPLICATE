@@ -44,7 +44,8 @@ public class SesionControlador implements Serializable {
     }
 
     public void ensamblarMenu() {
-        for(Permiso permiso : usuarioSesion.getPerfil().getPermisos()){
+        ensamblarMenuAuxiliar(usuarioSesion.getPerfil().getPermisos());
+        for(Permiso permiso : menuSistema){
             if(ArrayUtils.contains(Modulo.IDS_MODULOS_SEGURIDAD,permiso.getModulo().getId())){
                 seguridad = (seguridad == null ? new ArrayList<Permiso>() : seguridad);
                 seguridad.add(permiso);
@@ -70,7 +71,6 @@ public class SesionControlador implements Serializable {
                 clientes.add(permiso);
             }
         }
-        ensamblarMenuAuxiliar(usuarioSesion.getPerfil().getPermisos());
     }
 
     private void ensamblarMenuAuxiliar(Collection<Permiso> permisos) {
