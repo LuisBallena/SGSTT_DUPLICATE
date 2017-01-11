@@ -23,12 +23,18 @@ public class FilePaginador extends HibernateStringPaginador implements Serializa
     @Override
     public void createFilterDynamic(Object value) {
         if(value instanceof FileFilter){
-            FileFilter filter = (FileFilter)value;
-            if(!Utilitario.esNulo(filter.getNroCorrelativo())){
-                queryDynamicCriteria = String.format("and file.nroCorrelativo like '%s%s'",filter.getNroCorrelativo(),"%");
-            }else{
-                queryDynamicCriteria = "";
+            FileFilter fileFilter = (FileFilter)value;
+            StringBuilder builder = new StringBuilder();
+            builder.append(!Utilitario.esNulo(fileFilter.getNroCorrelativo()) ? String.format("and file.nroCorrelativo like '%s%%' ", fileFilter.getNroCorrelativo()) : "");
+            builder.append(!Utilitario.esNulo(fileFilter.getPax()) ? String.format("and file.pax like '%s%%' ", fileFilter.getPax()) : "");
+            builder.append(!Utilitario.esNulo(fileFilter.getCuenta()) ? String.format("and file.cuenta like '%s%%' ", fileFilter.getCuenta()) : "");
+            builder.append(fileFilter.getCliente() != null ? String.format("and file.cliente.idCliente = %d ",fileFilter.getCliente().getIdCliente()):"");
+            if (fileFilter.getFechaDesde() != null && fileFilter.getFechaHasta() != null) {
+                builder.append(String.format("and file.fechaRegistro between '%s' and '%s' ",
+                        Utilitario.convertirFormatoFecha(fileFilter.getFechaDesde(), Utilitario.FORMATO_SQL_DATE_TIME),
+                        Utilitario.convertirFormatoFecha(fileFilter.getFechaHasta(), Utilitario.FORMATO_SQL_DATE) + " 23:59:59"));
             }
+            queryDynamicCriteria = builder.toString().trim();
         }
     }
 }

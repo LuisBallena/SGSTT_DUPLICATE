@@ -2,6 +2,8 @@ package com.sgstt.controlador;
 
 import com.sgstt.entidad.Cliente;
 import com.sgstt.entidad.File;
+import com.sgstt.excepciones.FilterException;
+import com.sgstt.filters.FileFilter;
 import com.sgstt.hibernate.HibernateConexion;
 import com.sgstt.hibernate.HibernatePaginador;
 import com.sgstt.paginacion.FilePaginador;
@@ -44,6 +46,7 @@ public class FileControlador implements Serializable {
     private List<Cliente> clientes;
     private Cliente clienteSeleccionado;
     private File file;
+    private FileFilter fileFilter;
     @ManagedProperty("#{sesionControlador}")
     SesionControlador sesionControlador;
 
@@ -53,9 +56,11 @@ public class FileControlador implements Serializable {
     public void initLista() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
             file = new File();
+            fileFilter = new FileFilter();
             fileServicio = new FileServicio();
             filePaginador = new FilePaginador();
             filePaginador.initPaginador();
+            clientes = fileServicio.obtenerClientes();
         }
     }
 
@@ -102,6 +107,18 @@ public class FileControlador implements Serializable {
     public void exportarFacturaNoGravada() {
         if (file != null) {
             exportarFactura(file.getIdFile(), 0, sesionControlador.getUsuarioSesion().getSede().getDescripcion(),"factura_no_gravada");
+        }
+    }
+
+    public void limpiarClienteFilter() {
+        fileFilter.setCliente(null);
+    }
+
+    public void ejecutarBusqueda(){
+        try {
+            filePaginador.createFilterDynamic(fileFilter);
+        }catch (FilterException e){
+            Utilitario.enviarMensajeGlobalError(e.getMessage());
         }
     }
 
@@ -152,15 +169,6 @@ public class FileControlador implements Serializable {
     private void limpiar() {
         file = new File();
         clienteSeleccionado = new Cliente();
-    }
-
-    private ExternalContext getResponseContentPdf(ExternalContext externalContext, String nombreArchivo) {
-        externalContext.setResponseContentType("application/pdf");
-        externalContext.setResponseHeader("Expires", "0");
-        externalContext.setResponseHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
-        externalContext.setResponseHeader("Pragma", "public");
-        externalContext.setResponseHeader("Content-Disposition", "attachment; filename=" + nombreArchivo + ".pdf");
-        return externalContext;
     }
 
     private ExternalContext getResponseContentExcel(ExternalContext externalContext, String nombreArchivo) {
@@ -262,4 +270,11 @@ public class FileControlador implements Serializable {
         this.sesionControlador = sesionControlador;
     }
 
+    public FileFilter getFileFilter() {
+        return fileFilter;
+    }
+
+    public void setFileFilter(FileFilter fileFilter) {
+        this.fileFilter = fileFilter;
+    }
 }

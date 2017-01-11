@@ -1,12 +1,13 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns="http://www.w3.org/1999/xhtml"
                 template="./../home.xhtml"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                >
+                xmlns:jsf="http://xmlns.jcp.org/jsf">
 
     <ui:define name="content">
         <div class="row">
@@ -17,65 +18,173 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-body" id="tabla">
+                            <h:messages id="msg" globalOnly="true" styleClass="list-group"
+                                        infoClass="list-group-item list-group-item-success"
+                                        errorClass="list-group-item list-group-item-danger"/>
                             <div class="row">
                                 <div class="col-sm-2">
                                     <h:panelGroup rendered="#{sesionControlador.permisoModulo.crear eq true}">
-                                        <h:button value="Nuevo File" styleClass="btn btn-primary" outcome="create.xhtml" />
+                                        <h:button value="Nuevo File" styleClass="btn btn-primary"
+                                                  outcome="create.xhtml"/>
                                     </h:panelGroup>
                                 </div>
                             </div>
                             <br/>
-                            <h:form id="formfile">
-                                <f:event type="preRenderView" listener="#{fileControlador.initLista}" />
-                                <h:messages id="msg" globalOnly="true" styleClass="list-group" infoClass="list-group-item list-group-item-success"
-                                                    errorClass="list-group-item list-group-item-danger" />
-                                <p:dataTable    value="#{fileControlador.filePaginador}"    var="list" emptyMessage="No existen registros de perfiles" 
-                                                paginator="true" rows="20" lazy="true"
-                                                paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
+                            <!-- INICIO DE FILTRO -->
+                            <div class="row" style="margin-left: 2px;margin-right: 2px;">
+                                <div class="panel panel-default panel-busqueda">
+                                    <div class="panel-heading">
+                                        Filtros
+                                        <span style="margin-top: 5px;" class="pull-right clickable"><i
+                                                class="fa fa-plus"></i></span>
+                                    </div>
+                                    <div class="panel-body">
+                                        <h:form id="frmFiltroFile" styleClass="form-horizontal">
+                                            <div class="form-group has-feedback">
+                                                <label class="col-md-2 control-label">File :</label>
 
-                                    
-                                    <p:column    style="text-align: center;font-size: 15px;">
+                                                <div class="col-sm-4 col-md-3">
+                                                    <h:inputText styleClass="form-control"
+                                                                 value="#{fileControlador.fileFilter.nroCorrelativo}">
+                                                    </h:inputText>
+                                                </div>
+                                                <label class="col-md-2 control-label">Cliente :</label>
+
+                                                <div class="col-md-3">
+                                                    <div jsf:id="clienteFilter" class="form-control"
+                                                         style="background-color: #f5f5f5;border: 1px solid #ccc;">
+                                                        <span jsf:id="cleanCliente"
+                                                              style="cursor: pointer;display: none;">
+                                                            <i class="fa fa-times"></i>
+                                                            <f:ajax render="clienteFilter"
+                                                                    listener="#{fileControlador.limpiarClienteFilter}"
+                                                                    onevent="changeCleanCliente('none')"/>
+                                                        </span>
+                                                        #{fileControlador.fileFilter.cliente.nombreAuxiliar}
+                                                    </div>
+                                                </div>
+                                                <div class="buton_selectable" style="margin-left:-15px;">
+                                                    <div onclick="PF('dialogClientFilter').show();"
+                                                         class="btn btn-primary clickable"
+                                                         style="width: 43px;height: 32.8px;">
+                                                        <img alt="" title="Seleccionar Cliente"
+                                                             src="#{request.contextPath}/resources/images/add.png"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group has-feedback">
+                                                <label class="col-md-2 control-label">PAX :</label>
+                                                <div class="col-sm-4 col-md-3">
+                                                    <h:inputText styleClass="form-control"
+                                                                 value="#{fileControlador.fileFilter.pax}">
+                                                    </h:inputText>
+                                                </div>
+                                                <label class="col-md-2 control-label">Cuenta :</label>
+                                                <div class="col-sm-4 col-md-3">
+                                                    <h:inputText styleClass="form-control"
+                                                                 value="#{fileControlador.fileFilter.cuenta}">
+                                                    </h:inputText>
+                                                </div>
+                                            </div>
+                                            <div class="form-group has-feedback">
+                                                <label class="col-md-2 control-label">Desde :</label>
+
+                                                <div class="col-md-3">
+                                                    <p:calendar styleClass="bootstrap-calendar" readonlyInput="true"
+                                                                locale="es"
+                                                                id="filtroDesde"
+                                                                pattern="dd/MM/yyyy"
+                                                                value="#{fileControlador.fileFilter.fechaDesde}"
+                                                                showOn="button"
+                                                                maxdate="#{fileControlador.fileFilter.fechaHasta}">
+                                                        <p:ajax event="dateSelect" update="filtroHasta"/>
+                                                    </p:calendar>
+                                                </div>
+                                                <label class="col-md-2 control-label">Hasta :</label>
+
+                                                <div class="col-sm-4 col-md-3">
+                                                    <p:calendar styleClass="bootstrap-calendar" readonlyInput="true"
+                                                                locale="es"
+                                                                id="filtroHasta"
+                                                                pattern="dd/MM/yyyy"
+                                                                value="#{fileControlador.fileFilter.fechaHasta}"
+                                                                showOn="button"
+                                                                mindate="#{fileControlador.fileFilter.fechaDesde}" >
+                                                        <p:ajax event="dateSelect" update="filtroDesde"/>
+                                                    </p:calendar>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3 control-label">
+                                                <p:commandButton value="Buscar"
+                                                                 actionListener="#{fileControlador.ejecutarBusqueda}"
+                                                                 styleClass="btn btn-primary"
+                                                                 update=":formfile :msg"/>
+                                            </div>
+                                        </h:form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- FIN DE FILTRO -->
+                            <br/>
+                            <h:form id="formfile">
+                                <f:event type="preRenderView" listener="#{fileControlador.initLista}"/>
+
+                                <p:dataTable value="#{fileControlador.filePaginador}" var="list"
+                                             emptyMessage="No existen registros de perfiles"
+                                             paginator="true" rows="20" lazy="true"
+                                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}">
+
+
+                                    <p:column style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             File
                                         </f:facet>
-                                        <h:outputText value="#{list.nroCorrelativo}" />
+                                        <h:outputText value="#{list.nroCorrelativo}"/>
                                     </p:column>
-                                    <p:column    style="text-align: center;font-size: 15px;">
+                                    <p:column style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Cliente
                                         </f:facet>
-                                        <h:outputText value="#{list.cliente.nombreAuxiliar}" />
+                                        <h:outputText value="#{list.cliente.nombreAuxiliar}"/>
                                     </p:column>
-                                    <p:column    style="text-align: center;font-size: 15px;">
+                                    <p:column style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             PAX
                                         </f:facet>
-                                        <h:outputText value="#{list.pax}" />
+                                        <h:outputText value="#{list.pax}"/>
                                     </p:column>
-									<p:column    style="text-align: center;font-size: 15px;">
+                                    <p:column style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Cuenta
                                         </f:facet>
-                                        <h:outputText value="#{list.cuenta}" />
+                                        <h:outputText value="#{list.cuenta}"/>
                                     </p:column>
-                                    <p:column    style="text-align: center;font-size: 15px;">
+                                    <p:column style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Fecha Registro
                                         </f:facet>
-                                        <h:outputText value="#{list.fechaRegistro}" >
-                                            <f:convertDateTime pattern="dd/MM/yyyy H:mm a"  timeZone="GMT-5"/>
+                                        <h:outputText value="#{list.fechaRegistro}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy H:mm a" timeZone="GMT-5"/>
                                         </h:outputText>
                                     </p:column>
-                                    <p:column  style="text-align: center;width: 12%;">
-                                        <p:commandButton rendered="#{sesionControlador.permisoModulo.actualizar eq true}" style="font-size: 12px;" icon="icon-update" action="#{fileControlador.irActualizar(list.idFile)}"    >
+                                    <p:column style="text-align: center;width: 12%;">
+                                        <p:commandButton
+                                                rendered="#{sesionControlador.permisoModulo.actualizar eq true}"
+                                                style="font-size: 12px;" icon="icon-update"
+                                                action="#{fileControlador.irActualizar(list.idFile)}">
                                         </p:commandButton>
-                                        <p:commandButton rendered="#{sesionControlador.permisoModulo.eliminar eq true}" style="font-size: 12px;" icon="icon-delete" actionListener="#{fileControlador.capturarFile(list)}" oncomplete="PF('deletefile').show();"   >
+                                        <p:commandButton rendered="#{sesionControlador.permisoModulo.eliminar eq true}"
+                                                         style="font-size: 12px;" icon="icon-delete"
+                                                         actionListener="#{fileControlador.capturarFile(list)}"
+                                                         oncomplete="PF('deletefile').show();">
                                         </p:commandButton>
-                                        <p:commandButton  style="font-size: 12px;" icon="icon-money" oncomplete="PF('exportFile').show();"  >
-                                            <f:setPropertyActionListener value="#{list}" target="#{fileControlador.file}" />
+                                        <p:commandButton style="font-size: 12px;" icon="icon-money"
+                                                         oncomplete="PF('exportFile').show();">
+                                            <f:setPropertyActionListener value="#{list}"
+                                                                         target="#{fileControlador.file}"/>
                                         </p:commandButton>
                                     </p:column>
-                                </p:dataTable> 
+                                </p:dataTable>
                             </h:form>
 
                         </div>
@@ -84,37 +193,85 @@
             </div>
             <!-- /.col-lg-12 -->
         </div>
-        <p:dialog modal="true" position="center top"  widgetVar="deletefile" resizable="false" showEffect="fade" >
-            <h:form >
-                <div   id="row" style="font-weight: bold;font-size: 14px;">
+        <p:dialog modal="true" position="center top" widgetVar="deletefile" resizable="false" showEffect="fade">
+            <h:form>
+                <div style="font-weight: bold;font-size: 14px;">
                     ¿Desea Eliminar el File ?
                 </div>
-                <div   id="row">
+                <div>
                     <div class="col-lg-6">
-                        <p:commandButton  actionListener="#{fileControlador.eliminarFile}" update=":formfile" value="Si" oncomplete="PF('deletefile').hide();"   >
+                        <p:commandButton actionListener="#{fileControlador.eliminarFile}" update=":formfile :msg" value="Si"
+                                         oncomplete="PF('deletefile').hide();">
                         </p:commandButton>
                     </div>
                     <div class="col-lg-6">
-                        <p:commandButton    value="No" onclick="PF('deletefile').hide();"   >
-                        </p:commandButton>
-                    </div>
-                </div>
-            </h:form>
-        </p:dialog>
-        <p:dialog modal="true" position="center top" header="Tipo de Factura" width="350" widgetVar="exportFile" resizable="false" showEffect="fade" >
-            <h:form >
-                <div   id="row">
-                    <div class="col-lg-6">
-                        <p:commandButton  ajax="false"  actionListener="#{fileControlador.exportarFacturaGravada}"  value="Gravada" onclick="PF('exportFile').hide();"   >
-                        </p:commandButton>
-                    </div>
-                    <div class="col-lg-6">
-                        <p:commandButton ajax="false"  actionListener="#{fileControlador.exportarFacturaNoGravada}"  value="No Gravada" onclick="PF('exportFile').hide();"   >
+                        <p:commandButton value="No" onclick="PF('deletefile').hide();">
                         </p:commandButton>
                     </div>
                 </div>
             </h:form>
         </p:dialog>
+        <p:dialog modal="true" position="center top" header="Tipo de Factura" width="350" widgetVar="exportFile"
+                  resizable="false" showEffect="fade">
+            <h:form>
+                <div>
+                    <div class="col-lg-6">
+                        <p:commandButton ajax="false" actionListener="#{fileControlador.exportarFacturaGravada}"
+                                         value="Gravada" onclick="PF('exportFile').hide();">
+                        </p:commandButton>
+                    </div>
+                    <div class="col-lg-6">
+                        <p:commandButton ajax="false" actionListener="#{fileControlador.exportarFacturaNoGravada}"
+                                         value="No Gravada" onclick="PF('exportFile').hide();">
+                        </p:commandButton>
+                    </div>
+                </div>
+            </h:form>
+        </p:dialog>
+        <!-- FORMULARIO PARA ESCOGER EL CLIENTE PARA LOS FILTROS -->
+        <p:dialog modal="true" position="center top" header="Lista de Clientes" id="dialogClientFilter"
+                  widgetVar="dialogClientFilter" resizable="false" width="600"
+                  showEffect="fade">
+            <h:form>
+                <p:dataTable value="#{fileControlador.clientes}" var="listClienteFilter"
+                             emptyMessage="No existen registros de clientes"
+                             paginator="true" rows="10"
+                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}">
+                    <p:column style="text-align: center;font-size: 13px;">
+                        <f:facet name="header">
+                            Cliente
+                        </f:facet>
+                        <h:outputText value="#{listClienteFilter.nombreAuxiliar}">
+
+                        </h:outputText>
+                    </p:column>
+                    <p:column style="text-align: center;font-size: 13px;">
+                        <f:facet name="header">
+                            Tipo Cliente
+                        </f:facet>
+                        <h:outputText value="#{listClienteFilter.tipoCliente.tipoCliente}"/>
+                    </p:column>
+                    <p:column style="text-align: center;width: 8%;">
+                        <p:commandButton style="font-size: 12px;" icon="icon-choice"
+                                         oncomplete="PF('dialogClientFilter').hide();changeCleanCliente('grid');"
+                                         update=":frmFiltroFile:clienteFilter">
+                            <f:setPropertyActionListener value="#{listClienteFilter}"
+                                                         target="#{fileControlador.fileFilter.cliente}"/>
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:dialog>
+        <h:outputScript name="js/collapse_panel.js"/>
+        <script type="text/javascript">
+            jQuery(function ($) {
+                $('.panel-busqueda').find('.panel-body').hide();
+                $('.panel-busqueda .panel-heading span.clickable').addClass('panel-collapsed');
+            });
+            function changeCleanCliente(state) {
+                $('#frmFiltroFile\\:cleanCliente').css({'display': state});
+            }
+        </script>
     </ui:define>
 
 </ui:composition>
