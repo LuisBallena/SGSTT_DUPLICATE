@@ -36,9 +36,11 @@ public class VentaPaginador extends HibernateStringPaginador implements Serializ
             }
             if(!builder.toString().trim().isEmpty()){
                 queryDynamicCriteria = builder.toString().trim().replaceFirst("and","where");
+
             }else{
                 queryDynamicCriteria = "";
             }
+            resetPagination();
         }
     }
 

@@ -34,6 +34,7 @@ public class ServicioPaginador extends HibernateStringPaginador implements Seria
             builder.append(!Utilitario.esNulo(servicioFilter.getServicio()) ? String.format("and servicio.descripcion like '%s%%' ", servicioFilter.getServicio()) : "");
             builder.append(servicioFilter.esValidoId(servicioFilter.getIdTipoServicio()) ? String.format("and servicio.tipoServicio.id = %d ", servicioFilter.getIdTipoServicio()) : "");
             queryDynamicCriteria = builder.toString().trim();
+            resetPagination();
         }
     }
     

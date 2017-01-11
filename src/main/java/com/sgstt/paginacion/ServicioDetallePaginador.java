@@ -40,13 +40,14 @@ public class ServicioDetallePaginador extends HibernateStringPaginador implement
             builder.append(filter.esValidoId(filter.getIdVehiculo()) ? String.format("and serviciodetalle.vehiculo.id = %d ", filter.getIdVehiculo()) : "");
             builder.append(filter.esValidoId(filter.getIdChofer()) ? String.format("and serviciodetalle.chofer.id = %d ", filter.getIdChofer()) : "");
             builder.append(filter.esValidoId(filter.getIdEmpresa()) && filter.getServicioExterno() == 1 ? String.format("and serviciodetalle.chofer.empresa.id = %d ", filter.getIdEmpresa()) : "");
-            builder.append(filter.getCliente() != null ? String.format("and serviciodetalle.idcliente = %d",filter.getCliente().getIdCliente()):"");
+            builder.append(filter.getCliente() != null ? String.format("and serviciodetalle.idcliente = %d", filter.getCliente().getIdCliente()) : "");
             if (!filter.getTipoOrden().equals("none")) {
                 builder.append(ensamblarQueryTipoOrden(filter));
             }
             if (filter.getServicioExterno() != -1) {
                 builder.append(String.format("and serviciodetalle.externalizado = '%s'", filter.getServicioExterno() == 1 ? "SI" : "NO"));
             }
+            builder.append(ensamblarQueryPAX(filter));
             builder.append(filter.getEstadoServicio() != null && !filter.getEstadoServicio().trim().isEmpty() ? String.format("and serviciodetalle.estadoServicio = '%s'", filter.getEstadoServicio()) : "");
             if (filter.getFechaDesde() != null && filter.getFechaHasta() != null) {
                 builder.append(String.format("and serviciodetalle.fecha between '%s' and  '%s'",
@@ -54,6 +55,7 @@ public class ServicioDetallePaginador extends HibernateStringPaginador implement
                         Utilitario.convertirFormatoFecha(filter.getFechaHasta(), Utilitario.FORMATO_SQL_DATE) + " 23:59:59"));
             }
             queryDynamicCriteria = builder.toString().trim();
+            resetPagination();
         }
     }
 
@@ -71,13 +73,23 @@ public class ServicioDetallePaginador extends HibernateStringPaginador implement
         } else {
             switch (servicioDetalleFilter.getTipoOrden()) {
                 case "F":
-                    subQuery = String.format("and serviciodetalle.file.nroCorrelativo = %s ", servicioDetalleFilter.getSerie());
+                    subQuery = String.format("and serviciodetalle.file.nroCorrelativo = '%s' ", servicioDetalleFilter.getSerie());
                     break;
                 case "V":
                     servicioDetalleFilter.validarFiltroInteger(servicioDetalleFilter.getSerie());
-                    subQuery = String.format("and serviciodetalle.venta.id = %d ",Integer.parseInt(servicioDetalleFilter.getSerie()));
+                    subQuery = String.format("and serviciodetalle.venta.id = %d ", Integer.parseInt(servicioDetalleFilter.getSerie()));
                     break;
             }
+        }
+        return subQuery;
+    }
+
+    private String ensamblarQueryPAX(ServicioDetalleFilter servicioDetalleFilter) {
+        String subQuery = "";
+        switch (servicioDetalleFilter.getTipoOrden()) {
+            case "F":
+                subQuery = String.format("and serviciodetalle.file.pax = '%s' ", servicioDetalleFilter.getPax());
+                break;
         }
         return subQuery;
     }

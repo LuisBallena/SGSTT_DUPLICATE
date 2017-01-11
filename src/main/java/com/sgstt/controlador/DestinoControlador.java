@@ -3,6 +3,7 @@ package com.sgstt.controlador;
 import com.sgstt.entidad.Destino;
 import com.sgstt.entidad.Sede;
 import com.sgstt.entidad.TipoDestino;
+import com.sgstt.filters.DestinoFilter;
 import com.sgstt.hibernate.HibernatePaginador;
 import com.sgstt.paginacion.DestinoPaginador;
 import com.sgstt.servicios.TransporteServicio;
@@ -29,6 +30,7 @@ public class DestinoControlador implements Serializable {
     private List<Sede> sedes;
     private Integer idTipoDestinos;
     private TransporteServicio transporteServicio;
+    private DestinoFilter destinoFilter;
     @ManagedProperty(value = "#{sesionControlador}")
     private SesionControlador sesionControlador;
 
@@ -38,6 +40,7 @@ public class DestinoControlador implements Serializable {
     public void initLista() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
             transporteServicio = new TransporteServicio();
+            destinoFilter = new DestinoFilter();
             destinoPaginador = new DestinoPaginador();
             destinoPaginador.initPaginador(sesionControlador.getUsuarioSesion().getSede().getId());
         }
@@ -85,6 +88,13 @@ public class DestinoControlador implements Serializable {
     public String irActualizar(Integer id) {
         Utilitario.putFlash("idDestino", id);
         return "update.xhtml?faces-redirect=true;";
+    }
+
+    public void ejecutarBusqueda() {
+        destinoFilter.setRazonComercial(destinoFilter.getRazonComercial() != null ? destinoFilter.getRazonComercial().trim() : null);
+        destinoFilter.setRazonSocial(destinoFilter.getRazonSocial() != null ? destinoFilter.getRazonSocial().trim() : null);
+        destinoFilter.setRuc(destinoFilter.getRuc() != null ? destinoFilter.getRuc().trim() : null);
+        destinoPaginador.createFilterDynamic(destinoFilter);
     }
 
     private boolean esVistaValida() {
@@ -136,4 +146,11 @@ public class DestinoControlador implements Serializable {
         this.idTipoDestinos = idTipoDestinos;
     }
 
+    public DestinoFilter getDestinoFilter() {
+        return destinoFilter;
+    }
+
+    public void setDestinoFilter(DestinoFilter destinoFilter) {
+        this.destinoFilter = destinoFilter;
+    }
 }

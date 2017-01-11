@@ -30,6 +30,8 @@ public class ServicioDetalleFilter extends BaseFilter{
     
     private Cliente cliente;
 
+    private String pax;
+
     public ServicioDetalleFilter() {
         tipoOrden = "none";
     }
@@ -113,7 +115,12 @@ public class ServicioDetalleFilter extends BaseFilter{
     public void setIdEmpresa(Integer idEmpresa) {
         this.idEmpresa = idEmpresa;
     }
-    
-    
-    
+
+    public String getPax() {
+        return pax;
+    }
+
+    public void setPax(String pax) {
+        this.pax = pax;
+    }
 }

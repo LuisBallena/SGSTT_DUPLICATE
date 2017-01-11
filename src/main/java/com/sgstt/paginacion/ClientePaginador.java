@@ -37,6 +37,7 @@ public class ClientePaginador extends HibernateStringPaginador implements Serial
             builder.append(!Utilitario.esNulo(clienteFilter.getTipoDocumento()) ? String.format("and cliente.tipoDocumento = '%s' ",clienteFilter.getTipoDocumento()): "");
             builder.append(!Utilitario.esNulo(clienteFilter.getNumeroDocumento()) ? String.format("and cliente.numeroDocumento = '%s' ",clienteFilter.getNumeroDocumento()):"");
             queryDynamicCriteria = builder.toString().trim();
+            resetPagination();
         }
     }
 

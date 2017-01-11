@@ -27,6 +27,8 @@ public class HibernateStringPaginador<T> extends HibernatePaginador<T> {
 
     private String orderByElement = "";
 
+    private boolean reset = false;
+
     @Override
     public void initPaginador() {
         queryCriteria = createFilter();
@@ -86,6 +88,11 @@ public class HibernateStringPaginador<T> extends HibernatePaginador<T> {
     @Override
     public List<T> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
         conexion.beginConexion();
+        if(reset){
+            first = 0;
+            reset = false;
+            setRowIndex(0);
+        }
         int totalRows = getTotalRows();
         log.debug("[HibernatePaginador/load] total de filas : " + totalRows);
         setRowCount(totalRows);
@@ -150,4 +157,15 @@ public class HibernateStringPaginador<T> extends HibernatePaginador<T> {
         throw new UnsupportedOperationException("No soporta la creacion dinamica de querys");
     }
 
+    public void resetPagination() {
+        this.reset = true;
+    }
+
+    public boolean isReset() {
+        return reset;
+    }
+
+    public void setReset(boolean reset) {
+        this.reset = reset;
+    }
 }

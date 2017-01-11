@@ -35,6 +35,7 @@ public class FilePaginador extends HibernateStringPaginador implements Serializa
                         Utilitario.convertirFormatoFecha(fileFilter.getFechaHasta(), Utilitario.FORMATO_SQL_DATE) + " 23:59:59"));
             }
             queryDynamicCriteria = builder.toString().trim();
+            resetPagination();
         }
     }
 }
