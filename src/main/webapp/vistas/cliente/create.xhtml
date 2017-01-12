@@ -28,7 +28,7 @@
                                         <h:messages id="msg" globalOnly="true" styleClass="list-group" infoClass="list-group-item list-group-item-success"
                                                     errorClass="list-group-item list-group-item-danger" />
                                         <div class="form-group has-feedback">
-                                            <label for="nombre" class="col-sm-3 control-label" >Tipo Cliente :</label>
+                                            <label class="col-sm-3 control-label" >Tipo Cliente :</label>
                                             <div    class="col-sm-6" >
                                                 <h:selectOneMenu value="#{clienteControlador.cliente.tipoCliente.idTipoCliente}" styleClass="form-control"  >
                                                     <f:ajax event="change" render="contenedorPadre tipoDocumento" listener="#{clienteControlador.onChangeTipoCliente}" />
@@ -39,7 +39,7 @@
                                         <h:panelGroup id="contenedorPadre">
                                             <h:panelGroup id="contenedorNombreNatural" rendered="#{clienteControlador.cliente.tipoCliente.idTipoCliente eq 1}">
                                                 <div class="form-group has-feedback">
-                                                    <label for="nombre" class="col-sm-3 control-label" >Cliente :</label>
+                                                    <label class="col-sm-3 control-label" >Cliente :</label>
                                                     <div    class="col-sm-6" >
                                                         <p:inputText styleClass="form-control"  value="#{clienteControlador.cliente.nombre}"     >
                                                         </p:inputText>
@@ -48,7 +48,7 @@
                                             </h:panelGroup>
                                             <h:panelGroup id="contenedorNombreJuridico" rendered="#{clienteControlador.cliente.tipoCliente.idTipoCliente eq 2}" >
                                                 <div class="form-group has-feedback">
-                                                    <label for="nombre" class="col-sm-3 control-label" >Razón Social :</label>
+                                                    <label class="col-sm-3 control-label" >Razón Social :</label>
                                                     <div    class="col-sm-6" >
                                                         <p:inputText styleClass="form-control"  value="#{clienteControlador.cliente.razonSocial}"     >
                                                         </p:inputText>
@@ -57,7 +57,7 @@
                                             </h:panelGroup>
                                         </h:panelGroup>
                                         <div class="form-group has-feedback">
-                                            <label for="nombre" class="col-sm-3 control-label" >Tipo Documento :</label>
+                                            <label class="col-sm-3 control-label" >Tipo Documento :</label>
                                             <div    class="col-sm-6" >
                                                 <h:selectOneMenu id="tipoDocumento" value="#{clienteControlador.auxTipoDocumento}" styleClass="form-control"  >
                                                     <f:selectItem itemValue="0" itemLabel="DNI" />
@@ -68,21 +68,21 @@
                                             </div>
                                         </div>
                                         <div class="form-group has-feedback">
-                                            <label for="nombre" class="col-sm-3 control-label" >Nro Doc. :</label>
+                                            <label class="col-sm-3 control-label" >Nro Doc. :</label>
                                             <div    class="col-sm-6" >
                                                 <p:inputText styleClass="form-control"  value="#{clienteControlador.cliente.numeroDocumento}"     >
                                                 </p:inputText>
                                             </div>
                                         </div>
                                         <div class="form-group has-feedback">
-                                            <label for="nombre" class="col-sm-3 control-label" >Dirección :</label>
+                                            <label  class="col-sm-3 control-label" >Dirección :</label>
                                             <div    class="col-sm-6" >
                                                 <p:inputText styleClass="form-control"  value="#{clienteControlador.cliente.direccion}"     >
                                                 </p:inputText>
                                             </div>
                                         </div>
                                         <div class="form-group has-feedback">
-                                            <label for="nombre" class="col-sm-3 control-label" >Correo :</label>
+                                            <label class="col-sm-3 control-label" >Correo :</label>
                                             <div    class="col-sm-6" >
                                                 <p:inputText styleClass="form-control"  value="#{clienteControlador.cliente.correo}"     >
                                                 </p:inputText>

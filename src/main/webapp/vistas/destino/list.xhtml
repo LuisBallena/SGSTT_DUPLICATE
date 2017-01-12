@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns="http://www.w3.org/1999/xhtml"
                 template="./../home.xhtml"
@@ -16,116 +17,192 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-body" id="tabla">
+                            <h:messages id="msg" globalOnly="true" styleClass="list-group"
+                                        infoClass="list-group-item list-group-item-success"
+                                        errorClass="list-group-item list-group-item-danger"/>
                             <div class="row">
                                 <div class="col-sm-2">
                                     <h:panelGroup rendered="#{sesionControlador.permisoModulo.crear eq true}">
-                                        <h:button value="Nuevo Destino" styleClass="btn btn-primary" outcome="create.xhtml" />
+                                        <h:button value="Nuevo Destino" styleClass="btn btn-primary"
+                                                  outcome="create.xhtml"/>
                                     </h:panelGroup>
                                 </div>
-                            </div>      
+                            </div>
+                            <br/>
+                            <!-- INICIO DE FILTRO -->
+                            <div class="row" style="margin-left: 2px;margin-right: 2px;">
+                                <div class="panel panel-default panel-busqueda">
+                                    <div class="panel-heading">
+                                        Filtros
+                                        <span style="margin-top: 5px;" class="pull-right clickable"><i
+                                                class="fa fa-plus"></i></span>
+                                    </div>
+                                    <div class="panel-body">
+                                        <h:form id="frmFiltroDestino" styleClass="form-horizontal">
+                                            <div class="form-group has-feedback">
+                                                <label class="col-md-2 control-label">Razón Comercial :</label>
+                                                <div class="col-sm-4 col-md-3">
+                                                    <h:inputText value="#{destinoControlador.destinoFilter.razonComercial}"
+                                                                 styleClass="form-control">
+                                                    </h:inputText>
+                                                </div>
+                                                <label class="col-md-2 control-label">Razón Social :</label>
+                                                <div class="col-md-3">
+                                                    <h:inputText value="#{destinoControlador.destinoFilter.razonSocial}"
+                                                                 styleClass="form-control">
+                                                    </h:inputText>
+                                                </div>
+                                            </div>
+                                            <div class="form-group has-feedback">
+                                                <label class="col-md-2 control-label">Ruc :</label>
+                                                <div class="col-sm-4 col-md-3">
+                                                    <h:inputText value="#{destinoControlador.destinoFilter.ruc}"
+                                                                 styleClass="form-control">
+                                                    </h:inputText>
+                                                </div>
+                                                <label class="col-md-2 control-label">Tipo Destino :</label>
+                                                <div class="col-md-3">
+                                                    <h:selectOneMenu styleClass="form-control"
+                                                                     value="#{destinoControlador.destinoFilter.tipoDestino}">
+                                                        <f:selectItem itemLabel="Todos" itemValue="#{null}"/>
+                                                        <f:selectItem itemLabel="Hotel" itemValue="Hotel"/>
+                                                        <f:selectItem itemLabel="Restaurant" itemValue="Restaurant"/>
+                                                        <f:selectItem itemLabel="Museo" itemValue="Museo"/>
+                                                        <f:selectItem itemLabel="Sitio Arqueológico" itemValue="Sitio Arqueológico"/>
+                                                        <f:selectItem itemLabel="Lugar Turístico" itemValue="Lugar Turístico"/>
+                                                        <f:selectItem itemLabel="Aeropuerto" itemValue="Aeropuerto"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3 control-label">
+                                                <p:commandButton value="Buscar"
+                                                                 actionListener="#{destinoControlador.ejecutarBusqueda}"
+                                                                 styleClass="btn btn-primary"
+                                                                 update=":formperfil :msg"/>
+                                            </div>
+                                        </h:form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- FIN DE FILTRO -->
                             <br/>
                             <h:form id="formperfil">
-                                <f:event type="preRenderView" listener="#{destinoControlador.initLista}" />
-                                <h:messages id="msg" globalOnly="true" styleClass="list-group" infoClass="list-group-item list-group-item-success"
-                                                    errorClass="list-group-item list-group-item-danger" />
-                                <p:dataTable    value="#{destinoControlador.destinoPaginador}"    var="list" emptyMessage="No existen registros de destinos" 
-                                                paginator="true" rows="20" lazy="true" rowIndexVar="rowIndex"
-                                                paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
+                                <f:event type="preRenderView" listener="#{destinoControlador.initLista}"/>
+                                <p:dataTable value="#{destinoControlador.destinoPaginador}" var="list"
+                                             emptyMessage="No existen registros de destinos"
+                                             paginator="true" rows="20" lazy="true" rowIndexVar="rowIndex"
+                                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}">
 
-                                    <p:column    style="text-align: center;font-size: 15px;">
+                                    <p:column style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Razon Comercial
                                         </f:facet>
-                                        <h:outputText value="#{list.razoncomercial}" />
+                                        <h:outputText value="#{list.razoncomercial}"/>
                                     </p:column>
-                                     <p:column    style="text-align: center;font-size: 15px;">
+                                    <p:column style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Razon Social
                                         </f:facet>
-                                        <h:outputText value="#{list.razonsocial}" />
+                                        <h:outputText value="#{list.razonsocial}"/>
                                     </p:column>
-                                     <p:column    style="text-align: center;font-size: 15px;">
+                                    <p:column style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             RUC
                                         </f:facet>
-                                        <h:outputText value="#{list.ruc}" />
+                                        <h:outputText value="#{list.ruc}"/>
                                     </p:column>
-                                     <p:column    style="text-align: center;font-size: 15px;">
+                                    <p:column style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Direccion
                                         </f:facet>
-                                        <h:outputText value="#{list.direccion}" />
+                                        <h:outputText value="#{list.direccion}"/>
                                     </p:column>
-                                     <p:column    style="text-align: center;font-size: 15px;">
+                                    <p:column style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Telefono
                                         </f:facet>
-                                        <h:outputText value="#{list.telefono}" />
+                                        <h:outputText value="#{list.telefono}"/>
                                     </p:column>
-                                     <p:column    style="text-align: center;font-size: 15px;">
+                                    <p:column style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Web
                                         </f:facet>
-                                        <h:outputText value="#{list.web}" />
+                                        <h:outputText value="#{list.web}"/>
                                     </p:column>
-                                    <p:column    style="text-align: center;font-size: 15px;">
+                                    <p:column style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Ubigeo
                                         </f:facet>
-                                        <h:outputText value="#{list.ubigeo}" />
+                                        <h:outputText value="#{list.ubigeo}"/>
                                     </p:column>
-                                    <p:column    style="text-align: center;font-size: 15px;">
+                                    <p:column style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Latitud
                                         </f:facet>
-                                        <h:outputText value="#{list.latitud eq null or list.latitud eq '' ? 'No Disponible' :  list.latitud}" />
+                                        <h:outputText
+                                                value="#{list.latitud eq null or list.latitud eq '' ? 'No Disponible' :  list.latitud}"/>
                                     </p:column>
-                                    <p:column    style="text-align: center;font-size: 15px;">
+                                    <p:column style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Longitud
                                         </f:facet>
-                                        <h:outputText value="#{list.longitud eq null or list.longitud eq '' ? 'No Disponible' :  list.longitud}" />
+                                        <h:outputText
+                                                value="#{list.longitud eq null or list.longitud eq '' ? 'No Disponible' :  list.longitud}"/>
                                     </p:column>
-                                    <p:column    style="text-align: center;font-size: 15px;">
+                                    <p:column style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
                                             Tipo de Destino
                                         </f:facet>
-                                        <h:outputText value="#{list.tipoDestino}" />
+                                        <h:outputText value="#{list.tipoDestino}"/>
                                     </p:column>
-                                    <p:column  style="text-align: center;width: 12%;">
-                                        <p:commandButton rendered="#{sesionControlador.permisoModulo.actualizar eq true}" style="font-size: 12px;"  icon="icon-update" action="#{destinoControlador.irActualizar(list.id)}"    >
+                                    <p:column style="text-align: center;width: 12%;">
+                                        <p:commandButton
+                                                rendered="#{sesionControlador.permisoModulo.actualizar eq true}"
+                                                style="font-size: 12px;" icon="icon-update"
+                                                action="#{destinoControlador.irActualizar(list.id)}">
                                         </p:commandButton>
-                                        <p:commandButton rendered="#{sesionControlador.permisoModulo.eliminar eq true}" style="font-size: 12px;" icon="icon-delete"  oncomplete="PF('deletedestino').show();"   >
-                                            <f:setPropertyActionListener value="#{list}" target="#{destinoControlador.destino}" />
+                                        <p:commandButton rendered="#{sesionControlador.permisoModulo.eliminar eq true}"
+                                                         style="font-size: 12px;" icon="icon-delete"
+                                                         oncomplete="PF('deletedestino').show();">
+                                            <f:setPropertyActionListener value="#{list}"
+                                                                         target="#{destinoControlador.destino}"/>
                                         </p:commandButton>
                                     </p:column>
-                                </p:dataTable> 
+                                </p:dataTable>
                             </h:form>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- /.col-lg-12 -->
-        </div>    
-        <p:dialog modal="true" position="center top"  widgetVar="deletedestino" resizable="false" showEffect="fade" >
-            <h:form >
-                <div   id="row" style="font-weight: bold;font-size: 14px;">
+        </div>
+        <p:dialog modal="true" position="center top" widgetVar="deletedestino" resizable="false" showEffect="fade">
+            <h:form>
+                <div style="font-weight: bold;font-size: 14px;">
                     ¿Desea Eliminar el Destino ?
                 </div>
-                <div   id="row">
+                <div>
                     <div class="col-lg-6">
-                        <p:commandButton  actionListener="#{destinoControlador.eliminarDestino}" update=":formperfil" value="Si" oncomplete="PF('deletedestino').hide();"   >
+                        <p:commandButton actionListener="#{destinoControlador.eliminarDestino}" update=":formperfil :msg"
+                                         value="Si" oncomplete="PF('deletedestino').hide();">
 
                         </p:commandButton>
                     </div>
                     <div class="col-lg-6">
-                        <p:commandButton    value="No" onclick="PF('deletedestino').hide();"   >
+                        <p:commandButton value="No" onclick="PF('deletedestino').hide();">
 
                         </p:commandButton>
                     </div>
                 </div>
             </h:form>
         </p:dialog>
+        <h:outputScript name="js/collapse_panel.js"/>
+        <script type="text/javascript">
+            jQuery(function ($) {
+                $('.panel-busqueda').find('.panel-body').hide();
+                $('.panel-busqueda .panel-heading span.clickable').addClass('panel-collapsed');
+            });
+        </script>
     </ui:define>
 
 </ui:composition>

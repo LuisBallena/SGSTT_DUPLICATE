@@ -2,6 +2,7 @@ package com.sgstt.controlador;
 
 import com.sgstt.entidad.Empresa;
 import com.sgstt.entidad.Sede;
+import com.sgstt.filters.EmpresaFilter;
 import com.sgstt.hibernate.HibernatePaginador;
 import com.sgstt.paginacion.EmpresaPaginador;
 import com.sgstt.servicios.EmpresaServicio;
@@ -28,6 +29,7 @@ public class EmpresaControlador implements Serializable {
     private EmpresaServicio empresaServicio;
     private Empresa empresa;
     private List<Sede> sedes;
+    private EmpresaFilter empresaFilter;
     @ManagedProperty(value = "#{sesionControlador}")
     private SesionControlador sesionControlador;
 
@@ -36,6 +38,7 @@ public class EmpresaControlador implements Serializable {
 
 	public void initLista() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
+            empresaFilter = new EmpresaFilter();
         	empresaServicio = new EmpresaServicio();
             empresaPaginador = new EmpresaPaginador();
             empresaPaginador.initPaginador(sesionControlador.getUsuarioSesion().getSede().getId());
@@ -91,6 +94,10 @@ public class EmpresaControlador implements Serializable {
         return "update.xhtml?faces-redirect=true;";
     }
 
+    public void ejecutarBusqueda() {
+        empresaPaginador.createFilterDynamic(empresaFilter);
+    }
+
     private boolean esVistaValida() {
         boolean resultado = true;
         if(Utilitario.esNulo(empresa.getRazonSocial())){
@@ -131,4 +138,12 @@ public class EmpresaControlador implements Serializable {
 	public void setSedes(List<Sede> sedes) {
 		this.sedes = sedes;
 	}
+
+    public EmpresaFilter getEmpresaFilter() {
+        return empresaFilter;
+    }
+
+    public void setEmpresaFilter(EmpresaFilter empresaFilter) {
+        this.empresaFilter = empresaFilter;
+    }
 }

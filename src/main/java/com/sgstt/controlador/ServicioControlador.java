@@ -3,10 +3,13 @@ package com.sgstt.controlador;
 import com.sgstt.entidad.Destino;
 import com.sgstt.entidad.Servicio;
 import com.sgstt.entidad.TipoServicio;
+import com.sgstt.excepciones.FilterException;
+import com.sgstt.filters.ServicioFilter;
 import com.sgstt.hibernate.HibernatePaginador;
 import com.sgstt.paginacion.ServicioPaginador;
 import com.sgstt.servicios.TransporteServicio;
 import com.sgstt.util.Utilitario;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +19,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 /**
- *
  * @author Luis Alonso Ballena Garcia
  */
 @ManagedBean(name = "servicioControlador")
@@ -30,6 +32,7 @@ public class ServicioControlador implements Serializable {
     private List<TipoServicio> tiposServicios;
     private List<Destino> destinos;
     private List<Destino> destinosSeleccionados;
+    private ServicioFilter servicioFilter;
     @ManagedProperty(value = "#{sesionControlador}")
     private SesionControlador sesionControlador;
 
@@ -38,6 +41,7 @@ public class ServicioControlador implements Serializable {
 
     public void initLista() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
+            servicioFilter = new ServicioFilter();
             servicioPaginador = new ServicioPaginador();
             servicioPaginador.initPaginador(sesionControlador.getUsuarioSesion().getSede().getId());
             transporteServicio = new TransporteServicio();
@@ -64,9 +68,9 @@ public class ServicioControlador implements Serializable {
             }
             transporteServicio = new TransporteServicio();
             servicio = transporteServicio.obtenerServicio(Integer.parseInt(value.toString()));
-            if(servicio.getDestinos() != null && !servicio.getDestinos().isEmpty()){
+            if (servicio.getDestinos() != null && !servicio.getDestinos().isEmpty()) {
                 destinosSeleccionados = new ArrayList(servicio.getDestinos());
-            }else{
+            } else {
                 destinosSeleccionados = new ArrayList<>();
             }
             destinos = transporteServicio.obtenerDestinos();
@@ -108,13 +112,17 @@ public class ServicioControlador implements Serializable {
         return "update.xhtml?faces-redirect=true;";
     }
 
+    public void ejecutarBusqueda() {
+        servicioPaginador.createFilterDynamic(servicioFilter);
+    }
+
     private boolean esVistaValida() {
         boolean resultado = true;
         if (!esNombreValido()) {
             resultado = false;
         } else if (!esTipoServicioValido()) {
             resultado = false;
-        } 
+        }
         return resultado;
     }
 
@@ -184,4 +192,11 @@ public class ServicioControlador implements Serializable {
         this.sesionControlador = sesionControlador;
     }
 
+    public ServicioFilter getServicioFilter() {
+        return servicioFilter;
+    }
+
+    public void setServicioFilter(ServicioFilter servicioFilter) {
+        this.servicioFilter = servicioFilter;
+    }
 }

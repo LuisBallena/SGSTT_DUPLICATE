@@ -1,6 +1,9 @@
 package com.sgstt.controlador;
 
+import com.sgstt.entidad.Cliente;
 import com.sgstt.entidad.Venta;
+import com.sgstt.excepciones.FilterException;
+import com.sgstt.filters.VentaFilter;
 import com.sgstt.hibernate.HibernateConexion;
 import com.sgstt.hibernate.HibernatePaginador;
 import com.sgstt.paginacion.VentaPaginador;
@@ -10,9 +13,13 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.ExternalContext;
+
+import com.sgstt.servicios.TransporteServicio;
+import com.sgstt.util.Utilitario;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
@@ -33,6 +40,9 @@ public class VentaControlador implements Serializable {
 
     private HibernatePaginador<Venta> ventaPaginador;
     private Venta venta;
+    private VentaFilter ventaFilter;
+    private List<Cliente> clientes;
+    private TransporteServicio transporteServicio;
     @ManagedProperty("#{sesionControlador}")
     SesionControlador sesionControlador;
 
@@ -41,8 +51,11 @@ public class VentaControlador implements Serializable {
 
     public void initLista(){
         if (!FacesContext.getCurrentInstance().isPostback()) {
+            transporteServicio = new TransporteServicio();
+            ventaFilter = new VentaFilter();
             ventaPaginador = new VentaPaginador();
             ventaPaginador.initPaginador();
+            clientes = transporteServicio.obtenerClientes(sesionControlador.getUsuarioSesion().getSede().getId());
         }
     }
     
@@ -55,6 +68,18 @@ public class VentaControlador implements Serializable {
     public void exportarVentaNoGravada() {
         if (venta != null) {
             exportarComprobante(venta.getId(), 0, sesionControlador.getUsuarioSesion().getSede().getDescripcion(),"venta_no_gravada");
+        }
+    }
+
+    public void limpiarClienteFilter() {
+        ventaFilter.setCliente(null);
+    }
+
+    public void ejecutarBusqueda(){
+        try {
+            ventaPaginador.createFilterDynamic(ventaFilter);
+        }catch (FilterException e){
+            Utilitario.enviarMensajeGlobalError(e.getMessage());
         }
     }
 
@@ -131,5 +156,20 @@ public class VentaControlador implements Serializable {
     public void setSesionControlador(SesionControlador sesionControlador) {
         this.sesionControlador = sesionControlador;
     }
-    
+
+    public VentaFilter getVentaFilter() {
+        return ventaFilter;
+    }
+
+    public void setVentaFilter(VentaFilter ventaFilter) {
+        this.ventaFilter = ventaFilter;
+    }
+
+    public List<Cliente> getClientes() {
+        return clientes;
+    }
+
+    public void setClientes(List<Cliente> clientes) {
+        this.clientes = clientes;
+    }
 }

@@ -43,8 +43,8 @@ public class Vehiculo implements Serializable {
     @Column
      String color;
 
-    @Column
-     String año_fabricacion;
+    @Column(name = "yearfabricacion")
+    private String año_fabricacion;
 
     @Column
      String capacidad_max;

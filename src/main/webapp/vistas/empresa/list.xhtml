@@ -16,6 +16,8 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-body" id="tabla">
+                            <h:messages id="msg" globalOnly="true" styleClass="list-group" infoClass="list-group-item list-group-item-success"
+                                        errorClass="list-group-item list-group-item-danger" />
                             <div class="row">
                                 <div class="col-sm-2">
                                     <h:panelGroup rendered="#{sesionControlador.permisoModulo.crear eq true}">
@@ -24,12 +26,54 @@
                                 </div>
                             </div>      
                             <br/>
+                            <!-- INICIO DE FILTRO -->
+                            <div class="row" style="margin-left: 2px;margin-right: 2px;">
+                                <div class="panel panel-default panel-busqueda">
+                                    <div class="panel-heading">
+                                        Filtros
+                                        <span style="margin-top: 5px;" class="pull-right clickable"><i
+                                                class="fa fa-plus"></i></span>
+                                    </div>
+                                    <div class="panel-body">
+                                        <h:form id="frmFiltroEmpresa" styleClass="form-horizontal">
+                                            <div class="form-group has-feedback">
+                                                <label class="col-md-2 control-label">Razón Social :</label>
+                                                <div class="col-sm-4 col-md-3">
+                                                    <h:inputText styleClass="form-control"
+                                                                 value="#{empresaControlador.empresaFilter.razonSocial}">
+                                                    </h:inputText>
+                                                </div>
+                                                <label class="col-md-2 control-label">RUC :</label>
+                                                <div class="col-sm-4 col-md-3">
+                                                    <h:inputText styleClass="form-control"
+                                                                 value="#{empresaControlador.empresaFilter.ruc}">
+                                                    </h:inputText>
+                                                </div>
+                                            </div>
+                                            <div class="form-group has-feedback">
+                                                <label class="col-md-2 control-label">Centro de Costo :</label>
+                                                <div class="col-sm-4 col-md-3">
+                                                    <h:inputText styleClass="form-control"
+                                                                 value="#{empresaControlador.empresaFilter.centroCosto}">
+                                                    </h:inputText>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3 control-label">
+                                                <p:commandButton value="Buscar"
+                                                                 actionListener="#{empresaControlador.ejecutarBusqueda}"
+                                                                 styleClass="btn btn-primary"
+                                                                 update=":formperfil :msg" />
+                                            </div>
+                                        </h:form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- FIN DE FILTRO -->
+                            <br/>
                             <h:form id="formperfil">
                                 <f:event type="preRenderView" listener="#{empresaControlador.initLista}" />
-                                <h:messages id="msg" globalOnly="true" styleClass="list-group" infoClass="list-group-item list-group-item-success"
-                                                    errorClass="list-group-item list-group-item-danger" />
-                                <p:dataTable    value="#{empresaControlador.empresaPaginador}"    var="list" emptyMessage="No existen registros de empresas externas" 
-                                                paginator="true" rows="20" lazy="true" rowIndexVar="rowIndex"
+                                <p:dataTable id="dataTableEmpresa"    value="#{empresaControlador.empresaPaginador}" var="list" emptyMessage="No existen registros de empresas externas"
+                                                paginator="true" rows="20" lazy="true" rowIndexVar="rowIndex" widgetVar="dataTableEmpresa"
                                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
 
                                     <p:column    style="text-align: center;font-size: 15px;">
@@ -85,12 +129,12 @@
         </div>    
         <p:dialog modal="true" position="center top"  widgetVar="deleteempresa" resizable="false" showEffect="fade" >
             <h:form >
-                <div   id="row" style="font-weight: bold;font-size: 14px;">
+                <div style="font-weight: bold;font-size: 14px;">
                     ¿Desea Eliminar la Empresa ?
                 </div>
-                <div   id="row">
+                <div >
                     <div class="col-lg-6">
-                        <p:commandButton  actionListener="#{empresaControlador.eliminarEmpresa}" update=":formperfil" value="Si" oncomplete="PF('deleteempresa').hide();"   >
+                        <p:commandButton  actionListener="#{empresaControlador.eliminarEmpresa}" update=":formperfil :msg" value="Si" oncomplete="PF('deleteempresa').hide();"   >
 
                         </p:commandButton>
                     </div>
@@ -102,6 +146,13 @@
                 </div>
             </h:form>
         </p:dialog>
+        <h:outputScript name="js/collapse_panel.js"/>
+        <script type="text/javascript">
+            jQuery(function ($) {
+                $('.panel-busqueda').find('.panel-body').hide();
+                $('.panel-busqueda .panel-heading span.clickable').addClass('panel-collapsed');
+            });
+        </script>
     </ui:define>
 
 </ui:composition>
