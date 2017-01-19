@@ -85,5 +85,13 @@ public class FileServicio implements Serializable{
         conexion.closeConexion();
         return aux;
     }
+
+    public List<Cliente> obtenerClientesPorSede(Integer idSede){
+        List<Cliente> clientes = null;
+        conexion.beginConexion();
+        clientes = clienteDao.getClientsFilterBySede(idSede);
+        conexion.closeConexion();
+        return clientes;
+    }
     
 }

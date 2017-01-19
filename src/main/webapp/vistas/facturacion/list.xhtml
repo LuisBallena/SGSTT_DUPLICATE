@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="./../home.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+    <ui:define name="content">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header">Administrar Facturación</h3>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body" id="tabla">
+                            <h:messages id="msg" globalOnly="true" styleClass="list-group"
+                                        infoClass="list-group-item list-group-item-success"
+                                        errorClass="list-group-item list-group-item-danger"/>
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <h:panelGroup rendered="#{sesionControlador.permisoModulo.crear eq true}">
+                                        <h:button value="Nuevo Comprobante" styleClass="btn btn-primary"
+                                                  outcome="create.xhtml"/>
+                                    </h:panelGroup>
+                                </div>
+                            </div>
+                            <br/>
+
+                            <br/>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+    </ui:define>
+
+</ui:composition>

@@ -720,7 +720,66 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`servicio_destinos` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `sgstt`.`comprobante`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `sgstt`.`comprobante` ;
 
+CREATE  TABLE IF NOT EXISTS `sgstt`.`comprobante` (
+  `idcomprobante` INT NOT NULL AUTO_INCREMENT,
+  `fecha_registro` DATE NOT NULL ,
+  `serie` VARCHAR(20) NOT NULL ,
+  `numero` INT(10) NOT NULL ,
+  `idsede` INT NOT NULL ,
+  `idcliente` INT NOT NULL ,
+  PRIMARY KEY (`idcomprobante`) ,
+  INDEX `index_serie` (`serie` ASC) ,
+  INDEX `index_numero` (`numero` ASC) ,
+  CONSTRAINT `fk_comprobante_sede`
+  FOREIGN KEY (`idsede` )
+  REFERENCES `sgstt`.`sede` (`idsede` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_comprobante_cliente`
+  FOREIGN KEY (`idcliente` )
+  REFERENCES `sgstt`.`cliente` (`idcliente` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+  ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `sgstt`.`comprobante_detalle`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `sgstt`.`comprobante_detalle` ;
+
+CREATE  TABLE IF NOT EXISTS `sgstt`.`comprobante_detalle` (
+  `idcomprobante_detalle` INT NOT NULL AUTO_INCREMENT,
+  `idservicio_detalle` INT NOT NULL ,
+  `idFile` INT NULL ,
+  `idVenta` INT NULL ,
+  `idComprobante` INT(10) NOT NULL ,
+  PRIMARY KEY (`idcomprobante_detalle`) ,
+  CONSTRAINT `fk_comprobante_detalle_id_servicio_detalle`
+  FOREIGN KEY (`idservicio_detalle` )
+  REFERENCES `sgstt`.`servicio_detalle` (`idservicio_detalle` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_comprobante_detalle_id_file`
+  FOREIGN KEY (`idFile` )
+  REFERENCES `sgstt`.`file` (`idfile` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_comprobante_detalle_id_venta`
+  FOREIGN KEY (`idVenta` )
+  REFERENCES `sgstt`.`venta_directa` (`idventa` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_comprobante_detalle_id_comprobante`
+  FOREIGN KEY (`idComprobante` )
+  REFERENCES `sgstt`.`comprobante` (`idcomprobante` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+  ENGINE = InnoDB;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

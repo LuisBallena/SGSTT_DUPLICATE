@@ -40,12 +40,14 @@
             var nodeRecursosHumanos = $('#nav-recursosHumanos');
             var nodeBienes = $('#nav-bienes');
             var nodeClientes = $('#nav-clientes');
+            var nodeContabilidad = $('#nav-contabilidad');
             activarDropdown(nodeSeguridad);
             activarDropdown(nodeAdministracion);
             activarDropdown(nodeVentas);
             activarDropdown(nodeRecursosHumanos);
             activarDropdown(nodeBienes);
             activarDropdown(nodeClientes);
+            activarDropdown(nodeContabilidad);
         });
     </script>
 </h:head>
@@ -212,6 +214,26 @@
                                 <ul class="nav nav-second-level">
                                     <h:form styleClass="nav nav-second-level">
                                         <c:forEach items="#{sesionControlador.clientes}" varStatus="indicePadre"
+                                                   var="item">
+                                            <li>
+                                                <a index="#{item.modulo.url}"
+                                                   jsf:action="#{sesionControlador.redireccionar(item)}"
+                                                   style="font-size: 15px;"
+                                                   class="#{item.modulo.id == sesionControlador.permisoModulo.modulo.id ? 'active' : ''}">
+                                                    <i class="fa glyphicon-minus"></i>  #{item.modulo.nombre}
+                                                </a>
+                                            </li>
+                                        </c:forEach>
+                                    </h:form>
+                                </ul>
+                            </li>
+                        </c:if>
+                        <c:if test="#{sesionControlador.contabilidad != null}">
+                            <li id="nav-contabilidad">
+                                <a href="#"><i class="fa fa-dollar"></i> Contabilidad<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <h:form styleClass="nav nav-second-level">
+                                        <c:forEach items="#{sesionControlador.contabilidad}" varStatus="indicePadre"
                                                    var="item">
                                             <li>
                                                 <a index="#{item.modulo.url}"

@@ -33,5 +33,6 @@
     <mapping class="com.sgstt.entidad.Aerolinea" />
     <mapping class="com.sgstt.entidad.Venta" />
     <mapping class="com.sgstt.entidad.Sede" />
+    <mapping class="com.sgstt.entidad.Comprobante" />
   </session-factory>
 </hibernate-configuration>
