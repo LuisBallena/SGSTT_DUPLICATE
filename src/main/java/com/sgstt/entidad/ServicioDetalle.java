@@ -31,8 +31,6 @@ public class ServicioDetalle implements Serializable, Exporter {
 
     private static final long serialVersionUID = 165099556331434992L;
 
-    public static final int TIEMPO_ESPERA = 4;
-
     @Id
     @GeneratedValue
     @Column(name = "IDSERVICIO_DETALLE")
@@ -143,6 +141,11 @@ public class ServicioDetalle implements Serializable, Exporter {
 
     @Column(name = "idtipo_vehiculo")
     private Integer idTipoVehiculo;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @Fetch(FetchMode.JOIN)
+    @JoinColumn(name = "idcomprobante")
+    private Comprobante comprobante;
 
     public ServicioDetalle() {
         vuelo = new Vuelo();
@@ -441,4 +444,11 @@ public class ServicioDetalle implements Serializable, Exporter {
         this.precioServicioIgv = precioServicioIgv;
     }
 
+    public Comprobante getComprobante() {
+        return comprobante;
+    }
+
+    public void setComprobante(Comprobante comprobante) {
+        this.comprobante = comprobante;
+    }
 }

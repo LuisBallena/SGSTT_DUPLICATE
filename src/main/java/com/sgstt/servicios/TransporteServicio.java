@@ -62,22 +62,6 @@ public class TransporteServicio implements Serializable {
 
     }
 
-    public List<Vehiculo> obtenerVehiculos() {
-        List<Vehiculo> aux = null;
-        conexion.beginConexion();
-        aux = vehiculoDao.obtenerTodos();
-        conexion.closeConexion();
-        return aux;
-    }
-
-    public List<Vehiculo> obtenerVehiculos(Integer idSede) {
-        List<Vehiculo> aux = null;
-        conexion.beginConexion();
-        aux = vehiculoDao.getVehiculosFilterbySede(idSede);
-        conexion.closeConexion();
-        return aux;
-    }
-
     public List<Vehiculo> obtenerVehiculosConTipoVehiculosPorSede(Integer idSede) {
         List<Vehiculo> aux = null;
         conexion.beginConexion();
@@ -110,14 +94,6 @@ public class TransporteServicio implements Serializable {
         return aux;
     }
 
-    public List<Cliente> obtenerClientes() {
-        List<Cliente> aux = null;
-        conexion.beginConexion();
-        aux = clienteDao.obtenerTodos();
-        conexion.closeConexion();
-        return aux;
-    }
-
     public List<Cliente> obtenerClientes(Integer idSede) {
         List<Cliente> aux = null;
         conexion.beginConexion();
@@ -134,26 +110,10 @@ public class TransporteServicio implements Serializable {
         return aux;
     }
 
-    public List<Trasladista> obtenerGuias() {
-        List<Trasladista> aux = null;
-        conexion.beginConexion();
-        aux = trasladistaDao.obtenerTodos();
-        conexion.closeConexion();
-        return aux;
-    }
-
     public List<Trasladista> obtenerGuiasPorSede(Integer idSede) {
         List<Trasladista> aux = null;
         conexion.beginConexion();
         aux = trasladistaDao.getTrasladistaFilterBySede(idSede);
-        conexion.closeConexion();
-        return aux;
-    }
-
-    public List<File> obtenerFilesActivos() {
-        List<File> aux = null;
-        conexion.beginConexion();
-        aux = fileDao.obtenerTodosActivos();
         conexion.closeConexion();
         return aux;
     }
@@ -316,36 +276,6 @@ public class TransporteServicio implements Serializable {
         return auxiliar;
     }
 
-    public void guardarEmpresa(Empresa empresa) {
-        conexion.beginConexion();
-        empresaDao.agregar(empresa);
-        conexion.closeConexion();
-        Utilitario.enviarMensajeGlobalValido("Se ha registrado correctamente");
-    }
-
-    public void actualizarEmpresa(Empresa empresa) {
-        conexion.beginConexion();
-        empresaDao.actualizar(empresa);
-        conexion.closeConexion();
-        Utilitario.enviarMensajeGlobalValido("Se ha actualizado correctamente");
-    }
-
-    public void eliminarEmpresa(Empresa empresa) {
-        conexion.beginConexion();
-        empresa.setEstado(Estado.ELIMINADO);
-        empresaDao.actualizar(empresa);
-        conexion.closeConexion();
-        Utilitario.enviarMensajeGlobalValido("Se ha eliminado correctamente");
-    }
-
-    public Empresa obtenerEmpresa(Integer id) {
-        Empresa empresa = null;
-        conexion.beginConexion();
-        empresa = empresaDao.obtenerEntidad(id);
-        conexion.closeConexion();
-        return empresa;
-    }
-
     public List<Empresa> obtenerEmpresasConChoferRegistrado(Integer idSede) {
         List<Empresa> auxiliar = null;
         conexion.beginConexion();
@@ -358,14 +288,6 @@ public class TransporteServicio implements Serializable {
         List<Empresa> auxiliar = null;
         conexion.beginConexion();
         auxiliar = empresaDao.getEmpresasExternasFilterBySede(idSede);
-        conexion.closeConexion();
-        return auxiliar;
-    }
-
-    public List<Empresa> obtenerEmpresa() {
-        List<Empresa> auxiliar = null;
-        conexion.beginConexion();
-        auxiliar = empresaDao.obtenerTodosActivos();
         conexion.closeConexion();
         return auxiliar;
     }

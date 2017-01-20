@@ -56,6 +56,11 @@ public class File implements java.io.Serializable {
     @Column(nullable = false,insertable = false)
     Estado estado;
 
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(nullable = false,insertable = false)
+    private EstadoFactura estadoFactura;
+
     public File() {
 
     }
@@ -133,6 +138,11 @@ public class File implements java.io.Serializable {
         this.estado = estado;
     }
 
-    
-    
+    public EstadoFactura getEstadoFactura() {
+        return estadoFactura;
+    }
+
+    public void setEstadoFactura(EstadoFactura estadoFactura) {
+        this.estadoFactura = estadoFactura;
+    }
 }

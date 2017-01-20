@@ -48,6 +48,14 @@
                                                          src="#{request.contextPath}/resources/images/add.png"/>
                                                 </div>
                                             </div>
+                                            <label class="col-md-2 control-label">File/VTA :</label>
+
+                                            <div class="col-sm-4 col-md-3">
+                                                <h:selectOneMenu id="fileVta" styleClass="form-control" value="#{comprobanteControlador.comprobanteFilter.fileVtaDTO}" converter="omnifaces.SelectItemsConverter">
+                                                    <f:selectItem itemLabel="Todos" itemValue="#{null}"/>
+                                                    <f:selectItems value="#{comprobanteControlador.fileVtaDTOs}" var="list" itemLabel="#{list.nombre}" itemValue="#{list}"/>
+                                                </h:selectOneMenu>
+                                            </div>
                                         </div>
                                     </h:form>
                                 </div>
@@ -81,9 +89,9 @@
                         <h:outputText value="#{listClienteFilter.tipoCliente.tipoCliente}"/>
                     </p:column>
                     <p:column style="text-align: center;width: 8%;">
-                        <p:commandButton style="font-size: 12px;" icon="icon-choice"
+                        <p:commandButton style="font-size: 12px;" icon="icon-choice" actionListener="#{comprobanteControlador.obtenerFileVTA(listClienteFilter.idCliente)}"
                                          oncomplete="PF('dialogClientFilter').hide();changeCleanCliente('grid');"
-                                         update=":frmFiltroRegistro:clienteFilter">
+                                         update=":frmFiltroRegistro:clienteFilter,:frmFiltroRegistro:fileVta">
                             <f:setPropertyActionListener value="#{listClienteFilter}"
                                                          target="#{comprobanteControlador.comprobanteFilter.cliente}"/>
                         </p:commandButton>

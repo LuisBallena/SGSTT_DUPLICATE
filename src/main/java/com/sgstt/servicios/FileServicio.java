@@ -3,15 +3,19 @@ package com.sgstt.servicios;
 import com.sgstt.dao.ClienteDao;
 import com.sgstt.dao.FileDao;
 import com.sgstt.dao.ServicioDetalleDao;
+import com.sgstt.dao.VentaDao;
 import com.sgstt.dao.impl.ClienteImpl;
 import com.sgstt.dao.impl.FileImpl;
 import com.sgstt.dao.impl.ServicioDetalleImpl;
+import com.sgstt.dao.impl.VentaImpl;
+import com.sgstt.dto.FileVtaDTO;
 import com.sgstt.entidad.Cliente;
 import com.sgstt.entidad.Estado;
 import com.sgstt.entidad.File;
 import com.sgstt.hibernate.HibernateConexion;
 import com.sgstt.util.Utilitario;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,12 +30,14 @@ public class FileServicio implements Serializable{
     private final ClienteDao clienteDao;
     private final FileDao fileDao;
     private final ServicioDetalleDao servicioDetalleDao;
+    private final VentaDao ventaDao;
 
     public FileServicio() {
         conexion = new HibernateConexion();
         clienteDao = new ClienteImpl(conexion);
         fileDao = new FileImpl(conexion);
         servicioDetalleDao = new ServicioDetalleImpl(conexion);
+        ventaDao = new VentaImpl(conexion);
     }
     
     public List<Cliente> obtenerClientes(){
@@ -92,6 +98,21 @@ public class FileServicio implements Serializable{
         clientes = clienteDao.getClientsFilterBySede(idSede);
         conexion.closeConexion();
         return clientes;
+    }
+
+    public List<FileVtaDTO> obtenerFileVentasPorCliente(Integer idCliente){
+        List<FileVtaDTO> fileVtaDTOs = new ArrayList<>();
+        conexion.beginConexion();
+        List<FileVtaDTO> files  = fileDao.getFilesByIdCliente(idCliente);
+        if(files != null && !files.isEmpty()){
+            fileVtaDTOs.addAll(files);
+        }
+        List<FileVtaDTO> ventas  = ventaDao.getVentasByIdCliente(idCliente);
+        if(ventas != null && !ventas.isEmpty()){
+            fileVtaDTOs.addAll(ventas);
+        }
+        conexion.closeConexion();
+        return fileVtaDTOs;
     }
     
 }

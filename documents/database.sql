@@ -421,6 +421,7 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`file` (
   `fecha_modificacion` DATETIME NOT NULL ,
   `nro_correlativo` VARCHAR(45) NULL ,
   `estado` TINYINT(1) NOT NULL DEFAULT 1 ,
+  `estado_factura` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '0 = Sin Facturar , 1 = Pendientes a Facturar , 2 = Facturado',
   PRIMARY KEY (`idfile`, `idcliente`, `idempleado`) ,
   INDEX `fk_file_cliente1_idx` (`idcliente` ASC) ,
   INDEX `fk_file_empleado1_idx` (`idempleado` ASC) ,
@@ -491,6 +492,7 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`servicio_detalle` (
   `idcliente` INT NOT NULL,
   `idfile` INT NULL ,
   `idventa` INT NULL ,
+  `idcomprobante` INT NULL ,
   PRIMARY KEY (`idservicio_detalle`, `idservicio`) ,
   INDEX `fk_servicio_detalle_trasladista1_idx` (`idtrasladista` ASC) ,
   INDEX `fk_servicio_detalle_servicio1_idx` (`idservicio` ASC) ,
@@ -532,6 +534,11 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`servicio_detalle` (
   CONSTRAINT `fk_servicio_detalle_venta_directa1`
     FOREIGN KEY (`idventa` )
     REFERENCES `sgstt`.`venta_directa` (`idventa` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_servicio_detalle_comprobante`
+  FOREIGN KEY (`idcomprobante` )
+  REFERENCES `sgstt`.`comprobante` (`idcomprobante` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -694,9 +701,6 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`destinos` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
-
-
 -- -----------------------------------------------------
 -- Table `sgstt`.`servicio_destinos`
 -- -----------------------------------------------------
@@ -743,40 +747,6 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`comprobante` (
   CONSTRAINT `fk_comprobante_cliente`
   FOREIGN KEY (`idcliente` )
   REFERENCES `sgstt`.`cliente` (`idcliente` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-  ENGINE = InnoDB;
-
--- -----------------------------------------------------
--- Table `sgstt`.`comprobante_detalle`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `sgstt`.`comprobante_detalle` ;
-
-CREATE  TABLE IF NOT EXISTS `sgstt`.`comprobante_detalle` (
-  `idcomprobante_detalle` INT NOT NULL AUTO_INCREMENT,
-  `idservicio_detalle` INT NOT NULL ,
-  `idFile` INT NULL ,
-  `idVenta` INT NULL ,
-  `idComprobante` INT(10) NOT NULL ,
-  PRIMARY KEY (`idcomprobante_detalle`) ,
-  CONSTRAINT `fk_comprobante_detalle_id_servicio_detalle`
-  FOREIGN KEY (`idservicio_detalle` )
-  REFERENCES `sgstt`.`servicio_detalle` (`idservicio_detalle` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_comprobante_detalle_id_file`
-  FOREIGN KEY (`idFile` )
-  REFERENCES `sgstt`.`file` (`idfile` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_comprobante_detalle_id_venta`
-  FOREIGN KEY (`idVenta` )
-  REFERENCES `sgstt`.`venta_directa` (`idventa` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_comprobante_detalle_id_comprobante`
-  FOREIGN KEY (`idComprobante` )
-  REFERENCES `sgstt`.`comprobante` (`idcomprobante` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB;

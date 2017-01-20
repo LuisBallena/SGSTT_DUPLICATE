@@ -1,6 +1,7 @@
 package com.sgstt.filters;
 
 
+import com.sgstt.dto.FileVtaDTO;
 import com.sgstt.entidad.Cliente;
 
 /**
@@ -9,6 +10,8 @@ import com.sgstt.entidad.Cliente;
 public class ComprobanteFilter extends BaseFilter {
 
     private Cliente cliente;
+
+    private FileVtaDTO fileVtaDTO;
 
     public ComprobanteFilter() {
     }
@@ -19,5 +22,13 @@ public class ComprobanteFilter extends BaseFilter {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public FileVtaDTO getFileVtaDTO() {
+        return fileVtaDTO;
+    }
+
+    public void setFileVtaDTO(FileVtaDTO fileVtaDTO) {
+        this.fileVtaDTO = fileVtaDTO;
     }
 }

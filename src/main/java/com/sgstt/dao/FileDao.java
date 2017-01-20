@@ -1,11 +1,16 @@
 package com.sgstt.dao;
 
+import com.sgstt.dto.FileVtaDTO;
 import com.sgstt.entidad.File;
+
+import java.util.List;
 
 /**
  *
  * @author Luis Alonso Ballena Garcia
  */
 public interface FileDao extends GenericDao<File,Integer>{
+
+    public List<FileVtaDTO> getFilesByIdCliente(Integer idCliente);
 
 }

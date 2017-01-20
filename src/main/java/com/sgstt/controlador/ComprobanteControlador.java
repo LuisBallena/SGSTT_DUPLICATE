@@ -1,5 +1,6 @@
 package com.sgstt.controlador;
 
+import com.sgstt.dto.FileVtaDTO;
 import com.sgstt.entidad.Cliente;
 import com.sgstt.filters.ComprobanteFilter;
 import com.sgstt.servicios.FileServicio;
@@ -21,6 +22,7 @@ public class ComprobanteControlador implements Serializable{
     private List<Cliente> clientes;
     private FileServicio fileServicio;
     private ComprobanteFilter comprobanteFilter;
+    private List<FileVtaDTO> fileVtaDTOs;
     @ManagedProperty("#{sesionControlador}")
     SesionControlador sesionControlador;
 
@@ -38,6 +40,10 @@ public class ComprobanteControlador implements Serializable{
 
     public void limpiarClienteFilter() {
         comprobanteFilter.setCliente(null);
+    }
+
+    public void obtenerFileVTA(Integer idCliente){
+        fileVtaDTOs = fileServicio.obtenerFileVentasPorCliente(idCliente);
     }
 
     /* GETTERS AND SETTERS */
@@ -59,5 +65,13 @@ public class ComprobanteControlador implements Serializable{
 
     public void setComprobanteFilter(ComprobanteFilter comprobanteFilter) {
         this.comprobanteFilter = comprobanteFilter;
+    }
+
+    public List<FileVtaDTO> getFileVtaDTOs() {
+        return fileVtaDTOs;
+    }
+
+    public void setFileVtaDTOs(List<FileVtaDTO> fileVtaDTOs) {
+        this.fileVtaDTOs = fileVtaDTOs;
     }
 }
