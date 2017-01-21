@@ -232,7 +232,7 @@
                                                 <label class="col-md-2 control-label">Desde :</label>
 
                                                 <div class="col-md-3">
-                                                    <p:calendar styleClass="bootstrap-calendar" readonlyInput="true"
+                                                    <p:calendar styleClass="bootstrap-calendar" readonlyInput="false"
                                                                 locale="es"
                                                                 pattern="dd/MM/yyyy"
                                                                 value="#{ordenServicioControlador.servicioDetalleFilter.fechaDesde}"
@@ -241,7 +241,7 @@
                                                 <label class="col-md-2 control-label">Hasta :</label>
 
                                                 <div class="col-sm-4 col-md-3">
-                                                    <p:calendar styleClass="bootstrap-calendar" readonlyInput="true"
+                                                    <p:calendar styleClass="bootstrap-calendar" readonlyInput="false"
                                                                 locale="es"
                                                                 pattern="dd/MM/yyyy"
                                                                 value="#{ordenServicioControlador.servicioDetalleFilter.fechaHasta}"
@@ -266,7 +266,7 @@
                                     <f:event type="preRenderView" listener="#{ordenServicioControlador.initLista}"/>
 
                                     <p:dataTable value="#{ordenServicioControlador.servicioDetallePaginador}" var="list"
-                                                 emptyMessage="No existen ordenes de servicios" style="width: 1700px;"
+                                                 emptyMessage="No existen ordenes de servicios" style="width: 2000px;"
                                                  paginator="true" rows="15" lazy="true" rowIndexVar="rowIndex"
                                                  paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {Exporters}">
                                         <f:facet name="{Exporters}">
@@ -297,7 +297,15 @@
                                                 Fecha
                                             </f:facet>
                                             <h:outputText value="#{list.fecha}">
-                                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-5"/>
+                                                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                                            </h:outputText>
+                                        </p:column>
+                                        <p:column style="text-align: center;font-size: 13px;">
+                                            <f:facet name="header">
+                                                Hora
+                                            </f:facet>
+                                            <h:outputText value="#{list.fecha}">
+                                                <f:convertDateTime pattern="HH:mm" timeZone="GMT-5"/>
                                             </h:outputText>
                                         </p:column>
                                         <p:column style="text-align: center;font-size: 13px;">
@@ -434,7 +442,7 @@
                                                              action="#{ordenServicioControlador.irActualizar(list.id)}">
                                             </p:commandButton>
                                             <p:commandButton title="Cotizacion por Item" style="font-size: 12px;"
-                                                             rendered="#{list.estadoServicio == 'Por_Realizar'}"
+                                                             
                                                              icon="icon-money"
                                                              action="#{ordenServicioControlador.irCotizar}"
                                                              update=":msg">
@@ -481,11 +489,11 @@
                   widgetVar="dialogClient" resizable="false" width="600"
                   showEffect="fade">
             <h:form>
-                <p:dataTable value="#{ordenServicioControlador.clientes}" var="listCliente"
+                <p:dataTable value="#{ordenServicioControlador.clientes}" var="listCliente" widgetVar="tableCliente"
                              emptyMessage="No existen registros de clientes"
                              paginator="true" rows="10"
                              paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}">
-                    <p:column style="text-align: center;font-size: 13px;">
+                    <p:column style="text-align: center;font-size: 13px;" filterStyle="width: 150px;" filterBy="#{listCliente.nombreAuxiliar}" filterMatchMode="startsWith" >
                         <f:facet name="header">
                             Cliente
                         </f:facet>
@@ -493,9 +501,16 @@
 
                         </h:outputText>
                     </p:column>
-                    <p:column style="text-align: center;font-size: 13px;">
+                    <p:column style="text-align: center;font-size: 13px;" filterBy="#{listCliente.tipoCliente.tipoCliente}" filterMatchMode="exact"  >
                         <f:facet name="header">
                             Tipo Cliente
+                        </f:facet>
+                        <f:facet name="filter">
+                            <p:selectOneMenu onchange="PF('tableCliente').filter()" style="width: 150px;font-size: 13px;" >
+                                <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
+                                <f:selectItem itemLabel="Jurídico" itemValue="JURIDICO"  />
+                                <f:selectItem itemLabel="Natural" itemValue="NATURAL"  />
+                            </p:selectOneMenu>
                         </f:facet>
                         <h:outputText value="#{listCliente.tipoCliente.tipoCliente}"/>
                     </p:column>
@@ -580,10 +595,10 @@
                   showEffect="fade">
             <h:form>
                 <p:dataTable value="#{ordenServicioControlador.clientes}" var="listClienteFilter"
-                             emptyMessage="No existen registros de clientes"
+                             emptyMessage="No existen registros de clientes" widgetVar="tableClienteFilter"
                              paginator="true" rows="10"
                              paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}">
-                    <p:column style="text-align: center;font-size: 13px;">
+                    <p:column style="text-align: center;font-size: 13px;" filterStyle="width: 150px;" filterBy="#{listClienteFilter.nombreAuxiliar}" filterMatchMode="startsWith">
                         <f:facet name="header">
                             Cliente
                         </f:facet>
@@ -591,9 +606,16 @@
 
                         </h:outputText>
                     </p:column>
-                    <p:column style="text-align: center;font-size: 13px;">
+                    <p:column style="text-align: center;font-size: 13px;" filterBy="#{listClienteFilter.tipoCliente.tipoCliente}" filterMatchMode="exact" >
                         <f:facet name="header">
                             Tipo Cliente
+                        </f:facet>
+                        <f:facet name="filter">
+                            <p:selectOneMenu onchange="PF('tableClienteFilter').filter()" style="width: 150px;font-size: 13px;" >
+                                <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
+                                <f:selectItem itemLabel="Jurídico" itemValue="JURIDICO"  />
+                                <f:selectItem itemLabel="Natural" itemValue="NATURAL"  />
+                            </p:selectOneMenu>
                         </f:facet>
                         <h:outputText value="#{listClienteFilter.tipoCliente.tipoCliente}"/>
                     </p:column>

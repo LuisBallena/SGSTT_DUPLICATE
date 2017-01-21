@@ -28,45 +28,45 @@ public class Vehiculo implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(name = "IDVEHICULO")
-    private Integer id;
+    @Column(name = "idvehiculo")
+     Integer id;
 
     @Column
-    private String descripcion;
+     String descripcion;
     
     @Column
-    private String descripcion2;
+     String descripcion2;
 
     @Column
-    private String placa;
+     String placa;
 
     @Column
-    private String color;
+     String color;
 
     @Column(name = "yearfabricacion")
     private String año_fabricacion;
 
     @Column
-    private String capacidad_max;
+     String capacidad_max;
 
     @Column
-    private String capacidad_recomendada;
+     String capacidad_recomendada;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idtipo_vehiculo", nullable = false)
-    private TipoVehiculo tipoVehiculo;
+     TipoVehiculo tipoVehiculo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MARCA_IDMARCA", nullable = false)
-    private Marca marca;
+     Marca marca;
 
     @Column(name = "FECHA_REGISTRO")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaRegistro;
+     Date fechaRegistro;
     
     @Column(name = "FECHA_MODIFICACION")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaModificacion;
+     Date fechaModificacion;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false, insertable = false)
@@ -124,7 +124,7 @@ public class Vehiculo implements Serializable {
     }
 
     public void setDescripcion2(String descripcion2) {
-        this.descripcion = descripcion2;
+        this.descripcion2 = descripcion2;
     }
 
     public String getPlaca() {

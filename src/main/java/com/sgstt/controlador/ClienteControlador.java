@@ -104,6 +104,9 @@ public class ClienteControlador implements Serializable {
             auxTipoDocumento = TipoDocumento.RUC.ordinal();
         } else if (cliente.getTipoCliente().getIdTipoCliente() == TipoCliente.NATURAL) {
             auxTipoDocumento = TipoDocumento.CARNET_EXTRANJERIA.ordinal();
+            
+        }else if (cliente.getTipoCliente().getIdTipoCliente() == TipoCliente.NATURAL) {
+            auxTipoDocumento = TipoDocumento.PASAPORTE.ordinal();
         }
     }
 
@@ -115,11 +118,17 @@ public class ClienteControlador implements Serializable {
 
     private TipoDocumento convertTipoDocumento(Integer id) {
         if (id == 0)
+     
             return TipoDocumento.DNI;
         if (id == 1)
-            return TipoDocumento.RUC;
-        else
-            return TipoDocumento.CARNET_EXTRANJERIA;
+			return TipoDocumento.RUC;
+        
+        if (id == 2)
+			return TipoDocumento.CARNET_EXTRANJERIA;
+		else			
+			return TipoDocumento.PASAPORTE;
+
+                
     }
 
     public String irActualizar(Integer id) {
@@ -181,13 +190,16 @@ public class ClienteControlador implements Serializable {
         if (!esNombreValido()) {
             resultado = false;
         } else if (cliente.getTipoDocumento() == TipoDocumento.DNI && !Utilitario.esRangoValido(cliente.getNumeroDocumento(), 8, 8)) {
-            Utilitario.enviarMensajeGlobalError("El dni son 8 caracteres");
+            Utilitario.enviarMensajeGlobalError("El DNI son 8 caracteres");
             resultado = false;
         } else if (cliente.getTipoDocumento() == TipoDocumento.CARNET_EXTRANJERIA && !Utilitario.esRangoValido(cliente.getNumeroDocumento(), 12, 12)) {
-            Utilitario.enviarMensajeGlobalError("El CARNET_EXTRANJERIA son 12 caracteres");
+            Utilitario.enviarMensajeGlobalError("El CARNET EXTRANJERIA son 12 caracteres");
             resultado = false;
         } else if (cliente.getTipoDocumento() == TipoDocumento.RUC && !Utilitario.esRangoValido(cliente.getNumeroDocumento(), 11, 11)) {
-            Utilitario.enviarMensajeGlobalError("El ruc son 11 caracteres");
+            Utilitario.enviarMensajeGlobalError("El RUC son 11 caracteres");
+            resultado = false;
+        } else if (cliente.getTipoDocumento() == TipoDocumento.PASAPORTE && !Utilitario.esRangoValido(cliente.getNumeroDocumento(), 10, 10)) {
+            Utilitario.enviarMensajeGlobalError("El PASAPORTE son 10 caracteres");
             resultado = false;
         } else if (!esDireccionValida()) {
             resultado = false;

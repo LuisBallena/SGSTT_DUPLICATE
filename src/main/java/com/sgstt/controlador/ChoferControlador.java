@@ -98,21 +98,21 @@ public class ChoferControlador implements Serializable {
         } else if (!Utilitario.esRangoValido(chofer.getNombre(), 45)) {
             Utilitario.enviarMensajeGlobalError("El rango máximo de la Nombre es de 45 caracteres");
             resultado = false;
-        } else if (Utilitario.esNulo(chofer.getApellido())) {
-            Utilitario.enviarMensajeGlobalError("Debe ingresar el Apellido del Chofer");
-            resultado = false;
-        } else if (!Utilitario.esRangoValido(chofer.getApellido(), 45)) {
-            Utilitario.enviarMensajeGlobalError("El rango máximo de la Apellido es de 45 caracteres");
-            resultado = false;
-        } else if (Utilitario.esNulo(chofer.getDni())) {
-            Utilitario.enviarMensajeGlobalError("Debe ingresar el Dni del Chofer");
-            resultado = false;
-        } else if (!Utilitario.esRangoValido(chofer.getDni(), 8)) {
-            Utilitario.enviarMensajeGlobalError("El rango máximo del Dni es de 8 caracteres");
-            resultado = false;
-        } else if (!Utilitario.esNulo(chofer.getCelular()) && !Utilitario.esRangoValido(chofer.getCelular(), 11)) {
-            Utilitario.enviarMensajeGlobalError("El rango máximo del Celular es de 11 caracteres");
-            resultado = false;
+      //  } else if (Utilitario.esNulo(chofer.getApellido())) {
+       //     Utilitario.enviarMensajeGlobalError("Debe ingresar el Apellido del Chofer");
+        //    resultado = false;
+      //  } else if (!Utilitario.esRangoValido(chofer.getApellido(), 45)) {
+       //     Utilitario.enviarMensajeGlobalError("El rango máximo de la Apellido es de 45 caracteres");
+        //    resultado = false;
+      //  } else if (Utilitario.esNulo(chofer.getDni())) {
+       //     Utilitario.enviarMensajeGlobalError("Debe ingresar el Dni del Chofer");
+       //     resultado = false;
+      //  } else if (!Utilitario.esRangoValido(chofer.getDni(), 8)) {
+       //     Utilitario.enviarMensajeGlobalError("El rango máximo del Dni es de 8 caracteres");
+       //     resultado = false;
+       // } else if (!Utilitario.esNulo(chofer.getCelular()) && !Utilitario.esRangoValido(chofer.getCelular(), 11)) {
+        //    Utilitario.enviarMensajeGlobalError("El rango máximo del Celular es de 11 caracteres");
+         //   resultado = false;
         }
 
         return resultado;
