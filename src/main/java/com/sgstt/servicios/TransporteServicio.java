@@ -432,6 +432,8 @@ public class TransporteServicio implements Serializable {
     private void asignarServicioExterno(Chofer chofer, ServicioDetalle servicioDetalle) {
         if (chofer.getEmpresa().getId() != 1) {
             servicioDetalle.setExternalizado("SI");
+        }else{
+            servicioDetalle.setExternalizado("NO");
         }
     }
 
