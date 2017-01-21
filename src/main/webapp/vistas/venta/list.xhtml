@@ -174,10 +174,10 @@
                   showEffect="fade">
             <h:form>
                 <p:dataTable value="#{ventaControlador.clientes}" var="listClienteFilter"
-                             emptyMessage="No existen registros de clientes"
+                             emptyMessage="No existen registros de clientes" widgetVar="tableCliente"
                              paginator="true" rows="10"
                              paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}">
-                    <p:column style="text-align: center;font-size: 13px;">
+                    <p:column style="text-align: center;font-size: 13px;" filterStyle="width: 150px;" filterBy="#{listClienteFilter.nombreAuxiliar}" filterMatchMode="startsWith" >
                         <f:facet name="header">
                             Cliente
                         </f:facet>
@@ -185,9 +185,16 @@
 
                         </h:outputText>
                     </p:column>
-                    <p:column style="text-align: center;font-size: 13px;">
+                    <p:column style="text-align: center;font-size: 13px;" filterMatchMode="exact" filterBy="#{listClienteFilter.tipoCliente.tipoCliente}" >
                         <f:facet name="header">
                             Tipo Cliente
+                        </f:facet>
+                        <f:facet name="filter">
+                            <p:selectOneMenu onchange="PF('tableCliente').filter()" style="width: 150px;font-size: 13px;"  >
+                                <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
+                                <f:selectItem itemLabel="Jurídico" itemValue="JURIDICO"  />
+                                <f:selectItem itemLabel="Natural" itemValue="NATURAL"  />
+                            </p:selectOneMenu>
                         </f:facet>
                         <h:outputText value="#{listClienteFilter.tipoCliente.tipoCliente}"/>
                     </p:column>
