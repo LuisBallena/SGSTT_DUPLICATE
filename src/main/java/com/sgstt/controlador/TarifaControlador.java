@@ -4,10 +4,13 @@ import com.sgstt.entidad.Tarifa;
 import com.sgstt.entidad.Sede;
 import com.sgstt.entidad.Servicio;
 import com.sgstt.entidad.TipoVehiculo;
+import com.sgstt.excepciones.FilterException;
+import com.sgstt.filters.TarifarioFilter;
 import com.sgstt.hibernate.HibernatePaginador;
 import com.sgstt.paginacion.TarifaPaginador;
 import com.sgstt.servicios.CotizacionServicio;
 import com.sgstt.util.Utilitario;
+
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -16,20 +19,20 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 /**
- *
  * @author SAM
  */
 @ManagedBean(name = "tarifaControlador")
 @ViewScoped
 public class TarifaControlador implements Serializable {
 
-	private static final long serialVersionUID = 8066631256078163099L;
-	private HibernatePaginador<Tarifa> tarifaPaginador;
+    private static final long serialVersionUID = 8066631256078163099L;
+    private HibernatePaginador<Tarifa> tarifaPaginador;
     private Tarifa tarifa;
     private List<TipoVehiculo> tipoVehiculos;
     private List<Servicio> servicios;
     private List<Sede> sedes;
     private CotizacionServicio cotizacionServicio;
+    private TarifarioFilter tarifarioFilter;
     @ManagedProperty(value = "#{sesionControlador}")
     private SesionControlador sesionControlador;
 
@@ -38,7 +41,10 @@ public class TarifaControlador implements Serializable {
 
     public void initLista() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
-        	cotizacionServicio = new CotizacionServicio();
+            tarifarioFilter = new TarifarioFilter();
+            cotizacionServicio = new CotizacionServicio();
+            tipoVehiculos = cotizacionServicio.obtenerTipoVehiculos();
+            servicios = cotizacionServicio.obtenerServiciosPorSede(sesionControlador.getUsuarioSesion().getSede().getId());
             tarifaPaginador = new TarifaPaginador();
             tarifaPaginador.initPaginador(sesionControlador.getUsuarioSesion().getSede().getId());
         }
@@ -52,14 +58,14 @@ public class TarifaControlador implements Serializable {
             servicios = cotizacionServicio.obtenerServiciosPorSede(sesionControlador.getUsuarioSesion().getSede().getId());
             tarifa.setSede(sesionControlador.getUsuarioSesion().getSede());
             setSedes(cotizacionServicio.obtenerSedes());
-            
+
         }
     }
 
     public void initUpdate() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
             Object value = Utilitario.getFlash("idTarifa");
-            if(value == null){
+            if (value == null) {
                 Utilitario.redireccionarJSF(FacesContext.getCurrentInstance(), "/vistas/tarifa/list.xhtml");
                 return;
             }
@@ -78,25 +84,29 @@ public class TarifaControlador implements Serializable {
         }
         cotizacionServicio.registrarTarifa(tarifa);
     }
-    
-    public void actualizarTarifa(){
+
+    public void actualizarTarifa() {
         if (!esVistaValida()) {
             return;
         }
         cotizacionServicio.actualizarTarifa(tarifa);
     }
-    
-    public void eliminarTarifa(){
+
+    public void eliminarTarifa() {
         cotizacionServicio.eliminarTarifa(tarifa);
     }
-    
-    public void capturarTarifa(Tarifa aux){
+
+    public void capturarTarifa(Tarifa aux) {
         tarifa = aux;
     }
-    
-    public String irActualizar(Integer id){
-        Utilitario.putFlash("idTarifa",id);
+
+    public String irActualizar(Integer id) {
+        Utilitario.putFlash("idTarifa", id);
         return "update.xhtml?faces-redirect=true;";
+    }
+
+    public void ejecutarBusqueda() {
+        tarifaPaginador.createFilterDynamic(tarifarioFilter);
     }
 
     private void limpiar() {
@@ -113,29 +123,25 @@ public class TarifaControlador implements Serializable {
         } else if (!esTipoVehiculoValido()) {
             Utilitario.enviarMensajeGlobalError("Debe seleccionar un Tipo Vehiculo");
             resultado = false;
-       // } else if (!esPrecioValido()) {
-        //    Utilitario.enviarMensajeGlobalError("Debe ingresar el precio");
-         //   resultado = false;
         }
         return resultado;
     }
 
     private boolean esDescripcionValida() {
         boolean resultado = true;
-        
-         if (Utilitario.esNulo(tarifa.getHoras())) {
+
+        if (Utilitario.esNulo(tarifa.getHoras())) {
             Utilitario.enviarMensajeGlobalError("Debe ingresar las horas");
-            resultado = false; }
-         
-         else if (!Utilitario.esSoloNumero(tarifa.getHoras())) {
-             Utilitario.enviarMensajeGlobalError("Horas solo pueden ser numeros");
-             resultado = false;
-         }
-         if (!Utilitario.esNulo(tarifa.getDescripcion()) && !Utilitario.esRangoValido(tarifa.getDescripcion(), 15)) {
+            resultado = false;
+        } else if (!Utilitario.esSoloNumero(tarifa.getHoras())) {
+            Utilitario.enviarMensajeGlobalError("Horas solo pueden ser numeros");
+            resultado = false;
+        }
+        if (!Utilitario.esNulo(tarifa.getDescripcion()) && !Utilitario.esRangoValido(tarifa.getDescripcion(), 15)) {
             Utilitario.enviarMensajeGlobalError("El rango maximo de la descripcion es de 10 caracteres");
             resultado = false;
         }
-        
+
         return resultado;
     }
 
@@ -146,10 +152,6 @@ public class TarifaControlador implements Serializable {
     private boolean esTipoVehiculoValido() {
         return tarifa.getTipoVehiculo().getId().intValue() != 0;
     }
-
- //   private boolean esPrecioValido() {
-//      return tarifa.getPrecio().doubleValue() != 0.0;
-//    }
 
     /* GETTERS AND SETTERS */
     public HibernatePaginador<Tarifa> getTarifaPaginador() {
@@ -187,12 +189,20 @@ public class TarifaControlador implements Serializable {
     public void setSesionControlador(SesionControlador sesionControlador) {
         this.sesionControlador = sesionControlador;
     }
-    
+
     public List<Sede> getSedes() {
-		return sedes;
-	}
-    
-	public void setSedes(List<Sede> sedes) {
-		this.sedes = sedes;
-	}
+        return sedes;
+    }
+
+    public void setSedes(List<Sede> sedes) {
+        this.sedes = sedes;
+    }
+
+    public TarifarioFilter getTarifarioFilter() {
+        return tarifarioFilter;
+    }
+
+    public void setTarifarioFilter(TarifarioFilter tarifarioFilter) {
+        this.tarifarioFilter = tarifarioFilter;
+    }
 }

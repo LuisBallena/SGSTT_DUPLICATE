@@ -2,6 +2,7 @@ package com.sgstt.controlador;
 
 import com.sgstt.entidad.Aerolinea;
 import com.sgstt.entidad.Vuelo;
+import com.sgstt.filters.VueloFilter;
 import com.sgstt.hibernate.HibernatePaginador;
 import com.sgstt.paginacion.VueloPaginador;
 import com.sgstt.servicios.VueloServicio;
@@ -28,6 +29,7 @@ public class VueloControlador implements Serializable {
     private List<Aerolinea> aerolineas;
     private HibernatePaginador<Vuelo> vueloPaginador;
     private VueloServicio vueloServicio;
+    private VueloFilter vueloFilter;
     @ManagedProperty(value = "#{sesionControlador}")
     private SesionControlador sesionControlador;
 
@@ -36,8 +38,10 @@ public class VueloControlador implements Serializable {
 
     public void initLista() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
+            vueloFilter = new VueloFilter();
             vueloServicio = new VueloServicio();
             vueloPaginador = new VueloPaginador();
+            aerolineas = vueloServicio.obtenerAerolineas();
             vueloPaginador.initPaginador(sesionControlador.getUsuarioSesion().getSede().getId());
         }
     }
@@ -87,6 +91,10 @@ public class VueloControlador implements Serializable {
         return "update.xhtml?faces-redirect=true;";
     }
 
+    public void ejecutarBusqueda() {
+        vueloPaginador.createFilterDynamic(vueloFilter);
+    }
+
     private boolean esVistaValida() {
         boolean resultado = true;
         if (Utilitario.esNulo(vuelo.getDescripcion())) {
@@ -126,5 +134,13 @@ public class VueloControlador implements Serializable {
 
     public void setAerolineas(List<Aerolinea> aerolineas) {
         this.aerolineas = aerolineas;
+    }
+
+    public VueloFilter getVueloFilter() {
+        return vueloFilter;
+    }
+
+    public void setVueloFilter(VueloFilter vueloFilter) {
+        this.vueloFilter = vueloFilter;
     }
 }

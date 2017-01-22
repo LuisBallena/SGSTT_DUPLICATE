@@ -16,6 +16,8 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-body" id="tabla">
+                            <h:messages id="msg" globalOnly="true" styleClass="list-group" infoClass="list-group-item list-group-item-success"
+                                        errorClass="list-group-item list-group-item-danger" />
                             <div class="row">
                                 <div class="col-sm-2">
                                     <h:panelGroup rendered="#{sesionControlador.permisoModulo.crear eq true}">
@@ -24,10 +26,55 @@
                                 </div>
                             </div>      
                             <br/>
+                            <!-- INICIO DE FILTRO -->
+                            <div class="row" style="margin-left: 2px;margin-right: 2px;">
+                                <div class="panel panel-default panel-busqueda">
+                                    <div class="panel-heading">
+                                        Filtros
+                                        <span style="margin-top: 5px;" class="pull-right clickable"><i
+                                                class="fa fa-plus"></i></span>
+                                    </div>
+                                    <div class="panel-body">
+                                        <h:form id="frmFiltroFile" styleClass="form-horizontal">
+                                            <div class="form-group has-feedback">
+                                                <label class="col-md-2 control-label">Código de Linea:</label>
+                                                <div class="col-md-3">
+                                                    <h:inputText value="#{vueloControlador.vueloFilter.descripcion}"
+                                                                 styleClass="form-control">
+                                                    </h:inputText>
+                                                </div>
+                                                <label class="col-md-2 control-label">Origen :</label>
+                                                <div class="col-md-3">
+                                                    <h:inputText value="#{vueloControlador.vueloFilter.origen}"
+                                                                 styleClass="form-control">
+                                                    </h:inputText>
+                                                </div>
+                                            </div>
+                                            <div class="form-group has-feedback">
+                                                <label class="col-md-2 control-label">Proveedor :</label>
+                                                <div class="col-md-3">
+                                                    <h:selectOneMenu styleClass="form-control"
+                                                                     value="#{vueloControlador.vueloFilter.idProveedor}">
+                                                        <f:selectItem itemLabel="Todos" itemValue="0"/>
+                                                        <f:selectItems value="#{vueloControlador.aerolineas}" var="listAerolinea"  itemValue="#{listAerolinea.idAerolinea}" itemLabel="#{listAerolinea.descripcion}" />
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3 control-label">
+                                                <p:commandButton value="Buscar"
+                                                                 actionListener="#{vueloControlador.ejecutarBusqueda}"
+                                                                 styleClass="btn btn-primary"
+                                                                 update=":formperfil :msg"/>
+                                            </div>
+                                        </h:form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- FIN DE FILTRO -->
+                            <br/>
                             <h:form id="formperfil">
                                 <f:event type="preRenderView" listener="#{vueloControlador.initLista}" />
-                                <h:messages id="msg" globalOnly="true" styleClass="list-group" infoClass="list-group-item list-group-item-success"
-                                                    errorClass="list-group-item list-group-item-danger" />
+
                                 <p:dataTable    value="#{vueloControlador.vueloPaginador}"    var="list" emptyMessage="No existen registros de lineas" 
                                                 paginator="true" rows="20" lazy="true" rowIndexVar="rowIndex"
                                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
@@ -78,7 +125,7 @@
                 </div>
                 <div   id="row">
                     <div class="col-lg-6">
-                        <p:commandButton  actionListener="#{vueloControlador.eliminarVuelo}" update=":formperfil" value="Si" oncomplete="PF('deletevuelo').hide();"   >
+                        <p:commandButton  actionListener="#{vueloControlador.eliminarVuelo}" update=":formperfil :msg" value="Si" oncomplete="PF('deletevuelo').hide();"   >
 
                         </p:commandButton>
                     </div>
@@ -90,6 +137,13 @@
                 </div>
             </h:form>
         </p:dialog>
+        <h:outputScript name="js/collapse_panel.js"/>
+        <script type="text/javascript">
+            jQuery(function ($) {
+                $('.panel-busqueda').find('.panel-body').hide();
+                $('.panel-busqueda .panel-heading span.clickable').addClass('panel-collapsed');
+            });
+        </script>
     </ui:define>
 
 </ui:composition>
