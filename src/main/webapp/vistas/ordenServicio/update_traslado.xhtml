@@ -194,7 +194,7 @@
             </div>
             <!-- /.col-lg-12 -->
         </div>
-        <p:dialog modal="true" width="700"  minHeight="400" resizable="false" header="Lista de Choferes" position="center top" id="dialogChoferes" widgetVar="dialogChoferes">
+        <p:dialog modal="true" width="700"  height="400" resizable="true" header="Lista de Choferes" position="center top" id="dialogChoferes" widgetVar="dialogChoferes">
             <h:form id="frmDialogChoferes">
                 <p:dataTable  styleClass="DataTable_Modal" value="#{ordenServicioControlador.choferes}" widgetVar="tableChoferes" style="font-size: 12px;" var="listChofer" 
                               rows="8"  rowIndexVar="rowIndex" paginator="true"
@@ -216,7 +216,7 @@
                     </p:column>
                     <p:column style="text-align: center;" headerText="Empresa" filterMatchMode="exact" filterBy="#{listChofer.empresa.razonSocial}">
                         <f:facet name="filter">
-                            <p:selectOneMenu panelStyleClass="Sgstt_OneMenu" onchange="PF('tableChoferes').filter()" style="width: 100%;" >
+                            <p:selectOneMenu onchange="PF('tableChoferes').filter()" style="width: 100%;" >
                                 <f:selectItem itemLabel="Selecciona Empresa" itemValue="#{null}" noSelectionOption="true" />
                                 <f:selectItems value="#{ordenServicioControlador.empresas}" var="listEmpresa" itemValue="#{listEmpresa.razonSocial}" itemLabel="#{listEmpresa.razonSocial}" />
                             </p:selectOneMenu>
@@ -232,10 +232,10 @@
                 </p:dataTable>
             </h:form>
         </p:dialog>
-        <p:dialog modal="true" width="500"  resizable="false" minHeight="300" header="Lista de Vehiculos" position="center top" id="dialogVehiculos" widgetVar="dialogVehiculos">
+        <p:dialog modal="true" width="500"  height="300" header="Lista de Vehiculos" position="center top" id="dialogVehiculos" widgetVar="dialogVehiculos">
             <h:form id="frmDialogVehiculos">
                 <p:dataTable  value="#{ordenServicioControlador.vehiculos}" var="listVehiculo" 
-                              paginator="true" rows="8"  rowIndexVar="rowIndex" styleClass="DataTable_Modal"
+                              paginator="true" rows="10"  rowIndexVar="rowIndex"
                               paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
 
                     <p:column style="text-align: center;">

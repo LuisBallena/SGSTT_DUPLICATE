@@ -87,14 +87,6 @@
     width: 44px;
 }
 
-.DataTable_Modal.ui-datatable thead{
-    font-size: 12px;
-}
-
 .DataTable_Modal.ui-datatable .ui-datatable-data{
-    font-size: 12px;
-}
-
-.Sgstt_OneMenu.ui-selectonemenu-panel .ui-selectonemenu-items-wrapper{
     font-size: 12px;
 }
