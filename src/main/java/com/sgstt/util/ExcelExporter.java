@@ -9,14 +9,8 @@ import java.io.OutputStream;
 import java.util.List;
 import javax.faces.context.ExternalContext;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.Header;
-import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.util.IntegerField;
 
 /**
  *
@@ -77,18 +71,25 @@ public class ExcelExporter {
         Row fila = getNuevaFila();
         for (int i = 0; i < lista.size(); i++) {
             Exporter exporter = (Exporter) lista.get(i);
-            String[] datos = exporter.getDatos();
+            Object[] datos = exporter.getDatos();
             for (int j = 0; j < datos.length; j++) {
-                String columna = datos[j];
+                Object columna = datos[j];
                 crearCelda(fila, j, columna);
             }
             fila = getNuevaFila();
         }
     }
 
-    private void crearCelda(Row filaEncabezado, int numeroCelda, String valor) {
+    private void crearCelda(Row filaEncabezado, int numeroCelda, Object valor) {
         final Cell celdaEncabezado = filaEncabezado.createCell(numeroCelda);
-        celdaEncabezado.setCellValue(valor);
+        if(valor instanceof String){
+            celdaEncabezado.setCellValue((String) (valor));
+        }else if(valor instanceof Integer){
+            celdaEncabezado.setCellValue((Integer) (valor));
+        }else if(valor instanceof Double){
+            celdaEncabezado.setCellType(Cell.CELL_TYPE_NUMERIC);
+            celdaEncabezado.setCellValue((Double) (valor));
+        }
     }
 
     // crea una nueva fila a continuación de la anterior
@@ -117,7 +118,6 @@ public class ExcelExporter {
         FileOutputStream fileOutputStream = new FileOutputStream(file);
         libro.write(fileOutputStream);
         fileOutputStream.close();
-
     }
 
     public static ExternalContext getResponseContent(ExternalContext externalContext, String nombreArchivo) {

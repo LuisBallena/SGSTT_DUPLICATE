@@ -160,8 +160,8 @@ public class ServicioDetalle implements Serializable, Exporter {
     }
 
     @Override
-    public String[] getDatos() {
-        String[] datos = new String[20];
+    public Object[] getDatos() {
+        Object[] datos = new Object[20];
         datos[0] = "" + new SimpleDateFormat("dd/MM/yyyy").format(this.fecha);
         datos[1] = "" + new SimpleDateFormat("HH:mm").format(this.fecha);
         datos[2] = this.servicio.getDescripcion();
@@ -180,9 +180,9 @@ public class ServicioDetalle implements Serializable, Exporter {
         datos[15] = this.chofer == null ? "No Asignado" : this.chofer.getDatosCompletos();
         datos[16] = this.chofer == null ? "" : this.chofer.getEmpresa().getRazonSocial();
         Double precioSinIgv = generarPrecioTotalSinIGV();
-        datos[17] = "" + precioSinIgv;
-        datos[18] = "" + this.precioServicioIgv;
-        datos[19] = "" + this.precioServicioTotal;
+        datos[17] = precioSinIgv ;
+        datos[18] = this.precioServicioIgv;
+        datos[19] = this.precioServicioTotal;
         return datos;
     }
 

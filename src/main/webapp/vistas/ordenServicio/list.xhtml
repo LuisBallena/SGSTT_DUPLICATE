@@ -506,7 +506,7 @@
                             Tipo Cliente
                         </f:facet>
                         <f:facet name="filter">
-                            <p:selectOneMenu onchange="PF('tableCliente').filter()" style="width: 150px;font-size: 13px;" >
+                            <p:selectOneMenu panelStyleClass="Sgstt_OneMenu" onchange="PF('tableCliente').filter()" style="width: 150px;font-size: 13px;" >
                                 <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
                                 <f:selectItem itemLabel="Jurídico" itemValue="JURIDICO"  />
                                 <f:selectItem itemLabel="Natural" itemValue="NATURAL"  />
@@ -528,25 +528,38 @@
                 >
             <h:form id="filterFiles" styleClass="form-horizontal">
                 <div class="form-group has-feedback">
-                    <label class="control-label" style="font-size:18px;float:left;margin-left:15px">File :</label>
-
-                    <div class="col-xs-4 col-md-2">
-                        <h:inputText styleClass="form-control"
+                    <label class="control-label" style="font-size:13px;float:left;margin-left:15px;width: 51px;">File :</label>
+                    <div class="col-xs-6 col-md-4">
+                        <h:inputText styleClass="form-control" style="padding-right: 0px !important;"
                                      value="#{ordenServicioControlador.fileFilter.nroCorrelativo}">
                         </h:inputText>
                     </div>
-                    <div style="float: left;">
-                        <h:commandButton value="Buscar" styleClass="btn btn-primary"
-                                         actionListener="#{ordenServicioControlador.ejecutarBusquedaFile}">
-                            <f:ajax render="frmTableFile" execute="@form"/>
-                        </h:commandButton>
+                    <label class="control-label" style="font-size:13px;float:left;margin-left:15px">PAX :</label>
+                    <div class="col-xs-6 col-md-4">
+                        <h:inputText styleClass="form-control" style="padding-right: 0px !important;"
+                                     value="#{ordenServicioControlador.fileFilter.pax}">
+                        </h:inputText>
                     </div>
+                </div>
+                <div class="form-group has-feedback">
+                    <label class="control-label" style="font-size:13px;float:left;margin-left:15px">Cuenta :</label>
+                    <div class="col-xs-6 col-md-4">
+                        <h:inputText styleClass="form-control" style="padding-right: 0px !important;"
+                                     value="#{ordenServicioControlador.fileFilter.cuenta}">
+                        </h:inputText>
+                    </div>
+                </div>
+                <div class="form-group has-feedback">
+                    <h:commandButton value="Buscar" styleClass="btn btn-primary" style="margin-left: 10px;"
+                                     actionListener="#{ordenServicioControlador.ejecutarBusquedaFile}">
+                        <f:ajax render=":frmTableFile" execute="@form"/>
+                    </h:commandButton>
                 </div>
             </h:form>
             <h:form id="frmTableFile">
                 <p:dataTable value="#{ordenServicioControlador.filePaginador}" var="listFile"
                              emptyMessage="No existen registros de files"
-                             paginator="true" rows="10" lazy="true" styleClass="DataTable_Modal"
+                             paginator="true" rows="7" lazy="true" styleClass="DataTable_Modal"
                              paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}">
                     <p:column style="text-align: center;">
                         <f:facet name="header">
@@ -611,7 +624,7 @@
                             Tipo Cliente
                         </f:facet>
                         <f:facet name="filter">
-                            <p:selectOneMenu onchange="PF('tableClienteFilter').filter()" style="width: 150px;font-size: 13px;" >
+                            <p:selectOneMenu panelStyleClass="Sgstt_OneMenu" onchange="PF('tableClienteFilter').filter()" style="width: 150px;font-size: 13px;" >
                                 <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
                                 <f:selectItem itemLabel="Jurídico" itemValue="JURIDICO"  />
                                 <f:selectItem itemLabel="Natural" itemValue="NATURAL"  />
@@ -694,7 +707,7 @@
                 </div>
             </h:form>
         </p:dialog>
-
+        <h:outputScript name="js/calendar.js" />
         <h:outputScript name="js/collapse_panel.js"/>
         <script type="text/javascript">
             jQuery(function ($) {
