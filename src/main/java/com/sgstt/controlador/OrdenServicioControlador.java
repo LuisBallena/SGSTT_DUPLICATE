@@ -244,6 +244,8 @@ public class OrdenServicioControlador implements Serializable {
 
     public void ejecutarBusqueda() {
         try {
+            servicioDetalleFilter.setSerie(Utilitario.esNulo(servicioDetalleFilter.getSerie()) ? null: servicioDetalleFilter.getSerie().trim());
+            servicioDetalleFilter.setPax(Utilitario.esNulo(servicioDetalleFilter.getPax()) ? null: servicioDetalleFilter.getPax().trim());
             servicioDetallePaginador.createFilterDynamic(servicioDetalleFilter);
         } catch (FilterException e) {
             Utilitario.enviarMensajeGlobalError(e.getMessage());
@@ -292,6 +294,11 @@ public class OrdenServicioControlador implements Serializable {
         if (servicioDetalleFilter.getIdTipoServicio() != null) {
             servicios = transporteServicio.obtenerServiciosPorTipoServicio(servicioDetalleFilter.getIdTipoServicio(), sesionControlador.getUsuarioSesion().getSede().getId());
         }
+    }
+
+    public void limpiarSeriePAX(){
+        servicioDetalleFilter.setSerie(null);
+        servicioDetalleFilter.setPax(null);
     }
 
     private void limpiarTraslado() {

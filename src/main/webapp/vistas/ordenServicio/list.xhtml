@@ -152,7 +152,7 @@
                                                 <div class="col-md-3">
                                                     <h:selectOneMenu id="comboOrden" styleClass="form-control"
                                                                      value="#{ordenServicioControlador.servicioDetalleFilter.tipoOrden}">
-                                                        <f:ajax render="inputSerie inputPAX" event="change"/>
+                                                        <f:ajax render="inputSerie inputPAX" event="change" listener="#{ordenServicioControlador.limpiarSeriePAX}"/>
                                                         <f:selectItem itemLabel="Todos" noSelectionOption="true"
                                                                       itemValue="none"/>
                                                         <f:selectItem itemLabel="File"
@@ -178,7 +178,7 @@
                                                 <div class="col-md-3">
                                                     <h:panelGroup id="inputPAX">
                                                         <h:panelGroup
-                                                                rendered="#{ordenServicioControlador.servicioDetalleFilter.tipoOrden == 'F'}">
+                                                                rendered="#{ordenServicioControlador.servicioDetalleFilter.tipoOrden != 'none'}">
                                                             <h:inputText styleClass="form-control"
                                                                          value="#{ordenServicioControlador.servicioDetalleFilter.pax}">
                                                             </h:inputText>
