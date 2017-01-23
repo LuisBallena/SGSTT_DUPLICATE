@@ -58,7 +58,7 @@ public class File implements java.io.Serializable {
 
 
     @Enumerated(EnumType.ORDINAL)
-    @Column(nullable = false,insertable = false)
+    @Column(nullable = false,insertable = false, name = "estado_factura")
     private EstadoFactura estadoFactura;
 
     public File() {
