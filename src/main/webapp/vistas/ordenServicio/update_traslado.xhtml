@@ -216,7 +216,7 @@
                     </p:column>
                     <p:column style="text-align: center;" headerText="Empresa" filterMatchMode="exact" filterBy="#{listChofer.empresa.razonSocial}">
                         <f:facet name="filter">
-                            <p:selectOneMenu onchange="PF('tableChoferes').filter()" style="width: 100%;" >
+                            <p:selectOneMenu panelStyleClass="Sgstt_OneMenu" onchange="PF('tableChoferes').filter()" style="width: 100%;" >
                                 <f:selectItem itemLabel="Selecciona Empresa" itemValue="#{null}" noSelectionOption="true" />
                                 <f:selectItems value="#{ordenServicioControlador.empresas}" var="listEmpresa" itemValue="#{listEmpresa.razonSocial}" itemLabel="#{listEmpresa.razonSocial}" />
                             </p:selectOneMenu>
@@ -232,7 +232,7 @@
                 </p:dataTable>
             </h:form>
         </p:dialog>
-        <p:dialog modal="true" width="500"  height="300" header="Lista de Vehiculos" position="center top" id="dialogVehiculos" widgetVar="dialogVehiculos">
+        <p:dialog modal="true" width="500"  resizable="false" minHeight="300" header="Lista de Vehiculos" position="center top" id="dialogVehiculos" widgetVar="dialogVehiculos">
             <h:form id="frmDialogVehiculos">
                 <p:dataTable  value="#{ordenServicioControlador.vehiculos}" var="listVehiculo" 
                               paginator="true" rows="10"  rowIndexVar="rowIndex"
