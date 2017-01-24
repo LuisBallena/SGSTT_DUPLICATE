@@ -4,6 +4,8 @@ import com.sgstt.dao.*;
 import com.sgstt.dao.impl.*;
 import com.sgstt.entidad.*;
 import com.sgstt.excepciones.TransporteException;
+import com.sgstt.filters.ClienteFilter;
+import com.sgstt.filters.ComprobanteFilter;
 import com.sgstt.hibernate.HibernateConexion;
 import com.sgstt.util.Utilitario;
 
@@ -369,6 +371,27 @@ public class TransporteServicio implements Serializable {
         aux = sedeDao.obtenerTodos();
         conexion.closeConexion();
         return aux;
+    }
+
+    public  List<ServicioDetalle> obtenerServicioDetalleCliente(ComprobanteFilter comprobanteFilter){
+        List<ServicioDetalle> servicioDetalles;
+        Integer idFile = null;
+        Integer idVenta = null;
+        if(comprobanteFilter.getFileVtaDTO() != null){
+            switch (comprobanteFilter.getFileVtaDTO().getTipo()){
+                case "F":
+                    idFile = comprobanteFilter.getFileVtaDTO().getId();
+                    break;
+                case "V":
+                    idVenta = comprobanteFilter.getFileVtaDTO().getId();
+                    break;
+            }
+        }
+        conexion.beginConexion();
+        servicioDetalles = servicioDetalleDao.getServicioDetalleFilterByCliente(comprobanteFilter.getCliente().getIdCliente(),
+                idFile, idVenta, comprobanteFilter.getGravada() == 0 ? false : true);
+        conexion.closeConexion();
+        return servicioDetalles;
     }
 
 }

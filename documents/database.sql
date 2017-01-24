@@ -731,7 +731,7 @@ DROP TABLE IF EXISTS `sgstt`.`comprobante` ;
 
 CREATE  TABLE IF NOT EXISTS `sgstt`.`comprobante` (
   `idcomprobante` INT NOT NULL AUTO_INCREMENT,
-  `fecha_registro` DATE NOT NULL ,
+  `fecha_registro` DATETIME NOT NULL ,
   `serie` VARCHAR(20) NOT NULL ,
   `numero` INT(10) NOT NULL ,
   `idsede` INT NOT NULL ,

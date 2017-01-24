@@ -56,6 +56,22 @@
                                                     <f:selectItems value="#{comprobanteControlador.fileVtaDTOs}" var="list" itemLabel="#{list.nombre}" itemValue="#{list}"/>
                                                 </h:selectOneMenu>
                                             </div>
+
+                                        </div>
+                                        <div class="form-group has-feedback">
+                                            <label class="col-md-2 control-label">Gravada :</label>
+                                            <div class="col-md-1" style="width: 100px;">
+                                                <h:selectOneMenu styleClass="form-control" style="padding-right: 0px !important;" value="#{comprobanteControlador.comprobanteFilter.gravada}"  >
+                                                    <f:selectItem itemLabel="Si" itemValue="1" />
+                                                    <f:selectItem itemLabel="No" itemValue="0"/>
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3 control-label">
+                                            <p:commandButton value="Buscar"
+                                                             actionListener="#{comprobanteControlador.ejecutarBusquedaCreate}"
+                                                             styleClass="btn btn-primary"
+                                                             />
                                         </div>
                                     </h:form>
                                 </div>

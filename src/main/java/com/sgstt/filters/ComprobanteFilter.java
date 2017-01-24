@@ -13,6 +13,8 @@ public class ComprobanteFilter extends BaseFilter {
 
     private FileVtaDTO fileVtaDTO;
 
+    private Integer gravada;
+
     public ComprobanteFilter() {
     }
 
@@ -30,5 +32,13 @@ public class ComprobanteFilter extends BaseFilter {
 
     public void setFileVtaDTO(FileVtaDTO fileVtaDTO) {
         this.fileVtaDTO = fileVtaDTO;
+    }
+
+    public Integer getGravada() {
+        return gravada;
+    }
+
+    public void setGravada(Integer gravada) {
+        this.gravada = gravada;
     }
 }

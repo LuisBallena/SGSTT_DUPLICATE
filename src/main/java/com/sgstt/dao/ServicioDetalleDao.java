@@ -2,6 +2,7 @@ package com.sgstt.dao;
 
 import com.sgstt.entidad.ServicioDetalle;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -16,5 +17,7 @@ public interface ServicioDetalleDao extends GenericDao<ServicioDetalle,Integer>{
     public ServicioDetalle getServicioDetalleWithTipoVehiculo(Integer id);
     
     public void deleteServiciosDetallesByFile(Integer idFile);
+
+    public List<ServicioDetalle> getServicioDetalleFilterByCliente(Integer idCliente, Integer idFile, Integer idVenta , boolean gravada);
 
 }

@@ -1,6 +1,7 @@
 package com.sgstt.dao.impl;
 
 import com.sgstt.dao.ServicioDetalleDao;
+import com.sgstt.entidad.Estado;
 import com.sgstt.entidad.ServicioDetalle;
 import com.sgstt.hibernate.HibernateConexion;
 import com.sgstt.hibernate.HibernateImpl;
@@ -8,10 +9,9 @@ import com.sgstt.util.Utilitario;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
-import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
-import org.hibernate.SQLQuery;
-import org.hibernate.Session;
+import java.util.List;
+
+import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
 
@@ -93,6 +93,30 @@ public class ServicioDetalleImpl extends HibernateImpl<ServicioDetalle, Integer>
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public List<ServicioDetalle> getServicioDetalleFilterByCliente(Integer idCliente, Integer idFile, Integer idVenta, boolean gravada) {
+        List<ServicioDetalle> servicioDetalles = null;
+        try {
+            Criteria criteria = conexion.getSession().createCriteria(ServicioDetalle.class,"st");
+            criteria.createAlias("st.vehiculo.tipoVehiculo","tv", JoinType.LEFT_OUTER_JOIN);
+            criteria.createAlias("st.venta.cliente", "c", JoinType.LEFT_OUTER_JOIN);
+            criteria.add(Restrictions.eq("st.estado", Estado.ACTIVO));
+            criteria.add(Restrictions.eq("c.idCliente",idCliente));
+            criteria.add(Restrictions.eq("st.gravada",gravada));
+            criteria.add(Restrictions.isNull("st.comprobante.id"));
+            if(idFile != null && idFile > 0){
+                criteria.add(Restrictions.eq("st.file.idFile",idFile));
+            }
+            if(idVenta != null && idVenta > 0){
+                criteria.add(Restrictions.eq("st.venta.id",idVenta));
+            }
+            servicioDetalles = criteria.list();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return servicioDetalles;
     }
 
 }
