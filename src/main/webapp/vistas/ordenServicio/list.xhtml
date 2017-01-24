@@ -384,6 +384,13 @@
                                             <h:outputText
                                                     value="#{list.vehiculo eq null ? 'No Asignado' : list.vehiculo.descripcion2}"/>
                                         </p:column>
+                                        <p:column style="text-align: center;font-size: 13px;">
+                                            <f:facet name="header">
+                                                Tipo Vehiculo
+                                            </f:facet>
+                                            <h:outputText
+                                                value="#{list.vehiculo eq null ? 'No Asignado' : list.vehiculo.tipoVehiculo.nombre}"/>
+                                        </p:column>
                                         <p:column style="text-align: center;font-size: 11px;">
                                             <f:facet name="header">
                                                 Chofer
