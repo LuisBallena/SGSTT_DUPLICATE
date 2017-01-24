@@ -47,7 +47,9 @@ public class ServicioDetallePaginador extends HibernateStringPaginador implement
             if (filter.getServicioExterno() != -1) {
                 builder.append(String.format("and serviciodetalle.externalizado = '%s'", filter.getServicioExterno() == 1 ? "SI" : "NO"));
             }
-            builder.append(ensamblarQueryPAX(filter));
+            if(!Utilitario.esNulo(filter.getPax())){
+                builder.append(ensamblarQueryPAX(filter));
+            }
             builder.append(filter.getEstadoServicio() != null && !filter.getEstadoServicio().trim().isEmpty() ? String.format("and serviciodetalle.estadoServicio = '%s'", filter.getEstadoServicio()) : "");
             if (filter.getFechaDesde() != null && filter.getFechaHasta() != null) {
                 builder.append(String.format("and serviciodetalle.fecha between '%s' and  '%s'",
@@ -61,16 +63,7 @@ public class ServicioDetallePaginador extends HibernateStringPaginador implement
 
     private String ensamblarQueryTipoOrden(ServicioDetalleFilter servicioDetalleFilter) {
         String subQuery = "";
-        if (Utilitario.esNulo(servicioDetalleFilter.getSerie())) {
-            switch (servicioDetalleFilter.getTipoOrden()) {
-                case "F":
-                    subQuery = "and serviciodetalle.venta is null ";
-                    break;
-                case "V":
-                    subQuery = "and serviciodetalle.file is null ";
-                    break;
-            }
-        } else {
+        if (!Utilitario.esNulo(servicioDetalleFilter.getSerie())) {
             switch (servicioDetalleFilter.getTipoOrden()) {
                 case "F":
                     subQuery = String.format("and serviciodetalle.file.nroCorrelativo = '%s' ", servicioDetalleFilter.getSerie());
@@ -88,7 +81,10 @@ public class ServicioDetallePaginador extends HibernateStringPaginador implement
         String subQuery = "";
         switch (servicioDetalleFilter.getTipoOrden()) {
             case "F":
-                subQuery = String.format("and serviciodetalle.file.pax = '%s' ", servicioDetalleFilter.getPax());
+                subQuery = String.format("and serviciodetalle.file.pax like '%s%%' ", servicioDetalleFilter.getPax());
+                break;
+            case "V":
+                subQuery = String.format("and serviciodetalle.pax like '%s%%' ", servicioDetalleFilter.getPax());
                 break;
         }
         return subQuery;

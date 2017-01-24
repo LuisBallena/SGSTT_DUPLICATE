@@ -69,7 +69,7 @@ public class ServicioDetalle implements Serializable, Exporter {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @Fetch(FetchMode.JOIN)
-    @JoinColumn(name = "IDVENTA")
+    @JoinColumn(name = "IDVENTA", nullable = true)
     private Venta venta;
 
     @Column(name = "NUM_PERSONAS")

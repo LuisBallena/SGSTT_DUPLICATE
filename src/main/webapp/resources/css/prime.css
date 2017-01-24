@@ -87,11 +87,11 @@
     width: 44px;
 }
 
-.DataTable_Modal.ui-datatable thead{
+.DataTable_Modal.ui-datatable .ui-datatable-data{
     font-size: 12px;
 }
 
-.DataTable_Modal.ui-datatable .ui-datatable-data{
+.DataTable_Modal.ui-datatable thead{
     font-size: 12px;
 }
 
