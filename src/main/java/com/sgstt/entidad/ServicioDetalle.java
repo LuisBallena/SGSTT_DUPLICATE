@@ -158,7 +158,7 @@ public class ServicioDetalle implements Serializable, Exporter {
 
     @Override
     public Object[] getDatos() {
-        Object[] datos = new Object[20];
+        Object[] datos = new Object[21];
         datos[0] = "" + new SimpleDateFormat("dd/MM/yyyy").format(this.fecha);
         datos[1] = "" + new SimpleDateFormat("HH:mm").format(this.fecha);
         datos[2] = this.servicio.getDescripcion();
@@ -174,18 +174,19 @@ public class ServicioDetalle implements Serializable, Exporter {
         datos[12] = this.estadoServicio.toString();
         datos[13] = this.externalizado;
         datos[14] = this.vehiculo == null ? "No Asignado" : this.vehiculo.getDescripcion();
-        datos[15] = this.chofer == null ? "No Asignado" : this.chofer.getDatosCompletos();
-        datos[16] = this.chofer == null ? "" : this.chofer.getEmpresa().getRazonSocial();
+        datos[15] = this.vehiculo == null ? "No Asignado" : this.vehiculo.tipoVehiculo.getNombre();
+        datos[16] = this.chofer == null ? "No Asignado" : this.chofer.getDatosCompletos();
+        datos[17] = this.chofer == null ? "" : this.chofer.getEmpresa().getRazonSocial();
         Double precioSinIgv = generarPrecioTotalSinIGV();
-        datos[17] = precioSinIgv ;
-        datos[18] = this.precioServicioIgv;
-        datos[19] = this.precioServicioTotal;
+        datos[18] = precioSinIgv ;
+        datos[19] = this.precioServicioIgv;
+        datos[20] = this.precioServicioTotal;
         return datos;
     }
 
     @Override
     public String[] getTitulos() {
-        return new String[]{"Fecha","Hora", "Servicio","Descripcion","Tipo de Servicio", "Horas de Servicio", "File/VTA", "PAX", "Cuenta", "Nro. Personas", "Trasladista", "Vuelo", "Estado Servicio", "Tercerizado", "Vehiculo", "Chofer", "Transportista", "Precio Sin IGV", "IGV 18%", "Precio Total"};
+        return new String[]{"Fecha","Hora", "Servicio","Descripcion","Tipo de Servicio", "Horas de Servicio", "File/VTA", "PAX", "Cuenta", "Nro. Personas", "Trasladista", "Vuelo", "Estado Servicio", "Tercerizado", "Vehiculo", "Tipo Vehiculo","Chofer", "Transportista", "Precio Sin IGV", "IGV 18%", "Precio Total"};
     }
 
     /* GETTERS AND SETTERS */
