@@ -16,6 +16,7 @@ import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -71,10 +72,16 @@ public class ComprobanteControlador implements Serializable {
 
     public void agregarServicio(ServicioDetalle servicioDetalle) {
         if (!servicioDetallesComprobantes.isEmpty()) {
-            for (ServicioDetalle servicioComprobante : servicioDetallesComprobantes) {
+            boolean existe = false;
+            Iterator<ServicioDetalle> iterator = servicioDetallesComprobantes.iterator();
+            while (iterator.hasNext()) {
+                ServicioDetalle servicioComprobante = iterator.next();
                 if (servicioComprobante.getId() == servicioDetalle.getId()) {
-                    continue;
+                    existe = true;
+                    break;
                 }
+            }
+            if (!existe) {
                 servicioDetallesComprobantes.add(servicioDetalle);
             }
         } else {
