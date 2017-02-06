@@ -19,20 +19,86 @@
                             outcome="list.xhtml"></h:link>
                 </div>
                 <div class="col-lg-12">
-                    <div class="panel panel-success">
-                        <div class="panel-heading">Filtro</div>
-                        <div class="panel-body">
-                            <div class="row" id="modificarEmpresa">
-                                <div class="row">
-                                    <h:form id="frmFiltroRegistro" styleClass="form-horizontal">
-                                        <f:event type="preRenderView" listener="#{comprobanteControlador.initCreate}"/>
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#comprobante">Comprobante</a></li>
+                        <li><a data-toggle="tab" href="#listaBusqueda">Listado de Búsqueda</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="comprobante" class="tab-pane fade in active">
+                            <br/>
 
-                                        <div class="form-group has-feedback">
-                                            <label class="col-md-2 control-label">Cliente :</label>
+                            <div class="col-lg-12">
+                                <div class="panel panel-success">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <h:form id="frmRegistrarComprobante" styleClass="form-horizontal">
+                                                    <div class="form-group has-feedback">
+                                                        <label class="col-sm-1 control-label">Cliente:</label>
 
-                                            <div class="col-md-3">
-                                                <div jsf:id="clienteFilter" class="form-control"
-                                                     style="background-color: #f5f5f5;border: 1px solid #ccc;">
+                                                        <div class="col-sm-10">
+                                                            <p id="pCliente"
+                                                               style="width: 100%;background-color: #f5f5f5;border: 1px solid #ccc;border-radius: 4px;  height: 34px;padding-top: 5px;">#{comprobanteControlador.cliente}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group has-feedback">
+                                                        <label class="col-sm-1 control-label">Serie:</label>
+
+                                                        <div class="col-sm-2">
+                                                            <p:inputText styleClass="form-control"
+                                                                         value="#{comprobanteControlador.serie}"
+                                                                         maxlength="15"/>
+                                                        </div>
+                                                        <label class="col-sm-1 control-label">Número:</label>
+
+                                                        <div class="col-sm-2">
+                                                            <p:inputMask styleClass="form-control" mask="9?999999999"
+                                                                         slotChar=""
+                                                                         value="#{comprobanteControlador.numero}"
+                                                                         maxlength="20"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group has-feedback">
+                                                        <div class="col-sm-12">
+                                                            <p:dataList id="serviciosComprobantes" style="font-size: 14px!important;font-family: Calibri !important;" value="#{comprobanteControlador.servicioDetallesComprobantes}" var="servicios" >
+                                                                <f:facet name="header">
+                                                                    Basic
+                                                                </f:facet>
+                                                                <h:outputText value="#{servicios.fecha}">
+                                                                    <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                                                                </h:outputText>
+                                                            </p:dataList>
+                                                        </div>
+                                                    </div>
+                                                </h:form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="listaBusqueda" class="tab-pane fade">
+                            <br/>
+
+                            <div class="col-lg-12">
+                                <div class="panel panel-success panel-busqueda">
+                                    <div class="panel-heading">Filtro
+                                    <span style="margin-top: 5px;" class="pull-right clickable"><i
+                                            class="fa fa-plus"></i></span>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row" id="modificarEmpresa">
+                                            <div class="row">
+                                                <h:form id="frmFiltroRegistro" styleClass="form-horizontal">
+                                                    <f:event type="preRenderView"
+                                                             listener="#{comprobanteControlador.initCreate}"/>
+
+                                                    <div class="form-group has-feedback">
+                                                        <label class="col-md-2 control-label">Cliente :</label>
+
+                                                        <div class="col-md-3">
+                                                            <div jsf:id="clienteFilter" class="form-control"
+                                                                 style="background-color: #f5f5f5;border: 1px solid #ccc;">
                                                         <span jsf:id="cleanCliente"
                                                               style="cursor: pointer;display: none;">
                                                             <i class="fa fa-times"></i>
@@ -40,148 +106,167 @@
                                                                     listener="#{comprobanteControlador.limpiarClienteFilter}"
                                                                     onevent="changeCleanCliente('none')"/>
                                                         </span>
-                                                    #{comprobanteControlador.comprobanteFilter.cliente.nombreAuxiliar}
-                                                </div>
-                                            </div>
-                                            <div class="buton_selectable" style="margin-left:-15px;">
-                                                <div onclick="PF('dialogClientFilter').show();"
-                                                     class="btn btn-primary clickable"
-                                                     style="width: 43px;height: 32.8px;">
-                                                    <img alt="" title="Seleccionar Cliente"
-                                                         src="#{request.contextPath}/resources/images/add.png"/>
-                                                </div>
-                                            </div>
-                                            <label class="col-md-2 control-label">File/VTA :</label>
+                                                                #{comprobanteControlador.comprobanteFilter.cliente.nombreAuxiliar}
+                                                            </div>
+                                                        </div>
+                                                        <div class="buton_selectable" style="margin-left:-15px;">
+                                                            <div onclick="PF('dialogClientFilter').show();"
+                                                                 class="btn btn-primary clickable"
+                                                                 style="width: 43px;height: 32.8px;">
+                                                                <img alt="" title="Seleccionar Cliente"
+                                                                     src="#{request.contextPath}/resources/images/add.png"/>
+                                                            </div>
+                                                        </div>
+                                                        <label class="col-md-2 control-label">File/VTA :</label>
 
-                                            <div class="col-sm-4 col-md-3">
-                                                <h:selectOneMenu id="fileVta" styleClass="form-control"
-                                                                 value="#{comprobanteControlador.comprobanteFilter.fileVtaDTO}"
-                                                                 converter="omnifaces.SelectItemsConverter">
-                                                    <f:selectItem itemLabel="Todos" itemValue="#{null}"/>
-                                                    <f:selectItems value="#{comprobanteControlador.fileVtaDTOs}"
-                                                                   var="list" itemLabel="#{list.nombre}"
-                                                                   itemValue="#{list}"/>
-                                                </h:selectOneMenu>
-                                            </div>
+                                                        <div class="col-sm-4 col-md-3">
+                                                            <h:selectOneMenu id="fileVta" styleClass="form-control"
+                                                                             value="#{comprobanteControlador.comprobanteFilter.fileVtaDTO}"
+                                                                             converter="omnifaces.SelectItemsConverter">
+                                                                <f:selectItem itemLabel="Todos" itemValue="#{null}"/>
+                                                                <f:selectItems
+                                                                        value="#{comprobanteControlador.fileVtaDTOs}"
+                                                                        var="list" itemLabel="#{list.nombre}"
+                                                                        itemValue="#{list}"/>
+                                                            </h:selectOneMenu>
+                                                        </div>
 
-                                        </div>
-                                        <div class="form-group has-feedback">
-                                            <label class="col-md-2 control-label">Gravada :</label>
+                                                    </div>
+                                                    <div class="form-group has-feedback">
+                                                        <label class="col-md-2 control-label">Gravada :</label>
 
-                                            <div class="col-md-1" style="width: 100px;">
-                                                <h:selectOneMenu styleClass="form-control"
-                                                                 style="padding-right: 0px !important;"
-                                                                 value="#{comprobanteControlador.comprobanteFilter.gravada}">
-                                                    <f:selectItem itemLabel="Si" itemValue="1"/>
-                                                    <f:selectItem itemLabel="No" itemValue="0"/>
-                                                </h:selectOneMenu>
+                                                        <div class="col-md-1" style="width: 100px;">
+                                                            <h:selectOneMenu styleClass="form-control"
+                                                                             style="padding-right: 0px !important;"
+                                                                             value="#{comprobanteControlador.comprobanteFilter.gravada}">
+                                                                <f:selectItem itemLabel="Si" itemValue="1"/>
+                                                                <f:selectItem itemLabel="No" itemValue="0"/>
+                                                            </h:selectOneMenu>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3 control-label">
+                                                        <p:commandButton value="Buscar"
+                                                                         actionListener="#{comprobanteControlador.ejecutarBusquedaCreate}"
+                                                                         styleClass="btn btn-primary"
+                                                                         update=":frmDataTable"
+                                                                />
+                                                    </div>
+                                                </h:form>
                                             </div>
                                         </div>
-                                        <div class="col-sm-3 control-label">
-                                            <p:commandButton value="Buscar"
-                                                             actionListener="#{comprobanteControlador.ejecutarBusquedaCreate}"
-                                                             styleClass="btn btn-primary" update=":frmDataTable"
-                                                    />
-                                        </div>
-                                    </h:form>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-body" id="tabla">
-                            <div class="col-lg-12" style="overflow: scroll;">
-                                <h:form id="frmDataTable">
-                                    <p:dataTable value="#{comprobanteControlador.servicioDetalles}" var="list"
-                                                 emptyMessage="No existen ordenes de servicios"
-                                                 style="width: 2000px;"
-                                                 paginator="true" rows="15" rowIndexVar="rowIndex"
-                                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} ">
-                                        <p:column style="text-align: center;font-size: 13px;">
-                                            <f:facet name="header">
-                                                Fecha
-                                            </f:facet>
-                                            <h:outputText value="#{list.fecha}">
-                                                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
-                                            </h:outputText>
-                                        </p:column>
-                                        <p:column style="text-align: center;font-size: 13px;">
-                                            <f:facet name="header">
-                                                Hora
-                                            </f:facet>
-                                            <h:outputText value="#{list.fecha}">
-                                                <f:convertDateTime pattern="HH:mm" timeZone="GMT-5"/>
-                                            </h:outputText>
-                                        </p:column>
-                                        <p:column style="text-align: center;font-size: 13px;">
-                                            <f:facet name="header">
-                                                Servicio
-                                            </f:facet>
-                                            <h:outputText value="#{list.servicio.descripcion}"/>
-                                        </p:column>
-                                        <p:column style="text-align: center;font-size: 13px;">
-                                            <f:facet name="header">
-                                                Tipo Servicio
-                                            </f:facet>
-                                            <h:outputText value="#{list.servicio.tipoServicio.descripcion}"/>
-                                        </p:column>
-                                        <p:column style="text-align: center;font-size: 13px;">
-                                            <f:facet name="header">
-                                                File/VTA
-                                            </f:facet>
-                                            <h:outputText value="#{list.fileAuxiliar}"/>
-                                        </p:column>
-                                        <p:column style="text-align: center;font-size: 13px;">
-                                            <f:facet name="header">
-                                                PAX
-                                            </f:facet>
-                                            <h:outputText value="#{list.file.pax}#{list.pax}"/>
-                                        </p:column>
-                                        <p:column style="text-align: center;font-size: 13px;">
-                                            <f:facet name="header">
-                                                Cuenta
-                                            </f:facet>
-                                            <h:outputText value="#{list.file.cuenta}#{list.cuenta}"/>
-                                        </p:column>
-                                        <p:column style="text-align: center;font-size: 13px;">
-                                            <f:facet name="header">
-                                                Costo Servicio
-                                            </f:facet>
-                                            <h:outputText
-                                                    value="$#{list.precioServicio eq null ? 'No Asignado' : list.precioServicio}"/>
-                                        </p:column>
-                                        <p:column style="text-align: center;font-size: 13px;">
-                                            <f:facet name="header">
-                                                Adicional
-                                            </f:facet>
-                                            <h:outputText
-                                                    value="$#{list.adicional eq null ? 'No Asignado' : list.adicional}"/>
-                                        </p:column>
-                                        <p:column style="text-align: center;font-size: 13px;">
-                                            <f:facet name="header">
-                                                Descuento
-                                            </f:facet>
-                                            <h:outputText
-                                                    value="$#{list.descuento eq null ? 'No Asignado' : list.descuento}"/>
-                                        </p:column>
-                                        <p:column style="text-align: center;font-size: 13px;">
-                                            <f:facet name="header">
-                                                Costo IGV
-                                            </f:facet>
-                                            <h:outputText
-                                                    value="$#{list.precioServicioIgv eq null ? 'No Asignado' : list.precioServicioIgv}"/>
-                                        </p:column>
-                                        <p:column style="text-align: center;font-size: 13px;">
-                                            <f:facet name="header">
-                                                Costo Total
-                                            </f:facet>
-                                            <h:outputText
-                                                    value="$#{list.precioServicioTotal eq null ? 'No Asignado' : list.precioServicioTotal}"/>
-                                        </p:column>
-                                    </p:dataTable>
-                                </h:form>
+                            <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-body" id="tabla">
+                                        <div class="col-lg-12" style="overflow: scroll;">
+                                            <h:form id="frmDataTable">
+                                                <p:dataTable value="#{comprobanteControlador.servicioDetalles}"
+                                                             var="list"
+                                                             emptyMessage="No existen ordenes de servicios"
+                                                             style="width: 2000px;"
+                                                             paginator="true" rows="15" rowIndexVar="rowIndex"
+                                                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} ">
+                                                    <p:column style="text-align: center;width: 50px;">
+                                                        <p:commandButton style="font-size: 12px;" icon="icon-add"
+                                                                         actionListener="#{comprobanteControlador.agregarServicio(list)}"
+                                                                         update=":frmRegistrarComprobante:serviciosComprobantes">
+                                                        </p:commandButton>
+                                                    </p:column>
+                                                    <p:column style="text-align: center;font-size: 13px;">
+                                                        <f:facet name="header">
+                                                            Fecha
+                                                        </f:facet>
+                                                        <h:outputText value="#{list.fecha}">
+                                                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                                                        </h:outputText>
+                                                    </p:column>
+                                                    <p:column style="text-align: center;font-size: 13px;">
+                                                        <f:facet name="header">
+                                                            Hora
+                                                        </f:facet>
+                                                        <h:outputText value="#{list.fecha}">
+                                                            <f:convertDateTime pattern="HH:mm" timeZone="GMT-5"/>
+                                                        </h:outputText>
+                                                    </p:column>
+                                                    <p:column style="text-align: center;font-size: 13px;">
+                                                        <f:facet name="header">
+                                                            Servicio
+                                                        </f:facet>
+                                                        <h:outputText value="#{list.servicio.descripcion}"/>
+                                                    </p:column>
+                                                    <p:column style="text-align: center;font-size: 13px;">
+                                                        <f:facet name="header">
+                                                            Tipo Servicio
+                                                        </f:facet>
+                                                        <h:outputText
+                                                                value="#{list.servicio.tipoServicio.descripcion}"/>
+                                                    </p:column>
+                                                    <p:column style="text-align: center;font-size: 13px;">
+                                                        <f:facet name="header">
+                                                            File/VTA
+                                                        </f:facet>
+                                                        <h:outputText value="#{list.fileAuxiliar}"/>
+                                                    </p:column>
+                                                    <p:column style="text-align: center;font-size: 13px;">
+                                                        <f:facet name="header">
+                                                            PAX
+                                                        </f:facet>
+                                                        <h:outputText value="#{list.file.pax}#{list.pax}"/>
+                                                    </p:column>
+                                                    <p:column style="text-align: center;font-size: 13px;">
+                                                        <f:facet name="header">
+                                                            Cuenta
+                                                        </f:facet>
+                                                        <h:outputText value="#{list.file.cuenta}#{list.cuenta}"/>
+                                                    </p:column>
+                                                    <p:column style="text-align: center;font-size: 13px;">
+                                                        <f:facet name="header">
+                                                            Costo Servicio
+                                                        </f:facet>
+                                                        <h:outputText
+                                                                value="$#{list.precioServicio eq null ? 'No Asignado' : list.precioServicio}"/>
+                                                    </p:column>
+                                                    <p:column style="text-align: center;font-size: 13px;">
+                                                        <f:facet name="header">
+                                                            Adicional
+                                                        </f:facet>
+                                                        <h:outputText
+                                                                value="$#{list.adicional eq null ? 'No Asignado' : list.adicional}"/>
+                                                    </p:column>
+                                                    <p:column style="text-align: center;font-size: 13px;">
+                                                        <f:facet name="header">
+                                                            Descuento
+                                                        </f:facet>
+                                                        <h:outputText
+                                                                value="$#{list.descuento eq null ? 'No Asignado' : list.descuento}"/>
+                                                    </p:column>
+                                                    <p:column style="text-align: center;font-size: 13px;">
+                                                        <f:facet name="header">
+                                                            Costo IGV
+                                                        </f:facet>
+                                                        <h:outputText
+                                                                value="$#{list.precioServicioIgv eq null ? 'No Asignado' : list.precioServicioIgv}"/>
+                                                    </p:column>
+                                                    <p:column style="text-align: center;font-size: 13px;">
+                                                        <f:facet name="header">
+                                                            Costo Total
+                                                        </f:facet>
+                                                        <h:outputText
+                                                                value="$#{list.precioServicioTotal eq null ? 'No Asignado' : list.precioServicioTotal}"/>
+                                                    </p:column>
+                                                    <p:column style="text-align: center;width: 50px;">
+                                                        <p:commandButton style="font-size: 12px;"  icon="icon-add"
+                                                                         actionListener="#{comprobanteControlador.agregarServicio(list)}"
+                                                                         update=":frmRegistrarComprobante:serviciosComprobantes">
+                                                        </p:commandButton>
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </h:form>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -223,7 +308,12 @@
                 </p:dataTable>
             </h:form>
         </p:dialog>
+        <h:outputScript name="js/collapse_panel.js"/>
         <script type="text/javascript">
+            jQuery(function ($) {
+                $('.panel-busqueda').find('.panel-body').hide();
+                $('.panel-busqueda .panel-heading span.clickable').addClass('panel-collapsed');
+            });
             function changeCleanCliente(state) {
                 $('#frmFiltroRegistro\\:cleanCliente').css({'display': state});
             }

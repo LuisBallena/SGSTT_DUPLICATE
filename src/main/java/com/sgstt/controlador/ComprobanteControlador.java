@@ -14,6 +14,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,6 +31,12 @@ public class ComprobanteControlador implements Serializable {
     private ComprobanteFilter comprobanteFilter;
     private List<FileVtaDTO> fileVtaDTOs;
     private List<ServicioDetalle> servicioDetalles;
+    private List<ServicioDetalle> servicioDetallesComprobantes;
+    private String cliente;
+    private Integer idCliente;
+    private String serie;
+    private Integer numero;
+    private Date fechaEmision;
     @ManagedProperty("#{sesionControlador}")
     SesionControlador sesionControlador;
 
@@ -38,6 +46,7 @@ public class ComprobanteControlador implements Serializable {
 
     public void initCreate() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
+            servicioDetallesComprobantes = new ArrayList<>();
             comprobanteFilter = new ComprobanteFilter();
             comprobanteFilter.setGravada(1);
             fileServicio = new FileServicio();
@@ -47,7 +56,7 @@ public class ComprobanteControlador implements Serializable {
     }
 
     public void ejecutarBusquedaCreate() {
-        if(comprobanteFilter.getCliente() != null){
+        if (comprobanteFilter.getCliente() != null) {
             servicioDetalles = transporteServicio.obtenerServicioDetalleCliente(comprobanteFilter);
         }
     }
@@ -58,6 +67,19 @@ public class ComprobanteControlador implements Serializable {
 
     public void obtenerFileVTA(Integer idCliente) {
         fileVtaDTOs = fileServicio.obtenerFileVentasPorCliente(idCliente);
+    }
+
+    public void agregarServicio(ServicioDetalle servicioDetalle) {
+        if (!servicioDetallesComprobantes.isEmpty()) {
+            for (ServicioDetalle servicioComprobante : servicioDetallesComprobantes) {
+                if (servicioComprobante.getId() == servicioDetalle.getId()) {
+                    continue;
+                }
+                servicioDetallesComprobantes.add(servicioDetalle);
+            }
+        } else {
+            servicioDetallesComprobantes.add(servicioDetalle);
+        }
     }
 
     /* GETTERS AND SETTERS */
@@ -95,5 +117,45 @@ public class ComprobanteControlador implements Serializable {
 
     public void setServicioDetalles(List<ServicioDetalle> servicioDetalles) {
         this.servicioDetalles = servicioDetalles;
+    }
+
+    public String getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(String cliente) {
+        this.cliente = cliente;
+    }
+
+    public String getSerie() {
+        return serie;
+    }
+
+    public void setSerie(String serie) {
+        this.serie = serie;
+    }
+
+    public Integer getNumero() {
+        return numero;
+    }
+
+    public void setNumero(Integer numero) {
+        this.numero = numero;
+    }
+
+    public Date getFechaEmision() {
+        return fechaEmision;
+    }
+
+    public void setFechaEmision(Date fechaEmision) {
+        this.fechaEmision = fechaEmision;
+    }
+
+    public List<ServicioDetalle> getServicioDetallesComprobantes() {
+        return servicioDetallesComprobantes;
+    }
+
+    public void setServicioDetallesComprobantes(List<ServicioDetalle> servicioDetallesComprobantes) {
+        this.servicioDetallesComprobantes = servicioDetallesComprobantes;
     }
 }
