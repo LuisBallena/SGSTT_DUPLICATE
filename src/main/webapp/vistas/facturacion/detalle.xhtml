@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="./../home.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <ui:define name="content">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header">Administrar Facturación</h3>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 opcion-listado">
+                    <h:link style="font-size: 16px;font-weight: bold;" value="Lista de Facturación"
+                            outcome="list.xhtml"></h:link>
+                </div>
+                <div class="col-lg-12">
+                    <div class="tab-content">
+                        <div id="comprobante" class="tab-pane fade in active">
+                            <br/>
+                            <div class="col-lg-12">
+                                <div class="panel panel-success">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <h:form id="frmRegistrarComprobante" styleClass="form-horizontal">
+                                                    <f:event type="preRenderView" listener="#{comprobanteControlador.initDetalle}" />
+                                                    <div class="form-group has-feedback">
+                                                        <label class="col-sm-1 control-label">Cliente:</label>
+
+                                                        <div class="col-sm-8">
+                                                            <p id="pCliente"
+                                                               style="width: 100%;background-color: #f5f5f5;border: 1px solid #ccc;border-radius: 4px;  height: 34px;padding-top: 5px;padding-left: 5px;">#{comprobanteControlador.cliente}</p>
+                                                        </div>
+
+                                                        <label class="col-sm-2 control-label" style="width: 11%;" >File ó VTA:</label>
+
+                                                        <div class="col-sm-1">
+                                                            <p id="pFileVTA"
+                                                               style="width: 100%;background-color: #f5f5f5;border: 1px solid #ccc;border-radius: 4px;  height: 34px;padding-top: 5px;padding-left: 5px;">#{comprobanteControlador.tipoFileVTA eq null ? '' : (comprobanteControlador.tipoFileVTA == 'F' ? 'File' : 'VTA')}</p>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="form-group has-feedback">
+
+                                                        <label class="col-sm-1 control-label">Gravada:</label>
+
+                                                        <div class="col-sm-1">
+                                                            <p id="pGravada"
+                                                               style="width: 100%;background-color: #f5f5f5;border: 1px solid #ccc;border-radius: 4px;  height: 34px;padding-top: 5px;padding-left: 5px;">#{comprobanteControlador.gravada != null ? (comprobanteControlador.gravada == true ? 'SI': 'NO') : ''}</p>
+                                                        </div>
+
+                                                        <label class="col-sm-1 control-label">Serie:</label>
+
+                                                        <div class="col-sm-2">
+                                                            <p style="width: 100%;background-color: #f5f5f5;border: 1px solid #ccc;border-radius: 4px;  height: 34px;padding-top: 5px;padding-left: 5px;">
+                                                                #{comprobanteControlador.serie}
+                                                            </p>
+                                                        </div>
+                                                        <label class="col-sm-1 control-label">Número:</label>
+
+                                                        <div class="col-sm-2">
+                                                            <p style="width: 100%;background-color: #f5f5f5;border: 1px solid #ccc;border-radius: 4px;  height: 34px;padding-top: 5px;padding-left: 5px;">
+                                                                #{comprobanteControlador.numero}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group has-feedback">
+                                                        <div class="col-sm-12">
+                                                            <p:dataList id="serviciosComprobantes" itemType="none"
+                                                                        emptyMessage="No se tiene ningún item"
+                                                                        styleClass="Sgstt_DataList" type="ordered"
+                                                                        value="#{comprobanteControlador.servicioDetallesComprobantes}"
+                                                                        var="servicios">
+                                                                <f:facet name="header">
+                                                                    Items del Comprobante
+                                                                </f:facet>
+                                                                <f:facet name="header">
+                                                                    <br/>(Fecha/Hora/Servicio/Tipo Servicio/File-VTA/Costo Servicio/Adicional/Descuento/Costo Total)
+                                                                </f:facet>
+                                                                <h:outputText value="#{servicios.fecha}">
+                                                                    <f:convertDateTime pattern="dd-MM-yyyy"
+                                                                                       timeZone="GMT-5"/>
+                                                                </h:outputText>
+                                                                /
+                                                                <h:outputText value="#{servicios.fecha}">
+                                                                    <f:convertDateTime pattern="HH:mm"
+                                                                                       timeZone="GMT-5"/>
+                                                                </h:outputText>
+                                                                /
+                                                                #{servicios.servicio.descripcion}
+                                                                /
+                                                                #{servicios.servicio.tipoServicio.descripcion}
+                                                                /
+                                                                #{servicios.fileAuxiliar}
+                                                                /
+                                                                $#{servicios.precioServicio eq null ? 'No Asignado' : servicios.precioServicio}
+                                                                /
+                                                                $#{servicios.adicional eq null ? 'No Asignado' : servicios.adicional}
+                                                                /
+                                                                $#{servicios.descuento eq null ? 'No Asignado' : servicios.descuento}
+                                                                /
+                                                                $#{servicios.precioServicioTotal eq null ? 'No Asignado' : servicios.precioServicioTotal}
+                                                            </p:dataList>
+                                                        </div>
+                                                    </div>
+                                                </h:form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+
+</ui:composition>

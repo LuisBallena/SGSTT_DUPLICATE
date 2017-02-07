@@ -448,6 +448,7 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`venta_directa` (
   `idcliente` INT NOT NULL ,
   `serie` VARCHAR(10) NOT NULL DEFAULT 'VTA' ,
   `fecha_creacion` DATETIME NOT NULL,
+  `estado_factura` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '0 = Sin Facturar , 1 = Pendientes a Facturar , 2 = Facturado',
   PRIMARY KEY (`idventa`, `idcliente`) ,
   INDEX `fk_venta_directa_cliente1` (`idcliente` ASC) ,
   CONSTRAINT `fk_venta_directa_cliente1`
@@ -736,6 +737,8 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`comprobante` (
   `numero` INT(10) NOT NULL ,
   `idsede` INT NOT NULL ,
   `idcliente` INT NOT NULL ,
+  `gravada` TINYINT(1) NOT NULL COMMENT '0 : no gravada , 1 : gravada',
+  `filovta` TINYINT(1) NOT NULL COMMENT '0 : file, 1 : venta directa',
   PRIMARY KEY (`idcomprobante`) ,
   INDEX `index_serie` (`serie` ASC) ,
   INDEX `index_numero` (`numero` ASC) ,

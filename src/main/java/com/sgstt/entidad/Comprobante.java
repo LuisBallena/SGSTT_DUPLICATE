@@ -9,7 +9,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "comprobante", catalog = "sgstt")
-public class Comprobante implements Serializable{
+public class Comprobante implements Serializable {
 
     @Id
     @GeneratedValue
@@ -33,6 +33,12 @@ public class Comprobante implements Serializable{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idcliente")
     private Cliente cliente;
+
+    @Column(name = "gravada", nullable = false)
+    private boolean gravada;
+
+    @Column(name = "filovta", nullable = false)
+    private Short fileVta;
 
     public Comprobante() {
     }
@@ -83,5 +89,21 @@ public class Comprobante implements Serializable{
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public boolean isGravada() {
+        return gravada;
+    }
+
+    public void setGravada(boolean gravada) {
+        this.gravada = gravada;
+    }
+
+    public Short getFileVta() {
+        return fileVta;
+    }
+
+    public void setFileVta(Short fileVta) {
+        this.fileVta = fileVta;
     }
 }

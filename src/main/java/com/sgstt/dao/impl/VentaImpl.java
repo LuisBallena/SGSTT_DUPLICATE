@@ -9,8 +9,10 @@ import com.sgstt.hibernate.HibernateImpl;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -29,7 +31,7 @@ public class VentaImpl extends HibernateImpl<Venta, Integer> implements VentaDao
     public List<FileVtaDTO> getVentasByIdCliente(Integer idCliente) {
         List<FileVtaDTO> fileVtaDTOs = null;
         try{
-            Query query = conexion.getSession().createQuery("select new com.sgstt.dto.FileVtaDTO('V',concat(v.serie,'-',v.id) ,v.id) from Venta as v where v.cliente.id = :idCliente");
+            Query query = conexion.getSession().createQuery("select new com.sgstt.dto.FileVtaDTO('V',concat(v.serie,'-',v.id) ,v.id) from Venta as v where v.cliente.id = :idCliente and v.estadoFactura != 2");
             query.setInteger("idCliente", idCliente);
             fileVtaDTOs = query.list();
         }catch(HibernateException e){
@@ -37,4 +39,26 @@ public class VentaImpl extends HibernateImpl<Venta, Integer> implements VentaDao
         }
         return fileVtaDTOs;
     }
+
+    @Override
+    public boolean isFacturadoVTA(Integer idVTA) {
+        boolean facturado = false;
+        Query query = conexion.getSession().createSQLQuery("SELECT COUNT(v.idventa) FROM venta_directa AS v INNER JOIN servicio_detalle AS s ON s.idventa = v.idventa " +
+                "WHERE v.idventa = :idVTA AND idcomprobante IS NULL");
+        query.setInteger("idVTA", idVTA);
+        BigInteger total = ((BigInteger) query.uniqueResult());
+        if (total != null && total == BigInteger.ZERO) {
+            facturado = true;
+        }
+        return facturado;
+    }
+
+    @Override
+    public void changeStateFacturado(Integer idVTA, Integer estadoFacturado){
+        SQLQuery query = conexion.getSession().createSQLQuery("update venta_directa set estado_factura = :estado where idventa = :dato");
+        query.setInteger("estado", estadoFacturado);
+        query.setInteger("dato", idVTA);
+        query.executeUpdate();
+    }
+
 }

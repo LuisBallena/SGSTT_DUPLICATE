@@ -30,6 +30,10 @@ public class Venta implements Serializable{
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date fechaCreacion;
 
+    @Enumerated(EnumType.ORDINAL)
+    @Column(nullable = false,insertable = false, name = "estado_factura")
+    private EstadoFactura estadoFactura;
+
     public Venta() {
     }
 
@@ -63,5 +67,13 @@ public class Venta implements Serializable{
 
     public void setFechaCreacion(Date fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
+    }
+
+    public EstadoFactura getEstadoFactura() {
+        return estadoFactura;
+    }
+
+    public void setEstadoFactura(EstadoFactura estadoFactura) {
+        this.estadoFactura = estadoFactura;
     }
 }

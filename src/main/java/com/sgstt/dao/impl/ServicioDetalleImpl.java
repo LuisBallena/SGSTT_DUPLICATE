@@ -6,6 +6,7 @@ import com.sgstt.entidad.ServicioDetalle;
 import com.sgstt.hibernate.HibernateConexion;
 import com.sgstt.hibernate.HibernateImpl;
 import com.sgstt.util.Utilitario;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -16,7 +17,6 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
 
 /**
- *
  * @author Luis Alonso Ballena Garcia
  */
 public class ServicioDetalleImpl extends HibernateImpl<ServicioDetalle, Integer> implements ServicioDetalleDao, Serializable {
@@ -99,20 +99,44 @@ public class ServicioDetalleImpl extends HibernateImpl<ServicioDetalle, Integer>
     public List<ServicioDetalle> getServicioDetalleFilterByCliente(Integer idCliente, Integer idFile, Integer idVenta, boolean gravada) {
         List<ServicioDetalle> servicioDetalles = null;
         try {
-            Criteria criteria = conexion.getSession().createCriteria(ServicioDetalle.class,"st");
+            Criteria criteria = conexion.getSession().createCriteria(ServicioDetalle.class, "st");
             criteria.createAlias("st.vehiculo.tipoVehiculo", "tv", JoinType.LEFT_OUTER_JOIN);
             criteria.createAlias("st.venta.cliente", "vc", JoinType.LEFT_OUTER_JOIN);
             criteria.createAlias("st.file.cliente", "fc", JoinType.LEFT_OUTER_JOIN);
             criteria.add(Restrictions.eq("st.estado", Estado.ACTIVO));
             criteria.add(Restrictions.or(Restrictions.eq("vc.idCliente", idCliente), Restrictions.eq("fc.idCliente", idCliente)));
-            criteria.add(Restrictions.eq("st.gravada",gravada));
+            criteria.add(Restrictions.eq("st.gravada", gravada));
             criteria.add(Restrictions.isNull("st.comprobante.id"));
-            if(idFile != null && idFile > 0){
-                criteria.add(Restrictions.eq("st.file.idFile",idFile));
+            if (idFile != null && idFile > 0) {
+                criteria.add(Restrictions.eq("st.file.idFile", idFile));
             }
-            if(idVenta != null && idVenta > 0){
-                criteria.add(Restrictions.eq("st.venta.id",idVenta));
+            if (idVenta != null && idVenta > 0) {
+                criteria.add(Restrictions.eq("st.venta.id", idVenta));
             }
+            servicioDetalles = criteria.list();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return servicioDetalles;
+    }
+
+    @Override
+    public void updateIdComprobante(List<Integer> idsServicios, Integer idComprobante) {
+        SQLQuery query = conexion.getSession().createSQLQuery("update servicio_detalle set idcomprobante = :idComprobante where idservicio_detalle in (:dato)");
+        query.setInteger("idComprobante", idComprobante);
+        query.setParameterList("dato", idsServicios);
+        query.executeUpdate();
+    }
+
+    @Override
+    public List<ServicioDetalle> getServicioDetalleFilterByIdComprobante(Integer idComprobante) {
+        List<ServicioDetalle> servicioDetalles = null;
+        try {
+            Criteria criteria = conexion.getSession().createCriteria(ServicioDetalle.class, "st");
+            criteria.createAlias("st.vehiculo.tipoVehiculo", "tv", JoinType.LEFT_OUTER_JOIN);
+            criteria.createAlias("st.venta.cliente", "vc", JoinType.LEFT_OUTER_JOIN);
+            criteria.createAlias("st.file.cliente", "fc", JoinType.LEFT_OUTER_JOIN);
+            criteria.add(Restrictions.eq("st.comprobante.id", idComprobante));
             servicioDetalles = criteria.list();
         } catch (HibernateException e) {
             e.printStackTrace();

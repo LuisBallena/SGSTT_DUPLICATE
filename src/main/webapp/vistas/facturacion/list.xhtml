@@ -18,9 +18,6 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-body" id="tabla">
-                            <h:messages id="msg" globalOnly="true" styleClass="list-group"
-                                        infoClass="list-group-item list-group-item-success"
-                                        errorClass="list-group-item list-group-item-danger"/>
                             <div class="row">
                                 <div class="col-sm-2">
                                     <h:panelGroup rendered="#{sesionControlador.permisoModulo.crear eq true}">
@@ -30,10 +27,47 @@
                                 </div>
                             </div>
                             <br/>
+                            <h:form id="formFacturacion">
+                                <f:event type="preRenderView" listener="#{comprobanteControlador.initLista}" />
+                                <h:messages id="msg" globalOnly="true" styleClass="list-group" infoClass="list-group-item list-group-item-success"
+                                            errorClass="list-group-item list-group-item-danger" />
+                                <p:dataTable    value="#{comprobanteControlador.comprobantePaginador}"    var="list" emptyMessage="No existen registros de comprobantes"
+                                                paginator="true" rows="20" lazy="true" rowIndexVar="rowIndex"
+                                                paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
 
-                            <br/>
-
-
+                                    <p:column    style="text-align: center;font-size: 13px;">
+                                        <f:facet name="header">
+                                            Fecha Registro
+                                        </f:facet>
+                                        <h:outputText value="#{list.fechaRegistro}" >
+                                            <f:convertDateTime pattern="dd-MM-yyyy"
+                                                               timeZone="GMT-5"/>
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column    style="text-align: center;font-size: 13px;">
+                                        <f:facet name="header">
+                                            Serie
+                                        </f:facet>
+                                        #{list.serie}
+                                    </p:column>
+                                    <p:column    style="text-align: center;font-size: 13px;">
+                                        <f:facet name="header">
+                                            Número
+                                        </f:facet>
+                                        #{list.numero}
+                                    </p:column>
+                                    <p:column    style="text-align: center;font-size: 13px;">
+                                        <f:facet name="header">
+                                            Cliente
+                                        </f:facet>
+                                        #{list.cliente.nombreAuxiliar}
+                                    </p:column>
+                                    <p:column  style="text-align: center;width: 8%;">
+                                        <p:commandButton  style="font-size: 12px;" icon="icon-detail" action="#{comprobanteControlador.irDetalle(list.id)}"    >
+                                        </p:commandButton>
+                                    </p:column>
+                                </p:dataTable>
+                            </h:form>
                         </div>
                     </div>
                 </div>

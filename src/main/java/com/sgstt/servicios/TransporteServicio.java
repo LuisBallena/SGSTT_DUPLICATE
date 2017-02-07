@@ -8,10 +8,11 @@ import com.sgstt.filters.ClienteFilter;
 import com.sgstt.filters.ComprobanteFilter;
 import com.sgstt.hibernate.HibernateConexion;
 import com.sgstt.util.Utilitario;
+import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Luis Alonso Ballena Garcia
@@ -19,6 +20,7 @@ import java.util.List;
 public class TransporteServicio implements Serializable {
 
     private static final long serialVersionUID = -480596500113721392L;
+    private static final Logger log = Logger.getLogger(TransporteServicio.class.getPackage().getName());
 
     private final HibernateConexion conexion;
     private final ChoferDao choferDao;
@@ -35,6 +37,7 @@ public class TransporteServicio implements Serializable {
     private final VentaDao ventaDao;
     private final EmpresaDao empresaDao;
     private SedeDao sedeDao;
+    private ComprobanteDao comprobanteDao;
 
     public TransporteServicio() {
         conexion = new HibernateConexion();
@@ -52,7 +55,7 @@ public class TransporteServicio implements Serializable {
         ventaDao = new VentaImpl(conexion);
         empresaDao = new EmpresaImpl(conexion);
         sedeDao = new SedeImpl(conexion);
-
+        comprobanteDao = new ComprobanteImpl(conexion);
     }
 
     public List<Chofer> obtenerChoferesPorSede(Integer idSede) {
@@ -392,6 +395,94 @@ public class TransporteServicio implements Serializable {
                 idFile, idVenta, comprobanteFilter.getGravada() == 0 ? false : true);
         conexion.closeConexion();
         return servicioDetalles;
+    }
+
+    public void guardarComprobante(Comprobante comprobante, List<ServicioDetalle> servicioDetalles, String tipoFileVTA) throws TransporteException{
+        conexion.beginConexion();
+        try{
+            comprobanteDao.agregar(comprobante);
+            List<Integer> idsServicioDetalle = convertIdsServicioDetalle(servicioDetalles);
+            servicioDetalleDao.updateIdComprobante(idsServicioDetalle,comprobante.getId());
+            switch (tipoFileVTA){
+                case "F":
+                    cambiarEstadoFacturaFile(servicioDetalles);
+                    break;
+                case "V":
+                    cambiarEstadoFacturaVenta(servicioDetalles);
+                    break;
+            }
+            conexion.closeConexion();
+        }catch (HibernateException e){
+            conexion.rollBack();
+            log.error("Ocurrio una excepcion a nivel de Hibernate : " + e.getMessage(), e);
+            throw new TransporteException("Ocurrio un error al guardar en la base de datos");
+        }catch (Exception e){
+            conexion.rollBack();
+            log.error("Ocurrio una excepcion general : " + e.getMessage(), e);
+            throw new TransporteException("Ocurrio un error no identificado en el sistema");
+        }
+    }
+
+    public Comprobante obtenerComprobante(Integer idComprobante){
+        conexion.beginConexion();
+        Comprobante comprobante = comprobanteDao.obtenerEntidad(idComprobante);
+        conexion.closeConexion();
+        return comprobante;
+    }
+
+    public List<ServicioDetalle> obtenerItemsComprobante(Integer idComprobante){
+        List<ServicioDetalle> servicioDetalles = new ArrayList<>();
+        conexion.beginConexion();
+        servicioDetalles = servicioDetalleDao.getServicioDetalleFilterByIdComprobante(idComprobante);
+        conexion.closeConexion();
+        return servicioDetalles;
+    }
+
+    public void eliminarComprobante(Comprobante comprobante){
+        List<ServicioDetalle> servicioDetalles = obtenerItemsComprobante(comprobante.getId());
+        List<Integer> idsServicioDetalle = convertIdsServicioDetalle(servicioDetalles);
+        servicioDetalleDao.updateIdComprobante(idsServicioDetalle,null);
+
+    }
+
+    private void cambiarEstadoFacturaFile(List<ServicioDetalle> servicioDetalles){
+        List<Integer> idFiles = obtenerIdsFiles(servicioDetalles);
+        for(Integer idFile : idFiles){
+            boolean facturado = fileDao.isFacturadoFile(idFile);
+            fileDao.changeStateFacturado(idFile, facturado ? EstadoFactura.FACTURADO.ordinal() : EstadoFactura.PENDIENTES_FACTURA.ordinal());
+        }
+    }
+
+    private void cambiarEstadoFacturaVenta(List<ServicioDetalle> servicioDetalles){
+        List<Integer> idsVTA = obtenerIdsVTA(servicioDetalles);
+        for(Integer idVTA : idsVTA){
+            boolean facturado = ventaDao.isFacturadoVTA(idVTA);
+            ventaDao.changeStateFacturado(idVTA, facturado ? EstadoFactura.FACTURADO.ordinal() : EstadoFactura.PENDIENTES_FACTURA.ordinal());
+        }
+    }
+
+    private List<Integer> convertIdsServicioDetalle(List<ServicioDetalle> servicioDetalles){
+        List<Integer> idsServicios = new ArrayList<>();
+        for(ServicioDetalle servicioDetalle : servicioDetalles){
+            idsServicios.add(servicioDetalle.getId());
+        }
+        return idsServicios;
+    }
+
+    private List<Integer> obtenerIdsFiles(List<ServicioDetalle> servicioDetalles){
+        Set<Integer> idFiles = new TreeSet<>();
+        for(ServicioDetalle servicioDetalle : servicioDetalles){
+            idFiles.add(servicioDetalle.getFile().getIdFile());
+        }
+        return new ArrayList<>(idFiles);
+    }
+
+    private List<Integer> obtenerIdsVTA(List<ServicioDetalle> servicioDetalles){
+        Set<Integer> idVTAs = new TreeSet<>();
+        for(ServicioDetalle servicioDetalle : servicioDetalles){
+            idVTAs.add(servicioDetalle.getVenta().getId());
+        }
+        return new ArrayList<>(idVTAs);
     }
 
 }

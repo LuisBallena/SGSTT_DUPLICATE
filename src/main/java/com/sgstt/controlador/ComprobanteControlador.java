@@ -2,9 +2,14 @@ package com.sgstt.controlador;
 
 import com.sgstt.dto.FileVtaDTO;
 import com.sgstt.entidad.Cliente;
+import com.sgstt.entidad.Comprobante;
+import com.sgstt.entidad.Sede;
 import com.sgstt.entidad.ServicioDetalle;
 import com.sgstt.excepciones.FilterException;
+import com.sgstt.excepciones.TransporteException;
 import com.sgstt.filters.ComprobanteFilter;
+import com.sgstt.hibernate.HibernatePaginador;
+import com.sgstt.paginacion.ComprobantePaginador;
 import com.sgstt.servicios.FileServicio;
 import com.sgstt.servicios.TransporteServicio;
 import com.sgstt.util.Utilitario;
@@ -39,11 +44,20 @@ public class ComprobanteControlador implements Serializable {
     private Integer numero;
     private Date fechaEmision;
     private Boolean gravada;
+    private String tipoFileVTA;
+    private HibernatePaginador<Comprobante> comprobantePaginador;
     @ManagedProperty("#{sesionControlador}")
     SesionControlador sesionControlador;
 
 
     public ComprobanteControlador() {
+    }
+
+    public void initLista() {
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+            comprobantePaginador = new ComprobantePaginador();
+            comprobantePaginador.initPaginador(sesionControlador.getUsuarioSesion().getSede().getId());
+        }
     }
 
     public void initCreate() {
@@ -54,6 +68,31 @@ public class ComprobanteControlador implements Serializable {
             fileServicio = new FileServicio();
             transporteServicio = new TransporteServicio();
             clientes = fileServicio.obtenerClientesPorSede(sesionControlador.getUsuarioSesion().getSede().getId());
+        }
+    }
+
+    public void initDetalle(){
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+            Object value = Utilitario.getFlash("idComprobante");
+            if (value == null) {
+                Utilitario.redireccionarJSF(FacesContext.getCurrentInstance(), "/vistas/facturacion/list.xhtml");
+                return;
+            }
+            transporteServicio = new TransporteServicio();
+            Comprobante comprobante = transporteServicio.obtenerComprobante((Integer)value);
+            this.servicioDetallesComprobantes = transporteServicio.obtenerItemsComprobante(comprobante.getId());
+            this.cliente = comprobante.getCliente().getNombreAuxiliar();
+            this.serie = comprobante.getSerie();
+            this.numero = comprobante.getNumero();
+            this.gravada = comprobante.isGravada();
+            switch (comprobante.getFileVta()){
+                case 0:
+                    this.tipoFileVTA = "F";
+                    break;
+                case 1:
+                    this.tipoFileVTA = "V";
+                    break;
+            }
         }
     }
 
@@ -73,7 +112,7 @@ public class ComprobanteControlador implements Serializable {
 
     public void agregarServicio(ServicioDetalle servicioDetalle) {
         if (!servicioDetallesComprobantes.isEmpty()) {
-            if(esAgregadoValido(servicioDetalle,this.idCliente,this.gravada)){
+            if (esAgregadoValido(servicioDetalle, this.idCliente, this.gravada, this.tipoFileVTA)) {
                 boolean existe = false;
                 Iterator<ServicioDetalle> iterator = servicioDetallesComprobantes.iterator();
                 while (iterator.hasNext()) {
@@ -91,61 +130,118 @@ public class ComprobanteControlador implements Serializable {
             this.cliente = servicioDetalle.getCliente().getNombreAuxiliar();
             this.idCliente = servicioDetalle.getCliente().getIdCliente();
             this.gravada = servicioDetalle.isGravada();
+            this.tipoFileVTA = servicioDetalle.getFile() == null ? "V"  : "F";
             servicioDetallesComprobantes.add(servicioDetalle);
         }
     }
 
-    public void limpiarFormulario(){
+    public void limpiarFormulario() {
         this.cliente = "";
         this.idCliente = null;
         this.serie = "";
         this.numero = null;
         this.gravada = null;
+        this.tipoFileVTA = null;
         servicioDetallesComprobantes = new ArrayList<>();
     }
 
-    public void eliminarItem(Integer idServicioComprobante){
+    public void eliminarItem(Integer idServicioComprobante) {
         Iterator<ServicioDetalle> iterator = servicioDetallesComprobantes.iterator();
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             ServicioDetalle servicioDetalle = iterator.next();
-            if(servicioDetalle.getId().intValue() == idServicioComprobante.intValue()){
+            if (servicioDetalle.getId().intValue() == idServicioComprobante.intValue()) {
                 iterator.remove();
                 break;
             }
         }
     }
 
-    public void guardarComprobante(){
-        if(esVistaValida()){
-
+    public void guardarComprobante() {
+        if (esVistaValida()) {
+            Comprobante comprobante = ensamblarComprobante(idCliente, serie, numero,gravada,tipoFileVTA,
+                    sesionControlador.getUsuarioSesion().getSede());
+            try{
+                transporteServicio.guardarComprobante(comprobante, servicioDetallesComprobantes, tipoFileVTA);
+                limpiarServiciosBusqueda(this.servicioDetallesComprobantes);
+                limpiarFormulario();
+                Utilitario.enviarMensajeGlobalValido("Se ha registrado correctamente el comprobante");
+            }catch (TransporteException e){
+                Utilitario.enviarMensajeGlobalError(e.getMessage());
+            }
         }
     }
 
-    private boolean esVistaValida(){
+    public String irDetalle(Integer idComprobante){
+        Utilitario.putFlash("idComprobante",idComprobante);
+        return "detalle.xhtml?faces-redirect=true;";
+    }
+
+    private boolean esVistaValida() {
         boolean valido = true;
-        if(Utilitario.esNulo(this.serie)){
+        if (Utilitario.esNulo(this.serie)) {
             Utilitario.enviarMensajeGlobalError("Debe ingresar la serie del comprobante");
             valido = false;
-        }else if(this.numero == null){
+        } else if (this.numero == null) {
             Utilitario.enviarMensajeGlobalError("Debe ingresar el numero del comprobante");
             valido = false;
-        }else if(servicioDetallesComprobantes.isEmpty()){
+        } else if (servicioDetallesComprobantes.isEmpty()) {
             Utilitario.enviarMensajeGlobalError("Debe seleccionar almenos una orden de servicio");
             valido = false;
         }
         return valido;
     }
 
-    private boolean esAgregadoValido(ServicioDetalle servicioDetalle, Integer idCliente, boolean gravado){
+    private boolean esAgregadoValido(ServicioDetalle servicioDetalle, Integer idCliente, boolean gravado, String tipoFileVTA) {
         boolean valido = true;
-        if(servicioDetalle.getCliente().getIdCliente() != idCliente.intValue()){
+        String tipo = servicioDetalle.getFile() == null ? "V" : "F";
+        if (servicioDetalle.getCliente().getIdCliente() != idCliente.intValue()) {
             Utilitario.enviarMensajeGlobalError("Esta seleccionando ordenes de servicio de otro cliente");
             valido = false;
-        }else if(servicioDetalle.isGravada() != gravado){
+        } else if (servicioDetalle.isGravada() != gravado) {
             Utilitario.enviarMensajeGlobalError("El tipo de afectacion escogido no es el mismo de los ya seleccionados");
+            valido = false;
+        } else if(!tipo.equals(tipoFileVTA)){
+            Utilitario.enviarMensajeGlobalError(String.format("Debe escoger servicios del tipo '%s'",tipoFileVTA == "F" ? "File" : "VTA"));
             valido = false;
         }
         return valido;
+    }
+
+    private Comprobante ensamblarComprobante(Integer idCliente, String serie, Integer numero, boolean gravada, String tipoFileVta,
+                                             Sede sede) {
+        Comprobante comprobante = new Comprobante();
+        Cliente cliente = new Cliente();
+        cliente.setIdCliente(idCliente);
+        comprobante.setCliente(cliente);
+        comprobante.setSerie(serie);
+        comprobante.setNumero(numero);
+        comprobante.setSede(sede);
+        comprobante.setFechaRegistro(new Date());
+        comprobante.setGravada(gravada);
+        switch (tipoFileVta){
+            case "F":
+                short file = 0;
+                comprobante.setFileVta(file);
+                break;
+            case "V":
+                short venta = 1;
+                comprobante.setFileVta(venta);
+                break;
+        }
+        return comprobante;
+    }
+
+    private void limpiarServiciosBusqueda(List<ServicioDetalle> servicioDetallesComprobantes){
+        Iterator<ServicioDetalle> iterator =  this.servicioDetalles.iterator();
+        while(iterator.hasNext()){
+            ServicioDetalle servicioDetalle = iterator.next();
+            for(ServicioDetalle item : servicioDetallesComprobantes){
+                if(servicioDetalle.getId().intValue() == item.getId().intValue()){
+                    iterator.remove();
+                    break;
+                }
+            }
+        }
     }
 
     /* GETTERS AND SETTERS */
@@ -231,5 +327,21 @@ public class ComprobanteControlador implements Serializable {
 
     public void setGravada(Boolean gravada) {
         this.gravada = gravada;
+    }
+
+    public String getTipoFileVTA() {
+        return tipoFileVTA;
+    }
+
+    public void setTipoFileVTA(String tipoFileVTA) {
+        this.tipoFileVTA = tipoFileVTA;
+    }
+
+    public HibernatePaginador<Comprobante> getComprobantePaginador() {
+        return comprobantePaginador;
+    }
+
+    public void setComprobantePaginador(HibernatePaginador<Comprobante> comprobantePaginador) {
+        this.comprobantePaginador = comprobantePaginador;
     }
 }

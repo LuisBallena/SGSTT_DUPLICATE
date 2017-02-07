@@ -14,4 +14,8 @@ public interface VentaDao extends GenericDao<Venta,Integer>{
 
     public List<FileVtaDTO> getVentasByIdCliente(Integer idCliente);
 
+    public boolean isFacturadoVTA(Integer idVTA);
+
+    public void changeStateFacturado(Integer idVTA, Integer estadoFacturado);
+
 }
