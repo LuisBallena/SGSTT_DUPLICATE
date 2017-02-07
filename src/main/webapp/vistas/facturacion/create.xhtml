@@ -19,6 +19,9 @@
                             outcome="list.xhtml"></h:link>
                 </div>
                 <div class="col-lg-12">
+                    <h:messages id="msg" globalOnly="true" styleClass="list-group"
+                                infoClass="list-group-item list-group-item-success"
+                                errorClass="list-group-item list-group-item-danger"/>
                     <ul class="nav nav-tabs">
                         <li class="active"><a data-toggle="tab" href="#comprobante">Comprobante</a></li>
                         <li><a data-toggle="tab" href="#listaBusqueda">Listado de Búsqueda</a></li>
@@ -33,15 +36,35 @@
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <h:form id="frmRegistrarComprobante" styleClass="form-horizontal">
+                                                    <div class="col-sm-12" style="margin-bottom: 15px;">
+                                                        <p:commandButton value="Limpiar" style="margin-right: 10px;"
+                                                                         actionListener="#{comprobanteControlador.limpiarFormulario}"
+                                                                         styleClass="btn btn-primary"
+                                                                         update="@form :msg"/>
+
+                                                        <p:commandButton value="Registrar"
+                                                                         actionListener="#{comprobanteControlador.guardarComprobante}"
+                                                                         styleClass="btn btn-primary"
+                                                                         update="@form :msg"/>
+                                                    </div>
+
                                                     <div class="form-group has-feedback">
                                                         <label class="col-sm-1 control-label">Cliente:</label>
 
                                                         <div class="col-sm-10">
                                                             <p id="pCliente"
-                                                               style="width: 100%;background-color: #f5f5f5;border: 1px solid #ccc;border-radius: 4px;  height: 34px;padding-top: 5px;">#{comprobanteControlador.cliente}</p>
+                                                               style="width: 100%;background-color: #f5f5f5;border: 1px solid #ccc;border-radius: 4px;  height: 34px;padding-top: 5px;padding-left: 5px;">#{comprobanteControlador.cliente}</p>
                                                         </div>
                                                     </div>
                                                     <div class="form-group has-feedback">
+
+                                                        <label class="col-sm-1 control-label">Gravada:</label>
+
+                                                        <div class="col-sm-1">
+                                                            <p id="pGravada"
+                                                               style="width: 100%;background-color: #f5f5f5;border: 1px solid #ccc;border-radius: 4px;  height: 34px;padding-top: 5px;padding-left: 5px;">#{comprobanteControlador.gravada != null ? (comprobanteControlador.gravada != true ? 'SI': 'NO') : ''}</p>
+                                                        </div>
+
                                                         <label class="col-sm-1 control-label">Serie:</label>
 
                                                         <div class="col-sm-2">
@@ -60,13 +83,45 @@
                                                     </div>
                                                     <div class="form-group has-feedback">
                                                         <div class="col-sm-12">
-                                                            <p:dataList id="serviciosComprobantes" style="font-size: 14px!important;font-family: Calibri !important;" value="#{comprobanteControlador.servicioDetallesComprobantes}" var="servicios" >
+                                                            <p:dataList id="serviciosComprobantes" itemType="none"
+                                                                        emptyMessage="No se tiene ningún item"
+                                                                        styleClass="Sgstt_DataList"
+                                                                        value="#{comprobanteControlador.servicioDetallesComprobantes}"
+                                                                        var="servicios">
                                                                 <f:facet name="header">
-                                                                    Basic
+                                                                    Items del Comprobante
                                                                 </f:facet>
+                                                                <f:facet name="header">
+                                                                    <br/>(Fecha/Hora/Servicio/Tipo Servicio/File-VTA/Costo Servicio/Adicional/Descuento/Costo Total)
+                                                                </f:facet>
+                                                                <p:commandButton
+                                                                        actionListener="#{comprobanteControlador.eliminarItem(servicios.id)}"
+                                                                        style="font-size: 10px;margin-left: -35px;margin-right: 5px;"
+                                                                        icon="icon-delete"
+                                                                        update="serviciosComprobantes">
+
+                                                                </p:commandButton>
                                                                 <h:outputText value="#{servicios.fecha}">
-                                                                    <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                                                                    <f:convertDateTime pattern="dd/MM/yyyy"
+                                                                                       timeZone="GMT-5"/>
                                                                 </h:outputText>
+                                                                /
+                                                                <h:outputText value="#{servicios.fecha}">
+                                                                    <f:convertDateTime pattern="HH:mm"
+                                                                                       timeZone="GMT-5"/>
+                                                                </h:outputText>
+                                                                /
+                                                                #{servicios.servicio.descripcion}
+                                                                /
+                                                                #{servicios.servicio.tipoServicio.descripcion}
+                                                                /
+                                                                $#{servicios.precioServicio eq null ? 'No Asignado' : servicios.precioServicio}
+                                                                /
+                                                                $#{servicios.adicional eq null ? 'No Asignado' : servicios.adicional}
+                                                                /
+                                                                $#{servicios.descuento eq null ? 'No Asignado' : servicios.descuento}
+                                                                /
+                                                                $#{servicios.precioServicioTotal eq null ? 'No Asignado' : servicios.precioServicioTotal}
                                                             </p:dataList>
                                                         </div>
                                                     </div>
@@ -96,7 +151,7 @@
                                                     <div class="form-group has-feedback">
                                                         <label class="col-md-2 control-label">Cliente :</label>
 
-                                                        <div class="col-md-3">
+                                                        <div class="col-md-5">
                                                             <div jsf:id="clienteFilter" class="form-control"
                                                                  style="background-color: #f5f5f5;border: 1px solid #ccc;">
                                                         <span jsf:id="cleanCliente"
@@ -117,6 +172,8 @@
                                                                      src="#{request.contextPath}/resources/images/add.png"/>
                                                             </div>
                                                         </div>
+                                                    </div>
+                                                    <div class="form-group has-feedback">
                                                         <label class="col-md-2 control-label">File/VTA :</label>
 
                                                         <div class="col-sm-4 col-md-3">
@@ -131,8 +188,6 @@
                                                             </h:selectOneMenu>
                                                         </div>
 
-                                                    </div>
-                                                    <div class="form-group has-feedback">
                                                         <label class="col-md-2 control-label">Gravada :</label>
 
                                                         <div class="col-md-1" style="width: 100px;">
@@ -149,7 +204,7 @@
                                                                          actionListener="#{comprobanteControlador.ejecutarBusquedaCreate}"
                                                                          styleClass="btn btn-primary"
                                                                          update=":frmDataTable"
-                                                                />
+                                                        />
                                                     </div>
                                                 </h:form>
                                             </div>
@@ -171,10 +226,10 @@
                                                     <p:column style="text-align: center;width: 50px;">
                                                         <p:commandButton style="font-size: 12px;" icon="icon-add"
                                                                          actionListener="#{comprobanteControlador.agregarServicio(list)}"
-                                                                         update=":frmRegistrarComprobante:serviciosComprobantes">
+                                                                         update=":frmRegistrarComprobante :msg">
                                                         </p:commandButton>
                                                     </p:column>
-                                                    <p:column style="text-align: center;font-size: 13px;">
+                                                    <p:column style="text-align: center;font-size: 13px;width: 130px;">
                                                         <f:facet name="header">
                                                             Fecha
                                                         </f:facet>
@@ -182,7 +237,7 @@
                                                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
                                                         </h:outputText>
                                                     </p:column>
-                                                    <p:column style="text-align: center;font-size: 13px;">
+                                                    <p:column style="text-align: center;font-size: 13px;width: 80px;">
                                                         <f:facet name="header">
                                                             Hora
                                                         </f:facet>
@@ -257,9 +312,9 @@
                                                                 value="$#{list.precioServicioTotal eq null ? 'No Asignado' : list.precioServicioTotal}"/>
                                                     </p:column>
                                                     <p:column style="text-align: center;width: 50px;">
-                                                        <p:commandButton style="font-size: 12px;"  icon="icon-add"
+                                                        <p:commandButton style="font-size: 12px;" icon="icon-add"
                                                                          actionListener="#{comprobanteControlador.agregarServicio(list)}"
-                                                                         update=":frmRegistrarComprobante:serviciosComprobantes">
+                                                                         update=":frmRegistrarComprobante :msg">
                                                         </p:commandButton>
                                                     </p:column>
                                                 </p:dataTable>

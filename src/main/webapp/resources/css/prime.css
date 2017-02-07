@@ -98,3 +98,11 @@
 .Sgstt_OneMenu.ui-selectonemenu-panel .ui-selectonemenu-items-wrapper{
     font-size: 12px;
 }
+
+.Sgstt_DataList.ui-datalist{
+    font-size: 13px!important;font-family: Calibri !important;
+}
+.Sgstt_DataList.ui-datalist .ui-datalist-item{
+    margin-top: 2px!important;
+    margin-bottom: 2px!important;
+}

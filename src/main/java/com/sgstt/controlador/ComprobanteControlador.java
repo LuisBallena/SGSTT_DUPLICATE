@@ -38,6 +38,7 @@ public class ComprobanteControlador implements Serializable {
     private String serie;
     private Integer numero;
     private Date fechaEmision;
+    private Boolean gravada;
     @ManagedProperty("#{sesionControlador}")
     SesionControlador sesionControlador;
 
@@ -72,21 +73,79 @@ public class ComprobanteControlador implements Serializable {
 
     public void agregarServicio(ServicioDetalle servicioDetalle) {
         if (!servicioDetallesComprobantes.isEmpty()) {
-            boolean existe = false;
-            Iterator<ServicioDetalle> iterator = servicioDetallesComprobantes.iterator();
-            while (iterator.hasNext()) {
-                ServicioDetalle servicioComprobante = iterator.next();
-                if (servicioComprobante.getId() == servicioDetalle.getId()) {
-                    existe = true;
-                    break;
+            if(esAgregadoValido(servicioDetalle,this.idCliente,this.gravada)){
+                boolean existe = false;
+                Iterator<ServicioDetalle> iterator = servicioDetallesComprobantes.iterator();
+                while (iterator.hasNext()) {
+                    ServicioDetalle servicioComprobante = iterator.next();
+                    if (servicioComprobante.getId().intValue() == servicioDetalle.getId().intValue()) {
+                        existe = true;
+                        break;
+                    }
+                }
+                if (!existe) {
+                    servicioDetallesComprobantes.add(servicioDetalle);
                 }
             }
-            if (!existe) {
-                servicioDetallesComprobantes.add(servicioDetalle);
-            }
         } else {
+            this.cliente = servicioDetalle.getCliente().getNombreAuxiliar();
+            this.idCliente = servicioDetalle.getCliente().getIdCliente();
+            this.gravada = servicioDetalle.isGravada();
             servicioDetallesComprobantes.add(servicioDetalle);
         }
+    }
+
+    public void limpiarFormulario(){
+        this.cliente = "";
+        this.idCliente = null;
+        this.serie = "";
+        this.numero = null;
+        this.gravada = null;
+        servicioDetallesComprobantes = new ArrayList<>();
+    }
+
+    public void eliminarItem(Integer idServicioComprobante){
+        Iterator<ServicioDetalle> iterator = servicioDetallesComprobantes.iterator();
+        while (iterator.hasNext()){
+            ServicioDetalle servicioDetalle = iterator.next();
+            if(servicioDetalle.getId().intValue() == idServicioComprobante.intValue()){
+                iterator.remove();
+                break;
+            }
+        }
+    }
+
+    public void guardarComprobante(){
+        if(esVistaValida()){
+
+        }
+    }
+
+    private boolean esVistaValida(){
+        boolean valido = true;
+        if(Utilitario.esNulo(this.serie)){
+            Utilitario.enviarMensajeGlobalError("Debe ingresar la serie del comprobante");
+            valido = false;
+        }else if(this.numero == null){
+            Utilitario.enviarMensajeGlobalError("Debe ingresar el numero del comprobante");
+            valido = false;
+        }else if(servicioDetallesComprobantes.isEmpty()){
+            Utilitario.enviarMensajeGlobalError("Debe seleccionar almenos una orden de servicio");
+            valido = false;
+        }
+        return valido;
+    }
+
+    private boolean esAgregadoValido(ServicioDetalle servicioDetalle, Integer idCliente, boolean gravado){
+        boolean valido = true;
+        if(servicioDetalle.getCliente().getIdCliente() != idCliente.intValue()){
+            Utilitario.enviarMensajeGlobalError("Esta seleccionando ordenes de servicio de otro cliente");
+            valido = false;
+        }else if(servicioDetalle.isGravada() != gravado){
+            Utilitario.enviarMensajeGlobalError("El tipo de afectacion escogido no es el mismo de los ya seleccionados");
+            valido = false;
+        }
+        return valido;
     }
 
     /* GETTERS AND SETTERS */
@@ -164,5 +223,13 @@ public class ComprobanteControlador implements Serializable {
 
     public void setServicioDetallesComprobantes(List<ServicioDetalle> servicioDetallesComprobantes) {
         this.servicioDetallesComprobantes = servicioDetallesComprobantes;
+    }
+
+    public Boolean getGravada() {
+        return gravada;
+    }
+
+    public void setGravada(Boolean gravada) {
+        this.gravada = gravada;
     }
 }
