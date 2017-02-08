@@ -9,12 +9,15 @@ import com.sgstt.util.Utilitario;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.sql.Types;
 import java.util.Date;
 import java.util.List;
 
 import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.metamodel.binding.HibernateTypeDescriptor;
 import org.hibernate.sql.JoinType;
+import org.hibernate.type.IntegerType;
 
 /**
  * @author Luis Alonso Ballena Garcia
@@ -123,7 +126,7 @@ public class ServicioDetalleImpl extends HibernateImpl<ServicioDetalle, Integer>
     @Override
     public void updateIdComprobante(List<Integer> idsServicios, Integer idComprobante) {
         SQLQuery query = conexion.getSession().createSQLQuery("update servicio_detalle set idcomprobante = :idComprobante where idservicio_detalle in (:dato)");
-        query.setInteger("idComprobante", idComprobante);
+        query.setParameter("idComprobante", idComprobante, IntegerType.INSTANCE);
         query.setParameterList("dato", idsServicios);
         query.executeUpdate();
     }

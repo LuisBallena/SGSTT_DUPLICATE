@@ -46,6 +46,7 @@ public class ComprobanteControlador implements Serializable {
     private Boolean gravada;
     private String tipoFileVTA;
     private HibernatePaginador<Comprobante> comprobantePaginador;
+    private Comprobante comprobante;
     @ManagedProperty("#{sesionControlador}")
     SesionControlador sesionControlador;
 
@@ -55,6 +56,7 @@ public class ComprobanteControlador implements Serializable {
 
     public void initLista() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
+            transporteServicio = new TransporteServicio();
             comprobantePaginador = new ComprobantePaginador();
             comprobantePaginador.initPaginador(sesionControlador.getUsuarioSesion().getSede().getId());
         }
@@ -174,6 +176,15 @@ public class ComprobanteControlador implements Serializable {
     public String irDetalle(Integer idComprobante){
         Utilitario.putFlash("idComprobante",idComprobante);
         return "detalle.xhtml?faces-redirect=true;";
+    }
+
+    public void eliminarComprobante(){
+        try{
+            transporteServicio.eliminarComprobante(comprobante);
+            Utilitario.enviarMensajeGlobalValido("Se ha eliminado correctamente");
+        }catch (TransporteException e){
+            Utilitario.enviarMensajeGlobalError(e.getMessage());
+        }
     }
 
     private boolean esVistaValida() {
@@ -343,5 +354,13 @@ public class ComprobanteControlador implements Serializable {
 
     public void setComprobantePaginador(HibernatePaginador<Comprobante> comprobantePaginador) {
         this.comprobantePaginador = comprobantePaginador;
+    }
+
+    public Comprobante getComprobante() {
+        return comprobante;
+    }
+
+    public void setComprobante(Comprobante comprobante) {
+        this.comprobante = comprobante;
     }
 }

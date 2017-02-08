@@ -40,6 +40,10 @@ public class Comprobante implements Serializable {
     @Column(name = "filovta", nullable = false)
     private Short fileVta;
 
+    @Enumerated(EnumType.ORDINAL)
+    @Column(nullable = false,insertable = false)
+    private Estado estado;
+
     public Comprobante() {
     }
 
@@ -105,5 +109,13 @@ public class Comprobante implements Serializable {
 
     public void setFileVta(Short fileVta) {
         this.fileVta = fileVta;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
 }

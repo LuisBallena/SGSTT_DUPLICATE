@@ -739,6 +739,7 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`comprobante` (
   `idcliente` INT NOT NULL ,
   `gravada` TINYINT(1) NOT NULL COMMENT '0 : no gravada , 1 : gravada',
   `filovta` TINYINT(1) NOT NULL COMMENT '0 : file, 1 : venta directa',
+  `estado` TINYINT(1) NOT NULL DEFAULT 1 ,
   PRIMARY KEY (`idcomprobante`) ,
   INDEX `index_serie` (`serie` ASC) ,
   INDEX `index_numero` (`numero` ASC) ,

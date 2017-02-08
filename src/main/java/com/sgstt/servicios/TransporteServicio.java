@@ -359,7 +359,7 @@ public class TransporteServicio implements Serializable {
     private void asignarServicioExterno(Chofer chofer, ServicioDetalle servicioDetalle) {
         if (chofer.getEmpresa().getId() != 1) {
             servicioDetalle.setExternalizado("SI");
-        }else{
+        } else {
             servicioDetalle.setExternalizado("NO");
         }
     }
@@ -376,12 +376,12 @@ public class TransporteServicio implements Serializable {
         return aux;
     }
 
-    public  List<ServicioDetalle> obtenerServicioDetalleCliente(ComprobanteFilter comprobanteFilter){
+    public List<ServicioDetalle> obtenerServicioDetalleCliente(ComprobanteFilter comprobanteFilter) {
         List<ServicioDetalle> servicioDetalles;
         Integer idFile = null;
         Integer idVenta = null;
-        if(comprobanteFilter.getFileVtaDTO() != null){
-            switch (comprobanteFilter.getFileVtaDTO().getTipo()){
+        if (comprobanteFilter.getFileVtaDTO() != null) {
+            switch (comprobanteFilter.getFileVtaDTO().getTipo()) {
                 case "F":
                     idFile = comprobanteFilter.getFileVtaDTO().getId();
                     break;
@@ -397,13 +397,13 @@ public class TransporteServicio implements Serializable {
         return servicioDetalles;
     }
 
-    public void guardarComprobante(Comprobante comprobante, List<ServicioDetalle> servicioDetalles, String tipoFileVTA) throws TransporteException{
+    public void guardarComprobante(Comprobante comprobante, List<ServicioDetalle> servicioDetalles, String tipoFileVTA) throws TransporteException {
         conexion.beginConexion();
-        try{
+        try {
             comprobanteDao.agregar(comprobante);
             List<Integer> idsServicioDetalle = convertIdsServicioDetalle(servicioDetalles);
-            servicioDetalleDao.updateIdComprobante(idsServicioDetalle,comprobante.getId());
-            switch (tipoFileVTA){
+            servicioDetalleDao.updateIdComprobante(idsServicioDetalle, comprobante.getId());
+            switch (tipoFileVTA) {
                 case "F":
                     cambiarEstadoFacturaFile(servicioDetalles);
                     break;
@@ -412,25 +412,25 @@ public class TransporteServicio implements Serializable {
                     break;
             }
             conexion.closeConexion();
-        }catch (HibernateException e){
+        } catch (HibernateException e) {
             conexion.rollBack();
             log.error("Ocurrio una excepcion a nivel de Hibernate : " + e.getMessage(), e);
             throw new TransporteException("Ocurrio un error al guardar en la base de datos");
-        }catch (Exception e){
+        } catch (Exception e) {
             conexion.rollBack();
             log.error("Ocurrio una excepcion general : " + e.getMessage(), e);
             throw new TransporteException("Ocurrio un error no identificado en el sistema");
         }
     }
 
-    public Comprobante obtenerComprobante(Integer idComprobante){
+    public Comprobante obtenerComprobante(Integer idComprobante) {
         conexion.beginConexion();
         Comprobante comprobante = comprobanteDao.obtenerEntidad(idComprobante);
         conexion.closeConexion();
         return comprobante;
     }
 
-    public List<ServicioDetalle> obtenerItemsComprobante(Integer idComprobante){
+    public List<ServicioDetalle> obtenerItemsComprobante(Integer idComprobante) {
         List<ServicioDetalle> servicioDetalles = new ArrayList<>();
         conexion.beginConexion();
         servicioDetalles = servicioDetalleDao.getServicioDetalleFilterByIdComprobante(idComprobante);
@@ -438,48 +438,87 @@ public class TransporteServicio implements Serializable {
         return servicioDetalles;
     }
 
-    public void eliminarComprobante(Comprobante comprobante){
-        List<ServicioDetalle> servicioDetalles = obtenerItemsComprobante(comprobante.getId());
-        List<Integer> idsServicioDetalle = convertIdsServicioDetalle(servicioDetalles);
-        servicioDetalleDao.updateIdComprobante(idsServicioDetalle,null);
-
+    public void eliminarComprobante(Comprobante comprobante) throws TransporteException {
+        conexion.beginConexion();
+        try {
+            comprobante.setEstado(Estado.ELIMINADO);
+            comprobanteDao.actualizar(comprobante);
+            List<ServicioDetalle> servicioDetalles = servicioDetalleDao.getServicioDetalleFilterByIdComprobante(comprobante.getId());
+            List<Integer> idsServicioDetalle = convertIdsServicioDetalle(servicioDetalles);
+            servicioDetalleDao.updateIdComprobante(idsServicioDetalle, null);
+            switch (comprobante.getFileVta()) {
+                case 0:
+                    cambiarEstadoFacturaFile(servicioDetalles, false);
+                    break;
+                case 1:
+                    cambiarEstadoFacturaVenta(servicioDetalles, false);
+                    break;
+            }
+            conexion.closeConexion();
+        } catch (HibernateException e) {
+            conexion.rollBack();
+            log.error("Ocurrio una excepcion a nivel de Hibernate : " + e.getMessage(), e);
+            throw new TransporteException("Ocurrio un error al eliminar en la base de datos");
+        } catch (Exception e) {
+            conexion.rollBack();
+            log.error("Ocurrio una excepcion general : " + e.getMessage(), e);
+            throw new TransporteException("Ocurrio un error no identificado en el sistema");
+        }
     }
 
-    private void cambiarEstadoFacturaFile(List<ServicioDetalle> servicioDetalles){
+    private void cambiarEstadoFacturaFile(List<ServicioDetalle> servicioDetalles) {
+        cambiarEstadoFacturaFile(servicioDetalles, null);
+    }
+
+    private void cambiarEstadoFacturaFile(List<ServicioDetalle> servicioDetalles, Boolean estadoFacturado) {
         List<Integer> idFiles = obtenerIdsFiles(servicioDetalles);
-        for(Integer idFile : idFiles){
-            boolean facturado = fileDao.isFacturadoFile(idFile);
+        for (Integer idFile : idFiles) {
+            boolean facturado;
+            if (estadoFacturado != null) {
+                facturado = estadoFacturado;
+            } else {
+                facturado = fileDao.isFacturadoFile(idFile);
+            }
             fileDao.changeStateFacturado(idFile, facturado ? EstadoFactura.FACTURADO.ordinal() : EstadoFactura.PENDIENTES_FACTURA.ordinal());
         }
     }
 
-    private void cambiarEstadoFacturaVenta(List<ServicioDetalle> servicioDetalles){
+    private void cambiarEstadoFacturaVenta(List<ServicioDetalle> servicioDetalles) {
+        cambiarEstadoFacturaVenta(servicioDetalles, null);
+    }
+
+    private void cambiarEstadoFacturaVenta(List<ServicioDetalle> servicioDetalles, Boolean estadoFacturado) {
         List<Integer> idsVTA = obtenerIdsVTA(servicioDetalles);
-        for(Integer idVTA : idsVTA){
-            boolean facturado = ventaDao.isFacturadoVTA(idVTA);
+        for (Integer idVTA : idsVTA) {
+            boolean facturado;
+            if (estadoFacturado != null) {
+                facturado = estadoFacturado;
+            } else {
+                facturado = ventaDao.isFacturadoVTA(idVTA);
+            }
             ventaDao.changeStateFacturado(idVTA, facturado ? EstadoFactura.FACTURADO.ordinal() : EstadoFactura.PENDIENTES_FACTURA.ordinal());
         }
     }
 
-    private List<Integer> convertIdsServicioDetalle(List<ServicioDetalle> servicioDetalles){
+    private List<Integer> convertIdsServicioDetalle(List<ServicioDetalle> servicioDetalles) {
         List<Integer> idsServicios = new ArrayList<>();
-        for(ServicioDetalle servicioDetalle : servicioDetalles){
+        for (ServicioDetalle servicioDetalle : servicioDetalles) {
             idsServicios.add(servicioDetalle.getId());
         }
         return idsServicios;
     }
 
-    private List<Integer> obtenerIdsFiles(List<ServicioDetalle> servicioDetalles){
+    private List<Integer> obtenerIdsFiles(List<ServicioDetalle> servicioDetalles) {
         Set<Integer> idFiles = new TreeSet<>();
-        for(ServicioDetalle servicioDetalle : servicioDetalles){
+        for (ServicioDetalle servicioDetalle : servicioDetalles) {
             idFiles.add(servicioDetalle.getFile().getIdFile());
         }
         return new ArrayList<>(idFiles);
     }
 
-    private List<Integer> obtenerIdsVTA(List<ServicioDetalle> servicioDetalles){
+    private List<Integer> obtenerIdsVTA(List<ServicioDetalle> servicioDetalles) {
         Set<Integer> idVTAs = new TreeSet<>();
-        for(ServicioDetalle servicioDetalle : servicioDetalles){
+        for (ServicioDetalle servicioDetalle : servicioDetalles) {
             idVTAs.add(servicioDetalle.getVenta().getId());
         }
         return new ArrayList<>(idVTAs);
