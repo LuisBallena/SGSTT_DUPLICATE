@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="comprobante_venta" pageWidth="620" pageHeight="700" columnWidth="600" leftMargin="0" rightMargin="20" topMargin="42" bottomMargin="20" uuid="61ec99cb-d6c8-4700-a209-1e1918af79fc">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="264"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="DataSet" uuid="32125806-36ef-4df1-af48-95c103449a4f">
+		<parameter name="IDCOMPROBANTE" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[select
+    detalle.fecha as fecha,
+    detalle.pax as pax,
+    detalle.fecha as hora,
+    service.descripcion,
+    detalle.num_personas,
+    service.descripcion,
+    vehi.descripcion as vehi_descrip,
+    detalle.precio_servicio,
+    detalle.descuento,
+    detalle.adicional,
+    detalle.dias_viaje,
+CONCAT(v.serie,'-',v.idventa) as nro_correlativo
+from
+    servicio_detalle as detalle
+ 	inner join
+    venta_directa as v on detalle.idventa = v.idventa
+        inner join
+    servicio as service on detalle.idservicio = service.idservicio
+        inner join
+    vehiculo as vehi on detalle.idvehiculo = vehi.idvehiculo
+        inner join
+    tipo_vehiculo as tipo_vehi on vehi.idtipo_vehiculo = tipo_vehi.idtipo_vehiculo
+where
+    detalle.idcomprobante = $P{IDCOMPROBANTE}
+order by detalle.fecha]]>
+		</queryString>
+		<field name="fecha" class="java.sql.Timestamp">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="pax" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="hora" class="java.sql.Timestamp"/>
+		<field name="descripcion" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="num_personas" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="vehi_descrip" class="java.lang.String"/>
+		<field name="precio_servicio" class="java.lang.Double">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="descuento" class="java.lang.Double">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="adicional" class="java.lang.Double">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="dias_viaje" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="nro_correlativo" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<variable name="precio_desc_adic" class="java.lang.Double">
+			<variableExpression><![CDATA[($F{precio_servicio}*($F{dias_viaje}==null || $F{dias_viaje} == 0 ? 1.0 :$F{dias_viaje}.doubleValue()))+$F{adicional}-$F{descuento}]]></variableExpression>
+		</variable>
+	</subDataset>
+	<subDataset name="DataCount" uuid="354b033a-fe87-4d14-b635-ea8a4c0a2d45">
+		<parameter name="IDCOMPROBANTE" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[select
+sum((detalle.precio_servicio*detalle.dias_viaje)-detalle.descuento + detalle.adicional) as preci_sin_igv
+
+from
+    servicio_detalle as detalle
+        inner join
+    servicio as service on detalle.idservicio = service.idservicio
+        inner join
+    vehiculo as vehi on detalle.idvehiculo = vehi.idvehiculo
+        inner join
+    tipo_vehiculo as tipo_vehi on vehi.idtipo_vehiculo = tipo_vehi.idtipo_vehiculo
+where
+    detalle.idcomprobante = $P{IDCOMPROBANTE}]]>
+		</queryString>
+		<field name="preci_sin_igv" class="java.lang.Double"/>
+		<variable name="igv" class="java.lang.Double">
+			<variableExpression><![CDATA[$F{preci_sin_igv}*0.18]]></variableExpression>
+		</variable>
+		<variable name="total_igv" class="java.lang.Double">
+			<variableExpression><![CDATA[$F{preci_sin_igv}+($F{preci_sin_igv}*0.18)]]></variableExpression>
+		</variable>
+	</subDataset>
+	<parameter name="IDCOMPROBANTE" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="GRAVADA" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SEDE" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select c.serie,c.numero,cliente.nombre,cliente.razonsocial,
+cliente.direccion,
+cliente.numerodocumento
+ from comprobante as c inner join cliente as cliente on  cliente.idcliente = c.idcliente
+where c.idcomprobante = $P{IDCOMPROBANTE}]]>
+	</queryString>
+	<field name="serie" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numero" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="razonsocial" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="direccion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numerodocumento" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="163" splitType="Stretch">
+			<staticText>
+				<reportElement x="79" y="146" width="301" height="17" uuid="34c5e434-4367-4858-9344-542fdf854840">
+					<printWhenExpression><![CDATA[$P{GRAVADA} == 1]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Verdana" size="10" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[SERVICIO DE TRASLADO]]></text>
+			</staticText>
+			<textField pattern="dd">
+				<reportElement x="411" y="81" width="20" height="14" uuid="58d2dd31-9451-4765-a423-638e25f6f11c"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Verdana"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="58" y="59" width="172" height="13" uuid="787eb672-c49e-4fca-bf76-b3dc12f02b98"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numerodocumento}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="36" y="81" width="349" height="14" uuid="5a521efa-7c6e-4637-88eb-7e66a56d3dfd"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Verdana"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{direccion}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="32" y="36" width="173" height="13" uuid="c82a7de3-b615-4edb-b66e-40bbab2c49d6"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Verdana"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="33" y="35" width="173" height="13" uuid="5472774e-527c-43da-8cfa-b8f00e00dc83"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Verdana"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{razonsocial}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM">
+				<reportElement x="476" y="81" width="71" height="14" uuid="5dd1e125-1dc5-4c9d-b31f-e1ac331326f9"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Verdana"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy">
+				<reportElement x="565" y="81" width="35" height="14" uuid="4c4b25a8-a492-4f4c-b3f9-c1045514dff4"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Verdana"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="79" y="146" width="468" height="17" uuid="3a68a114-e2a5-47de-a16d-96085f0ae240">
+					<printWhenExpression><![CDATA[$P{GRAVADA} == 0]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Verdana" size="10" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[SERVICIO DE TRANSPORTE TURISTICO (NUM.9 ART.33 D.LEG 1125)]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="258" splitType="Prevent">
+			<componentElement>
+				<reportElement key="table 2" x="1" y="0" width="579" height="238" uuid="fadae37d-887a-42a4-9b0b-84b65c99dcc0"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="DataSet" uuid="f4b8e96e-5751-4a39-aa7f-e9d0004d8971">
+						<datasetParameter name="IDCOMPROBANTE">
+							<datasetParameterExpression><![CDATA[$P{IDCOMPROBANTE}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="75" uuid="50c3ef8e-8157-4e02-9d92-0eb3c028be2c">
+						<jr:columnHeader height="16" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="75" height="16" uuid="022ce7d5-18bf-4581-8b53-449c1a81284a"/>
+								<textElement textAlignment="Center" verticalAlignment="Bottom">
+									<font fontName="Verdana" size="10" isUnderline="true"/>
+								</textElement>
+								<text><![CDATA[FECHA]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField pattern="dd-MMM">
+								<reportElement x="0" y="0" width="75" height="13" uuid="7ccc0029-7b46-4287-b716-e0c8da102e07"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="35" uuid="46ec0999-0a16-4019-afd3-3827fb02fc74">
+						<jr:columnHeader height="16" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="35" height="16" uuid="4a42ceaa-b9f1-4716-9520-85551f51838d"/>
+								<textElement textAlignment="Center" verticalAlignment="Bottom">
+									<font fontName="Verdana" size="10" isUnderline="true"/>
+								</textElement>
+								<text><![CDATA[Hora]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField pattern="HH:mm">
+								<reportElement x="0" y="0" width="35" height="13" uuid="aac7bdae-db48-47f1-b0a4-a6498459f3ca"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{hora}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="c3cfdf2f-e537-486c-9dac-2eec23fdbaf0">
+						<jr:columnHeader height="16" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="16" uuid="bc993283-2d02-41c6-bbad-58ca5362c576"/>
+								<textElement textAlignment="Center" verticalAlignment="Bottom">
+									<font fontName="Verdana" size="10" isUnderline="true"/>
+								</textElement>
+								<text><![CDATA[Pax]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="13" uuid="4aa08401-2c4d-453e-92ce-055383dc4545"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{pax}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="37" uuid="3366d36a-9f09-4dc6-8474-26c71f4b0eac">
+						<jr:columnHeader height="16" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="37" height="16" uuid="6d9b693a-978c-41e1-936d-02cddc325efe"/>
+								<textElement textAlignment="Center" verticalAlignment="Bottom">
+									<font fontName="Verdana" size="10" isUnderline="true"/>
+								</textElement>
+								<text><![CDATA[Nro.]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="37" height="13" uuid="8290623a-0bfd-4f6a-8316-27aa2898c548"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{num_personas}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="186" uuid="3ea45638-c1c8-4bf4-8071-e8b9b6ac2808">
+						<jr:columnHeader height="16" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="186" height="16" uuid="cf0e1e50-9e70-40ad-9006-5ebc48fa05e9"/>
+								<textElement textAlignment="Center" verticalAlignment="Bottom">
+									<font fontName="Verdana" size="10" isUnderline="true"/>
+								</textElement>
+								<text><![CDATA[Servicio]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="186" height="13" uuid="94231503-a654-4182-b409-287eb3774a84"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="56" uuid="7f24f7d2-a7c6-4955-81ab-e712a9d8e29b">
+						<jr:columnHeader height="16" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="56" height="16" uuid="95269806-f0e0-446f-9715-bfc4123d8209"/>
+								<textElement textAlignment="Center" verticalAlignment="Bottom">
+									<font fontName="Verdana" size="10" isUnderline="true"/>
+								</textElement>
+								<text><![CDATA[VTA]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="56" height="13" uuid="1a7a4b24-53ad-4c01-bcc0-34cf271a690d"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{nro_correlativo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="66" uuid="8f85b355-f1db-43fa-a0d9-7ea2420cd85a">
+						<jr:columnHeader height="16" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="66" height="16" uuid="9820fd3e-881c-4e77-82a7-3d29876fc7b7"/>
+								<textElement textAlignment="Center" verticalAlignment="Bottom">
+									<font fontName="Verdana" size="10" isUnderline="true"/>
+								</textElement>
+								<text><![CDATA[C.C]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="66" height="13" uuid="e29b6f1d-0c83-4802-9cd5-facbe5a5e797"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{vehi_descrip}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="49" uuid="9eb62575-c0a8-41ed-8021-86f299e5d9dd">
+						<jr:columnHeader height="16" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="49" height="16" uuid="0a487f2d-1cf1-4139-8324-55990a17a3e6"/>
+								<textElement textAlignment="Center" verticalAlignment="Bottom">
+									<font fontName="Verdana" size="10" isUnderline="true"/>
+								</textElement>
+								<text><![CDATA[US$]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="13" rowSpan="1">
+							<textField pattern="###0.00">
+								<reportElement x="0" y="0" width="49" height="13" uuid="d9afaa41-7eca-400a-b982-0dfe54495b6b"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{precio_desc_adic}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement x="203" y="243" width="41" height="14" uuid="f8b63713-c3f6-41e7-8441-97079ebc21c5"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Verdana"/>
+				</textElement>
+				<text><![CDATA[SEDE :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="244" y="243" width="141" height="14" uuid="a84c49f4-7d32-45c4-8e09-b097603b51b3"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Verdana"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{SEDE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="104" splitType="Stretch">
+			<componentElement>
+				<reportElement x="1" y="0" width="599" height="104" uuid="73323879-59a7-4b52-a911-995fcc74cdae"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="DataCount" uuid="54f3ee71-3dae-4529-86e5-f2bb2ef49511">
+						<datasetParameter name="IDCOMPROBANTE">
+							<datasetParameterExpression><![CDATA[$P{IDCOMPROBANTE}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:listContents height="104" width="599">
+						<textField pattern="###0.00">
+							<reportElement x="486" y="20" width="113" height="20" uuid="eadd9f5d-fee7-4e98-93b1-b4a9b8c636de"/>
+							<textElement textAlignment="Right" verticalAlignment="Bottom">
+								<font fontName="Verdana" isBold="false"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{preci_sin_igv}]]></textFieldExpression>
+						</textField>
+						<textField pattern="###0.00">
+							<reportElement x="511" y="40" width="88" height="20" uuid="10e1f746-0a87-49d0-94a9-85620445dfdb"/>
+							<textElement textAlignment="Right" verticalAlignment="Bottom">
+								<font fontName="Verdana" isBold="false"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{igv}]]></textFieldExpression>
+						</textField>
+						<textField pattern="###0.00">
+							<reportElement x="486" y="60" width="113" height="20" uuid="c4b1670a-ae2b-484f-9720-e85d1cfea17c"/>
+							<textElement textAlignment="Right" verticalAlignment="Bottom">
+								<font fontName="Verdana" isBold="false"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{total_igv}]]></textFieldExpression>
+						</textField>
+						<staticText>
+							<reportElement x="450" y="40" width="61" height="20" uuid="6a20eb0f-614f-4d47-82f3-8e50062cc519"/>
+							<textElement textAlignment="Center" verticalAlignment="Bottom">
+								<font fontName="Verdana"/>
+							</textElement>
+							<text><![CDATA[         18%]]></text>
+						</staticText>
+						<textField>
+							<reportElement x="0" y="0" width="486" height="20" uuid="5877d89e-e19a-4039-a66b-1c0f168fbc29"/>
+							<textElement verticalAlignment="Middle">
+								<font fontName="Verdana"/>
+							</textElement>
+							<textFieldExpression><![CDATA[com.sgstt.util.JavaNumber.convertDecimalToWord($V{total_igv})]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+	</summary>
+</jasperReport>

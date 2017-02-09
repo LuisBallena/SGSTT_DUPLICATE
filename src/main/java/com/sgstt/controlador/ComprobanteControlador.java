@@ -8,21 +8,30 @@ import com.sgstt.entidad.ServicioDetalle;
 import com.sgstt.excepciones.FilterException;
 import com.sgstt.excepciones.TransporteException;
 import com.sgstt.filters.ComprobanteFilter;
+import com.sgstt.hibernate.HibernateConexion;
 import com.sgstt.hibernate.HibernatePaginador;
 import com.sgstt.paginacion.ComprobantePaginador;
 import com.sgstt.servicios.FileServicio;
 import com.sgstt.servicios.TransporteServicio;
 import com.sgstt.util.Utilitario;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+import net.sf.jasperreports.export.SimpleXlsReportConfiguration;
+import org.apache.log4j.Logger;
+import org.hibernate.internal.SessionImpl;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by lballena on 19/01/2017.
@@ -31,6 +40,7 @@ import java.util.List;
 @ViewScoped
 public class ComprobanteControlador implements Serializable {
 
+    private static final Logger log = Logger.getLogger(ComprobanteControlador.class.getPackage().getName());
     private List<Cliente> clientes;
     private FileServicio fileServicio;
     private TransporteServicio transporteServicio;
@@ -73,7 +83,7 @@ public class ComprobanteControlador implements Serializable {
         }
     }
 
-    public void initDetalle(){
+    public void initDetalle() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
             Object value = Utilitario.getFlash("idComprobante");
             if (value == null) {
@@ -81,13 +91,13 @@ public class ComprobanteControlador implements Serializable {
                 return;
             }
             transporteServicio = new TransporteServicio();
-            Comprobante comprobante = transporteServicio.obtenerComprobante((Integer)value);
+            Comprobante comprobante = transporteServicio.obtenerComprobante((Integer) value);
             this.servicioDetallesComprobantes = transporteServicio.obtenerItemsComprobante(comprobante.getId());
             this.cliente = comprobante.getCliente().getNombreAuxiliar();
             this.serie = comprobante.getSerie();
             this.numero = comprobante.getNumero();
             this.gravada = comprobante.isGravada();
-            switch (comprobante.getFileVta()){
+            switch (comprobante.getFileVta()) {
                 case 0:
                     this.tipoFileVTA = "F";
                     break;
@@ -132,7 +142,7 @@ public class ComprobanteControlador implements Serializable {
             this.cliente = servicioDetalle.getCliente().getNombreAuxiliar();
             this.idCliente = servicioDetalle.getCliente().getIdCliente();
             this.gravada = servicioDetalle.isGravada();
-            this.tipoFileVTA = servicioDetalle.getFile() == null ? "V"  : "F";
+            this.tipoFileVTA = servicioDetalle.getFile() == null ? "V" : "F";
             servicioDetallesComprobantes.add(servicioDetalle);
         }
     }
@@ -160,31 +170,95 @@ public class ComprobanteControlador implements Serializable {
 
     public void guardarComprobante() {
         if (esVistaValida()) {
-            Comprobante comprobante = ensamblarComprobante(idCliente, serie, numero,gravada,tipoFileVTA,
+            Comprobante comprobante = ensamblarComprobante(idCliente, serie, numero, gravada, tipoFileVTA,
                     sesionControlador.getUsuarioSesion().getSede());
-            try{
+            try {
                 transporteServicio.guardarComprobante(comprobante, servicioDetallesComprobantes, tipoFileVTA);
                 limpiarServiciosBusqueda(this.servicioDetallesComprobantes);
                 limpiarFormulario();
                 Utilitario.enviarMensajeGlobalValido("Se ha registrado correctamente el comprobante");
-            }catch (TransporteException e){
+            } catch (TransporteException e) {
                 Utilitario.enviarMensajeGlobalError(e.getMessage());
             }
         }
     }
 
-    public String irDetalle(Integer idComprobante){
-        Utilitario.putFlash("idComprobante",idComprobante);
+    public String irDetalle(Integer idComprobante) {
+        Utilitario.putFlash("idComprobante", idComprobante);
         return "detalle.xhtml?faces-redirect=true;";
     }
 
-    public void eliminarComprobante(){
-        try{
+    public void eliminarComprobante() {
+        try {
             transporteServicio.eliminarComprobante(comprobante);
             Utilitario.enviarMensajeGlobalValido("Se ha eliminado correctamente");
-        }catch (TransporteException e){
+        } catch (TransporteException e) {
             Utilitario.enviarMensajeGlobalError(e.getMessage());
         }
+    }
+
+    public void exportarComprobante(Comprobante comprobante) {
+        switch (comprobante.getFileVta()){
+            case 0:
+                exportarFactura(comprobante.getId(), comprobante.isGravada() ? 1 : 0, sesionControlador.getUsuarioSesion().getSede().getDescripcion(), "comprobante", "comprobante_factura.jasper");
+                break;
+            case 1:
+                exportarFactura(comprobante.getId(), comprobante.isGravada() ? 1 : 0, sesionControlador.getUsuarioSesion().getSede().getDescripcion(), "comprobante", "comprobante_venta.jasper");
+                break;
+        }
+    }
+
+    private void exportarFactura(Integer idComprobante, Integer idGravada, String sede, String nombreArchivo , String reporte) {
+        /* tu lo modificias como quieras para que sea un codigo mas limpio :D */
+        String realPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
+        String rutaJasper = String.format("%sresources//reports//%s", realPath,reporte);
+        log.info("La ruta final es : " + rutaJasper);
+        Map map = new HashMap();
+        map.put("IDCOMPROBANTE", idComprobante);
+        map.put("GRAVADA", idGravada);
+        map.put("SEDE", sede);
+        JasperReport reporteJasper;
+        try {
+            reporteJasper = (JasperReport) JRLoader.loadObjectFromFile(rutaJasper);
+            HibernateConexion conexion = new HibernateConexion();
+            conexion.beginConexion();
+            JasperPrint jprint = JasperFillManager.fillReport(reporteJasper, map, ((SessionImpl) (conexion.getSession())).connection());
+            conexion.closeConexion();
+            JRXlsExporter xlsExporter = new JRXlsExporter();
+            xlsExporter.setExporterInput(new SimpleExporterInput(jprint));
+            FacesContext context = FacesContext.getCurrentInstance();
+            ExternalContext externalContext = context.getExternalContext();
+            externalContext = getResponseContentExcel(externalContext, nombreArchivo);
+            xlsExporter.setExporterOutput(new SimpleOutputStreamExporterOutput(externalContext.getResponseOutputStream()));
+            SimpleXlsReportConfiguration xlsReportConfiguration = new SimpleXlsReportConfiguration();
+            xlsReportConfiguration.setOnePagePerSheet(true);
+            xlsReportConfiguration.setRemoveEmptySpaceBetweenColumns(true);
+            xlsReportConfiguration.setRemoveEmptySpaceBetweenRows(false);
+            xlsReportConfiguration.setDetectCellType(false);
+            xlsReportConfiguration.setWhitePageBackground(true);
+            xlsReportConfiguration.setFontSizeFixEnabled(false);
+            xlsReportConfiguration.setImageBorderFixEnabled(false);
+            xlsReportConfiguration.setIgnoreGraphics(false);
+            xlsReportConfiguration.setCollapseRowSpan(false);
+            xlsReportConfiguration.setIgnoreCellBorder(false);
+            xlsReportConfiguration.setIgnoreCellBackground(false);
+            xlsExporter.setConfiguration(xlsReportConfiguration);
+            xlsExporter.exportReport();
+            externalContext.setResponseStatus(200);
+            externalContext.responseFlushBuffer();
+            context.responseComplete();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private ExternalContext getResponseContentExcel(ExternalContext externalContext, String nombreArchivo) {
+        externalContext.setResponseContentType("application/vnd.ms-excel");
+        externalContext.setResponseHeader("Expires", "0");
+        externalContext.setResponseHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+        externalContext.setResponseHeader("Pragma", "public");
+        externalContext.setResponseHeader("Content-Disposition", "attachment; filename=" + nombreArchivo + ".xls");
+        return externalContext;
     }
 
     private boolean esVistaValida() {
@@ -211,8 +285,8 @@ public class ComprobanteControlador implements Serializable {
         } else if (servicioDetalle.isGravada() != gravado) {
             Utilitario.enviarMensajeGlobalError("El tipo de afectacion escogido no es el mismo de los ya seleccionados");
             valido = false;
-        } else if(!tipo.equals(tipoFileVTA)){
-            Utilitario.enviarMensajeGlobalError(String.format("Debe escoger servicios del tipo '%s'",tipoFileVTA == "F" ? "File" : "VTA"));
+        } else if (!tipo.equals(tipoFileVTA)) {
+            Utilitario.enviarMensajeGlobalError(String.format("Debe escoger servicios del tipo '%s'", tipoFileVTA == "F" ? "File" : "VTA"));
             valido = false;
         }
         return valido;
@@ -229,7 +303,7 @@ public class ComprobanteControlador implements Serializable {
         comprobante.setSede(sede);
         comprobante.setFechaRegistro(new Date());
         comprobante.setGravada(gravada);
-        switch (tipoFileVta){
+        switch (tipoFileVta) {
             case "F":
                 short file = 0;
                 comprobante.setFileVta(file);
@@ -242,12 +316,12 @@ public class ComprobanteControlador implements Serializable {
         return comprobante;
     }
 
-    private void limpiarServiciosBusqueda(List<ServicioDetalle> servicioDetallesComprobantes){
-        Iterator<ServicioDetalle> iterator =  this.servicioDetalles.iterator();
-        while(iterator.hasNext()){
+    private void limpiarServiciosBusqueda(List<ServicioDetalle> servicioDetallesComprobantes) {
+        Iterator<ServicioDetalle> iterator = this.servicioDetalles.iterator();
+        while (iterator.hasNext()) {
             ServicioDetalle servicioDetalle = iterator.next();
-            for(ServicioDetalle item : servicioDetallesComprobantes){
-                if(servicioDetalle.getId().intValue() == item.getId().intValue()){
+            for (ServicioDetalle item : servicioDetallesComprobantes) {
+                if (servicioDetalle.getId().intValue() == item.getId().intValue()) {
                     iterator.remove();
                     break;
                 }

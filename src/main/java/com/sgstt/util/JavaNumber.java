@@ -52,7 +52,6 @@ public class JavaNumber {
     public static String convertDecimalToWord(Double number) {
         StringBuilder builder = new StringBuilder();
         String[] cadena = number.toString().split("\\.");
-        System.out.println(" " + number.toString());
         String entero = cadena[0];
         builder.append("SON: ");
         builder.append(convertNumberToWord(Integer.parseInt(entero)));
