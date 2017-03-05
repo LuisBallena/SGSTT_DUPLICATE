@@ -248,6 +248,27 @@
                                 </ul>
                             </li>
                         </c:if>
+                        
+                        <c:if test="#{sesionControlador.reporte != null}">
+                            <li id="nav-reporte">
+                                <a href="#"><i class="fa fa-file-excel-o"></i> Reportes<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <h:form styleClass="nav nav-second-level">
+                                        <c:forEach items="#{sesionControlador.reporte}" varStatus="indicePadre"
+                                                   var="item">
+                                            <li>
+                                                <a index="#{item.modulo.url}"
+                                                   jsf:action="#{sesionControlador.redireccionar(item)}"
+                                                   style="font-size: 13px;"
+                                                   class="#{item.modulo.id == sesionControlador.permisoModulo.modulo.id ? 'active' : ''}">
+                                                    <i class="fa glyphicon-minus"></i>  #{item.modulo.nombre}
+                                                </a>
+                                            </li>
+                                        </c:forEach>
+                                    </h:form>
+                                </ul>
+                            </li>
+                        </c:if>
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->

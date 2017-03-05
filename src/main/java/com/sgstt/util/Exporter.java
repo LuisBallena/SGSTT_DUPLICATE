@@ -8,4 +8,7 @@ package com.sgstt.util;
 public interface Exporter {
     public Object[] getDatos();
     public String[] getTitulos();
+     public Object[] getDatos2();
+    public String[] getTitulos2();
+
 }

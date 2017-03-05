@@ -12,7 +12,7 @@
     <ui:define name="content">
         <div class="row">
             <div class="col-lg-12">
-                <h3 class="page-header">Administrar Orden de Servicios</h3>
+                <h3 class="page-header">Obtener Reporte Contable</h3>
             </div>
             <div class="row">
                 <div class="col-lg-12">
@@ -270,28 +270,12 @@
                                                  paginator="true" rows="15" lazy="true" rowIndexVar="rowIndex"
                                                  paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {Exporters}">
                                         <f:facet name="{Exporters}">
-                                            <h:commandLink styleClass="btnExportarExcel" id="exporterright"
+                                            <h:commandLink styleClass="btnExportarExcelLeft" id="exporterleft"
                                                            actionListener="#{ordenServicioControlador.exportarData2}">
                                                 <h:graphicImage
                                                         url="#{facesContext.externalContext.contextName}/resources/images/xls.gif"/>
                                             </h:commandLink>
-                                            <h:commandLink styleClass="btnExportarExcelLeft" id="exporterleft"
-                                                           actionListener="#{ordenServicioControlador.exportarData}">
-                                                <h:graphicImage
-                                                        url="#{facesContext.externalContext.contextName}/resources/images/xls.gif"/>
-                                            </h:commandLink>
                                         </f:facet>
-                                        <p:column style="text-align: center;font-size: 13px;">
-                                            <f:facet name="header">
-                                                Asignar Chofer
-                                            </f:facet>
-                                            <p:commandButton style="font-size: 12px;" icon="icon-person-assigned"
-                                                             oncomplete="PF('dialogChoferVehiculo').show();"
-                                                             update=":dialogChoferVehiculo">
-                                                <f:setPropertyActionListener value="#{list}"
-                                                                             target="#{ordenServicioControlador.servicioDetalle}"/>
-                                            </p:commandButton>
-                                        </p:column>
                                         <p:column style="text-align: center;font-size: 13px;">
                                             <f:facet name="header">
                                                 Fecha
@@ -453,29 +437,7 @@
                                             </f:facet>
                                             <h:outputText
                                                     value="$#{list.precioServicioTotal eq null ? 'No Asignado' : list.precioServicioTotal}"/>
-                                        </p:column>
-                                        <p:column style="text-align: center;width: 8%;">
-                                            <f:facet name="header">
-                                                Operaciones
-                                            </f:facet>
-                                            <p:commandButton style="font-size: 12px;" icon="icon-update"
-                                                             rendered="#{sesionControlador.permisoModulo.actualizar eq true}"
-                                                             action="#{ordenServicioControlador.irActualizar(list.id)}">
-                                            </p:commandButton>
-                                            <p:commandButton title="Cotizacion por Item" style="font-size: 12px;"
-                                                             
-                                                             icon="icon-money"
-                                                             action="#{ordenServicioControlador.irCotizar}"
-                                                             update=":msg">
-                                                <f:setPropertyActionListener value="#{list}"
-                                                                             target="#{ordenServicioControlador.servicioDetalle}"/>
-                                            </p:commandButton>
-                                            <p:commandButton style="font-size: 12px;" icon="icon-delete"
-                                                             rendered="#{sesionControlador.permisoModulo.eliminar eq true}"
-                                                             actionListener="#{ordenServicioControlador.capturarServicioDetalle(list.id)}"
-                                                             oncomplete="PF('deleteperfil').show();">
-                                            </p:commandButton>
-                                        </p:column>
+                                        </p:column>                                      
                                     </p:dataTable>
                                 </h:form>
                             </div>

@@ -37,5 +37,6 @@
     <mapping class="com.sgstt.entidad.Venta" />
     <mapping class="com.sgstt.entidad.Sede" />
     <mapping class="com.sgstt.entidad.Comprobante" />
+    <mapping class="com.sgstt.entidad.EstadoFactura" />
   </session-factory>
 </hibernate-configuration>

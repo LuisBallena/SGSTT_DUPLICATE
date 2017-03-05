@@ -16,7 +16,7 @@ import org.apache.poi.util.IntegerField;
  *
  * @author user
  */
-public class ExcelExporter {
+public class ExcelExporter1 {
 
     private Workbook libro;
 
@@ -29,13 +29,13 @@ public class ExcelExporter {
     
     private List dataList;
 
-    public <T extends Exporter> ExcelExporter(Class<T> clase,List<T> dataList) {
+    public <T extends Exporter> ExcelExporter1(Class<T> clase,List<T> dataList) {
         Exporter exporter = null;
         try {
             exporter = clase.newInstance();
             this.libro = new HSSFWorkbook();
             this.hoja = libro.createSheet("Libro 1");
-            this.titulosCabecera = exporter.getTitulos();
+            this.titulosCabecera = exporter.getTitulos2();
             estiloTitulo = getEstiloTitulo();
             this.dataList = dataList;
         } catch (Exception e) {
@@ -71,7 +71,7 @@ public class ExcelExporter {
         Row fila = getNuevaFila();
         for (int i = 0; i < lista.size(); i++) {
             Exporter exporter = (Exporter) lista.get(i);
-            Object[] datos = exporter.getDatos();
+            Object[] datos = exporter.getDatos2();
             for (int j = 0; j < datos.length; j++) {
                 Object columna = datos[j];
                 crearCelda(fila, j, columna);
@@ -79,7 +79,8 @@ public class ExcelExporter {
             fila = getNuevaFila();
         }
     }
- 
+    
+
     private void crearCelda(Row filaEncabezado, int numeroCelda, Object valor) {
         final Cell celdaEncabezado = filaEncabezado.createCell(numeroCelda);
         if(valor instanceof String){

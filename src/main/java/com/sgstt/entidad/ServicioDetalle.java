@@ -161,7 +161,7 @@ public class ServicioDetalle implements Serializable, Exporter {
 
     @Override
     public Object[] getDatos() {
-        Object[] datos = new Object[21];
+        Object[] datos = new Object[24];
         datos[0] = "" + new SimpleDateFormat("dd/MM/yyyy").format(this.fecha);
         datos[1] = "" + new SimpleDateFormat("HH:mm").format(this.fecha);
         datos[2] = this.servicio.getDescripcion();
@@ -174,24 +174,85 @@ public class ServicioDetalle implements Serializable, Exporter {
         datos[9] = "" + this.getNroPersonas();
         datos[10] = this.trasladista == null ? "No Asignado" : this.trasladista.getDatosCompletos();
         datos[11] = this.vuelo == null ? "No aplica" : this.vuelo.getDescripcion();
-        datos[12] = this.estadoServicio.toString();
-        datos[13] = this.externalizado;
-        datos[14] = this.vehiculo == null ? "No Asignado" : this.vehiculo.getDescripcion();
-        datos[15] = this.vehiculo == null ? "No Asignado" : this.vehiculo.tipoVehiculo.getNombre();
-        datos[16] = this.chofer == null ? "No Asignado" : this.chofer.getDatosCompletos();
-        datos[17] = this.chofer == null ? "" : this.chofer.getEmpresa().getRazonSocial();
+        datos[12] = this.vuelo == null ? "No aplica" : this.vuelo.getOrigen();
+        datos[13] = this.estadoServicio.toString();
+        datos[14] = this.externalizado;
+        datos[15] = this.vehiculo == null ? "No Asignado" : this.vehiculo.getDescripcion();
+        datos[16] = this.vehiculo == null ? "No Asignado" : this.vehiculo.getDescripcion2();
+        datos[17] = this.vehiculo == null ? "No Asignado" : this.vehiculo.tipoVehiculo.getNombre();
+        datos[18] = this.chofer == null ? "No Asignado" : this.chofer.getDatosCompletos();
+        datos[19] = this.chofer == null ? "" : this.chofer.getEmpresa().getRazonSocial();
+        datos[20] = this.comentario;
         Double precioSinIgv = generarPrecioTotalSinIGV();
-        datos[18] = precioSinIgv ;
-        datos[19] = this.precioServicioIgv;
-        datos[20] = this.precioServicioTotal;
+        datos[21] = precioSinIgv ;
+        datos[22] = this.precioServicioIgv;
+        datos[23] = this.precioServicioTotal;
         return datos;
     }
 
     @Override
     public String[] getTitulos() {
-        return new String[]{"Fecha","Hora", "Servicio","Descripcion","Tipo de Servicio", "Horas de Servicio", "File/VTA", "PAX", "Cuenta", "Nro. Personas", "Trasladista", "Vuelo", "Estado Servicio", "Tercerizado", "Vehiculo", "Tipo Vehiculo","Chofer", "Transportista", "Precio Sin IGV", "IGV 18%", "Precio Total"};
+        return new String[]{"Fecha","Hora", "Servicio","Descripcion","Tipo de Servicio", "Horas de Servicio", "File/VTA", "PAX", "Cuenta", "Nro. Personas", "Trasladista", "Vuelo","Origen/Destino", "Estado Servicio", "Tercerizado", "Vehiculo","Nombre Vehiculo","Tipo Vehiculo","Chofer", "Transportista","Observacion","Precio Sin IGV", "IGV 18%", "Precio Total"};
+    }
+    
+    
+    @Override
+    public Object[] getDatos2() {
+        Object[] datos = new Object[43];
+        datos[0] = "05";
+        datos[1] = "120066";
+        datos[2] = this.cliente.getNumeroDocumento();
+        datos[3] = this.getDescripcion();
+        datos[4] = this.servicio.getTipoServicio().getDescripcion();
+        datos[5] = this.servicio.getHoras();
+        datos[6] = this.getFileAuxiliar();
+        datos[7] = this.file == null ? this.pax : this.file.getPax();
+        datos[8] = this.file == null ? this.cuenta : this.file.getCuenta();
+        datos[9] = "" + this.getNroPersonas();
+        datos[10] = this.trasladista == null ? "No Asignado" : this.trasladista.getDatosCompletos();
+        datos[11] = this.vuelo == null ? "No aplica" : this.vuelo.getDescripcion();
+        datos[12] = this.vuelo == null ? "No aplica" : this.vuelo.getOrigen();
+        datos[13] = this.estadoServicio.toString();
+        datos[14] = this.externalizado;
+        datos[15] = this.vehiculo == null ? "No Asignado" : this.vehiculo.getDescripcion();
+        datos[16] = this.vehiculo == null ? "No Asignado" : this.vehiculo.getDescripcion2();
+        datos[17] = this.vehiculo == null ? "No Asignado" : this.vehiculo.tipoVehiculo.getNombre();
+        datos[18] = this.chofer == null ? "No Asignado" : this.chofer.getDatosCompletos();
+        datos[19] = this.chofer == null ? "" : this.chofer.getEmpresa().getRazonSocial();
+        datos[20] = this.comentario;
+        Double precioSinIgv = generarPrecioTotalSinIGV();
+        datos[21] = precioSinIgv ;
+        datos[22] = this.precioServicioIgv;
+        datos[23] = this.precioServicioTotal;
+        datos[24] = this.precioServicioTotal;
+        datos[25] = this.precioServicioTotal;
+        datos[26] = this.precioServicioTotal;
+        datos[27] = this.precioServicioTotal;
+        datos[28] = this.precioServicioTotal;
+        datos[29] = this.precioServicioTotal;
+        datos[30] = this.precioServicioTotal;
+        datos[31] = this.precioServicioTotal;
+        datos[32] = this.precioServicioTotal;
+        datos[33] = this.precioServicioTotal;
+        datos[34] = this.precioServicioTotal;
+        datos[35] = this.precioServicioTotal;
+        datos[36] = this.precioServicioTotal;
+        datos[37] = this.precioServicioTotal;
+        datos[38] = this.precioServicioTotal;
+        datos[39]  = " ";;
+        datos[40]  = " ";
+        datos[41]  = " ";
+        datos[42] = " ";
+
+        return datos;
     }
 
+    @Override
+    public String[] getTitulos2() {
+       // return new String[]{"FechaDOS","Hora", "Servicio","Descripcion","Tipo de Servicio", "Horas de Servicio", "File/VTA", "PAX", "Cuenta", "Nro. Personas", "Trasladista", "Vuelo","Origen/Destino", "Estado Servicio", "Tercerizado", "Vehiculo","Nombre Vehiculo","Tipo Vehiculo","Chofer", "Transportista","Observacion","Precio Sin IGV", "IGV 18%", "Precio Total"};
+        return new String[]{"Sub Diario","Número de Comprobante","Fecha de Comprobante","Código de Moneda","Glosa Principal","Tipo de Cambio","Tipo de Conversión","Flag de Conversión de Moneda","Fecha Tipo de Cambio","Cuenta Contable","Código de Anexo","Código de Centro de Costo","Debe / Haber","Importe Original","Importe en Dólares","Importe en Soles","Tipo de Documento","Número de Documento","Fecha de Documento","Fecha de Vencimiento","Código de Area","Glosa Detalle","Código de Anexo Auxiliar","Medio de Pago","Tipo de Documento de Referencia","Número de Documento Referencia","Fecha Documento Referencia","Base Imponible Documento Referencia","IGV Documento Provisión","Tipo Referencia en estado MQ","Número Serie Caja Registradora","Fecha de Operación","Tipo de Tasa","Tasa Detracción/Percepción","Importe Base Detracción/Percepción Dólares","Importe Base Detracción/Percepción Soles","Tipo Cambio para 'F'","N° File Asignado","Ciudad de Destino","IGV por Servicio","Total importe por Servicio","importe de la Detracción"};
+    }
+    
     /* GETTERS AND SETTERS */
     public Integer getId() {
         return id;

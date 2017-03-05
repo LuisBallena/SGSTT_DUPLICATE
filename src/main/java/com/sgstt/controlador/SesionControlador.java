@@ -34,6 +34,7 @@ public class SesionControlador implements Serializable {
     private List<Permiso> bienes;
     private List<Permiso> clientes;
     private List<Permiso> contabilidad;
+    private List<Permiso> reporte;
     private Permiso permisoModulo;
     private NavegadorControlador navegadorControlador;
 
@@ -74,6 +75,10 @@ public class SesionControlador implements Serializable {
             if(ArrayUtils.contains(Modulo.IDS_MODULOS_CONTABILIDAD,permiso.getModulo().getId())){
                 contabilidad = (contabilidad == null ? new ArrayList<Permiso>() : contabilidad);
                 contabilidad.add(permiso);
+            }
+            if(ArrayUtils.contains(Modulo.IDS_MODULOS_REPORTE,permiso.getModulo().getId())){
+                reporte = (reporte == null ? new ArrayList<Permiso>() : reporte);
+                reporte.add(permiso);
             }
         }
     }
@@ -199,5 +204,13 @@ public class SesionControlador implements Serializable {
 
     public void setContabilidad(List<Permiso> contabilidad) {
         this.contabilidad = contabilidad;
+    }
+    
+     public List<Permiso> getReporte() {
+        return reporte;
+    }
+
+    public void stReporte(List<Permiso> reporte) {
+        this.reporte = reporte;
     }
 }
