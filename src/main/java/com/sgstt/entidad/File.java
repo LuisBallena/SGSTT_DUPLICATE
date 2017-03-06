@@ -54,7 +54,7 @@ public class File implements java.io.Serializable {
     
     @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false,insertable = false)
-    Estado estado;
+    private Estado estado;
 
 
     @Enumerated(EnumType.ORDINAL)

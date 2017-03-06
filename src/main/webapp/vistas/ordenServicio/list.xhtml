@@ -266,7 +266,7 @@
                                     <f:event type="preRenderView" listener="#{ordenServicioControlador.initLista}"/>
 
                                     <p:dataTable value="#{ordenServicioControlador.servicioDetallePaginador}" var="list"
-                                                 emptyMessage="No existen ordenes de servicios" style="width: 2000px;"
+                                                 emptyMessage="No existen ordenes de servicios" style="width: 2100px;"
                                                  paginator="true" rows="15" lazy="true" rowIndexVar="rowIndex"
                                                  paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {Exporters}">
                                         <f:facet name="{Exporters}">
@@ -343,6 +343,12 @@
                                                 Cuenta
                                             </f:facet>
                                             <h:outputText value="#{list.file.cuenta}#{list.cuenta}"/>
+                                        </p:column>
+                                        <p:column style="text-align: center;font-size: 13px;">
+                                            <f:facet name="header">
+                                                Facturado
+                                            </f:facet>
+                                            <h:outputText value="#{list.comprobante == null ? 'NO' : 'SI'}"/>
                                         </p:column>
                                         <p:column style="text-align: center;font-size: 13px;">
                                             <f:facet name="header">

@@ -130,7 +130,7 @@
                                 <f:event type="preRenderView" listener="#{fileControlador.initLista}"/>
 
                                 <p:dataTable value="#{fileControlador.filePaginador}" var="list"
-                                             emptyMessage="No existen registros de perfiles"
+                                             emptyMessage="No existen registros de files"
                                              paginator="true" rows="20" lazy="true"
                                              paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}">
 
@@ -158,6 +158,12 @@
                                             Cuenta
                                         </f:facet>
                                         <h:outputText value="#{list.cuenta}"/>
+                                    </p:column>
+                                    <p:column style="text-align: center;font-size: 15px;">
+                                        <f:facet name="header">
+                                            Estado Factura
+                                        </f:facet>
+                                        <h:outputText value="#{list.estadoFactura.getDescripcion()}"/>
                                     </p:column>
                                     <p:column style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">

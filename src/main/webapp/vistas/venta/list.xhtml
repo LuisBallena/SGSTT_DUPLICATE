@@ -127,6 +127,12 @@
                                     </p:column>
                                     <p:column style="text-align: center;font-size: 15px;">
                                         <f:facet name="header">
+                                            Estado Factura
+                                        </f:facet>
+                                        <h:outputText value="#{listVenta.estadoFactura.getDescripcion()}"/>
+                                    </p:column>
+                                    <p:column style="text-align: center;font-size: 15px;">
+                                        <f:facet name="header">
                                             Fecha Creación
                                         </f:facet>
                                         <h:outputText value="#{listVenta.fechaCreacion}">

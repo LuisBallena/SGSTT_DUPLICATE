@@ -18,4 +18,10 @@ public interface VentaDao extends GenericDao<Venta,Integer>{
 
     public void changeStateFacturado(Integer idVTA, Integer estadoFacturado);
 
+    public boolean existServicioDetalleFacturadoByVenta(Integer idVta);
+
+    public boolean existServicioDetalleByVenta(Integer idVta);
+
+    public void updateStateVenta(Integer estado, Integer idVta);
+
 }

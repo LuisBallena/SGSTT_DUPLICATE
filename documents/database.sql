@@ -449,6 +449,7 @@ CREATE  TABLE IF NOT EXISTS `sgstt`.`venta_directa` (
   `serie` VARCHAR(10) NOT NULL DEFAULT 'VTA' ,
   `fecha_creacion` DATETIME NOT NULL,
   `estado_factura` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '0 = Sin Facturar , 1 = Pendientes a Facturar , 2 = Facturado',
+  `estado` TINYINT(1) NOT NULL DEFAULT 1 ,
   PRIMARY KEY (`idventa`, `idcliente`) ,
   INDEX `fk_venta_directa_cliente1` (`idcliente` ASC) ,
   CONSTRAINT `fk_venta_directa_cliente1`

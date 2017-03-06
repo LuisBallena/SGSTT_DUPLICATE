@@ -17,4 +17,5 @@ public interface FileDao extends GenericDao<File,Integer>{
 
     public void changeStateFacturado(Integer idFile, Integer estadoFacturado);
 
+    public boolean existServicioDetalleFacturadoByFile(Integer idFile);
 }

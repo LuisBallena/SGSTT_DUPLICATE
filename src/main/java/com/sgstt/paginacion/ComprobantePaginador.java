@@ -13,7 +13,7 @@ public class ComprobantePaginador extends HibernateStringPaginador implements Se
 
     @Override
     protected String createFilter(Object... values) {
-        orderBy("comprobante.fechaRegistro desc");
-        return String.format("%s join fetch comprobante.cliente where comprobante.sede.id = %d and comprobante.estado = 1",super.createFilter(),values[0]);
+        orderBy("comprobante.fechaRegistro desc, comprobante.estado desc");
+        return String.format("%s join fetch comprobante.cliente where comprobante.sede.id = %d",super.createFilter(),values[0]);
     }
 }

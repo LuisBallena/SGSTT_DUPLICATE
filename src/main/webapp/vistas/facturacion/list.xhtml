@@ -62,15 +62,23 @@
                                         </f:facet>
                                         #{list.cliente.nombreAuxiliar}
                                     </p:column>
+                                    <p:column    style="text-align: center;font-size: 13px;">
+                                        <f:facet name="header">
+                                            Estado
+                                        </f:facet>
+                                        #{list.estado.getDescripcionComprobante()}
+                                    </p:column>
                                     <p:column  style="text-align: center;width: 18%;">
-                                        <p:commandButton  style="font-size: 12px;margin-right: 5px;" icon="icon-detail" action="#{comprobanteControlador.irDetalle(list.id)}"    >
-                                        </p:commandButton>
-                                        <p:commandButton rendered="#{sesionControlador.permisoModulo.eliminar eq true}"  style="font-size: 12px;margin-right: 5px;" icon="icon-delete" oncomplete="PF('deleteComprobante').show();"    >
-                                            <f:setPropertyActionListener value="#{list}" target="#{comprobanteControlador.comprobante}" />
-                                        </p:commandButton>
-                                        <p:commandButton style="font-size: 12px;" icon="icon-file" title="Generar Documento"
-                                                         ajax="false" actionListener="#{comprobanteControlador.exportarComprobante(list)}">
-                                        </p:commandButton>
+                                        <h:panelGroup rendered="#{list.estado.ordinal() == 1}">
+                                            <p:commandButton  style="font-size: 12px;margin-right: 5px;" icon="icon-detail" action="#{comprobanteControlador.irDetalle(list.id)}"    >
+                                            </p:commandButton>
+                                            <p:commandButton rendered="#{sesionControlador.permisoModulo.eliminar eq true}"  style="font-size: 12px;margin-right: 5px;" icon="icon-delete" oncomplete="PF('deleteComprobante').show();"    >
+                                                <f:setPropertyActionListener value="#{list}" target="#{comprobanteControlador.comprobante}" />
+                                            </p:commandButton>
+                                            <p:commandButton style="font-size: 12px;" icon="icon-file" title="Generar Documento"
+                                                             ajax="false" actionListener="#{comprobanteControlador.exportarComprobante(list)}">
+                                            </p:commandButton>
+                                        </h:panelGroup>
                                     </p:column>
                                 </p:dataTable>
                             </h:form>

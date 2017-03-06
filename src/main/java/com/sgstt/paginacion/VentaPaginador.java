@@ -19,7 +19,7 @@ public class VentaPaginador extends HibernateStringPaginador implements Serializ
 
     @Override
     protected String createFilter() {
-        return String.format("%s join fetch venta.cliente",super.createFilter());
+        return String.format("%s join fetch venta.cliente where venta.estado = 1",super.createFilter());
     }
 
     @Override
@@ -35,7 +35,7 @@ public class VentaPaginador extends HibernateStringPaginador implements Serializ
                         Utilitario.convertirFormatoFecha(ventaFilter.getFechaHasta(), Utilitario.FORMATO_SQL_DATE) + " 23:59:59"));
             }
             if(!builder.toString().trim().isEmpty()){
-                queryDynamicCriteria = builder.toString().trim().replaceFirst("and","where");
+                queryDynamicCriteria = builder.toString();
 
             }else{
                 queryDynamicCriteria = "";

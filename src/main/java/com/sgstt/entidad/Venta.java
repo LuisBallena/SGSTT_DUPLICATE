@@ -34,6 +34,10 @@ public class Venta implements Serializable{
     @Column(nullable = false,insertable = false, name = "estado_factura")
     private EstadoFactura estadoFactura;
 
+    @Enumerated(EnumType.ORDINAL)
+    @Column(nullable = false,insertable = false)
+    private Estado estado;
+
     public Venta() {
     }
 
@@ -75,5 +79,13 @@ public class Venta implements Serializable{
 
     public void setEstadoFactura(EstadoFactura estadoFactura) {
         this.estadoFactura = estadoFactura;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
 }

@@ -30,7 +30,7 @@ public class FileImpl extends HibernateImpl<File, Integer> implements FileDao, S
     public List<FileVtaDTO> getFilesByIdCliente(Integer idCliente) {
         List<FileVtaDTO> fileVtaDTOs = null;
         try {
-            Query query = conexion.getSession().createQuery("select new com.sgstt.dto.FileVtaDTO('F',f.nroCorrelativo,f.id) from File as f where f.cliente.id = :idCliente and f.estadoFactura != 2");
+            Query query = conexion.getSession().createQuery("select new com.sgstt.dto.FileVtaDTO('F',f.nroCorrelativo,f.id) from File as f where f.cliente.id = :idCliente and f.estadoFactura != 2 and f.estado = 1 order by f.nroCorrelativo");
             query.setInteger("idCliente", idCliente);
             fileVtaDTOs = query.list();
         } catch (HibernateException e) {
@@ -43,7 +43,7 @@ public class FileImpl extends HibernateImpl<File, Integer> implements FileDao, S
     public boolean isFacturadoFile(Integer idFile) {
         boolean facturado = false;
         Query query = conexion.getSession().createSQLQuery("SELECT COUNT(f.idFile) FROM FILE AS f INNER JOIN servicio_detalle AS s ON s.idfile = f.idfile " +
-                "WHERE f.idFile = :idFile AND idcomprobante IS NULL");
+                "WHERE f.idFile = :idFile AND idcomprobante IS NULL and s.estado = 1");
         query.setInteger("idFile", idFile);
         BigInteger total = ((BigInteger) query.uniqueResult());
         if (total != null && total == BigInteger.ZERO) {
@@ -58,6 +58,19 @@ public class FileImpl extends HibernateImpl<File, Integer> implements FileDao, S
         query.setInteger("estado", estadoFacturado);
         query.setInteger("dato", idFile);
         query.executeUpdate();
+    }
+
+    @Override
+    public boolean existServicioDetalleFacturadoByFile(Integer idFile) {
+        boolean facturado = true;
+        Query query = conexion.getSession().createSQLQuery("SELECT COUNT(f.idFile) FROM FILE AS f INNER JOIN servicio_detalle AS s ON s.idfile = f.idfile " +
+                "WHERE f.idFile = :idFile AND idcomprobante IS NOT NULL and s.estado = 1");
+        query.setInteger("idFile", idFile);
+        BigInteger total = ((BigInteger) query.uniqueResult());
+        if (total != null && total == BigInteger.ZERO) {
+            facturado = false;
+        }
+        return facturado;
     }
 
 }

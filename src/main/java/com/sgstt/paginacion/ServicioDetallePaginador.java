@@ -26,7 +26,7 @@ public class ServicioDetallePaginador extends HibernateStringPaginador implement
     @Override
     protected String createFilter(Object... values) {
         orderBy("serviciodetalle.fecha ASC");
-        return String.format("%s left join fetch serviciodetalle.vehiculo.tipoVehiculo left join fetch serviciodetalle.venta.cliente where serviciodetalle.estado = 1 and serviciodetalle.servicio.sede.id = %d", super.createFilter(), ((ServicioDetalleFilter) values[0]).getIdSede());
+        return String.format("%s left join fetch serviciodetalle.vehiculo.tipoVehiculo left join fetch serviciodetalle.venta.cliente left join fetch serviciodetalle.comprobante where serviciodetalle.estado = 1 and serviciodetalle.servicio.sede.id = %d", super.createFilter(), ((ServicioDetalleFilter) values[0]).getIdSede());
     }
 
     @Override
@@ -43,11 +43,12 @@ public class ServicioDetallePaginador extends HibernateStringPaginador implement
             builder.append(filter.getCliente() != null ? String.format("and serviciodetalle.idcliente = %d", filter.getCliente().getIdCliente()) : "");
             if (!filter.getTipoOrden().equals("none")) {
                 builder.append(ensamblarQueryTipoOrden(filter));
+                builder.append(ensamblarQuerySerie(filter));
             }
             if (filter.getServicioExterno() != -1) {
                 builder.append(String.format("and serviciodetalle.externalizado = '%s'", filter.getServicioExterno() == 1 ? "SI" : "NO"));
             }
-            if(!Utilitario.esNulo(filter.getPax())){
+            if (!Utilitario.esNulo(filter.getPax())) {
                 builder.append(ensamblarQueryPAX(filter));
             }
             builder.append(filter.getEstadoServicio() != null && !filter.getEstadoServicio().trim().isEmpty() ? String.format("and serviciodetalle.estadoServicio = '%s'", filter.getEstadoServicio()) : "");
@@ -62,6 +63,19 @@ public class ServicioDetallePaginador extends HibernateStringPaginador implement
     }
 
     private String ensamblarQueryTipoOrden(ServicioDetalleFilter servicioDetalleFilter) {
+        String subQuery = "";
+        switch (servicioDetalleFilter.getTipoOrden()) {
+            case "F":
+                subQuery = String.format("and serviciodetalle.venta.id is null ");
+                break;
+            case "V":
+                subQuery = String.format("and serviciodetalle.file.idFile is null ");
+                break;
+        }
+        return subQuery;
+    }
+
+    private String ensamblarQuerySerie(ServicioDetalleFilter servicioDetalleFilter) {
         String subQuery = "";
         if (!Utilitario.esNulo(servicioDetalleFilter.getSerie())) {
             switch (servicioDetalleFilter.getTipoOrden()) {

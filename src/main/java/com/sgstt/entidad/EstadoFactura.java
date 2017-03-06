@@ -5,4 +5,21 @@ package com.sgstt.entidad;
  */
 public enum EstadoFactura {
     SIN_FACTURAR,PENDIENTES_FACTURA,FACTURADO;
+
+    public String getDescripcion(){
+        String descripcion = "";
+        switch (this){
+            case SIN_FACTURAR:
+                descripcion = "Sin Facturar";
+                break;
+            case PENDIENTES_FACTURA:
+                descripcion = "Pendiente";
+                break;
+            case FACTURADO:
+                descripcion = "Facturado";
+                break;
+        }
+        return descripcion;
+    }
+
 }

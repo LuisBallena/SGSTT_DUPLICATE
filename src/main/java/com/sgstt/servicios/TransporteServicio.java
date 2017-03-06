@@ -218,6 +218,14 @@ public class TransporteServicio implements Serializable {
         servicioDetalle.setEstado(Estado.ELIMINADO);
         servicioDetalleDao.actualizar(servicioDetalle);
         conexion.closeConexion();
+        conexion.beginConexion();
+        if(servicioDetalle.getVenta() != null){
+            boolean existeServicios = ventaDao.existServicioDetalleByVenta(servicioDetalle.getVenta().getId());
+            if(!existeServicios){
+                ventaDao.updateStateVenta(Estado.ELIMINADO.ordinal(),servicioDetalle.getVenta().getId());
+            }
+        }
+        conexion.closeConexion();
         Utilitario.enviarMensajeGlobalValido("Se ha eliminado correctamente");
     }
 
@@ -448,10 +456,10 @@ public class TransporteServicio implements Serializable {
             servicioDetalleDao.updateIdComprobante(idsServicioDetalle, null);
             switch (comprobante.getFileVta()) {
                 case 0:
-                    cambiarEstadoFacturaFile(servicioDetalles, false);
+                    cambiarEstadoEliminadoFacturaFile(servicioDetalles);
                     break;
                 case 1:
-                    cambiarEstadoFacturaVenta(servicioDetalles, false);
+                    cambiarEstadoEliminadoFacturaVenta(servicioDetalles);
                     break;
             }
             conexion.closeConexion();
@@ -483,6 +491,14 @@ public class TransporteServicio implements Serializable {
         }
     }
 
+    private void cambiarEstadoEliminadoFacturaFile(List<ServicioDetalle> servicioDetalles) {
+        List<Integer> idFiles = obtenerIdsFiles(servicioDetalles);
+        for (Integer idFile : idFiles) {
+            boolean facturado = fileDao.existServicioDetalleFacturadoByFile(idFile);
+            fileDao.changeStateFacturado(idFile, facturado ? EstadoFactura.PENDIENTES_FACTURA.ordinal() : EstadoFactura.SIN_FACTURAR.ordinal());
+        }
+    }
+
     private void cambiarEstadoFacturaVenta(List<ServicioDetalle> servicioDetalles) {
         cambiarEstadoFacturaVenta(servicioDetalles, null);
     }
@@ -497,6 +513,14 @@ public class TransporteServicio implements Serializable {
                 facturado = ventaDao.isFacturadoVTA(idVTA);
             }
             ventaDao.changeStateFacturado(idVTA, facturado ? EstadoFactura.FACTURADO.ordinal() : EstadoFactura.PENDIENTES_FACTURA.ordinal());
+        }
+    }
+
+    private void cambiarEstadoEliminadoFacturaVenta(List<ServicioDetalle> servicioDetalles) {
+        List<Integer> idsVTA = obtenerIdsVTA(servicioDetalles);
+        for (Integer idVTA : idsVTA) {
+            boolean facturado = facturado = ventaDao.existServicioDetalleFacturadoByVenta(idVTA);
+            ventaDao.changeStateFacturado(idVTA, facturado ? EstadoFactura.PENDIENTES_FACTURA.ordinal() : EstadoFactura.SIN_FACTURAR.ordinal());
         }
     }
 
