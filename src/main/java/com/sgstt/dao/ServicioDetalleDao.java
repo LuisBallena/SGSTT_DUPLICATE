@@ -18,7 +18,7 @@ public interface ServicioDetalleDao extends GenericDao<ServicioDetalle,Integer>{
     
     public void deleteServiciosDetallesByFile(Integer idFile);
 
-    public List<ServicioDetalle> getServicioDetalleFilterByCliente(Integer idCliente, Integer idFile, Integer idVenta , boolean gravada);
+    public List<ServicioDetalle> getServicioDetalleFilterByCliente(Integer idCliente, Integer idFile, Integer idVenta , boolean gravada, Date fechaDesde, Date fechaHasta);
 
     public void updateIdComprobante(List<Integer> idsServicios, Integer idComprobante);
 

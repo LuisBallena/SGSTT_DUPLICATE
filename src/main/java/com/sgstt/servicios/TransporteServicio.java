@@ -400,7 +400,7 @@ public class TransporteServicio implements Serializable {
         }
         conexion.beginConexion();
         servicioDetalles = servicioDetalleDao.getServicioDetalleFilterByCliente(comprobanteFilter.getCliente().getIdCliente(),
-                idFile, idVenta, comprobanteFilter.getGravada() == 0 ? false : true);
+                idFile, idVenta, comprobanteFilter.getGravada() == 0 ? false : true,comprobanteFilter.getFechaDesde(),comprobanteFilter.getFechaHasta());
         conexion.closeConexion();
         return servicioDetalles;
     }

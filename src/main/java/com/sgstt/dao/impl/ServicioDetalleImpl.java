@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.*;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.metamodel.binding.HibernateTypeDescriptor;
 import org.hibernate.sql.JoinType;
@@ -99,7 +100,7 @@ public class ServicioDetalleImpl extends HibernateImpl<ServicioDetalle, Integer>
     }
 
     @Override
-    public List<ServicioDetalle> getServicioDetalleFilterByCliente(Integer idCliente, Integer idFile, Integer idVenta, boolean gravada) {
+    public List<ServicioDetalle> getServicioDetalleFilterByCliente(Integer idCliente, Integer idFile, Integer idVenta, boolean gravada, Date fechaDesde, Date fechaHasta) {
         List<ServicioDetalle> servicioDetalles = null;
         try {
             Criteria criteria = conexion.getSession().createCriteria(ServicioDetalle.class, "st");
@@ -116,6 +117,14 @@ public class ServicioDetalleImpl extends HibernateImpl<ServicioDetalle, Integer>
             if (idVenta != null && idVenta > 0) {
                 criteria.add(Restrictions.eq("st.venta.id", idVenta));
             }
+            if(fechaDesde != null){
+                criteria.add(Restrictions.ge("st.fecha",fechaDesde));
+            }
+            if(fechaHasta != null){
+                fechaHasta = Utilitario.definirHoraMinutoSegundo(fechaHasta,23,59,59);
+                criteria.add(Restrictions.le("st.fecha", fechaHasta));
+            }
+            criteria.addOrder(Order.asc("st.file.nroCorrelativo"));
             servicioDetalles = criteria.list();
         } catch (HibernateException e) {
             e.printStackTrace();

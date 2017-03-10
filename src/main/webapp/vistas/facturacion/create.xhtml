@@ -209,6 +209,35 @@
                                                             </h:selectOneMenu>
                                                         </div>
                                                     </div>
+                                                    <div class="form-group has-feedback">
+                                                        <label class="col-md-2 control-label">Fecha Ejec. Desde :</label>
+
+                                                        <div class="col-sm-4 col-md-3">
+                                                            <p:calendar styleClass="bootstrap-calendar" readonlyInput="true"
+                                                                        locale="es"
+                                                                        id="filtroDesde"
+                                                                        pattern="dd/MM/yyyy"
+                                                                        value="#{comprobanteControlador.comprobanteFilter.fechaDesde}"
+                                                                        showOn="button"
+                                                                        maxdate="#{comprobanteControlador.comprobanteFilter.fechaHasta}">
+                                                                <p:ajax event="dateSelect" update="filtroHasta"/>
+                                                            </p:calendar>
+                                                        </div>
+
+                                                        <label class="col-md-2 control-label">Fecha Ejec. Hasta :</label>
+
+                                                        <div class="col-sm-4 col-md-3">
+                                                            <p:calendar styleClass="bootstrap-calendar" readonlyInput="true"
+                                                                        locale="es"
+                                                                        id="filtroHasta"
+                                                                        pattern="dd/MM/yyyy"
+                                                                        value="#{comprobanteControlador.comprobanteFilter.fechaHasta}"
+                                                                        showOn="button"
+                                                                        mindate="#{comprobanteControlador.comprobanteFilter.fechaDesde}" >
+                                                                <p:ajax event="dateSelect" update="filtroDesde"/>
+                                                            </p:calendar>
+                                                        </div>
+                                                    </div>
                                                     <div class="col-sm-3 control-label">
                                                         <p:commandButton value="Buscar"
                                                                          actionListener="#{comprobanteControlador.ejecutarBusquedaCreate}"
@@ -373,6 +402,7 @@
                 </p:dataTable>
             </h:form>
         </p:dialog>
+        <h:outputScript name="js/calendar.js" />
         <h:outputScript name="js/collapse_panel.js"/>
         <script type="text/javascript">
             jQuery(function ($) {

@@ -28,7 +28,7 @@ public class VueloImpl extends HibernateImpl<Vuelo,Integer> implements VueloDao,
         List<Vuelo> vuelos = null;
         try{
             Session session = conexion.getSession();
-            Query query = session.createQuery("from Vuelo as vuelo join fetch vuelo.aerolinea where vuelo.sede.id = :sede");
+            Query query = session.createQuery("from Vuelo as vuelo join fetch vuelo.aerolinea where vuelo.sede.id = :sede order by vuelo.descripcion");
             query.setInteger("sede",idSede);
             vuelos = query.list();
         }catch(HibernateException e){

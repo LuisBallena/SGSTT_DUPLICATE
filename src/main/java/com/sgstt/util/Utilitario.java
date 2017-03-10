@@ -186,6 +186,15 @@ public class Utilitario {
         return calendar.getTime();
     }
 
+    public static Date definirHoraMinutoSegundo(Date fechaActual, int hora, int minuto, int segundo) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fechaActual);
+        calendar.set(Calendar.HOUR_OF_DAY, (hora));
+        calendar.set(Calendar.MINUTE, (minuto));
+        calendar.set(Calendar.SECOND, (segundo));
+        return calendar.getTime();
+    }
+
     public static String convertirFormatoFecha(Date date, String formato) {
 
         DateFormat dateFormat = new SimpleDateFormat(formato);
