@@ -5,10 +5,11 @@ import com.sgstt.util.Utilitario;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.primefaces.model.SortOrder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Luis Alonso Ballena Garcia
@@ -17,9 +18,9 @@ public class HibernateStringPaginador<T> extends HibernatePaginador<T> {
 
     private static final long serialVersionUID = 181579326202394336L;
 
-    private static final Logger log = Logger.getLogger(HibernateStringPaginador.class.getPackage().getName());
+    private static Logger log = LoggerFactory.getLogger(HibernateStringPaginador.class);
 
-    private String queryCriteria = null;
+    protected String queryCriteria = null;
 
     protected String queryDynamicCriteria = "";
 
@@ -138,7 +139,7 @@ public class HibernateStringPaginador<T> extends HibernatePaginador<T> {
         return query.list();
     }
 
-    private void cloneQuery() {
+    protected void cloneQuery() {
         StringBuilder builder = new StringBuilder();
         builder.append("select count(*) ");
         builder.append(queryCriteria.replaceFirst("select", "").replaceAll("fetch", "").trim());

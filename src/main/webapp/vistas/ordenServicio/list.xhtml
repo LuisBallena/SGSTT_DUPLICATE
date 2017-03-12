@@ -34,7 +34,7 @@
                                     <h:panelGroup rendered="#{sesionControlador.permisoModulo.crear eq true}">
                                         <p:commandButton value="Nueva Orden VTA" styleClass="btn btn-primary"
                                                          onclick="PF('dialogClient').show();"
-                                                />
+                                        />
                                     </h:panelGroup>
 
                                 </div>
@@ -152,7 +152,8 @@
                                                 <div class="col-md-3">
                                                     <h:selectOneMenu id="comboOrden" styleClass="form-control"
                                                                      value="#{ordenServicioControlador.servicioDetalleFilter.tipoOrden}">
-                                                        <f:ajax render="inputSerie inputPAX" event="change" listener="#{ordenServicioControlador.limpiarSeriePAX}"/>
+                                                        <f:ajax render="inputSerie inputPAX" event="change"
+                                                                listener="#{ordenServicioControlador.limpiarSeriePAX}"/>
                                                         <f:selectItem itemLabel="Todos" noSelectionOption="true"
                                                                       itemValue="none"/>
                                                         <f:selectItem itemLabel="File"
@@ -184,6 +185,17 @@
                                                             </h:inputText>
                                                         </h:panelGroup>
                                                     </h:panelGroup>
+                                                </div>
+                                                <label class="col-md-2 control-label">Estado Factura :</label>
+                                                <div class="col-md-3">
+
+                                                    <h:selectOneMenu styleClass="form-control"
+                                                                 value="#{ordenServicioControlador.servicioDetalleFilter.facturado}">
+                                                        <f:selectItem itemLabel="Todos" itemValue="#{0}" />
+                                                        <f:selectItem itemLabel="No Facturado" itemValue="#{1}" />
+                                                        <f:selectItem itemLabel="Facturado" itemValue="#{2}" />
+                                                    </h:selectOneMenu>
+
                                                 </div>
                                             </div>
                                             <div class="form-group has-feedback">
@@ -402,7 +414,7 @@
                                                 Tipo Vehiculo
                                             </f:facet>
                                             <h:outputText
-                                                value="#{list.vehiculo eq null ? 'No Asignado' : list.vehiculo.tipoVehiculo.nombre}"/>
+                                                    value="#{list.vehiculo eq null ? 'No Asignado' : list.vehiculo.tipoVehiculo.nombre}"/>
                                         </p:column>
                                         <p:column style="text-align: center;font-size: 11px;">
                                             <f:facet name="header">
@@ -418,12 +430,12 @@
                                             <h:outputText
                                                     value="#{list.chofer eq null ? 'No Asignado' : list.chofer.empresa.razonSocial}"/>
                                         </p:column>
-                                          <p:column style="text-align: center;font-size: 11px;">
+                                        <p:column style="text-align: center;font-size: 11px;">
                                             <f:facet name="header">
                                                 Observacion
                                             </f:facet>
                                             <h:outputText
-                                                value="#{list.chofer eq null ? 'Sin Comentarios' : list.comentario}"/>
+                                                    value="#{list.chofer eq null ? 'Sin Comentarios' : list.comentario}"/>
                                         </p:column>
                                         <p:column style="text-align: center;font-size: 13px;">
                                             <f:facet name="header">
@@ -469,7 +481,7 @@
                                                              action="#{ordenServicioControlador.irActualizar(list.id)}">
                                             </p:commandButton>
                                             <p:commandButton title="Cotizacion por Item" style="font-size: 12px;"
-                                                             
+
                                                              icon="icon-money"
                                                              action="#{ordenServicioControlador.irCotizar}"
                                                              update=":msg">
@@ -493,10 +505,10 @@
         </div>
         <p:dialog modal="true" position="center top" widgetVar="deleteperfil" resizable="false" showEffect="fade">
             <h:form>
-                <div id="row" style="font-weight: bold;font-size: 14px;">
+                <div class="row" style="font-weight: bold;font-size: 14px;">
                     ¿Desea Eliminar el Servicio ?
                 </div>
-                <div id="row">
+                <div class="row">
                     <div class="col-lg-6">
                         <p:commandButton actionListener="#{ordenServicioControlador.eliminarDetalle}"
                                          update=":formperfil :msg" value="Si" oncomplete="PF('deleteperfil').hide();">
@@ -520,7 +532,8 @@
                              emptyMessage="No existen registros de clientes"
                              paginator="true" rows="10"
                              paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}">
-                    <p:column style="text-align: center;font-size: 13px;" filterStyle="width: 150px;" filterBy="#{listCliente.nombreAuxiliar}" filterMatchMode="startsWith" >
+                    <p:column style="text-align: center;font-size: 13px;" filterStyle="width: 150px;"
+                              filterBy="#{listCliente.nombreAuxiliar}" filterMatchMode="startsWith">
                         <f:facet name="header">
                             Cliente
                         </f:facet>
@@ -528,15 +541,17 @@
 
                         </h:outputText>
                     </p:column>
-                    <p:column style="text-align: center;font-size: 13px;" filterBy="#{listCliente.tipoCliente.tipoCliente}" filterMatchMode="exact"  >
+                    <p:column style="text-align: center;font-size: 13px;"
+                              filterBy="#{listCliente.tipoCliente.tipoCliente}" filterMatchMode="exact">
                         <f:facet name="header">
                             Tipo Cliente
                         </f:facet>
                         <f:facet name="filter">
-                            <p:selectOneMenu panelStyleClass="Sgstt_OneMenu" onchange="PF('tableCliente').filter()" style="width: 150px;font-size: 13px;" >
-                                <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
-                                <f:selectItem itemLabel="Jurídico" itemValue="JURIDICO"  />
-                                <f:selectItem itemLabel="Natural" itemValue="NATURAL"  />
+                            <p:selectOneMenu panelStyleClass="Sgstt_OneMenu" onchange="PF('tableCliente').filter()"
+                                             style="width: 150px;font-size: 13px;">
+                                <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true"/>
+                                <f:selectItem itemLabel="Jurídico" itemValue="JURIDICO"/>
+                                <f:selectItem itemLabel="Natural" itemValue="NATURAL"/>
                             </p:selectOneMenu>
                         </f:facet>
                         <h:outputText value="#{listCliente.tipoCliente.tipoCliente}"/>
@@ -552,10 +567,11 @@
         <!-- FORMULARIO PARA ESCOGER EL FILE EN UNA ORDEN DE SERVICIO -->
         <p:dialog modal="true" position="center top" header="Lista de Files" id="dialogFile"
                   widgetVar="dialogFile" resizable="false" width="600"
-                >
+        >
             <h:form id="filterFiles" styleClass="form-horizontal">
                 <div class="form-group has-feedback">
-                    <label class="control-label" style="font-size:13px;float:left;margin-left:15px;width: 51px;">File :</label>
+                    <label class="control-label"
+                           style="font-size:13px;float:left;margin-left:15px;width: 51px;">File :</label>
                     <div class="col-xs-6 col-md-4">
                         <h:inputText styleClass="form-control" style="padding-right: 0px !important;"
                                      value="#{ordenServicioControlador.fileFilter.nroCorrelativo}">
@@ -638,7 +654,8 @@
                              emptyMessage="No existen registros de clientes" widgetVar="tableClienteFilter"
                              paginator="true" rows="10"
                              paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}">
-                    <p:column style="text-align: center;font-size: 13px;" filterStyle="width: 150px;" filterBy="#{listClienteFilter.nombreAuxiliar}" filterMatchMode="startsWith">
+                    <p:column style="text-align: center;font-size: 13px;" filterStyle="width: 150px;"
+                              filterBy="#{listClienteFilter.nombreAuxiliar}" filterMatchMode="startsWith">
                         <f:facet name="header">
                             Cliente
                         </f:facet>
@@ -646,15 +663,18 @@
 
                         </h:outputText>
                     </p:column>
-                    <p:column style="text-align: center;font-size: 13px;" filterBy="#{listClienteFilter.tipoCliente.tipoCliente}" filterMatchMode="exact" >
+                    <p:column style="text-align: center;font-size: 13px;"
+                              filterBy="#{listClienteFilter.tipoCliente.tipoCliente}" filterMatchMode="exact">
                         <f:facet name="header">
                             Tipo Cliente
                         </f:facet>
                         <f:facet name="filter">
-                            <p:selectOneMenu panelStyleClass="Sgstt_OneMenu" onchange="PF('tableClienteFilter').filter()" style="width: 150px;font-size: 13px;" >
-                                <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
-                                <f:selectItem itemLabel="Jurídico" itemValue="JURIDICO"  />
-                                <f:selectItem itemLabel="Natural" itemValue="NATURAL"  />
+                            <p:selectOneMenu panelStyleClass="Sgstt_OneMenu"
+                                             onchange="PF('tableClienteFilter').filter()"
+                                             style="width: 150px;font-size: 13px;">
+                                <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true"/>
+                                <f:selectItem itemLabel="Jurídico" itemValue="JURIDICO"/>
+                                <f:selectItem itemLabel="Natural" itemValue="NATURAL"/>
                             </p:selectOneMenu>
                         </f:facet>
                         <h:outputText value="#{listClienteFilter.tipoCliente.tipoCliente}"/>
@@ -673,7 +693,7 @@
         <!-- FORMULARIO PARA ASIGNAR CHOFER Y VEHICULO A UNA ORDEN DE COMPROBANTE -->
         <p:dialog modal="false" position="center top" header="Asignar Chofer y Vehiculo" id="dialogChoferVehiculo"
                   widgetVar="dialogChoferVehiculo" resizable="false" width="450"
-                >
+        >
             <h:form id="formChoferVehiculo" styleClass="form-horizontal">
                 <div class="form-group has-feedback">
                     <label class="col-md-3 control-label">File/VTA :</label>
@@ -734,7 +754,7 @@
                 </div>
             </h:form>
         </p:dialog>
-        <h:outputScript name="js/calendar.js" />
+        <h:outputScript name="js/calendar.js"/>
         <h:outputScript name="js/collapse_panel.js"/>
         <script type="text/javascript">
             jQuery(function ($) {

@@ -2,7 +2,8 @@ package com.sgstt.hibernate;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.Session;
 
 /**
@@ -11,7 +12,7 @@ import org.hibernate.Session;
  */
 public class HibernateListener implements ServletContextListener {
 
-    private static final Logger log = Logger.getLogger(HibernateListener.class.getPackage().getName());
+    private static final Logger log = LoggerFactory.getLogger(HibernateListener.class);
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {

@@ -74,10 +74,10 @@
             </div>
             <!-- /.col-lg-12 -->
         </div>
-        <p:dialog modal="true" width="500"  height="300" header="Lista de Clientes" position="center top" id="DialogSelectable" widgetVar="dialogSelectable">
+        <p:dialog modal="true" resizable="false" width="600" header="Lista de Clientes" position="center top" id="DialogSelectable" widgetVar="dialogSelectable">
             <h:form id="frmDialogSelectable">
                 <p:dataTable  value="#{fileControlador.clientes}" var="list" 
-                              paginator="true" rows="10"  rowIndexVar="rowIndex"
+                              paginator="true" rows="7"  rowIndexVar="rowIndex" style="font-size: 13px;"
                               paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
 
                     <p:column style="text-align: center;width: 10%;">
@@ -86,7 +86,7 @@
                         </f:facet>
                         <h:outputText value="#{rowIndex+1}" />
                     </p:column>
-                    <p:column style="text-align: center;">
+                    <p:column style="text-align: center;font-size: 13px;" filterStyle="width: 150px;" filterBy="#{list.nombreAuxiliar}" filterMatchMode="startsWith">
                         <f:facet name="header">
                             Cliente
                         </f:facet>

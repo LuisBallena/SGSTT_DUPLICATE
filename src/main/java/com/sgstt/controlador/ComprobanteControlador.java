@@ -22,7 +22,8 @@ import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import net.sf.jasperreports.export.SimpleXlsReportConfiguration;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.internal.SessionImpl;
 
 import javax.faces.bean.ManagedBean;
@@ -40,7 +41,7 @@ import java.util.*;
 @ViewScoped
 public class ComprobanteControlador implements Serializable {
 
-    private static final Logger log = Logger.getLogger(ComprobanteControlador.class.getPackage().getName());
+    private static final Logger log = LoggerFactory.getLogger(ComprobanteControlador.class);
     private List<Cliente> clientes;
     private FileServicio fileServicio;
     private TransporteServicio transporteServicio;
@@ -66,9 +67,12 @@ public class ComprobanteControlador implements Serializable {
 
     public void initLista() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
+            comprobanteFilter = new ComprobanteFilter();
             transporteServicio = new TransporteServicio();
+            fileServicio = new FileServicio();
             comprobantePaginador = new ComprobantePaginador();
             comprobantePaginador.initPaginador(sesionControlador.getUsuarioSesion().getSede().getId());
+            clientes = fileServicio.obtenerClientesPorSede(sesionControlador.getUsuarioSesion().getSede().getId());
         }
     }
 
@@ -111,6 +115,14 @@ public class ComprobanteControlador implements Serializable {
     public void ejecutarBusquedaCreate() {
         if (comprobanteFilter.getCliente() != null) {
             servicioDetalles = transporteServicio.obtenerServicioDetalleCliente(comprobanteFilter);
+        }
+    }
+
+    public void ejecutarBusqueda(){
+        try {
+            comprobantePaginador.createFilterDynamic(comprobanteFilter);
+        }catch (FilterException e){
+            Utilitario.enviarMensajeGlobalError(e.getMessage());
         }
     }
 

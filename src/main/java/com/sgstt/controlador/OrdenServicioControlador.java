@@ -29,7 +29,8 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import org.apache.commons.lang3.SerializationUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Luis Alonso Ballena Garcia
@@ -39,7 +40,7 @@ import org.apache.log4j.Logger;
 public class OrdenServicioControlador implements Serializable {
 
     private static final long serialVersionUID = -8924952626882918455L;
-    private static final Logger log = Logger.getLogger(OrdenServicioControlador.class.getPackage().getName());
+    private static final Logger log = LoggerFactory.getLogger(OrdenServicioControlador.class);
     private TransporteServicio transporteServicio;
     private List<Servicio> servicios;
     private List<TipoServicio> tipoServicios;

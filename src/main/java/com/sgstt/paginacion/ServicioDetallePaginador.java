@@ -5,9 +5,11 @@ import com.sgstt.filters.ServicioDetalleFilter;
 import com.sgstt.hibernate.HibernateStringPaginador;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import com.sgstt.util.Utilitario;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Luis Alonso Ballena Garcia
@@ -15,7 +17,7 @@ import org.apache.log4j.Logger;
 @Paginator(value = ServicioDetalle.class)
 public class ServicioDetallePaginador extends HibernateStringPaginador implements Serializable {
 
-    private static final Logger log = Logger.getLogger(ServicioDetallePaginador.class.getPackage().getName());
+    private static final Logger log = LoggerFactory.getLogger(ServicioDetallePaginador.class);
     private static final long serialVersionUID = 341506581369211936L;
 
     @Override
@@ -26,7 +28,9 @@ public class ServicioDetallePaginador extends HibernateStringPaginador implement
     @Override
     protected String createFilter(Object... values) {
         orderBy("serviciodetalle.fecha ASC");
-        return String.format("%s left join fetch serviciodetalle.vehiculo.tipoVehiculo left join fetch serviciodetalle.venta.cliente left join fetch serviciodetalle.comprobante where serviciodetalle.estado = 1 and serviciodetalle.servicio.sede.id = %d", super.createFilter(), ((ServicioDetalleFilter) values[0]).getIdSede());
+        return String.format("%s left join fetch serviciodetalle.vehiculo.tipoVehiculo left join fetch serviciodetalle.venta.cliente " +
+                "left join fetch serviciodetalle.comprobante where serviciodetalle.estado = 1 and " +
+                "serviciodetalle.servicio.sede.id = %d and (serviciodetalle.fecha >= '%s')", super.createFilter(), ((ServicioDetalleFilter) values[0]).getIdSede(),Utilitario.convertirFormatoFecha(new Date(), Utilitario.FORMATO_SQL_DATE+" 00:00:00"));
     }
 
     @Override
@@ -34,6 +38,8 @@ public class ServicioDetallePaginador extends HibernateStringPaginador implement
         if (value instanceof ServicioDetalleFilter) {
             ServicioDetalleFilter filter = (ServicioDetalleFilter) value;
             filter.validarFiltroFecha();
+            queryCriteria = queryCriteria.replaceAll("\\(.*\\)","").trim().replaceAll("(and)$","").trim();
+            cloneQuery();
             StringBuilder builder = new StringBuilder();
             builder.append(filter.esValidoId(filter.getIdTipoServicio()) ? String.format("and serviciodetalle.servicio.tipoServicio.id = %d ", filter.getIdTipoServicio()) : "");
             builder.append(filter.esValidoId(filter.getIdServicio()) ? String.format("and serviciodetalle.servicio.id = %d ", filter.getIdServicio()) : "");
@@ -51,9 +57,12 @@ public class ServicioDetallePaginador extends HibernateStringPaginador implement
             if (!Utilitario.esNulo(filter.getPax())) {
                 builder.append(ensamblarQueryPAX(filter));
             }
+            if(filter.getFacturado() != null && filter.getFacturado() != 0){
+                builder.append(String.format("and serviciodetalle.comprobante.id %s ", filter.getFacturado() == 2 ? "is not null" : "is null"));
+            }
             builder.append(filter.getEstadoServicio() != null && !filter.getEstadoServicio().trim().isEmpty() ? String.format("and serviciodetalle.estadoServicio = '%s'", filter.getEstadoServicio()) : "");
             if (filter.getFechaDesde() != null && filter.getFechaHasta() != null) {
-                builder.append(String.format("and serviciodetalle.fecha between '%s' and  '%s'",
+                builder.append(String.format("and serviciodetalle.fecha between '%s' and '%s'",
                         Utilitario.convertirFormatoFecha(filter.getFechaDesde(), Utilitario.FORMATO_SQL_DATE_TIME),
                         Utilitario.convertirFormatoFecha(filter.getFechaHasta(), Utilitario.FORMATO_SQL_DATE) + " 23:59:59"));
             }

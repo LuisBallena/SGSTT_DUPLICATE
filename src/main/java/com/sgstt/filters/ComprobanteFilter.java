@@ -15,6 +15,10 @@ public class ComprobanteFilter extends BaseFilter {
 
     private Integer gravada;
 
+    private String serie;
+
+    private Integer numero;
+
     public ComprobanteFilter() {
     }
 
@@ -40,5 +44,21 @@ public class ComprobanteFilter extends BaseFilter {
 
     public void setGravada(Integer gravada) {
         this.gravada = gravada;
+    }
+
+    public String getSerie() {
+        return serie;
+    }
+
+    public void setSerie(String serie) {
+        this.serie = serie;
+    }
+
+    public Integer getNumero() {
+        return numero;
+    }
+
+    public void setNumero(Integer numero) {
+        this.numero = numero;
     }
 }

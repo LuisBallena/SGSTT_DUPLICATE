@@ -6,7 +6,8 @@ import com.sgstt.dto.FileVtaDTO;
 import com.sgstt.entidad.Venta;
 import com.sgstt.hibernate.HibernateConexion;
 import com.sgstt.hibernate.HibernateImpl;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
@@ -21,7 +22,7 @@ import java.util.List;
  */
 public class VentaImpl extends HibernateImpl<Venta, Integer> implements VentaDao, Serializable {
     private static final long serialVersionUID = 4293168409136530974L;
-    private static final Logger log = Logger.getLogger(VentaImpl.class.getPackage().getName());
+    private static final Logger log = LoggerFactory.getLogger(VentaImpl.class.getPackage().getName());
 
     public VentaImpl(HibernateConexion conexion) {
         super(conexion);

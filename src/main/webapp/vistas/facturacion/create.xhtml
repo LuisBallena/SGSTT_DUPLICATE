@@ -86,7 +86,7 @@
                                                             <p:inputMask styleClass="form-control" mask="9?999999999"
                                                                          slotChar=""
                                                                          value="#{comprobanteControlador.numero}"
-                                                                         maxlength="20"/>
+                                                                         maxlength="10"/>
                                                         </div>
                                                     </div>
                                                     <div class="form-group has-feedback">
@@ -376,7 +376,7 @@
                              emptyMessage="No existen registros de clientes"
                              paginator="true" rows="10"
                              paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}">
-                    <p:column style="text-align: center;font-size: 13px;">
+                    <p:column style="text-align: center;font-size: 13px;" filterStyle="width: 150px;" filterBy="#{list.nombreAuxiliar}" filterMatchMode="startsWith" >
                         <f:facet name="header">
                             Cliente
                         </f:facet>

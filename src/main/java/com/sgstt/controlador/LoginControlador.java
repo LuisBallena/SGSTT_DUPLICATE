@@ -11,8 +11,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-import org.apache.log4j.Logger;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 /**
  *
  * @author Luis Alonso Ballena Garcia
@@ -22,7 +22,7 @@ import org.apache.log4j.Logger;
 public class LoginControlador implements Serializable {
 
     private static final long serialVersionUID = -2058045863937792882L;
-    private static final Logger log = Logger.getLogger(LoginControlador.class.getPackage().getName());
+    private static final Logger log = LoggerFactory.getLogger(LoginControlador.class);
 
     private Usuario usuario;
     private List<Sede> sedes;

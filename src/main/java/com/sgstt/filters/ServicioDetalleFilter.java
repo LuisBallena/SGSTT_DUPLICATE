@@ -32,6 +32,8 @@ public class ServicioDetalleFilter extends BaseFilter{
 
     private String pax;
 
+    private Short facturado;
+
     public ServicioDetalleFilter() {
         tipoOrden = "none";
     }
@@ -122,5 +124,13 @@ public class ServicioDetalleFilter extends BaseFilter{
 
     public void setPax(String pax) {
         this.pax = pax;
+    }
+
+    public Short getFacturado() {
+        return facturado;
+    }
+
+    public void setFacturado(Short facturado) {
+        this.facturado = facturado;
     }
 }

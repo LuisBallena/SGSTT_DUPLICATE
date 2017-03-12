@@ -8,7 +8,6 @@ import com.sgstt.hibernate.HibernateConexion;
 import com.sgstt.hibernate.HibernatePaginador;
 import com.sgstt.paginacion.FilePaginador;
 import com.sgstt.servicios.FileServicio;
-import com.sgstt.servicios.TransporteServicio;
 import com.sgstt.util.Utilitario;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -28,7 +27,8 @@ import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import net.sf.jasperreports.export.SimpleXlsReportConfiguration;
 import org.apache.commons.lang3.SerializationUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.internal.SessionImpl;
 
 /**
@@ -40,7 +40,7 @@ import org.hibernate.internal.SessionImpl;
 public class FileControlador implements Serializable {
 
     private static final long serialVersionUID = 1483823329219355862L;
-    private static final Logger log = Logger.getLogger(FileControlador.class.getPackage().getName());
+    private static final Logger log = LoggerFactory.getLogger(FileControlador.class);
     private HibernatePaginador<File> filePaginador;
     private FileServicio fileServicio;
     private List<Cliente> clientes;

@@ -12,7 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.SerializationUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -23,7 +24,7 @@ import org.apache.log4j.Logger;
 public class SesionControlador implements Serializable {
 
     private static final long serialVersionUID = 4034829534792715905L;
-    private static final Logger log = Logger.getLogger(SesionControlador.class.getPackage().getName());
+    private static final Logger log = LoggerFactory.getLogger(SesionControlador.class);
 
     private Usuario usuarioSesion;
     private List<Permiso> menuSistema;

@@ -15,6 +15,8 @@ public class FileFilter extends BaseFilter{
 
     private String cuenta;
 
+    private Short facturado;
+
     public FileFilter() {
     }
 
@@ -48,5 +50,13 @@ public class FileFilter extends BaseFilter{
 
     public void setCuenta(String cuenta) {
         this.cuenta = cuenta;
+    }
+
+    public Short getFacturado() {
+        return facturado;
+    }
+
+    public void setFacturado(Short facturado) {
+        this.facturado = facturado;
     }
 }

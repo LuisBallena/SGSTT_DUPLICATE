@@ -3,10 +3,10 @@ package com.sgstt.dao.impl;
 import com.sgstt.dao.FileDao;
 import com.sgstt.dto.FileVtaDTO;
 import com.sgstt.entidad.File;
-import com.sgstt.entidad.Tarifa;
 import com.sgstt.hibernate.HibernateConexion;
 import com.sgstt.hibernate.HibernateImpl;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class FileImpl extends HibernateImpl<File, Integer> implements FileDao, Serializable {
     private static final long serialVersionUID = 8783581401517268495L;
-    private static final Logger log = Logger.getLogger(FileImpl.class.getPackage().getName());
+    private static final Logger log = LoggerFactory.getLogger(FileImpl.class);
 
     public FileImpl(HibernateConexion conexion) {
         super(conexion);

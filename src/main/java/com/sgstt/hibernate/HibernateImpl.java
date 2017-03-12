@@ -5,7 +5,8 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -16,7 +17,7 @@ import org.hibernate.Session;
  */
 public class HibernateImpl<T, ID extends Serializable> implements GenericDao<T, ID> {
 
-    private static final Logger log = Logger.getLogger(HibernateImpl.class.getPackage().getName());
+    private static final Logger log = LoggerFactory.getLogger(HibernateImpl.class);
 
     protected HibernateConexion conexion;
 

@@ -4,11 +4,11 @@ import com.sgstt.dao.*;
 import com.sgstt.dao.impl.*;
 import com.sgstt.entidad.*;
 import com.sgstt.excepciones.TransporteException;
-import com.sgstt.filters.ClienteFilter;
 import com.sgstt.filters.ComprobanteFilter;
 import com.sgstt.hibernate.HibernateConexion;
 import com.sgstt.util.Utilitario;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.HibernateException;
 
 import java.io.Serializable;
@@ -20,7 +20,7 @@ import java.util.*;
 public class TransporteServicio implements Serializable {
 
     private static final long serialVersionUID = -480596500113721392L;
-    private static final Logger log = Logger.getLogger(TransporteServicio.class.getPackage().getName());
+    private static final Logger log = LoggerFactory.getLogger(TransporteServicio.class);
 
     private final HibernateConexion conexion;
     private final ChoferDao choferDao;

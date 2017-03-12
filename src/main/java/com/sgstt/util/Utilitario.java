@@ -33,7 +33,8 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.imageio.ImageIO;
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -59,7 +60,7 @@ public class Utilitario {
     public static final String FORMATO_SQL_DATE = "yyyy-MM-dd";
     public static final String FORMATO_DATE_POR_DEFECTO = "dd/MM/yyyy HH:mm:ss";
 
-    private static final Logger log = Logger.getLogger(Utilitario.class.getPackage().getName());
+    private static final Logger log = LoggerFactory.getLogger(Utilitario.class);
 
     public static boolean esNulo(String txt) {
         return txt == null || txt.trim().length() == 0;

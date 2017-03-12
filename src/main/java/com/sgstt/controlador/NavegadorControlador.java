@@ -11,7 +11,8 @@ import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -21,7 +22,7 @@ import org.apache.log4j.Logger;
 @ApplicationScoped
 public class NavegadorControlador implements Serializable{
 
-    private static final Logger log = Logger.getLogger(NavegadorControlador.class.getPackage().getName());
+    private static final Logger log = LoggerFactory.getLogger(NavegadorControlador.class);
     private static final long serialVersionUID = -4671085300657211850L;
     private final Map<String, String> navegacion = new HashMap<>();
     private final List<String> llaves = new ArrayList<>();
