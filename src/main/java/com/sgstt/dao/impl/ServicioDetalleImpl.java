@@ -105,6 +105,7 @@ public class ServicioDetalleImpl extends HibernateImpl<ServicioDetalle, Integer>
         try {
             Criteria criteria = conexion.getSession().createCriteria(ServicioDetalle.class, "st");
             criteria.createAlias("st.vehiculo.tipoVehiculo", "tv", JoinType.LEFT_OUTER_JOIN);
+            criteria.createAlias("st.file", "file", JoinType.LEFT_OUTER_JOIN);
             criteria.createAlias("st.venta.cliente", "vc", JoinType.LEFT_OUTER_JOIN);
             criteria.createAlias("st.file.cliente", "fc", JoinType.LEFT_OUTER_JOIN);
             criteria.add(Restrictions.eq("st.estado", Estado.ACTIVO));
@@ -124,7 +125,7 @@ public class ServicioDetalleImpl extends HibernateImpl<ServicioDetalle, Integer>
                 fechaHasta = Utilitario.definirHoraMinutoSegundo(fechaHasta,23,59,59);
                 criteria.add(Restrictions.le("st.fecha", fechaHasta));
             }
-            criteria.addOrder(Order.asc("st.file.nroCorrelativo"));
+            criteria.addOrder(Order.asc("file.nroCorrelativo"));
             servicioDetalles = criteria.list();
         } catch (HibernateException e) {
             e.printStackTrace();
