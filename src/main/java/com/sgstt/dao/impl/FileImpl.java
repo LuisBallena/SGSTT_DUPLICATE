@@ -42,7 +42,7 @@ public class FileImpl extends HibernateImpl<File, Integer> implements FileDao, S
     @Override
     public boolean isFacturadoFile(Integer idFile) {
         boolean facturado = false;
-        Query query = conexion.getSession().createSQLQuery("SELECT COUNT(f.idFile) FROM FILE AS f INNER JOIN servicio_detalle AS s ON s.idfile = f.idfile " +
+        Query query = conexion.getSession().createSQLQuery("SELECT COUNT(f.idFile) FROM file AS f INNER JOIN servicio_detalle AS s ON s.idfile = f.idfile " +
                 "WHERE f.idFile = :idFile AND idcomprobante IS NULL and s.estado = 1");
         query.setInteger("idFile", idFile);
         BigInteger total = ((BigInteger) query.uniqueResult());
@@ -63,7 +63,7 @@ public class FileImpl extends HibernateImpl<File, Integer> implements FileDao, S
     @Override
     public boolean existServicioDetalleFacturadoByFile(Integer idFile) {
         boolean facturado = true;
-        Query query = conexion.getSession().createSQLQuery("SELECT COUNT(f.idFile) FROM FILE AS f INNER JOIN servicio_detalle AS s ON s.idfile = f.idfile " +
+        Query query = conexion.getSession().createSQLQuery("SELECT COUNT(f.idFile) FROM file AS f INNER JOIN servicio_detalle AS s ON s.idfile = f.idfile " +
                 "WHERE f.idFile = :idFile AND idcomprobante IS NOT NULL and s.estado = 1");
         query.setInteger("idFile", idFile);
         BigInteger total = ((BigInteger) query.uniqueResult());
