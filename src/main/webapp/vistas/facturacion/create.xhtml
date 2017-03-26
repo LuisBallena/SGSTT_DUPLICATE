@@ -376,7 +376,7 @@
                              emptyMessage="No existen registros de clientes"
                              paginator="true" rows="10"
                              paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}">
-                    <p:column style="text-align: center;font-size: 13px;" filterStyle="width: 150px;" filterBy="#{list.nombreAuxiliar}" filterMatchMode="startsWith" >
+                    <p:column style="text-align: center;font-size: 13px;" filterStyle="width: 150px;" filterBy="#{listClienteFilter.nombreAuxiliar}" filterMatchMode="startsWith" >
                         <f:facet name="header">
                             Cliente
                         </f:facet>
