@@ -125,6 +125,7 @@ public class ServicioDetalleImpl extends HibernateImpl<ServicioDetalle, Integer>
                 fechaHasta = Utilitario.definirHoraMinutoSegundo(fechaHasta,23,59,59);
                 criteria.add(Restrictions.le("st.fecha", fechaHasta));
             }
+            criteria.addOrder(Order.asc("st.fecha"));
             criteria.addOrder(Order.asc("file.nroCorrelativo"));
             servicioDetalles = criteria.list();
         } catch (HibernateException e) {

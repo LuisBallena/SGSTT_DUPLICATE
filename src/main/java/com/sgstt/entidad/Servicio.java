@@ -37,7 +37,7 @@ public class Servicio implements Serializable {
     private String descripcion;
     
     @Column
-    private String horas;
+    private Double horas;
     
 	@Enumerated(EnumType.ORDINAL)
     @Column(nullable = false,insertable = false)
@@ -136,13 +136,12 @@ public class Servicio implements Serializable {
     public void setSede(Sede sede) {
         this.sede = sede;
     }
-    
-    public String getHoras() {
-  		return horas;
-  	}
 
-  	public void setHoras(String horas) {
-  		this.horas = horas;
-  	}
+    public Double getHoras() {
+        return horas;
+    }
 
+    public void setHoras(Double horas) {
+        this.horas = horas;
+    }
 }

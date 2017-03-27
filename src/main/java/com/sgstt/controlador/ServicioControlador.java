@@ -94,6 +94,7 @@ public class ServicioControlador implements Serializable {
         if (esVistaValida()) {
             servicio.setSede(sesionControlador.getUsuarioSesion().getSede());
             transporteServicio.guardarServicio(servicio);
+            limpiar();
         }
     }
 
@@ -145,6 +146,11 @@ public class ServicioControlador implements Serializable {
             resultado = false;
         }
         return resultado;
+    }
+
+    private void limpiar(){
+        servicio = new Servicio();
+        destinosSeleccionados = new ArrayList<>();
     }
 
     /* GETTERS AND SETTERS */

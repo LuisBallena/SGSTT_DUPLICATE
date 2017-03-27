@@ -11,7 +11,7 @@ public enum Estado {
         String descripcion = "";
         switch (this){
             case ELIMINADO:
-                descripcion = "Cancelado";
+                descripcion = "Anulado";
                 break;
             case ACTIVO:
                 descripcion = "Activo";

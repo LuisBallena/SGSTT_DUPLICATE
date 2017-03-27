@@ -93,7 +93,7 @@ public class ExcelExporter {
     }
 
     // crea una nueva fila a continuación de la anterior
-    private Row getNuevaFila() {
+    protected Row getNuevaFila() {
         return hoja.createRow(hoja.getPhysicalNumberOfRows());
     }
 
@@ -128,5 +128,7 @@ public class ExcelExporter {
         externalContext.setResponseHeader("Content-Disposition", "attachment; filename=" + nombreArchivo + ".xls");
         return externalContext;
     }
+
+
 
 }

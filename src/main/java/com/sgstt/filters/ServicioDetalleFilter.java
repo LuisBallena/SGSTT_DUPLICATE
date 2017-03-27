@@ -34,6 +34,8 @@ public class ServicioDetalleFilter extends BaseFilter{
 
     private Short facturado;
 
+    private Short gravada;
+
     public ServicioDetalleFilter() {
         tipoOrden = "none";
     }
@@ -132,5 +134,13 @@ public class ServicioDetalleFilter extends BaseFilter{
 
     public void setFacturado(Short facturado) {
         this.facturado = facturado;
+    }
+
+    public Short getGravada() {
+        return gravada;
+    }
+
+    public void setGravada(Short gravada) {
+        this.gravada = gravada;
     }
 }

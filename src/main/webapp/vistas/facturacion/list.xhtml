@@ -70,7 +70,7 @@
                                                                      value="#{comprobanteControlador.comprobanteFilter.estado}">
                                                         <f:selectItem itemLabel="Todos" itemValue="#{-1}" />
                                                         <f:selectItem itemLabel="Activo" itemValue="#{1}" />
-                                                        <f:selectItem itemLabel="Cancelado" itemValue="#{0}" />
+                                                        <f:selectItem itemLabel="Anulado" itemValue="#{0}" />
                                                     </h:selectOneMenu>
 
                                                 </div>
@@ -218,7 +218,7 @@
                              emptyMessage="No existen registros de clientes"
                              paginator="true" rows="10"
                              paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}">
-                    <p:column style="text-align: center;font-size: 13px;" filterStyle="width: 150px;" filterBy="#{list.nombreAuxiliar}" filterMatchMode="startsWith">
+                    <p:column style="text-align: center;font-size: 13px;" filterStyle="width: 150px;" filterBy="#{listClienteFilter.nombreAuxiliar}" filterMatchMode="startsWith">
                         <f:facet name="header">
                             Cliente
                         </f:facet>

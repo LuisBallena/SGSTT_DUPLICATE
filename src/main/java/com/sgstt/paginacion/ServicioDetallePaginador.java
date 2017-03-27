@@ -61,6 +61,9 @@ public class ServicioDetallePaginador extends HibernateStringPaginador implement
                 builder.append(String.format("and serviciodetalle.comprobante.id %s ", filter.getFacturado() == 2 ? "is not null" : "is null"));
             }
             builder.append(filter.getEstadoServicio() != null && !filter.getEstadoServicio().trim().isEmpty() ? String.format("and serviciodetalle.estadoServicio = '%s'", filter.getEstadoServicio()) : "");
+            if(filter.getGravada() != null && filter.getGravada() != -1){
+                builder.append(String.format("and serviciodetalle.gravada = '%d' ", filter.getGravada()));
+            }
             if (filter.getFechaDesde() != null && filter.getFechaHasta() != null) {
                 builder.append(String.format("and serviciodetalle.fecha between '%s' and '%s'",
                         Utilitario.convertirFormatoFecha(filter.getFechaDesde(), Utilitario.FORMATO_SQL_DATE_TIME),
