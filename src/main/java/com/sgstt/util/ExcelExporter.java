@@ -75,6 +75,7 @@ public class ExcelExporter {
             for (int j = 0; j < datos.length; j++) {
                 Object columna = datos[j];
                 crearCelda(fila, j, columna);
+                fila.getSheet().autoSizeColumn(j);
             }
             fila = getNuevaFila();
         }
