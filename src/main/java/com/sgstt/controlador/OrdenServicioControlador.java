@@ -14,6 +14,7 @@ import com.sgstt.servicios.TransporteServicio;
 import com.sgstt.servicios.VehiculoServicio;
 import com.sgstt.util.ExcelExporter;
 import com.sgstt.util.ExcelExporter1;
+import com.sgstt.util.ExcelExporter2;
 import com.sgstt.util.Utilitario;
 
 import java.io.IOException;
@@ -400,6 +401,26 @@ public class OrdenServicioControlador implements Serializable {
             e.printStackTrace();
         }
     }
+     
+         public void exportarData3() {
+        List<ServicioDetalle> data = servicioDetallePaginador.obtenerListaCompleta();
+        ExcelExporter2 exporter = new ExcelExporter2(ServicioDetalle.class, data);
+        exporter.agregarHeader("Desarrollador");
+        exporter.crearDocumento();
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = facesContext.getExternalContext();
+        externalContext = ExcelExporter.getResponseContent(externalContext, "guia_servicio");
+        try {
+            OutputStream outputStream = externalContext.getResponseOutputStream();
+            exporter.exportarDocumento(outputStream);
+            externalContext.setResponseStatus(200);
+            externalContext.responseFlushBuffer();
+            facesContext.responseComplete();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+ 
 
 
     public void limpiarClienteFilter() {

@@ -45,7 +45,7 @@ public class TrasladistaImpl extends HibernateImpl<Trasladista, Integer> impleme
         Session session = null;
         try {
             session = conexion.getSession();
-            Query query = session.createQuery("from Trasladista as trasladista where trasladista.estado = 1 and trasladista.sede.id = :idsede");
+            Query query = session.createQuery("from Trasladista as trasladista where trasladista.estado = 1 and trasladista.sede.id = :idsede order by trasladista.nombre");
             query.setInteger("idsede", idSede);
             auxLista = query.list();
         } catch (HibernateException e) {

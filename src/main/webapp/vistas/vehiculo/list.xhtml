@@ -23,6 +23,11 @@
                                         <h:button value="Nuevo Vehiculo" styleClass="btn btn-primary" outcome="create.xhtml" />
                                     </h:panelGroup>
                                 </div>
+                                <div class="col-sm-2">
+                                    <h:panelGroup rendered="#{sesionControlador.permisoModulo.crear eq true}">
+                                        <h:button value="Ver Tipo Vehiculos" styleClass="btn btn-primary" outcome="list_tipo_vehiculo.xhtml" />
+                                    </h:panelGroup>
+                                </div>
                             </div>
                             <br/>
                             <h:form id="frmTarifa">

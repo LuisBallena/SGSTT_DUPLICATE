@@ -253,6 +253,35 @@ public class ServicioDetalle implements Serializable, Exporter {
         return new String[]{"Sub Diario","Número de Comprobante","Fecha de Comprobante","Código de Moneda","Glosa Principal","Tipo de Cambio","Tipo de Conversión","Flag de Conversión de Moneda","Fecha Tipo de Cambio","Cuenta Contable","Código de Anexo","Código de Centro de Costo","Debe / Haber","Importe Original","Importe en Dólares","Importe en Soles","Tipo de Documento","Número de Documento","Fecha de Documento","Fecha de Vencimiento","Código de Area","Glosa Detalle","Código de Anexo Auxiliar","Medio de Pago","Tipo de Documento de Referencia","Número de Documento Referencia","Fecha Documento Referencia","Base Imponible Documento Referencia","IGV Documento Provisión","Tipo Referencia en estado MQ","Número Serie Caja Registradora","Fecha de Operación","Tipo de Tasa","Tasa Detracción/Percepción","Importe Base Detracción/Percepción Dólares","Importe Base Detracción/Percepción Soles","Tipo Cambio para 'F'","N° File Asignado","Ciudad de Destino","IGV por Servicio","Total importe por Servicio","importe de la Detracción"};
     }
     
+    @Override
+    public Object[] getDatos3() {
+        Object[] datos = new Object[16];
+        datos[0] = "" + new SimpleDateFormat("dd/MM/yyyy").format(this.fecha);
+        datos[1] = "" + new SimpleDateFormat("HH:mm").format(this.fecha);
+        datos[2] = this.servicio.getDescripcion();
+        datos[3] = this.file == null ? this.pax : this.file.getPax();
+        datos[4] = "" + this.getNroPersonas();
+        datos[5] = this.trasladista == null ? "No Asignado" : this.trasladista.getDatosCompletos();
+        datos[6] = this.vuelo == null ? "No aplica" : this.vuelo.getDescripcion();
+        datos[7] = this.vuelo == null ? "No aplica" : this.vuelo.getOrigen();
+        datos[8] = this.file == null ? this.cuenta : this.file.getCuenta();
+        datos[9] = this.getFileAuxiliar();
+        datos[10] = this.vehiculo == null ? "No Asignado" : this.vehiculo.getDescripcion2();
+        datos[11] = this.chofer == null ? "No Asignado" : this.chofer.getDatosCompletos();
+        datos[12] = this.comentario;
+        Double precioSinIgv = generarPrecioTotalSinIGV();
+        datos[13] = precioSinIgv ;
+        datos[14] = this.precioServicioIgv;
+        datos[15] = this.precioServicioTotal;
+        return datos;
+    }
+
+    @Override
+    public String[] getTitulos3() {
+        return new String[]{"Fecha","Hora", "Servicio","Pax","Nro. Personas", "Trasladista", "Vuelo","Origen/Destino", "Cuenta", "File/Vta", "Vehiculo","Chofer","Observacion","Precio Sin IGV", "IGV 18%", "Precio Total"};
+    }
+    
+    
     /* GETTERS AND SETTERS */
     public Integer getId() {
         return id;

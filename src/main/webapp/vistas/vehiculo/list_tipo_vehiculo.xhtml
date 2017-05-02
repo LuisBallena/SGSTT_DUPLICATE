@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="./../home.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+    <ui:define name="content">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header">Administrar Tipo de Vehiculo</h3>
+            </div>  
+            <div class="row">
+                <div class="col-lg-12">
+                    <h:link style="font-size: 16px;font-weight: bold;" value="Lista de Vehiculos" outcome="list.xhtml"></h:link>
+                    <div class="panel panel-default">
+                        <div class="panel-body" id="tabla">
+                            <h:messages id="msg" globalOnly="true" styleClass="list-group"
+                                        infoClass="list-group-item list-group-item-success"
+                                        errorClass="list-group-item list-group-item-danger"/>
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <h:panelGroup rendered="#{sesionControlador.permisoModulo.crear eq true}">
+                                        <h:button value="Nuevo Tipo Vehiculo" styleClass="btn btn-primary"
+                                                  outcome="create_tipo_vehiculo.xhtml"/>
+                                    </h:panelGroup>
+                                </div>
+                            </div>
+                            <br/>
+                           
+                            <br/>
+                            <h:form id="formfile">
+                                <f:event type="preRenderView" listener="#{tipovehiculoControlador.initLista}"/>
+
+                                <p:dataTable value="#{tipovehiculoControlador.tipoVehiculoPaginador}" var="list"
+                                             emptyMessage="No existen registros de tipo de vehiculos"
+                                             paginator="true" rows="20" lazy="true"
+                                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}">
+
+
+                                    <p:column style="text-align: center;font-size: 15px;">
+                                        <f:facet name="header">
+                                            Nombre
+                                        </f:facet>
+                                        <h:outputText value="#{list.nombre}"/>
+                                    </p:column>
+                                    <p:column style="text-align: center;font-size: 15px;">
+                                        <f:facet name="header">
+                                            Capacidad
+                                        </f:facet>
+                                        <h:outputText value="#{list.capacidad}"/>
+                                    </p:column>
+                                  
+                                    <p:column style="text-align: center;width: 12%;">
+                                        <p:commandButton
+                                                rendered="#{sesionControlador.permisoModulo.actualizar eq true}"
+                                                style="font-size: 12px;" icon="icon-update"
+                                                action="#{tipovehiculoControlador.irActualizar(list.id)}">
+                                        </p:commandButton>
+                                       <p:commandButton rendered="#{sesionControlador.permisoModulo.eliminar eq true}"
+                                                         style="font-size: 12px;" icon="icon-delete"
+                                                         actionListener="#{tipovehiculoControlador.capturarTipoVehiculo(list)}"
+                                                         oncomplete="PF('deletefile').show();">
+                                        </p:commandButton>                                  
+                                    </p:column>
+                                </p:dataTable>
+                            </h:form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <p:dialog modal="true" position="center top" widgetVar="deletetipovehiculo" resizable="false" showEffect="fade">
+            <h:form>
+                <div style="font-weight: bold;font-size: 14px;">
+                    ¿Desea Eliminar el Tipo de Vehiculo ?
+                </div>
+                <div>
+                    <div class="col-lg-6">
+                        <p:commandButton actionListener="#{tipovehiculoControlador.eliminarTipoVehiculo()}" update=":formfile :msg" value="Si"
+                                         oncomplete="PF('deletetipovehiculo').hide();">
+                        </p:commandButton>
+                    </div>
+                    <div class="col-lg-6">
+                        <p:commandButton value="No" onclick="PF('deletetipovehiculo').hide();">
+                        </p:commandButton>
+                    </div>
+                </div>
+            </h:form>
+        </p:dialog>
+        
+        <!-- FORMULARIO PARA ESCOGER EL CLIENTE PARA LOS FILTROS -->
+        
+        <h:outputScript name="js/collapse_panel.js"/>
+        
+    </ui:define>
+
+</ui:composition>

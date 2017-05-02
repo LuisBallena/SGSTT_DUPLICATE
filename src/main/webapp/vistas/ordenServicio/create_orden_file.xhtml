@@ -88,6 +88,7 @@
                                         	<label class="col-md-2 control-label" >Guia :</label>
                                             <div class=" col-md-3">
                                                 <h:selectOneMenu styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.trasladista}" converter="omnifaces.SelectItemsConverter" >
+                                                    <f:ajax event="change" render="trasladista"  />
                                                     <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
                                                     <f:selectItems value="#{ordenServicioControlador.guias}" var="guias" itemLabel="#{guias.nombre} #{guias.apellido}" itemValue="#{guias}" />
                                                 </h:selectOneMenu>

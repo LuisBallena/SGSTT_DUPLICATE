@@ -33,7 +33,7 @@ public class Modulo implements Serializable, Comparable<Modulo> {
 
     public static int[] IDS_MODULOS_CONTABILIDAD = new int[]{20};
     
-    public static int[] IDS_MODULOS_REPORTE = new int[]{21};
+    public static int[] IDS_MODULOS_REPORTE = new int[]{21,22};
 
     @Id
     @GeneratedValue
