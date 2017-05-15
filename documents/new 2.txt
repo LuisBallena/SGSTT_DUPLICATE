@@ -1,0 +1,29 @@
+insert into imei_block values(IMEI_BLOCK_SEQ.nextval,'351821070110774',null,'L','02-05-2017 19:58:25',null,null,1,'X');
+
+
+insert into imei_block values(IMEI_BLOCK_SEQ.nextval,'354466077957020',null,'L','02-05-2017 19:58:25',null,null,1,'X');
+insert into imei_block values(IMEI_BLOCK_SEQ.nextval,'869531024414165',null,'L','02-05-2017 19:58:25',null,null,1,'X');
+insert into imei_block values(IMEI_BLOCK_SEQ.nextval,'352804065578618',null,'L','06-05-2017 11:58:25',null,null,1,'X'); 
+
+
+
+insert into imei_block values(IMEI_BLOCK_SEQ.nextval,'356991063971998',null,'L','06-05-2017 11:58:25',null,null,1,'X'); 
+insert into imei_block values(IMEI_BLOCK_SEQ.nextval,'358314068841538',null,'L','06-05-2017 11:58:25',null,null,1,'X'); 
+insert into imei_block values(IMEI_BLOCK_SEQ.nextval,'356265067021211',null,'L','06-05-2017 11:58:25',null,null,1,'X'); 
+insert into imei_block values(IMEI_BLOCK_SEQ.nextval,'013892003629693',null,'L','06-05-2017 11:58:25',null,null,1,'X'); 
+insert into imei_block values(IMEI_BLOCK_SEQ.nextval,'354421994765246',null,'L','06-05-2017 11:58:25',null,null,1,'X'); 
+insert into imei_block values(IMEI_BLOCK_SEQ.nextval,'612423452346137',null,'L','06-05-2017 11:58:25',null,null,1,'X'); 
+insert into imei_block values(IMEI_BLOCK_SEQ.nextval,'862995030141129',null,'L','06-05-2017 11:58:25',null,null,1,'X'); 
+insert into imei_block values(IMEI_BLOCK_SEQ.nextval,'352226073448313',null,'L','06-05-2017 11:58:25',null,null,1,'X'); 
+insert into imei_block values(IMEI_BLOCK_SEQ.nextval,'013592003491645',null,'L','08-05-2017 07:45:19',null,null,1,'X'); 
+
+
+insert into imei_block values(IMEI_BLOCK_SEQ.nextval,'354120076087996',null,'L','08-05-2017 07:45:19',null,null,1,'X'); 
+insert into imei_block values(IMEI_BLOCK_SEQ.nextval,'352504070353466',null,'L','08-05-2017 07:45:19',null,null,1,'X'); 
+insert into imei_block values(IMEI_BLOCK_SEQ.nextval,'356988067721007',null,'L','08-05-2017 07:45:19',null,null,1,'X'); 
+insert into imei_block values(IMEI_BLOCK_SEQ.nextval,'359324061303898',null,'L','08-05-2017 07:45:19',null,null,1,'X');
+insert into imei_block values(IMEI_BLOCK_SEQ.nextval,'359213077938658',null,'L','08-05-2017 07:45:19',null,null,1,'X');
+insert into imei_block values(IMEI_BLOCK_SEQ.nextval,'013885008161464',null,'L','08-05-2017 07:45:19',null,null,1,'X'); 
+insert into imei_block values(IMEI_BLOCK_SEQ.nextval,'354120072708009',null,'L','08-05-2017 07:45:19',null,null,1,'X');
+insert into imei_block values(IMEI_BLOCK_SEQ.nextval,'358126072959084',null,'L','08-05-2017 07:45:19',null,null,1,'X');
+insert into imei_block values(IMEI_BLOCK_SEQ.nextval,'359216070528905',null,'L','08-05-2017 07:45:19',null,null,1,'X');

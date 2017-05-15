@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="comprobante_factura" pageWidth="630" pageHeight="535" columnWidth="630" leftMargin="0" rightMargin="0" topMargin="10" bottomMargin="0" uuid="61ec99cb-d6c8-4700-a209-1e1918af79fc">
 	<property name="ireport.zoom" value="3.0"/>
-	<property name="ireport.x" value="814"/>
+	<property name="ireport.x" value="75"/>
 	<property name="ireport.y" value="958"/>
 	<style name="table">
 		<box>
@@ -50,8 +50,9 @@
 		<queryString>
 			<![CDATA[select
     detalle.fecha as fecha,
+    detalle.pax as pax,
     detalle.fecha as hora,
-    detalle.descripcion,
+    service.descripcion,
     detalle.num_personas,
     service.descripcion,
     vehi.descripcion as vehi_descrip,
@@ -59,12 +60,11 @@
     detalle.descuento,
     detalle.adicional,
     detalle.dias_viaje,
-    f.pax,
-    f.nro_correlativo
+CONCAT(v.serie,'-',v.idventa) as nro_correlativo
 from
     servicio_detalle as detalle
-	inner join
-	file as f on f.idfile = detalle.idfile
+ 	inner join
+    venta_directa as v on detalle.idventa = v.idventa
         inner join
     servicio as service on detalle.idservicio = service.idservicio
         inner join
