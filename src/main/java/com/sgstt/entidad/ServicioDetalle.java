@@ -258,7 +258,7 @@ public class ServicioDetalle implements Serializable, Exporter {
         Object[] datos = new Object[16];
         datos[0] = "" + new SimpleDateFormat("dd/MM/yyyy").format(this.fecha);
         datos[1] = "" + new SimpleDateFormat("HH:mm").format(this.fecha);
-        datos[2] = this.servicio.getDescripcion();
+        datos[2] = this.getDescripcion();
         datos[3] = this.file == null ? this.pax : this.file.getPax();
         datos[4] = "" + this.getNroPersonas();
         datos[5] = this.trasladista == null ? "No Asignado" : this.trasladista.getDatosCompletos();
@@ -278,7 +278,7 @@ public class ServicioDetalle implements Serializable, Exporter {
 
     @Override
     public String[] getTitulos3() {
-        return new String[]{"Fecha","Hora", "Servicio","Pax","Nro. Personas", "Trasladista", "Vuelo","Origen/Destino", "Cuenta", "File/Vta", "Vehiculo","Chofer","Observacion","Precio Sin IGV", "IGV 18%", "Precio Total"};
+        return new String[]{"Fecha","Hora", "Descripcion","Pax","Nro. Personas", "Trasladista", "Vuelo","Origen/Destino", "Cuenta", "File/Vta", "Vehiculo","Chofer","Observacion","Precio Sin IGV", "IGV 18%", "Precio Total"};
     }
     
     
