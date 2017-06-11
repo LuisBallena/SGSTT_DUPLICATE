@@ -153,6 +153,7 @@ public class ServicioDetalle implements Serializable, Exporter {
         gravada = true;
     }
 
+     
     public Double generarPrecioTotalSinIGV() {
         adicional = (adicional == null ? new Double(0.0) : adicional);
         descuento = (descuento == null ? new Double(0.0) : descuento);
@@ -195,54 +196,71 @@ public class ServicioDetalle implements Serializable, Exporter {
         return new String[]{"Fecha","Hora", "Servicio","Descripcion","Tipo de Servicio", "Horas de Servicio", "File/VTA", "PAX", "Cuenta", "Nro. Personas", "Trasladista", "Vuelo","Origen/Destino", "Estado Servicio", "Tercerizado", "Vehiculo","Nombre Vehiculo","Tipo Vehiculo","Chofer", "Transportista","Observacion","Precio Sin IGV", "IGV 18%", "Precio Total"};
     }
     
+    public int generarcuenta() {
+        if (cliente.getIdCliente() == 2) {
+            return 131212;
+        } else {
+            return 121202;
+        }
+    }
     
-    @Override
+    public String getSede() {
+        if (servicio.getSede().equals(true)) {
+            
+            return "LIMA";            
+        } else {
+            return "CUSCO";
+        }
+    }
+    
+  @Override
     public Object[] getDatos2() {
         Object[] datos = new Object[43];
-        datos[0] = "05";
-        datos[1] = "120066";
-        datos[2] = this.cliente.getNumeroDocumento();
-        datos[3] = this.getDescripcion();
-        datos[4] = this.servicio.getTipoServicio().getDescripcion();
-        datos[5] = this.servicio.getHoras();
-        datos[6] = this.getFileAuxiliar();
-        datos[7] = this.file == null ? this.pax : this.file.getPax();
-        datos[8] = this.file == null ? this.cuenta : this.file.getCuenta();
-        datos[9] = "" + this.getNroPersonas();
-        datos[10] = this.trasladista == null ? "No Asignado" : this.trasladista.getDatosCompletos();
-        datos[11] = this.vuelo == null ? "No aplica" : this.vuelo.getDescripcion();
-        datos[12] = this.vuelo == null ? "No aplica" : this.vuelo.getOrigen();
-        datos[13] = this.estadoServicio.toString();
-        datos[14] = this.externalizado;
-        datos[15] = this.vehiculo == null ? "No Asignado" : this.vehiculo.getDescripcion();
-        datos[16] = this.vehiculo == null ? "No Asignado" : this.vehiculo.getDescripcion2();
-        datos[17] = this.vehiculo == null ? "No Asignado" : this.vehiculo.tipoVehiculo.getNombre();
-        datos[18] = this.chofer == null ? "No Asignado" : this.chofer.getDatosCompletos();
-        datos[19] = this.chofer == null ? "" : this.chofer.getEmpresa().getRazonSocial();
-        datos[20] = this.comentario;
-        Double precioSinIgv = generarPrecioTotalSinIGV();
-        datos[21] = precioSinIgv ;
-        datos[22] = this.precioServicioIgv;
-        datos[23] = this.precioServicioTotal;
-        datos[24] = this.precioServicioTotal;
-        datos[25] = this.precioServicioTotal;
-        datos[26] = this.precioServicioTotal;
-        datos[27] = this.precioServicioTotal;
-        datos[28] = this.precioServicioTotal;
-        datos[29] = this.precioServicioTotal;
-        datos[30] = this.precioServicioTotal;
-        datos[31] = this.precioServicioTotal;
-        datos[32] = this.precioServicioTotal;
-        datos[33] = this.precioServicioTotal;
-        datos[34] = this.precioServicioTotal;
-        datos[35] = this.precioServicioTotal;
-        datos[36] = this.precioServicioTotal;
-        datos[37] = this.precioServicioTotal;
-        datos[38] = this.precioServicioTotal;
-        datos[39]  = " ";;
-        datos[40]  = " ";
-        datos[41]  = " ";
-        datos[42] = " ";
+        datos[0] = "05";//Sub Diario
+        datos[1] = this.comprobante == null ? "Sin Facturar" : this.comprobante.getSerie();//Número de Comprobante
+        datos[2] = this.comprobante == null ? "Sin Facturar" : "" + new SimpleDateFormat("dd/MM/yyyy HH:mm").format(this.comprobante.getFechaRegistro());//Fecha de Comprobante
+        datos[3] = "US";//Código de Moneda
+        datos[4] = "SERVICIOS TURISTICOS GENERALES SA";//Glosa Principal
+        datos[5] = "0";//Tipo de Cambio
+        datos[6] = "V";//Solo: 'C'= Especial, 'M'=Compra, 'V'=Venta , 'F' De acuerdo a fecha
+        datos[7] = "S"; //Flag de Conversión de Moneda
+        datos[8] = " ";//Fecha Tipo de Cambio
+        int cuenta = generarcuenta();
+        datos[9] = ""+cuenta;
+        datos[10] = this.file == null ? (this.venta == null ? "" : this.venta.getCliente().getNumeroDocumento() ) :  this.file.getCliente().getNumeroDocumento();
+        datos[11] = this.vehiculo == null ? "No Asignado" : this.vehiculo.getDescripcion();
+        datos[12] = "H";
+        datos[13] = " ";
+        datos[14] = " ";
+        datos[15] = " ";
+        datos[16] = "FT";
+        datos[17] ="001-18521";
+        datos[18] = "";
+        datos[19] = "";
+        datos[20] = " ";
+         Double precioSinIgv = generarPrecioTotalSinIGV();
+        datos[21] = "VENTA";
+        datos[22] = " ";
+        datos[23] = " ";
+        datos[24] = " ";
+        datos[25] =  " ";
+        datos[26] =  " ";
+        datos[27] =  " ";
+        datos[28] =  " ";
+        datos[29] = " ";
+        datos[30] =  " ";
+        datos[31] =  " ";
+        datos[32] =  " ";
+        datos[33] =  " ";
+        datos[34] =  " ";
+        datos[35] =  " ";
+        datos[36] =  "";
+         datos[37] = this.file == null ?  (this.venta == null ? "" : this.venta.getSerie()+ "-" +this.venta.getId()) : this.file.getNroCorrelativo();
+       // datos[38] = "";
+       datos[38]  =   "LIMA";
+        datos[39]  =  this.precioServicioIgv;
+        datos[40]  = this.precioServicioTotal;
+        datos[41]  =  "";
 
         return datos;
     }

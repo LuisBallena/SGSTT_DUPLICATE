@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="comprobante_factura" pageWidth="630" pageHeight="535" columnWidth="630" leftMargin="0" rightMargin="0" topMargin="10" bottomMargin="0" uuid="61ec99cb-d6c8-4700-a209-1e1918af79fc">
-	<property name="ireport.zoom" value="3.0"/>
-	<property name="ireport.x" value="814"/>
-	<property name="ireport.y" value="958"/>
+	<property name="ireport.zoom" value="2.049040366095217"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="321"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -167,51 +167,51 @@ cliente.numerodocumento
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<title>
-		<band height="180" splitType="Stretch">
+		<band height="175" splitType="Stretch">
 			<textField pattern="dd">
-				<reportElement x="420" y="130" width="20" height="14" uuid="58d2dd31-9451-4765-a423-638e25f6f11c"/>
+				<reportElement x="420" y="129" width="20" height="14" uuid="58d2dd31-9451-4765-a423-638e25f6f11c"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="Verdana"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="64" y="109" width="172" height="13" uuid="787eb672-c49e-4fca-bf76-b3dc12f02b98"/>
+				<reportElement x="64" y="108" width="172" height="13" uuid="787eb672-c49e-4fca-bf76-b3dc12f02b98"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{numerodocumento}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="64" y="130" width="344" height="14" uuid="5a521efa-7c6e-4637-88eb-7e66a56d3dfd"/>
+				<reportElement x="64" y="129" width="344" height="14" uuid="5a521efa-7c6e-4637-88eb-7e66a56d3dfd"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="Verdana"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{direccion}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="64" y="87" width="173" height="13" uuid="c82a7de3-b615-4edb-b66e-40bbab2c49d6"/>
+				<reportElement x="64" y="85" width="173" height="13" uuid="c82a7de3-b615-4edb-b66e-40bbab2c49d6"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="Verdana"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="64" y="87" width="173" height="13" uuid="5472774e-527c-43da-8cfa-b8f00e00dc83"/>
+				<reportElement x="64" y="85" width="173" height="13" uuid="5472774e-527c-43da-8cfa-b8f00e00dc83"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="Verdana"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{razonsocial}]]></textFieldExpression>
 			</textField>
 			<textField pattern="MMMMM">
-				<reportElement x="466" y="130" width="71" height="14" uuid="5dd1e125-1dc5-4c9d-b31f-e1ac331326f9"/>
+				<reportElement x="466" y="129" width="71" height="14" uuid="5dd1e125-1dc5-4c9d-b31f-e1ac331326f9"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="Verdana"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField pattern="yyyy">
-				<reportElement x="579" y="130" width="35" height="14" uuid="4c4b25a8-a492-4f4c-b3f9-c1045514dff4"/>
+				<reportElement x="579" y="129" width="35" height="14" uuid="4c4b25a8-a492-4f4c-b3f9-c1045514dff4"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="Verdana"/>
 				</textElement>
@@ -220,10 +220,10 @@ cliente.numerodocumento
 		</band>
 	</title>
 	<detail>
-		<band height="268">
+		<band height="257">
 			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<componentElement>
-				<reportElement key="table 2" positionType="Float" x="15" y="17" width="599" height="236" uuid="fadae37d-887a-42a4-9b0b-84b65c99dcc0">
+				<reportElement key="table 2" positionType="Float" x="8" y="17" width="599" height="195" uuid="fadae37d-887a-42a4-9b0b-84b65c99dcc0">
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
@@ -414,14 +414,14 @@ cliente.numerodocumento
 				<text><![CDATA[SERVICIO DE TRASLADO]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="267" y="254" width="141" height="14" uuid="a84c49f4-7d32-45c4-8e09-b097603b51b3"/>
+				<reportElement x="236" y="230" width="120" height="14" uuid="a84c49f4-7d32-45c4-8e09-b097603b51b3"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="Verdana"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{SEDE}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="215" y="253" width="41" height="14" uuid="f8b63713-c3f6-41e7-8441-97079ebc21c5"/>
+				<reportElement x="153" y="230" width="50" height="14" uuid="d2e96930-435a-4d88-9981-918d62520245"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="Verdana"/>
 				</textElement>
@@ -430,9 +430,9 @@ cliente.numerodocumento
 		</band>
 	</detail>
 	<summary>
-		<band height="77">
+		<band height="87">
 			<componentElement>
-				<reportElement x="15" y="0" width="599" height="68" uuid="5f6c73f9-af31-4d3b-b2a1-ccaf2ebf853a"/>
+				<reportElement x="12" y="0" width="599" height="80" uuid="5f6c73f9-af31-4d3b-b2a1-ccaf2ebf853a"/>
 				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
 					<datasetRun subDataset="DataCount" uuid="c2f16747-1d1b-475c-8cb2-0d334470c655">
 						<datasetParameter name="IDCOMPROBANTE">
@@ -440,30 +440,30 @@ cliente.numerodocumento
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:listContents height="68" width="599">
+					<jr:listContents height="80" width="599">
 						<textField pattern="###0.00">
-							<reportElement x="486" y="0" width="113" height="20" uuid="ba81246a-671e-49d9-a76d-1648363fb255"/>
+							<reportElement x="486" y="20" width="113" height="20" uuid="ba81246a-671e-49d9-a76d-1648363fb255"/>
 							<textElement textAlignment="Right" verticalAlignment="Bottom">
 								<font fontName="Verdana" isBold="false"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{preci_sin_igv}]]></textFieldExpression>
 						</textField>
 						<textField pattern="###0.00">
-							<reportElement x="522" y="20" width="77" height="20" uuid="ff76a046-95cd-4071-b0d5-e1d6d74c9ef2"/>
+							<reportElement x="522" y="40" width="77" height="20" uuid="ff76a046-95cd-4071-b0d5-e1d6d74c9ef2"/>
 							<textElement textAlignment="Right" verticalAlignment="Bottom">
 								<font fontName="Verdana" isBold="false"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$V{igv}]]></textFieldExpression>
 						</textField>
 						<textField pattern="###0.00">
-							<reportElement x="486" y="40" width="113" height="20" uuid="e85b964b-58a0-4379-83ba-dc4a47b29c93"/>
+							<reportElement x="486" y="60" width="113" height="20" uuid="e85b964b-58a0-4379-83ba-dc4a47b29c93"/>
 							<textElement textAlignment="Right" verticalAlignment="Bottom">
 								<font fontName="Verdana" isBold="false"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$V{total_igv}]]></textFieldExpression>
 						</textField>
 						<staticText>
-							<reportElement x="461" y="20" width="61" height="20" uuid="b2820a69-5429-49f6-ad9e-6e700fd9333b"/>
+							<reportElement x="461" y="40" width="61" height="20" uuid="b2820a69-5429-49f6-ad9e-6e700fd9333b"/>
 							<textElement textAlignment="Center" verticalAlignment="Bottom">
 								<font fontName="Verdana"/>
 							</textElement>

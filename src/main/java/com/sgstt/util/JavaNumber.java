@@ -50,15 +50,19 @@ public class JavaNumber {
     }
 
     public static String convertDecimalToWord(Double number) {
+        
+        //Doueble number2 = Math.round(number,2);
         StringBuilder builder = new StringBuilder();
         String[] cadena = number.toString().split("\\.");
         String entero = cadena[0];
         builder.append("SON: ");
         builder.append(convertNumberToWord(Integer.parseInt(entero)));
         String decimal = cadena[1];
+        String Subdecimal = decimal.substring(0,2);
+        
         if (!decimal.equals("0")) {
             builder.append(" CON ");
-            builder.append(decimal);
+            builder.append(Subdecimal);
             builder.append("/100");
         }
         builder.append(" DOLARES AMERICANOS");

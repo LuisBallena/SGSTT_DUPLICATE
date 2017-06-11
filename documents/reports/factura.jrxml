@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="factura" pageWidth="620" pageHeight="700" columnWidth="600" leftMargin="0" rightMargin="20" topMargin="42" bottomMargin="20" uuid="61ec99cb-d6c8-4700-a209-1e1918af79fc">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="174"/>
-	<property name="ireport.y" value="125"/>
+	<property name="ireport.zoom" value="2.049040366095217"/>
+	<property name="ireport.x" value="74"/>
+	<property name="ireport.y" value="321"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
