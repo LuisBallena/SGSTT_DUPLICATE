@@ -1,5 +1,8 @@
 package com.sgstt.util;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,8 +53,10 @@ public class JavaNumber {
     }
 
     public static String convertDecimalToWord(Double number) {
+        DecimalFormat decimalFormat = new DecimalFormat("###0.00");
+        String numberFormato = decimalFormat.format(number);
         StringBuilder builder = new StringBuilder();
-        String[] cadena = number.toString().split("\\.");
+        String[] cadena = numberFormato.split(",");
         String entero = cadena[0];
         builder.append("SON: ");
         builder.append(convertNumberToWord(Integer.parseInt(entero)));
