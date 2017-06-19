@@ -131,9 +131,9 @@
                                         <div class="form-group has-feedback">
                                             <label class="col-md-2 control-label" >Guia :</label>
                                             <div class="col-md-3">
-                                                <h:selectOneMenu styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.trasladista.id}">
-                                                    <f:selectItem itemLabel="Seleccionar" itemValue="0" />
-                                                    <f:selectItems value="#{ordenServicioControlador.guias}" var="guias" itemLabel="#{guias.nombre} #{guias.apellido}" itemValue="#{guias.id}" />
+                                                <h:selectOneMenu styleClass="form-control" value="#{ordenServicioControlador.servicioDetalle.trasladista}"  converter="omnifaces.SelectItemsConverter" >
+                                                    <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
+                                                    <f:selectItems value="#{ordenServicioControlador.guias}" var="guias" itemLabel="#{guias.nombre} #{guias.apellido}" itemValue="#{guias}" />
                                                 </h:selectOneMenu>
                                             </div>
 											<label class="col-md-2 control-label" >Comentario :</label>
