@@ -1,8 +1,8 @@
 package com.sgstt.util;
 
-import java.math.RoundingMode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +11,8 @@ import java.util.Map;
  * @author user
  */
 public class JavaNumber {
+
+    private static final Logger log = LoggerFactory.getLogger(JavaNumber.class);
 
     private static String[] ARRAY_UNIDADES
             = new String[]{"CERO", "UNO", "DOS", "TRES", "CUATRO", "CINCO", "SEIS", "SIETE", "OCHO", "NUEVE"};
@@ -53,20 +55,23 @@ public class JavaNumber {
     }
 
     public static String convertDecimalToWord(Double number) {
-        DecimalFormat decimalFormat = new DecimalFormat("###0.00");
-        String numberFormato = decimalFormat.format(number);
         StringBuilder builder = new StringBuilder();
-        String[] cadena = numberFormato.split(",");
-        String entero = cadena[0];
-        builder.append("SON: ");
-        builder.append(convertNumberToWord(Integer.parseInt(entero)));
-        String decimal = cadena[1];
-        if (!decimal.equals("0")) {
-            builder.append(" CON ");
-            builder.append(decimal);
-            builder.append("/100");
+        log.info("Se obtiene el valor : {}",number);
+        if(number != null){
+            DecimalFormat decimalFormat = new DecimalFormat("###0.00");
+            String numberFormato = decimalFormat.format(number);
+            String[] cadena = numberFormato.split(",");
+            String entero = cadena[0];
+            builder.append("SON: ");
+            builder.append(convertNumberToWord(Integer.parseInt(entero)));
+            String decimal = cadena[1];
+            if (!decimal.equals("0")) {
+                builder.append(" CON ");
+                builder.append(decimal);
+                builder.append("/100");
+            }
+            builder.append(" DOLARES AMERICANOS");
         }
-        builder.append(" DOLARES AMERICANOS");
         return builder.toString();
     }
 
