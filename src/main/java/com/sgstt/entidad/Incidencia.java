@@ -40,7 +40,7 @@ public class Incidencia implements Serializable{
     @ManyToOne(fetch = FetchType.EAGER)
     @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "IDSERVICIO_DETALLE", nullable = false)
-    private Servicio servicioDetalle;
+    private ServicioDetalle servicioDetalle;
     
     @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false,insertable = false)
@@ -86,11 +86,11 @@ public class Incidencia implements Serializable{
         this.descripcion = descripcion;
     }
 
-	public Servicio getServicioDetalle() {
+	public ServicioDetalle getServicioDetalle() {
 		return servicioDetalle;
 	}
 
-	public void setServicioDetalle(Servicio servicioDetalle) {
+	public void setServicioDetalle(ServicioDetalle servicioDetalle) {
 		this.servicioDetalle = servicioDetalle;
 	}
 

@@ -53,7 +53,7 @@ public class JavaNumber {
     }
 
     public static String convertDecimalToWord(Double number) {
-        DecimalFormat decimalFormat = new DecimalFormat("###0.00");
+        DecimalFormat decimalFormat = new DecimalFormat("###.00");
         String numberFormato = decimalFormat.format(number);
         StringBuilder builder = new StringBuilder();
         String[] cadena = numberFormato.split(",");

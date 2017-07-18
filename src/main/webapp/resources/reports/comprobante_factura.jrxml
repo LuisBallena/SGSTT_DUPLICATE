@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="comprobante_factura" pageWidth="630" pageHeight="535" columnWidth="630" leftMargin="0" rightMargin="0" topMargin="10" bottomMargin="0" uuid="61ec99cb-d6c8-4700-a209-1e1918af79fc">
-	<property name="ireport.zoom" value="2.049040366095217"/>
+	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="74"/>
 	<property name="ireport.y" value="321"/>
 	<style name="table">
@@ -418,7 +418,7 @@ cliente.numerodocumento
 				<textElement verticalAlignment="Bottom">
 					<font fontName="Verdana"/>
 				</textElement>
-				<textFieldExpression><![CDATA[ $P{SEDE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{SEDE}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="153" y="230" width="50" height="14" uuid="d2e96930-435a-4d88-9981-918d62520245"/>

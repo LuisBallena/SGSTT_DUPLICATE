@@ -25,10 +25,16 @@
                                               paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"   >
 
                                    <p:column  headerText="Servicio" style="text-align: center;">
-                                        <h:outputText value="#{list.servicioDetalle.descripcion}" />
+                                       <h:outputText value="#{list.servicioDetalle.descripcion}" />
                                     </p:column>
-                                    <p:column  headerText="Descripción" style="text-align: center;">
-                                        <h:outputText value="#{list.descripcion}" />
+                                    <p:column  headerText="File" style="text-align: center;">
+                                        <h:outputText value="#{list.servicioDetalle.file.nroCorrelativo}" />
+                                    </p:column>
+                                    <p:column  headerText="Trasladista" style="text-align: center;">
+                                        <h:outputText value="#{list.servicioDetalle.trasladista.nombre}" />
+                                    </p:column> 
+                                    <p:column  headerText="Chofer" style="text-align: center;">
+                                        <h:outputText value="#{list.servicioDetalle.chofer.nombre}" />
                                     </p:column> 
                                     <p:column  headerText="Tipo Incidencia" style="text-align: center;">
                                         <h:outputText value="#{list.tipoincidencia.descripcion}" />
