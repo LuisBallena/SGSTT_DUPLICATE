@@ -100,7 +100,7 @@ public class ServicioDetalleImpl extends HibernateImpl<ServicioDetalle, Integer>
     }
 
     @Override
-    public List<ServicioDetalle> getServicioDetalleFilterByCliente(Integer idCliente, Integer idFile, Integer idVenta, boolean gravada, Date fechaDesde, Date fechaHasta) {
+    public List<ServicioDetalle> getServicioDetalleFilterByCliente(Integer idCliente, Integer idFile, Integer idVenta, boolean gravada, Date fechaDesde, Date fechaHasta, Integer idSede) {
         List<ServicioDetalle> servicioDetalles = null;
         try {
             Criteria criteria = conexion.getSession().createCriteria(ServicioDetalle.class, "st");
@@ -112,6 +112,7 @@ public class ServicioDetalleImpl extends HibernateImpl<ServicioDetalle, Integer>
             criteria.add(Restrictions.or(Restrictions.eq("vc.idCliente", idCliente), Restrictions.eq("fc.idCliente", idCliente)));
             criteria.add(Restrictions.eq("st.gravada", gravada));
             criteria.add(Restrictions.isNull("st.comprobante.id"));
+            criteria.add(Restrictions.eq("st.servicio.sede.id",idSede));
             if (idFile != null && idFile > 0) {
                 criteria.add(Restrictions.eq("st.file.idFile", idFile));
             }

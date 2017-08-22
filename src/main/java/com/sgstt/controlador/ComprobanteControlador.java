@@ -83,7 +83,7 @@ public class ComprobanteControlador implements Serializable {
             comprobanteFilter.setGravada(1);
             fileServicio = new FileServicio();
             transporteServicio = new TransporteServicio();
-            clientes = fileServicio.obtenerClientesPorSede(sesionControlador.getUsuarioSesion().getSede().getId());
+            clientes = fileServicio.obtenerClientes();
         }
     }
 
@@ -114,6 +114,7 @@ public class ComprobanteControlador implements Serializable {
 
     public void ejecutarBusquedaCreate() {
         if (comprobanteFilter.getCliente() != null) {
+            comprobanteFilter.setIdSede(sesionControlador.getUsuarioSesion().getSede().getId());
             servicioDetalles = transporteServicio.obtenerServicioDetalleCliente(comprobanteFilter);
         }
     }
