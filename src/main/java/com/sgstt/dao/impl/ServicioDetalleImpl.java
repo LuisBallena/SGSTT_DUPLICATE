@@ -104,6 +104,7 @@ public class ServicioDetalleImpl extends HibernateImpl<ServicioDetalle, Integer>
         List<ServicioDetalle> servicioDetalles = null;
         try {
             Criteria criteria = conexion.getSession().createCriteria(ServicioDetalle.class, "st");
+            criteria.createAlias("st.servicio", "servicio", JoinType.INNER_JOIN);
             criteria.createAlias("st.vehiculo.tipoVehiculo", "tv", JoinType.LEFT_OUTER_JOIN);
             criteria.createAlias("st.file", "file", JoinType.LEFT_OUTER_JOIN);
             criteria.createAlias("st.venta.cliente", "vc", JoinType.LEFT_OUTER_JOIN);
@@ -112,7 +113,7 @@ public class ServicioDetalleImpl extends HibernateImpl<ServicioDetalle, Integer>
             criteria.add(Restrictions.or(Restrictions.eq("vc.idCliente", idCliente), Restrictions.eq("fc.idCliente", idCliente)));
             criteria.add(Restrictions.eq("st.gravada", gravada));
             criteria.add(Restrictions.isNull("st.comprobante.id"));
-            criteria.add(Restrictions.eq("st.servicio.sede.id",idSede));
+            criteria.add(Restrictions.eq("servicio.sede.id", idSede));
             if (idFile != null && idFile > 0) {
                 criteria.add(Restrictions.eq("st.file.idFile", idFile));
             }
