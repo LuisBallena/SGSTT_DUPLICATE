@@ -12,7 +12,7 @@
     <ui:define name="content">
         <div class="row">
             <div class="col-lg-12">
-                <h3 class="page-header">Administrar Orden de Servicios</h3>
+                <h3 class="page-header">Guia de Servicios</h3>
             </div>
             <div class="row">
                 <div class="col-lg-12">
@@ -389,6 +389,13 @@
                                             <h:outputText
                                                     value="#{list.chofer eq null ? 'Sin Comentarios' : list.comentario}"/>
                                         </p:column>
+                                          <p:column style="text-align: center;font-size: 12px;">
+                                            <f:facet name="header">
+                                                Nro. Factura
+                                            </f:facet>
+                                            <h:outputText
+                                                value="#{list.comprobante.numero eq null ? 'No Facturado' : list.comprobante.numero}"/>
+                                        </p:column>
                                         <p:column style="text-align: center;font-size: 12px;">
                                             <f:facet name="header">
                                                 Costo Servicio
@@ -409,7 +416,7 @@
                                             </f:facet>
                                             <h:outputText
                                                     value="$#{list.precioServicioTotal eq null ? 'No Asignado' : list.precioServicioTotal}"/>
-                                        </p:column>
+                                        </p:column>                                        
                                         <p:column style="text-align: center;width: 8%;font-size: 12px;">
                                             <f:facet name="header">
                                                 Operaciones
