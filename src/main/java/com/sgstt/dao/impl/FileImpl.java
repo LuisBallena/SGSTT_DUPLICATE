@@ -16,7 +16,7 @@ import java.math.BigInteger;
 import java.util.List;
 
 /**
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public class FileImpl extends HibernateImpl<File, Integer> implements FileDao, Serializable {
     private static final long serialVersionUID = 8783581401517268495L;

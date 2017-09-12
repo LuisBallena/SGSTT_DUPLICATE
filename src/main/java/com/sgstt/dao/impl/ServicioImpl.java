@@ -15,7 +15,7 @@ import org.hibernate.criterion.Restrictions;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public class ServicioImpl extends HibernateImpl<Servicio, Integer> implements ServicioDao, Serializable {
 

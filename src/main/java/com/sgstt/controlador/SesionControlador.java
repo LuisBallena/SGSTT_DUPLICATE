@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 @ManagedBean(name = "sesionControlador")
 @SessionScoped

@@ -5,7 +5,7 @@ import com.sgstt.entidad.TipoIncidencia;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public interface TipoIncidenciaDao extends GenericDao<TipoIncidencia,Integer>{
     

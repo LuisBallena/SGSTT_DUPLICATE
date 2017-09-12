@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 @Paginator(value = TipoServicio.class)
 public class TipoServicioPaginador extends HibernateStringPaginador implements Serializable{

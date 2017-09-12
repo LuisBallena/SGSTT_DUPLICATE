@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public class TipoServicioImpl extends HibernateImpl<TipoServicio,Integer> implements TipoServicioDao,Serializable{
     private static final long serialVersionUID = -5156209720144719832L;

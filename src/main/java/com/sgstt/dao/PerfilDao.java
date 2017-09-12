@@ -4,7 +4,7 @@ import com.sgstt.entidad.Perfil;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public interface PerfilDao extends GenericDao<Perfil,Integer>{
 

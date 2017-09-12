@@ -24,7 +24,7 @@ import java.util.List;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public class CotizacionServicio {
     

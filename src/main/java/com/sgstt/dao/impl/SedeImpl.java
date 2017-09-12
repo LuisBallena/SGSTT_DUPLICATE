@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public class SedeImpl extends HibernateImpl<Sede,Integer> implements SedeDao,Serializable{
     private static final long serialVersionUID = -5583449240298748558L;

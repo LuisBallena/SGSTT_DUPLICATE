@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 @Entity
 @Table(name = "usuario", catalog = "sgstt")

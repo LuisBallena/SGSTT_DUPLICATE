@@ -5,7 +5,7 @@ import com.sgstt.entidad.Destino;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public interface DestinoDao extends GenericDao<Destino,Integer>{
     

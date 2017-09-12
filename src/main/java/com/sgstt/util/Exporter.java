@@ -3,7 +3,7 @@ package com.sgstt.util;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public interface Exporter {
     public Object[] getDatos();

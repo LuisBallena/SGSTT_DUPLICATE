@@ -33,7 +33,7 @@ import org.hibernate.internal.SessionImpl;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 @ManagedBean(name = "fileControlador")
 @ViewScoped

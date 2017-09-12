@@ -5,7 +5,7 @@ import com.sgstt.entidad.TipoCliente;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public interface TipoClienteDao extends GenericDao<TipoCliente,Integer>{
     

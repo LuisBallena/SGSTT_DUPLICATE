@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 
 @Paginator(value = Modulo.class)

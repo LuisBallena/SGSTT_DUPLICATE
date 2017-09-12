@@ -5,7 +5,7 @@ import com.sgstt.entidad.Cliente;
 import java.util.List;
 
 /**
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public interface ClienteDao extends GenericDao<Cliente, Integer> {
     public Cliente getClienteWithSede(Integer idcliente);

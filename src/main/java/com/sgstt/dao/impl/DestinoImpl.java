@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public class DestinoImpl extends HibernateImpl<Destino,Integer> implements DestinoDao,Serializable{
 

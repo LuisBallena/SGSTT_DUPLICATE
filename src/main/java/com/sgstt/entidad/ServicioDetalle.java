@@ -24,7 +24,7 @@ import org.hibernate.annotations.FetchMode;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 @Entity
 @Table(name = "servicio_detalle")
@@ -255,7 +255,7 @@ public class ServicioDetalle implements Serializable, Exporter {
     
     @Override
     public Object[] getDatos3() {
-        Object[] datos = new Object[16];
+        Object[] datos = new Object[18];
         datos[0] = "" + new SimpleDateFormat("dd/MM/yyyy").format(this.fecha);
         datos[1] = "" + new SimpleDateFormat("HH:mm").format(this.fecha);
         datos[2] = this.servicio.getDescripcion();
@@ -269,16 +269,18 @@ public class ServicioDetalle implements Serializable, Exporter {
         datos[10] = this.vehiculo == null ? "No Asignado" : this.vehiculo.getDescripcion2();
         datos[11] = this.chofer == null ? "No Asignado" : this.chofer.getDatosCompletos();
         datos[12] = this.comentario;
+        datos[13] = this.comprobante.getSerie();
+        datos[14] = this.comprobante.getNumero();
         Double precioSinIgv = generarPrecioTotalSinIGV();
-        datos[13] = precioSinIgv ;
-        datos[14] = this.precioServicioIgv;
-        datos[15] = this.precioServicioTotal;
+        datos[15] = precioSinIgv ;
+        datos[16] = this.precioServicioIgv;
+        datos[17] = this.precioServicioTotal;
         return datos;
     }
 
     @Override
     public String[] getTitulos3() {
-        return new String[]{"Fecha","Hora", "Servicio","Pax","Nro. Personas", "Trasladista", "Vuelo","Origen/Destino", "Cuenta", "File/Vta", "Vehiculo","Chofer","Observacion","Precio Sin IGV", "IGV 18%", "Precio Total"};
+        return new String[]{"Fecha","Hora", "Servicio","Pax","Nro. Personas", "Trasladista", "Vuelo","Origen/Destino", "Cuenta", "File/Vta", "Vehiculo","Chofer","Observacion","Serie","Numero","Precio Sin IGV", "IGV 18%", "Precio Total"};
     }
     
     

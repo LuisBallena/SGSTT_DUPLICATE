@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public class TipoClienteImpl extends HibernateImpl<TipoCliente,Integer> implements TipoClienteDao,Serializable{
 

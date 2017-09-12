@@ -12,7 +12,7 @@ import org.hibernate.Session;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public class ChoferImpl extends HibernateImpl<Chofer,Integer> implements ChoferDao,Serializable{
     private static final long serialVersionUID = -3800142522597419412L;

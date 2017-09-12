@@ -6,7 +6,7 @@ import com.sgstt.entidad.Cliente;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public class ServicioDetalleFilter extends BaseFilter{
 

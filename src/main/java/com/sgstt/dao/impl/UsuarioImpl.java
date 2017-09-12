@@ -14,7 +14,7 @@ import org.hibernate.criterion.Restrictions;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public class UsuarioImpl extends HibernateImpl<Usuario,Integer> implements UsuarioDao,Serializable{
     private static final long serialVersionUID = 6769460883552402426L;

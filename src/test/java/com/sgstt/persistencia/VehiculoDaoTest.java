@@ -12,7 +12,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public class VehiculoDaoTest {
     static HibernateConexion conexion = new HibernateConexion();

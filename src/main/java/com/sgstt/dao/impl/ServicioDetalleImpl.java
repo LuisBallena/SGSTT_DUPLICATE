@@ -21,7 +21,7 @@ import org.hibernate.sql.JoinType;
 import org.hibernate.type.IntegerType;
 
 /**
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public class ServicioDetalleImpl extends HibernateImpl<ServicioDetalle, Integer> implements ServicioDetalleDao, Serializable {
 

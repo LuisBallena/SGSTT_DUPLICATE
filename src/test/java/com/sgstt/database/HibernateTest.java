@@ -9,7 +9,7 @@ import org.junit.Ignore;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public class HibernateTest {
     

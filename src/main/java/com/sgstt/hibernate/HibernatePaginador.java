@@ -6,7 +6,7 @@ import org.primefaces.model.LazyDataModel;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  * @param <T>
  */
 public abstract class HibernatePaginador<T> extends LazyDataModel<T> {

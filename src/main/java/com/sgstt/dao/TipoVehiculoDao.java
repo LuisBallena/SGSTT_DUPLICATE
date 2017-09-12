@@ -5,7 +5,7 @@ import com.sgstt.entidad.TipoVehiculo;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public interface TipoVehiculoDao extends GenericDao<TipoVehiculo,Integer>{
     

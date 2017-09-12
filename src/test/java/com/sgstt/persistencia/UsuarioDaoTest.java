@@ -12,7 +12,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public class UsuarioDaoTest {
     private static HibernateConexion conexion;

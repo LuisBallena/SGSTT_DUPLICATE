@@ -5,7 +5,7 @@ import org.hibernate.Session;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public class HibernateConexion implements Serializable{
     private static final long serialVersionUID = 3900695352536252271L;

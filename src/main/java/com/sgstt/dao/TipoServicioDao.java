@@ -4,7 +4,7 @@ import com.sgstt.entidad.TipoServicio;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public interface TipoServicioDao extends GenericDao<TipoServicio,Integer>{
 

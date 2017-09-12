@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public class ClienteServicio implements Serializable{
     private static final long serialVersionUID = 1465535481872848009L;

@@ -15,7 +15,7 @@ import org.hibernate.criterion.Restrictions;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public class PermisoImpl extends HibernateImpl<Permiso, Integer> implements PermisoDao, Serializable {
 

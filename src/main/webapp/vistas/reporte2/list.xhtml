@@ -389,7 +389,14 @@
                                             <h:outputText
                                                     value="#{list.chofer eq null ? 'Sin Comentarios' : list.comentario}"/>
                                         </p:column>
-                                          <p:column style="text-align: center;font-size: 12px;">
+                                        <p:column style="text-align: center;font-size: 12px;">
+                                            <f:facet name="header">
+                                                Serie Factura
+                                            </f:facet>
+                                            <h:outputText
+                                                value="#{list.comprobante.serie eq null ? 'No Facturado' : list.comprobante.serie}"/>
+                                        </p:column>
+                                        <p:column style="text-align: center;font-size: 12px;">
                                             <f:facet name="header">
                                                 Nro. Factura
                                             </f:facet>

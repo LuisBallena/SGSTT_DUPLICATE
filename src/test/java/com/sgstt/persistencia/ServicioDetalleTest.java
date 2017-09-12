@@ -11,7 +11,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public class ServicioDetalleTest {
     HibernateConexion conexion = new HibernateConexion();

@@ -3,7 +3,7 @@ package com.sgstt.dao;
 import com.sgstt.entidad.Modulo;
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public interface ModuloDao extends GenericDao<Modulo,Integer> {
 

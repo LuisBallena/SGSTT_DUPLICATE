@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public class VentaImpl extends HibernateImpl<Venta, Integer> implements VentaDao, Serializable {
     private static final long serialVersionUID = 4293168409136530974L;

@@ -14,7 +14,7 @@ import org.hibernate.Session;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public class TrasladistaImpl extends HibernateImpl<Trasladista, Integer> implements TrasladistaDao, Serializable {
 

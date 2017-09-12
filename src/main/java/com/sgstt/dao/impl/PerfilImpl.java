@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public class PerfilImpl extends HibernateImpl<Perfil,Integer> implements PerfilDao,Serializable{
     private static final long serialVersionUID = -2724741694838758291L;

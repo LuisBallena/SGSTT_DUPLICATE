@@ -15,7 +15,7 @@ import org.hibernate.Session;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public class VehiculoImpl extends HibernateImpl<Vehiculo,Integer> implements VehiculoDao,Serializable{
     private static final long serialVersionUID = -4441983384169177874L;

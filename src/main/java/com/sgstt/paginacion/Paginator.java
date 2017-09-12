@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

@@ -18,7 +18,7 @@ import com.sgstt.util.Utilitario;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 @Entity
 @Table(name = "empleado", catalog = "sgstt")

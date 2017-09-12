@@ -13,7 +13,7 @@ import org.hibernate.Session;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public class HibernateImpl<T, ID extends Serializable> implements GenericDao<T, ID> {
 

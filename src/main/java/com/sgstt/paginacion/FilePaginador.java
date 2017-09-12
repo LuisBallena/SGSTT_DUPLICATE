@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 @Paginator(value = File.class)
 public class FilePaginador extends HibernateStringPaginador implements Serializable{

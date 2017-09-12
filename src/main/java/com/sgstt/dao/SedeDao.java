@@ -10,7 +10,7 @@ import com.sgstt.entidad.Sede;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public interface SedeDao extends GenericDao<Sede,Integer>{
 

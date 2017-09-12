@@ -6,7 +6,7 @@ import com.sgstt.entidad.Tarifa;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public interface TarifaDao extends GenericDao<Tarifa,Integer>{
     

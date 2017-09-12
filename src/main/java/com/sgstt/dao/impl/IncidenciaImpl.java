@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public class IncidenciaImpl extends HibernateImpl<Incidencia,Integer> implements IncidenciaDao,Serializable{
     private static final long serialVersionUID = 8783581401517268495L;

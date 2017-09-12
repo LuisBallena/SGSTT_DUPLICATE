@@ -15,7 +15,7 @@ import java.io.Serializable;
 import java.util.*;
 
 /**
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public class TransporteServicio implements Serializable {
 

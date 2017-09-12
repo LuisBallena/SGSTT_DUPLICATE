@@ -21,7 +21,7 @@ import java.util.List;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public class FileServicio implements Serializable{
     private static final long serialVersionUID = 1088159658720573534L;

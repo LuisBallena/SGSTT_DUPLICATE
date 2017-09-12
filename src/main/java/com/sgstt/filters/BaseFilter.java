@@ -6,7 +6,7 @@ import com.sgstt.util.Utilitario;
 import java.util.Date;
 
 /**
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public class BaseFilter {
 

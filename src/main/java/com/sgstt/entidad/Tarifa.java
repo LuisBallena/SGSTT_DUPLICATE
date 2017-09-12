@@ -18,7 +18,7 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 @Entity
 @Table(name = "tarifa", catalog = "sgstt")

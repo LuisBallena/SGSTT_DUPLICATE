@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public class HibernateStringPaginador<T> extends HibernatePaginador<T> {
 

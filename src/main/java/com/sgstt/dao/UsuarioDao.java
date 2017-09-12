@@ -4,7 +4,7 @@ import com.sgstt.entidad.Usuario;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public interface UsuarioDao extends GenericDao<Usuario,Integer>{
     

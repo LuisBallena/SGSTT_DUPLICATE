@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 @Paginator(value = ServicioDetalle.class)
 public class ServicioDetallePaginador extends HibernateStringPaginador implements Serializable {

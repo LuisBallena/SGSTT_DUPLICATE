@@ -14,7 +14,7 @@ import org.slf4j.MDC;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public class SesionFilter implements Filter {
 

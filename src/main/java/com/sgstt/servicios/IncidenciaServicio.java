@@ -11,7 +11,7 @@ import java.util.Date;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public class IncidenciaServicio {
 

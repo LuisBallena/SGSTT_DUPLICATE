@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 @ManagedBean(name = "navegadorControlador", eager = true)
 @ApplicationScoped

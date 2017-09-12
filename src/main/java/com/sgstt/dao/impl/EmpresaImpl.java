@@ -13,7 +13,7 @@ import org.hibernate.Session;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public class EmpresaImpl extends HibernateImpl<Empresa, Integer> implements EmpresaDao, Serializable {
 

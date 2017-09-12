@@ -11,7 +11,7 @@ import org.hibernate.Query;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public class TarifaImpl extends HibernateImpl<Tarifa, Integer> implements TarifaDao, Serializable{
 

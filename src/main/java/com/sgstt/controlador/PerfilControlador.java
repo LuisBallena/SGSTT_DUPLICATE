@@ -16,7 +16,7 @@ import javax.faces.context.FacesContext;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 @ManagedBean(name = "perfilControlador")
 @ViewScoped

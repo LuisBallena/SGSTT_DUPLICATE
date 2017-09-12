@@ -14,7 +14,7 @@ import org.hibernate.Session;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public class VueloImpl extends HibernateImpl<Vuelo,Integer> implements VueloDao,Serializable{
     private static final long serialVersionUID = -8047753143464972870L;

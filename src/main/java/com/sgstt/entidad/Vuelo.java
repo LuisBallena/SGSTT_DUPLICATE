@@ -19,7 +19,7 @@ import org.hibernate.annotations.FetchMode;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 @Entity
 @Table(name = "vuelo", catalog = "sgstt")

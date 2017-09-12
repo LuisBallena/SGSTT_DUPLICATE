@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 public interface GenericDao<T, ID extends Serializable> {
 

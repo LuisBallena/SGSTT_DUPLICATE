@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 /**
  *
- * @author Luis Alonso Ballena Garcia
+ * @author SGSTT
  */
 @Entity
 @Table(name = "venta_directa")
